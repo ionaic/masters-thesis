@@ -1,0 +1,48 @@
+\documentclass[12pt, letter]{article}
+
+\usepackage[paperheight=11in, paperwidth=8.5in, margin=1in]{geometry}
+\usepackage{float}
+\usepackage{caption}
+
+\title{GSAS Research Syllabus}
+\date{}
+
+\begin{document}
+	\maketitle
+	%Short syllabus including plan of study, meetings, student learning outcomes, assessments (e.g. papers, recitation, performance, homework, projects, etc.), academic integrity statement, grading rubric
+	\paragraph{Learning Outcomes:} The student will explore automatic animation generation and learn about physics based character controllers.  Doing so will also encourage the student to read and explore the Computer Science and Animation literature and to research at a higher level.
+	
+	\paragraph{Meetings:} Meetings will occur once weekly on Thursday mornings in which the student will give an update about progress and turn in any deliverables for the week.  The student will also present current research, including new materials read or found relating to the project.
+	
+	\paragraph{Assessments:} The student will be expected to complete a joint control system for actuating joint movement and repositioning a model and to create a scheme for generating a jumping animation.  Code will be completed as scripts in Unity3D.
+	
+	In addition to the coding component, the student must write a report in the style of a thesis or paper analyzing and discussing research, results, and conclusions.  Format should follow a research paper, including an abstract, background and motivation, results, a description of the system, conclusions, and references.
+	
+	As part of the project the student will also be expected to read research materials and be able to provide a summary as well as relation to current work.  The expectation is one paper or comparable material per week, discussed during the weekly meeting.
+	
+	\paragraph{Grading:} Grades will be based off of 
+
+		\begin{table}[H]
+			\centering
+			\caption*{\bf \large Calendar:}
+			\begin{tabular}{| p{0.1\textwidth} | p{0.8\textwidth} |}
+				\hline
+				\bf Week & \bf Deliverable \\ \hline
+				Aug. 28 & Basic system setup and acquiring a test model/rig \\ \hline
+				Sept. 4 & Script controlling a joint in Unity3D \\ \hline
+				Sept. 11 & Playing with PID Controllers - Description of PD Servos and initial code implementation \\ \hline
+				Sept. 18 & Investigate a muscle/spring based control \\ \hline
+				Sept. 25 & Choose a final implementation and polish \\ \hline
+				Oct. 2 & Milestone 1: Controllable character system \\ \hline
+				Oct. 9 & Setup a sampling method for choosing ``good'' poses \\ \hline
+				Oct. 16 & Examples of different jump strategies using current system (play around with different setups to test sampling such as static, running start, precision landing, etc.) \\ \hline
+				Oct. 23 & Refine strategies to find good animation outputs \\ \hline
+				Oct. 30 & Milestone 2: Automated character controller \\ \hline
+				Nov. 6 & Implementation nearly finished, begin collecting data \\ \hline
+				Nov. 13 & Bug fixes and data collection \\ \hline
+				Nov. 20 & Set up a method of ``dumping'' the collected data \\ \hline
+				Nov. 27 & Analysis and report \\ \hline
+				Dec. 4 & Present final report and findings to professor\\ \hline
+			\end{tabular}
+		\end{table}
+\end{document}
