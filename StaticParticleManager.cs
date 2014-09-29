@@ -16,10 +16,12 @@ public class StaticParticleManager : MonoBehaviour {
 	    if (!m_Camera) {
             m_Camera = Camera.main;
         }
+        particles = new List<TrailParticle>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        m_CameraPos = m_Camera.transform;
 	    camPosition = m_Camera.transform.rotation * Vector3.back;
         upVec = m_Camera.transform.rotation * Vector3.up;
 
@@ -30,5 +32,10 @@ public class StaticParticleManager : MonoBehaviour {
 
     bool CameraIsDirty() {
         return m_CameraPos == m_Camera.transform;
+    }
+
+    public void AddParticle(Transform t) {
+        TrailParticle tmp = Instantiate(particle, t.position, t.rotation) as TrailParticle;
+        particles.Add(tmp);
     }
 }

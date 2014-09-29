@@ -118,8 +118,10 @@ public class PhysicalMotionController : MonoBehaviour {
     public SpringMuscle testMuscle;
     public float bodyMass;
     public Transform tracer;
-    public GameObject marker;
+    public StaticParticleManager trailManager;
     public bool useTrace;
+    public float gravity = 10.0f;
+    public float desiredAccel = 1.0f;
     private float angle;
 
 	// Use this for initialization
@@ -135,17 +137,18 @@ public class PhysicalMotionController : MonoBehaviour {
         if (IsRotating()) {
             skeleton.RCalf.Rotate(0.0f, 0.0f, angle * Time.deltaTime);
             if (useTrace) {
-                Instantiate(marker, tracer.position, tracer.rotation);
+                trailManager.AddParticle(tracer);
             }
         }
 	}
     
     void TestJump(Muscle musc) {
         // just try bending to get a force to accelerate upwards at net of 2.0f m/s/s
-        angle = musc.desiredAngle(bodyMass * 12.0f);
+        angle = musc.desiredAngle(bodyMass * gravity + bodyMass * desiredAccel);
         Debug.Log("radian angle " + angle);
         angle *= Mathf.Rad2Deg;
         Debug.Log("degree angle " + angle);
+        //angle = (angle + skeleton.RCalf.transform.rotation.z) % 360; // to get the target angle
     }
     bool IsRotating() {
         float curAngle = skeleton.RCalf.localRotation.eulerAngles.z;
