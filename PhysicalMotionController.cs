@@ -117,9 +117,7 @@ public class PhysicalMotionController : MonoBehaviour {
     public PIDServo pidservo;
     public SpringMuscle testMuscle;
     public float bodyMass;
-    public Transform tracer;
-    public StaticParticleManager trailManager;
-    public bool useTrace;
+    public MotionVisualizer visualizer;
     public float gravity = 10.0f;
     public float desiredAccel = 1.0f;
     private float angle;
@@ -127,6 +125,8 @@ public class PhysicalMotionController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         angle = 0.0f;
+        visualizer = GetComponent<MotionVisualizer>();
+        //visualizer.UpdateMarkers();
 	}
 	
 	// Update is called once per frame
@@ -136,10 +136,10 @@ public class PhysicalMotionController : MonoBehaviour {
         }
         if (IsRotating()) {
             skeleton.RCalf.Rotate(0.0f, 0.0f, angle * Time.deltaTime);
-            if (useTrace) {
-                trailManager.AddParticle(tracer);
-            }
+
+            //visualizer.UpdateTraces();
         }
+        visualizer.UpdateTraces();
 	}
     
     void TestJump(Muscle musc) {
