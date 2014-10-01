@@ -10,6 +10,8 @@ public class JointVisualizer {
     
     public void SetTrailManager(StaticParticleManager mgr) {
         trailManager = mgr;
+        trailManager.particle = GameObject.Instantiate(Resources.Load("Marker", typeof(TrailParticle))) as TrailParticle;
+        UpdateMarker();
     }
     
     public void UpdateMarker() {
