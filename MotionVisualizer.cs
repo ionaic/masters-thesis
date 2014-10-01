@@ -32,6 +32,7 @@ public class MotionVisualizer : MonoBehaviour {
     public JointVisualizer rightKnee;
     public JointVisualizer leftFoot;
     public JointVisualizer rightFoot;
+    public JointVisualizer[] joints;
 
     void Start() {
         hip.SetTrailManager(        gameObject.AddComponent<StaticParticleManager>() as StaticParticleManager);
