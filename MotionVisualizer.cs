@@ -27,36 +27,25 @@ public class JointVisualizer {
 
 [System.Serializable]
 public class MotionVisualizer : MonoBehaviour {
-    public JointVisualizer hip;
-    public JointVisualizer leftKnee;
-    public JointVisualizer rightKnee;
-    public JointVisualizer leftFoot;
-    public JointVisualizer rightFoot;
     public JointVisualizer[] joints;
 
     void Start() {
-        hip.SetTrailManager(        gameObject.AddComponent<StaticParticleManager>() as StaticParticleManager);
-        leftKnee.SetTrailManager(   gameObject.AddComponent<StaticParticleManager>() as StaticParticleManager);
-        rightKnee.SetTrailManager(  gameObject.AddComponent<StaticParticleManager>() as StaticParticleManager);
-        leftFoot.SetTrailManager(   gameObject.AddComponent<StaticParticleManager>() as StaticParticleManager);
-        rightFoot.SetTrailManager(  gameObject.AddComponent<StaticParticleManager>() as StaticParticleManager);
+        for (int idx = 0; idx < joints.Length; ++idx) {
+            joints[idx].SetTrailManager(gameObject.AddComponent<StaticParticleManager>() as StaticParticleManager);
+        }
 
         UpdateMarkers();
     }
     
     public void UpdateMarkers() {
-        hip.UpdateMarker();
-        leftKnee.UpdateMarker();
-        rightKnee.UpdateMarker();
-        leftFoot.UpdateMarker();
-        rightFoot.UpdateMarker();
+        for (int idx = 0; idx < joints.Length; ++idx) {
+            joints[idx].UpdateMarker();
+        }
     }
 
     public void UpdateTraces() {
-        hip.PlotPosition();
-        leftKnee.PlotPosition();
-        rightKnee.PlotPosition();
-        leftFoot.PlotPosition();
-        rightFoot.PlotPosition();
+        for (int idx = 0; idx < joints.Length; ++idx) {
+            joints[idx].PlotPosition();
+        }
     }
 }
