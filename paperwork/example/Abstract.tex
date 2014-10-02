@@ -1,0 +1,22 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                 %
+%                            ABSTRACT                             %
+%                                                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\specialhead{ABSTRACT}
+When dealing with emergency situations in the wake of a disaster where the infrastructure of a region is damaged, a wide range of expertise is needed to quickly and efficiently solve issues. A prototype system for training emergency response personnel was designed to foster a collaborative environment through a single visualization with multiple users. The traditional methods of providing more detail in geographic data when dealing with a single user do not work in situations
+requiring interactions from multiple users, as this requires the loss of detail elsewhere within the fixed resolution of a display. The data being displayed in this simulation consists of a graph network of nodes and edges on top of a underlying series of satellite images. The nodes and edges are drawn over corresponding physical locations on the satellite images. When interacting with this system, it is often helpful to
+zoom in and increase the level of detail for two primary reasons: it is difficult to distinguish geographic features at low resolution,
+and subsequently, it is difficult to distinguish between nodes when the screen distance between them is relatively small. 
+
+This thesis work presents a method for providing a focus plus context
+solution to this system, allowing for continuous visual information with a minimal amount of distortion. This method creates circular
+areas of high magnification which gradually fall off to a base level surrounding individual cursors.
+These different regions achieve the original goals of zooming by providing a magnified look at
+the satellite images and increasing the screen distance between nodes. By having these regions
+centered on cursors, multiple users can view data on a shared display with their own degree
+of magnification while still retaining the ability to view the majority of the surrounding data.
+
+Contributions of this thesis include efficient implementations of rendering a graph network 
+and text onto an underlying layer of satellite images, algorithms to perform the transformations of edges, vertices, and image data for rendering, and a preliminary feedback on the usability of these changes along with suggestions for a formal user study to be conducted as future work.

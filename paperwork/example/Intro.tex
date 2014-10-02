@@ -1,0 +1,98 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%                                                                 %
+%                           INTRODUCTION                          %
+%                                                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+ 
+% \specialhead{INTRODUCTION}
+\chapter{INTRODUCTION}
+\label{chapter:intro}
+
+The Infrastructure Visualization application is a system for studying and training the decision making of emergency response personnel in times of crisis. The application is intended for situations requiring collaborative thinking among people with expertise in different fields. By displaying the data on a large central screen, the application is intended to foster discussion in solving complex problems which require a fast response time with limited resources. The data being shown by this application is difficult to understand in a
+purely text based format. A solution to a possible disaster scenario may seem feasible at first, but without a complete picture of the data, the solution may not be comprehensive enough to solve the overall issue due to network interdependencies. To try and solve this problem, the interconnected data is represented visually as a network of nodes and edges with status information (OK, damaged, no service, etc.). The application should be easy to use, but also provide enough detail to adequately understand the underlying problem so that the participants can create an
+adequate solution \cite{Mendonca2014}.
+
+Satellite images of a region along with a graph network are displayed on the main screen. The nodes of the graph network represent the producers, consumers, and intermediary nodes of a particular resource, and the edges represent the connections between nodes which transmit the resource. The resources represented within the system are electricity, water, waste, and communications. For all of the resources besides communications, the nodes and edges are placed at their approximate
+physical locations on the underlying satellite images. Some demand nodes are not tied to a particular resource, and are a census-based collections of data, which also do not have a specific geographic location. Each of the different resources has a color associated with it. To facilitate viewing information within this display, the nodes and edges can be expanded and collapsed to display relevant data. 
+
+Figure~\ref{fig:mapview_example} shows an example image of the viewer application. The unexpanded nodes are currently drawn as circles, and the expanded nodes are drawn as squares to easily distinguish the data within the viewer. Expanded edges are simply wider than their unexpanded counterparts.
+
+\begin{figure}[htp] \centering
+    \includegraphics[width=0.8\linewidth]{img/mapview_example.jpg}
+    \caption[Example Infrastructure Visualization]{This example screenshot shows an example scenario of a residential node lacking water,
+    by following the network back to the supply node, we can deduce that the overall problem is twofold, a lack of power
+    to the water supply node and a damaged water pipe - both must be addressed to restore water to the demand node.}
+    \label{fig:mapview_example}
+\end{figure}
+
+When expanded, each node provides its id and name. If it is either a supply or transshipment node, it has a
+corresponding status which indicates if it is currently supplying its resource to its edges. If a node requires a particular resource to function, it shows the current ratio of the supply and demand for that resource as a percentage. Edges show their current status: {\tt damaged} or {\tt status OK} as well as their ids and two corresponding node ids. If either a node or an edge is damaged, it is unable to transmit its resource.
+
+When interacting with the system, users can toggle different parts of the display to simplify the data being presented. The underlying road network and satellite images can be turned off, as well as the nodes and edges of a particular resource. Users can also increase the level of detail of the application, effectively zooming in and out on the satellite images. This allows the users to see the a more detailed view of the satellite images and also reduces the number of graph elements on the screen. 
+
+This entire application is designed to work with a system developed by Tyler Sammann and Chris Stuetzle, and which allows multiple users to interact with a system with mouse cursors and laser pointers \cite{Sammann2013}. These various input devices are generalized as cursors which have a generalized set of gestures, allowing for collaboration on a single screen between multiple users. In the context of the viewer application, this functionality allows the users to expand and
+collapse the different graph elements, navigate to different areas of the map, change the global level of detail, and toggle the visibility of different elements as described above.
+
+Systems that use multiple cursors are designed to foster collaborative problem solving and data exploration. Having multiple people interact with a system all at once allows people do explore different areas of the data set at the same time where normally a single person would control what everyone using the system sees. By having users work on a single shared screen instead of multiple displays, each individual user can more easily see what other people are looking at or
+modifying.
+
+Previous demonstrations of this application revealed that the current functionality was lacking a number of features that would allow for greater information visibility. Essentially, users are unable to view a particular region in a higher level of detail without possibly disturbing what the other users are viewing. Figure~\ref{fig:example_problem} presents an example of this issue.
+
+\begin{figure}[htp] \centering
+    \includegraphics[width=150mm]{img/global_zoom_problem.jpg}
+    \caption[Loss of Context]{This diagram shows a screenshot with two cursors in different regions of the application. The red arrow cursor is in the top left corner and the blue arrow cursor is in the bottom right corner. If either cursor performs a global zoom on their location to get more detail, the other cursor is unable to view their data.}
+    \label{fig:example_problem}
+\end{figure}
+
+A system allowing for multiple areas of magnification when integrated with the previously mentioned multi-cursors could be useful in other contexts. If examining any sort of large graph based data set, being able to view different focal areas in higher detail would allow users to navigate data sets easier while still viewing the overall graph structure.
+
+\section{Focus Plus Context}
+\label{section:intro_fac}
+Overview plus detail, zooming, and focus plus context are all methods within information visualization for displaying data. They each seek to present varying levels of data in a format that facilitates understanding. Overview plus detail visualizations are similar to physical maps of cities. The overall view of a city is shown on the big map, but a higher detail region of the city is shown in a separate, enclosed area (Figure~\ref{fig:louisiana}). This sort of visualization is easy to create, and is most
+common for static media, as certain areas inherently require more detail than others when dealing with static data. Being able to interactively change the level of detail is the principle behind zooming visualizations (Figure~\ref{fig:google_maps}). This method is well suited for a single user looking to view different levels of detail at different points in time. It is also relatively easy to implement and does not cause distortions in the data being displayed. Focus plus context systems are useful for systems
+where a user needs both a local and global view at the same time. Some loss of data can occur in these visualizations, but by using a single screen, the user does not need to mentally combine the data of a overview plus detail visualization. The first two formats separate data in two
+different ways: overview plus detail interfaces separate data spatially, while zooming separates data temporally. Focus plus context uses a visual effect to display continuous information on a single screen \cite{Cockburn2008}. 
+
+\begin{figure}[htp] \centering
+    \includegraphics[width=0.8\linewidth]{img/1853_Louisiana.jpg}
+    \caption[Overview Plus Detail]{This old map of Louisiana from 1853 showing a detailed view of a streets of New Orleans is an example of an overview plus detail visualization \cite{Mitchell1853}.}
+    \label{fig:louisiana}
+\end{figure}
+
+\begin{figure}[htp] \centering
+    \includegraphics[width=0.8\linewidth]{img/zoom_interface.jpg}
+    \caption[Zooming Interface]{An image of a common zooming interface for map data, Google Maps \cite{google_maps}.}
+    \label{fig:google_maps}
+\end{figure}
+
+The goal of focus plus context interfaces is to reduce the cognitive load of managing multiple different views 
+of a single system. Theoretically, this would improve user performance with regards to understanding and 
+utilizing the data being presented. The foundation for the focus plus context interfaces was established by Furnas in 1986
+\cite{Furnas1986}. He described a ``generalized fisheye view'' formula is described which 
+calculates a user's ``degree of interest'' (\emph{DOI}) \cite{Furnas1986} (Equation~\ref{eq:furnas_doi}). The degree of interest, given a data element \emph{x} and focus \emph{y}, is the \emph{a priori interest} (API) in the data element minus the distance between the data element and the focus, \emph{D}.  The term fisheye in photography refers to a strong visual distortion which has an extremely wide angle. This photographic technique allows for more detail
+in the resulting image by introducing distortion. The ``generalized fisheye view'' states that objects closer to the focal point are more important than ones further away, paralleling the fact that in a fisheye visualization, objects close to the focal point are less distorted.
+
+\begin{equation}
+    \label{eq:furnas_doi} 
+    DOI(x, y) = API(x) - D(x,y)
+\end{equation}
+
+Focus plus context systems often perform some sort of distortion to present the data. Further work by Furnas within focus plus context systems highlighted the crucial fact that distortion based visualizations achieve a seamless display by requiring the user to understand that data is being modified in some manner \cite{Furnas2006}. All such distortions perform some sort of filtering of the data, as the distortion functions are presented on media with finite limitations. As information
+gets further distorted, it is essentially filtered out, as it can no longer be discerned by the users. Distortion causes geometric distortion among the data, altering the positions and shapes, while maintaining topological continuity. This property is potentially desirable, as our application features satellite images, which should remain topologically continuous \cite{Furnas2006}. By remaining topologically continuous, users would still be able to discern the
+relative distance between any two points on the map, as there are no regions of completely missing data.
+
+Due to the nature of the data that we are working with, techniques that introduce some sort of distortion to achieve a focus plus context visualization are particularly relevant to the work presented in this thesis. Leung and Apperley provide an overview of such techniques\cite{Leung1994}. Among the relevant applications are the Polyfocal Display \cite{Kadmon1978}, the Perspective Wall \cite{Mackinlay1991}, and the Graphical Fisheye View \cite{Sarkar1992}. These techniques are further explored in
+Chapter~\ref{chapter:previous_work}. Leung and Apperley classifies such techniques as magnification functions. The different functions can be further divided into techniques that have continuous magnification functions and those with noncontinuous piecewise functions. The different functions are unified into a single metaphor of a stretchable sheet on a rigid frame. By increasing the amount of data displayed in a single area, i.e. ``stretching'' the sheet to display information, other areas must ``shrink'' and display less data. The overall distortion effect that is then displayed is a result of the stretching and shrinking of the display.
+This stretchable rubber metaphor holds up even for views with multiple foci, though it is paramount that the balance between magnification and demagnification is maintained, otherwise the ``frame'' of the sheet would be deformed. At the core of \cite{Leung1994} is the idea that all of these distortion techniques are similar, and are purely dependent upon a single magnification function. We will expand upon this idea of creating a magnification function for our visualization later on in Chapter~\ref{chapter:magnification}.
+
+\section{Thesis Outline and Contributions}
+\label{section:intro_outline}
+As mentioned earlier, the first draft of the infrastructure visualization program has the ability to
+recognize simultaneous input from multiple keyboards, computer mice, and lasers by individual participants, but only supported zooming on a global scale. This loss of information when performing a global zoom is a major hindrance to a system which should be used by multiple people at the same time. If diagnosing a central problem for discrete graph elements in different geographic regions, trying to get more information about the area around a node is impossible with the
+current model without disrupting the other users. The main goals in designing this new system were to provide users the ability to view different regions of data at a variable level of detail without altering a majority of the
+global context. Because this visualization may be viewed by people who are not directly interacting with the system, solutions that cause too much loss of global context should be avoided. If we change the global context, we run into the same issue of obscuring other regions of high importance. 
+
+The first step in creating a solution which met our needs was the design and implementation of a proof-of-concept system. An investigation of previous methods of focus plus context visualizations was performed to formulate the design behind our solution, detailed in Chapter~\ref{chapter:previous_work}. The concepts learned from this system were then applied to the pre-existing application. The visualization required many changes to allow for the new feature to be implemented and a large bulk of time was spent on upgrading to modern OpenGL to also improve performance; these changes are detailed in Chapter~\ref{chapter:visualization}. Two separate magnification functions were created to affect both the satellite imagery and the
+graph network. These functions, described in Chapter~\ref{chapter:magnification}, cause the graph elements to stay in the same geographic location, and are easily adjustable for different parameters. The speed of the new system with regards to rendering and performing the magnification functions was measured and recorded in Chapter~\ref{chapter:results}. Chapter~\ref{chapter:results} also includes an informal survey of untrained user responses was carried out to gauge the basic
+usability of the new magnification system. Finally, further improvements and changes to the system are discussed in Chapter~\ref{chapter:future_work}.
