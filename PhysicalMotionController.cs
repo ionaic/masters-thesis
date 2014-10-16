@@ -34,10 +34,13 @@ public class SpringMuscle : Muscle {
     public override float desiredAngle(float force) {
         // given a desired force from the muscle, what angle (radians) should
         // the joint be at
-        float cos = (-k * bone_width) / (force + l_0);
+        //float cos = (-k * bone_width) / (force + l_0);
+        float cos = (2.0f * k * k * bone_width * bone_width) / (force * force) - 1.0f;
+        cos = cos % 1.0f;
         Debug.Log("Cos " + cos);
         //return 2.0f * Mathf.Acos(cos - (cos / (2.0f * Mathf.PI)));
-        return Mathf.Acos(cos - (cos / (2.0f * Mathf.PI)));
+        //return Mathf.Acos(cos - (cos / (2.0f * Mathf.PI)));
+        return Mathf.Acos(cos);
     }
 }
 
@@ -152,7 +155,7 @@ public class PhysicalMotionController : MonoBehaviour {
     }
     bool IsRotating() {
         float curAngle = skeleton.RCalf.localRotation.eulerAngles.z;
-        Debug.Log("current local angle " + curAngle);
+        //Debug.Log("current local angle " + curAngle);
         return !Mathf.Approximately(curAngle, angle) && Mathf.Abs(curAngle - angle) > 5.0f;
     }
 }
