@@ -8,14 +8,32 @@
 \chapter{INTRODUCTION}
 \label{chapter:intro}
 
-The Infrastructure Visualization application is a system for studying and training the decision making of emergency response personnel in times of crisis. The application is intended for situations requiring collaborative thinking among people with expertise in different fields. By displaying the data on a large central screen, the application is intended to foster discussion in solving complex problems which require a fast response time with limited resources. The data being shown by this application is difficult to understand in a
-purely text based format. A solution to a possible disaster scenario may seem feasible at first, but without a complete picture of the data, the solution may not be comprehensive enough to solve the overall issue due to network interdependencies. To try and solve this problem, the interconnected data is represented visually as a network of nodes and edges with status information (OK, damaged, no service, etc.). The application should be easy to use, but also provide enough detail to adequately understand the underlying problem so that the participants can create an
-adequate solution \cite{Mendonca2014}.
+% magical first sentence
+% explain like you would to your parents/non-technological people
+% - explain how keyframe animation currently works
+% explain in more technical terms what this means
+% - problems with current techniques
+% - what can be done (auto animation)
+% - overview of controllers
+% - overview of the technique
+% explain contributions
+% - what is the contribution of this technique
+% - Unity3D -> what am I getting from outside sources
+% - what am I making myself
 
-Satellite images of a region along with a graph network are displayed on the main screen. The nodes of the graph network represent the producers, consumers, and intermediary nodes of a particular resource, and the edges represent the connections between nodes which transmit the resource. The resources represented within the system are electricity, water, waste, and communications. For all of the resources besides communications, the nodes and edges are placed at their approximate
-physical locations on the underlying satellite images. Some demand nodes are not tied to a particular resource, and are a census-based collections of data, which also do not have a specific geographic location. Each of the different resources has a color associated with it. To facilitate viewing information within this display, the nodes and edges can be expanded and collapsed to display relevant data. 
+Animations of human characters are used heavily in video games, movies, and other fields.  Creation of such animations is largely done by hand by artists using keyframing.  In a keyframe animation, certain ``key'' parts of the animated sequence are specified, with the remaining frames filled in, or ``tweened'' using an automated interpolation method or manual frame addition.  For 2D animation, this occurs as a series of images which are played back in order to produce the animation.  In 3D, keyframe animations are performed on a 3D model.
 
-Figure~\ref{fig:mapview_example} shows an example image of the viewer application. The unexpanded nodes are currently drawn as circles, and the expanded nodes are drawn as squares to easily distinguish the data within the viewer. Expanded edges are simply wider than their unexpanded counterparts.
+% figure of sprite animation frames
+
+3D models are described as a mesh, a collection of primitive polygons (i.e. quadrilaterals or triangles) which are stored as vertices.  This mesh describes what is drawn, including any texture, color, and other material information.  Along with the mesh, a skeleton, or rig, is stored.  The rig describes a heirarchical structure of bones and accompanying joints.  Each vertex is given a series of weights describing the impact each joint has on its transformation.  This allows many vertices, and therefore many polygons, to be transformed at once in organized groups, simplifying the problem of animating the model to a matter of transforming the skeleton in the desired manner.  To animate this 3D model, an artist specifies keyframes of the animation by positioning the skeleton.  The stored keyframes, instead of an image, are the transformations of each joint at this frame in the animation, which a rendering or game engine can interpolate between to produce the final animation.
+
+Specifying these animation frames is work intensive, taking up significant time and resources to produce for a single character.  Recent work in animation generation seeks to automate this process, replacing the manual process with a procedural one.  Physics based simulations can be used to produce controllers for the skeleton, determining joint positions and rotations for keyframes automatically.  Not only does this reduce the effort involved in the creation process, but this also provides a basis for dynamic interaction between a character's animation and the environment, which is not possible with manual keyframe animations.
+
+% figure of current keyframe animation process in maya
+% accompanying video for presentation
+% accompanying figure/video of the resulting animation in 3d
+
+%sean's stuff below here
 
 \begin{figure}[htp] \centering
     \includegraphics[width=0.8\linewidth]{img/mapview_example.jpg}
