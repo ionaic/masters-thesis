@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+///*
 [System.Serializable]
 public class PIDServo {
     // PID servo function object
@@ -13,6 +14,7 @@ public class PIDServo {
         return k_p * error + k_i * error + k_d * error;
     }
 }
+//*/
 
 public abstract class Muscle {
     public abstract float force(float length);
@@ -23,9 +25,13 @@ public abstract class Muscle {
 public class SpringMuscle : Muscle {
     // Simple spring model of a muscle for determining target poses
     // for this, find a target length that will produce the desired joint
-    public float k; // spring constant
-    public float l_0; // resting length (pretty much can initialize as length of bone)
-    public float bone_width; // bone width
+
+    // spring constant
+    public float k;
+    // resting length (pretty much can initialize as length of bone)
+    public float l_0;
+    // bone width
+    public float bone_width;
     
     public override float force(float length) {
         // calculate the force of the muscle given a length
@@ -35,7 +41,8 @@ public class SpringMuscle : Muscle {
         // given a desired force from the muscle, what angle (radians) should
         // the joint be at
         //float cos = (-k * bone_width) / (force + l_0);
-        float cos = (2.0f * k * k * bone_width * bone_width) / (force * force) - 1.0f;
+        float cos = (2.0f * k * k * bone_width * bone_width) / (force * force)
+            - 1.0f;
         cos = cos % 1.0f;
         Debug.Log("Cos " + cos);
         //return 2.0f * Mathf.Acos(cos - (cos / (2.0f * Mathf.PI)));
@@ -44,23 +51,34 @@ public class SpringMuscle : Muscle {
     }
 }
 
+/*
 [System.Serializable]
 public class HillMuscle : Muscle {
     // Hill 3 element model of a muscle for determining target poses
     // is this too complex a model for our purposes?
     // a lot of variables for if this was a full muscle model
-    public float k_serial; // serial element spring constant (tendons)
-    public float k_parallel; // parallel element spring constant (intra-muscular, effects of trying to flex while muscle is stretched)
-    public float F_max; // maximum "isometric" force
-    public float a; // "coefficient of shortening heat" (what. smoothly (linearly) varying value for how activated the muscle is (how "on" or "off))
-    private float b; // calculated from other values, how to get values?
-    private float v; // shortening velocity, where does this come from?
+
+    // serial element spring constant (tendons)
+    public float k_serial;
+    // parallel element spring constant (intra-muscular, effects of trying to
+    // flex while muscle is stretched)
+    public float k_parallel;
+    // maximum "isometric" force
+    public float F_max;
+    // "coefficient of shortening heat" (what. smoothly (linearly) varying
+    // value for how activated the muscle is (how "on" or "off))
+    public float a;
+    // calculated from other values, how to get values?
+    private float b;
+    // shortening velocity, where does this come from?
+    private float v;
     
     public override float force(float length) {
         return (b * (F_max + a))/(v + b) + a;
     }
     public override float desiredAngle(float force) {
-        // given a desired force from the muscle, what angle should the joint be at
+        // given a desired force from the muscle, what angle should the joint
+        // be at
         return 0;
     }
 }
@@ -73,14 +91,16 @@ public class VariedSpringMuscle : Muscle {
         return length;
     }
     public override float desiredAngle(float force) {
-        // given a desired force from the muscle, what angle should the joint be at
+        // given a desired force from the muscle, what angle should the joint
+        // be at
         return 0;
     }
 }
 
 [System.Serializable]
 public class Limb {
-    // not sure if this is necessary, keeping track of bones and the related muscle
+    // not sure if this is necessary, keeping track of bones and the related
+    // muscle
     public float boneWidth;
     public Transform mainBone;
     public Transform anchorBone;
@@ -90,6 +110,7 @@ public class Limb {
         musc = new SpringMuscle();
     }
 }
+//*/
 
 [System.Serializable]
 public class PhysicalControllerSkeleton {
@@ -115,6 +136,7 @@ public class PhysicalControllerSkeleton {
     public Transform LHand;
 }
 
+[AddComponentMenu("Physical Motion Controller/Physical Motion Controller")]
 public class PhysicalMotionController : MonoBehaviour {
     public PhysicalControllerSkeleton skeleton;
     public PIDServo pidservo;
@@ -129,33 +151,32 @@ public class PhysicalMotionController : MonoBehaviour {
 	void Start () {
         angle = 0.0f;
         visualizer = GetComponent<MotionVisualizer>();
-        //visualizer.UpdateMarkers();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	    if (Input.GetKeyDown(KeyCode.Space)) {
+	    if (Input.GetKeyDown(KeyCode.Return)) {
             TestJump(testMuscle);
         }
         if (IsRotating()) {
             skeleton.RCalf.Rotate(0.0f, 0.0f, angle * Time.deltaTime);
-
-            //visualizer.UpdateTraces();
         }
         visualizer.UpdateTraces();
 	}
     
     void TestJump(Muscle musc) {
-        // just try bending to get a force to accelerate upwards at net of 2.0f m/s/s
-        angle = musc.desiredAngle(bodyMass * gravity + bodyMass * desiredAccel);
+        // just try bending to get a force to accelerate upwards at net of 2.0f
+        // m/s/s
+        angle = musc.desiredAngle(bodyMass * gravity + bodyMass *
+            desiredAccel);
         Debug.Log("radian angle " + angle);
         angle *= Mathf.Rad2Deg;
         Debug.Log("degree angle " + angle);
-        //angle = (angle + skeleton.RCalf.transform.rotation.z) % 360; // to get the target angle
     }
     bool IsRotating() {
         float curAngle = skeleton.RCalf.localRotation.eulerAngles.z;
         //Debug.Log("current local angle " + curAngle);
-        return !Mathf.Approximately(curAngle, angle) && Mathf.Abs(curAngle - angle) > 5.0f;
+        return !Mathf.Approximately(curAngle, angle) && Mathf.Abs(curAngle -
+            angle) > 5.0f;
     }
 }
