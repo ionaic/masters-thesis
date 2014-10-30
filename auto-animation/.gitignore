@@ -1,3 +1,4 @@
-*.meta
+# if we ignore meta files, then prefabs get lost
+#*.meta
 Library/*
 Temp/*
