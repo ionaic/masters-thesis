@@ -1,0 +1,134 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%                                                                 %
+%                            ROOT FILE                            %
+%                                                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%
+%  Run LaTeX or pdfLaTeX on this file to produce your thesis.
+%  To produce the abstract title page followed by the abstract,
+%  see the file abstitle-phd.tex or abstitle-mas.tex.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[chap]{rpi_thesis}  
+% Use the first command below if you want captions over 1 line indented. A side
+% effect of this is to remove the use of bold for captions (thesis default).
+% To restore bold, also include the second line below.
+\usepackage[hang]{caption}      % to indent subsequent lines of captions
+\renewcommand{\captionfont}{\bfseries} % bold caption (needed with caption 
+                                       % package to restore boldface.)                       
+
+\captionsetup[algorithm]{labelsep=colon}
+
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{url} 
+\urlstyle{rm}
+
+% For algorithms
+\usepackage{algpseudocode}
+\usepackage[chapter]{algorithm}
+
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+% For code
+\usepackage{listings}
+\renewcommand*{\lstlistlistingname}{LIST OF LISTINGS}
+
+% For equations 
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\renewcommand{\vec}[1]{\mathbf{#1}}
+
+% For rotating in the tables
+\usepackage{rotating} 
+\usepackage[T1]{fontenc}
+
+% To make the text tighter
+% \usepackage{microtype}
+
+% % For hyperreffing
+\usepackage{hyperref}
+% \usepackage[backref]{hyperref}
+\hypersetup{
+    unicode=false,          % non-Latin characters in Acrobats bookmarks
+    pdftoolbar=true,        % show Acrobats toolbar?
+    pdfmenubar=true,        % show Acrobats menu?
+    pdffitwindow=true,      % page fit to window when opened
+    pdftitle={My title},    % title
+    pdfauthor={Author},     % author
+    pdfsubject={Subject},   % subject of the document
+    pdfnewwindow=true,      % links in new window
+    pdfkeywords={keywords}, % list of keywords
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=black,          % color of internal links
+    citecolor=black,        % color of links to bibliography
+    filecolor=black,      % color of file links
+    urlcolor=black          % zcolor of external links
+}
+       
+% TO CITE STUFF
+\newcommand{\ignore}[1]{}
+\newcommand{\nobibentry}[1]{{\let\nocite\ignore\bibentry{#1}}}
+% apsrev entries in the text need definitions of these commands
+\newcommand{\bibfnamefont}[1]{#1}
+\newcommand{\bibnamefont}[1]{#1}
+\newcommand{\Argmin}{\operatornamewithlimits{argmin}}
+%\usepackage{natbib}
+\usepackage{cite}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[toc,page]{appendix}
+\usepackage{float}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\lstset{frame=tb,
+  language=c, 
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true
+  tabsize=3
+}
+
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}
+
+\renewcommand{\floatpagefraction}{0.8}
+
+
+\begin{document}
+% TO GET THE IEEE STANDARD RIGHT
+%\bstctlcite{IEEE_Thing}
+ 
+\include{TitlePage}   % titlepage material for Master's thesis or project
+\include{Acknowledgement}
+\include{Abstract} 	% abstract
+\include{Intro} 	% chapter 1
+\include{PreviousWorks}
+\include{Visualization}
+\include{Magnification}
+\include{Results}
+\include{FutureWork}
+\specialhead{References}
+
+\bibliography{IEEEabrv,research}
+\bibliographystyle{ieeetran}
+% \include{Bibliography} 	% bibliography
+%\include{rpiapp} 	% appendix
+\end{document}

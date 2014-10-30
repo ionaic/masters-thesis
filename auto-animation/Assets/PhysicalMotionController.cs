@@ -113,27 +113,62 @@ public class Limb {
 //*/
 
 [System.Serializable]
+public class Joint {
+    public Transform jointTransform;
+
+    public bool canRoll;
+    [Range(0.0f, 360.0f)]
+    public float minRollAngle = 0.0f;
+    [Range(0.0f, 360.0f)]
+    public float maxRollAngle = 360.0f;
+
+    public bool canPitch;
+    [Range(0.0f, 360.0f)]
+    public float minPitchAngle = 0.0f;
+    [Range(0.0f, 360.0f)]
+    public float maxPitchAngle = 360.0f;
+
+    public bool canYaw;
+    [Range(0.0f, 360.0f)]
+    public float minYawAngle = 0.0f;
+    [Range(0.0f, 360.0f)]
+    public float maxYawAngle = 360.0f;
+    
+    public bool CanRoll() {
+        return canRoll && 
+            (Mathf.Approximately(minRollAngle, jointTransform.eulerAngles.z) || 
+            Mathf.Approximately(maxRollAngle, jointTransform.eulerAngles.z));
+    }
+    public bool CanPitch() {
+        return canPitch && 
+            (Mathf.Approximately(minPitchAngle, jointTransform.eulerAngles.x) || 
+            Mathf.Approximately(maxPitchAngle, jointTransform.eulerAngles.x));
+    }
+    public bool CanYaw() {
+        return canYaw && 
+            (Mathf.Approximately(minYawAngle, jointTransform.eulerAngles.y) || 
+            Mathf.Approximately(maxYawAngle, jointTransform.eulerAngles.y));
+    }
+
+    public void rotate(Vector3 eulerAngles) {
+        rotate(eulerAngles.x, eulerAngles.y, eulerAngles.z);
+    }
+    public void rotate(float pitch, float yaw, float roll) {
+        float clampedX = Mathf.Clamp(pitch, minPitchAngle, maxPitchAngle);
+        jointTransform.Rotate(pitch, yaw, roll);
+    }
+}
+
+[System.Serializable]
 public class PhysicalControllerSkeleton {
-    public Transform Head;
-    public Transform Hip;
-    public Transform Neck;
-    public Transform Spine1;
-    public Transform Spine2;
-    public Transform Spine3;
-    public Transform RThigh;
-    public Transform LThigh;
-    public Transform RCalf;
-    public Transform LCalf;
+    public Transform[] UpperBody;
+    public Transform Pelvis;
+    public Transform RHip;
+    public Transform LHip;
+    public Transform RKnee;
+    public Transform LKnee;
     public Transform RFoot;
     public Transform LFoot;
-    public Transform RShoulder;
-    public Transform LShoulder;
-    public Transform RBicep;
-    public Transform LBicep;
-    public Transform RForearm;
-    public Transform LForearm;
-    public Transform RHand;
-    public Transform LHand;
 }
 
 [AddComponentMenu("Physical Motion Controller/Physical Motion Controller")]
@@ -159,7 +194,7 @@ public class PhysicalMotionController : MonoBehaviour {
             TestJump(testMuscle);
         }
         if (IsRotating()) {
-            skeleton.RCalf.Rotate(0.0f, 0.0f, angle * Time.deltaTime);
+            skeleton.RKnee.Rotate(0.0f, 0.0f, angle * Time.deltaTime);
         }
         visualizer.UpdateTraces();
 	}
@@ -174,7 +209,7 @@ public class PhysicalMotionController : MonoBehaviour {
         Debug.Log("degree angle " + angle);
     }
     bool IsRotating() {
-        float curAngle = skeleton.RCalf.localRotation.eulerAngles.z;
+        float curAngle = skeleton.RKnee.localRotation.eulerAngles.z;
         //Debug.Log("current local angle " + curAngle);
         return !Mathf.Approximately(curAngle, angle) && Mathf.Abs(curAngle -
             angle) > 5.0f;
