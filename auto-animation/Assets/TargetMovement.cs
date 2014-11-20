@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("Physical Motion Controller/Inverse Kinematics/IK Test Target Movement")]
+[AddComponentMenu("Inverse Kinematics/IK Test Target Movement")]
 
 public class TargetMovement : MonoBehaviour {
     public float translationAmount = 0.01f;

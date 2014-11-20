@@ -112,52 +112,6 @@ public class Limb {
 }
 //*/
 
-[System.Serializable]
-public class Joint {
-    public Transform jointTransform;
-
-    public bool canRoll;
-    [Range(0.0f, 360.0f)]
-    public float minRollAngle = 0.0f;
-    [Range(0.0f, 360.0f)]
-    public float maxRollAngle = 360.0f;
-
-    public bool canPitch;
-    [Range(0.0f, 360.0f)]
-    public float minPitchAngle = 0.0f;
-    [Range(0.0f, 360.0f)]
-    public float maxPitchAngle = 360.0f;
-
-    public bool canYaw;
-    [Range(0.0f, 360.0f)]
-    public float minYawAngle = 0.0f;
-    [Range(0.0f, 360.0f)]
-    public float maxYawAngle = 360.0f;
-    
-    public bool CanRoll() {
-        return canRoll && 
-            (Mathf.Approximately(minRollAngle, jointTransform.eulerAngles.z) || 
-            Mathf.Approximately(maxRollAngle, jointTransform.eulerAngles.z));
-    }
-    public bool CanPitch() {
-        return canPitch && 
-            (Mathf.Approximately(minPitchAngle, jointTransform.eulerAngles.x) || 
-            Mathf.Approximately(maxPitchAngle, jointTransform.eulerAngles.x));
-    }
-    public bool CanYaw() {
-        return canYaw && 
-            (Mathf.Approximately(minYawAngle, jointTransform.eulerAngles.y) || 
-            Mathf.Approximately(maxYawAngle, jointTransform.eulerAngles.y));
-    }
-
-    public void rotate(Vector3 eulerAngles) {
-        rotate(eulerAngles.x, eulerAngles.y, eulerAngles.z);
-    }
-    public void rotate(float pitch, float yaw, float roll) {
-        float clampedX = Mathf.Clamp(pitch, minPitchAngle, maxPitchAngle);
-        jointTransform.Rotate(pitch, yaw, roll);
-    }
-}
 
 [System.Serializable]
 public class PhysicalControllerSkeleton {
@@ -171,13 +125,25 @@ public class PhysicalControllerSkeleton {
     public Transform LFoot;
 }
 
+[System.Serializable]
+public class ConstrainedPhysicalControllerSkeleton {
+    public Joint[] UpperBody;
+    public Joint Pelvis;
+    public Joint RHip;
+    public Joint LHip;
+    public Joint RKnee;
+    public Joint LKnee;
+    public Joint RFoot;
+    public Joint LFoot;
+}
+ 
 [AddComponentMenu("Physical Motion Controller/Physical Motion Controller")]
 public class PhysicalMotionController : MonoBehaviour {
-    public PhysicalControllerSkeleton skeleton;
+    public ConstrainedPhysicalControllerSkeleton skeleton;
     public PIDServo pidservo;
     public SpringMuscle testMuscle;
     public float bodyMass;
-    public MotionVisualizer visualizer;
+    //public MotionVisualizer visualizer;
     public float gravity = 10.0f;
     public float desiredAccel = 1.0f;
     private float angle;
@@ -185,7 +151,7 @@ public class PhysicalMotionController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         angle = 0.0f;
-        visualizer = GetComponent<MotionVisualizer>();
+        //visualizer = GetComponent<MotionVisualizer>();
 	}
 	
 	// Update is called once per frame
@@ -196,7 +162,7 @@ public class PhysicalMotionController : MonoBehaviour {
         if (IsRotating()) {
             skeleton.RKnee.Rotate(0.0f, 0.0f, angle * Time.deltaTime);
         }
-        visualizer.UpdateTraces();
+        //visualizer.UpdateTraces();
 	}
     
     void TestJump(Muscle musc) {
@@ -209,9 +175,10 @@ public class PhysicalMotionController : MonoBehaviour {
         Debug.Log("degree angle " + angle);
     }
     bool IsRotating() {
-        float curAngle = skeleton.RKnee.localRotation.eulerAngles.z;
-        //Debug.Log("current local angle " + curAngle);
-        return !Mathf.Approximately(curAngle, angle) && Mathf.Abs(curAngle -
-            angle) > 5.0f;
+        //float curAngle = skeleton.RKnee.jointTransform.localRotation.eulerAngles.z;
+        ////Debug.Log("current local angle " + curAngle);
+        //return !Mathf.Approximately(curAngle, angle) && Mathf.Abs(curAngle -
+        //    angle) > 5.0f;
+        return false;
     }
 }
