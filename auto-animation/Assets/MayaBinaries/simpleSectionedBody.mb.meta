@@ -18,6 +18,8 @@ ModelImporter:
     100024: rightToe
     100026: //RootNode
     100028: torsoSection
+    100030: joint1
+    100032: joint2
     400000: head
     400002: headSection
     400004: lefKnee
@@ -33,6 +35,8 @@ ModelImporter:
     400024: rightToe
     400026: //RootNode
     400028: torsoSection
+    400030: joint1
+    400032: joint2
     4300000: torsoSection
     4300002: headSection
     4300004: leftLeg
