@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 [AddComponentMenu("Physical Motion Controller/Joint")]
 [System.Serializable]
-public class Joint : MonoBehaviour {
+public class PhysicalJoint : MonoBehaviour {
     public Transform jointTransform;
 
     public float jointMass = 0.0f;
@@ -50,6 +50,13 @@ public class Joint : MonoBehaviour {
         float clampedY = Mathf.Clamp(yaw, minPitchAngle, maxPitchAngle);
         float clampedZ = Mathf.Clamp(roll, minPitchAngle, maxPitchAngle);
         jointTransform.Rotate(clampedX, clampedY, clampedZ);
+    }
+    public void Rotate(Vector3 point, Vector3 axis, float angle) {
+        axis.Normalize();
+        jointTransform.RotateAround(point, axis, angle);
+    }
+    public void ReClamp() {
+
     }
 
     void Start() {

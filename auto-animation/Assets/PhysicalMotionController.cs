@@ -13,6 +13,9 @@ public class PIDServo {
     public float modify(float error) {
         return k_p * error + k_i * error + k_d * error;
     }
+    public Vector3 modify(Vector3 error) {
+        return k_p * error + k_i * error + k_d * error;
+    }
 }
 //*/
 
@@ -30,6 +33,8 @@ public class SpringMuscle : Muscle {
     public float k;
     // resting length (pretty much can initialize as length of bone)
     public float l_0;
+    // the joints that affect the muscle length
+    public PhysicalJoint[] anchors;
     // bone width
     public float bone_width;
     
@@ -44,7 +49,6 @@ public class SpringMuscle : Muscle {
         float cos = (2.0f * k * k * bone_width * bone_width) / (force * force)
             - 1.0f;
         cos = cos % 1.0f;
-        Debug.Log("Cos " + cos);
         //return 2.0f * Mathf.Acos(cos - (cos / (2.0f * Mathf.PI)));
         //return Mathf.Acos(cos - (cos / (2.0f * Mathf.PI)));
         return Mathf.Acos(cos);
@@ -96,7 +100,8 @@ public class VariedSpringMuscle : Muscle {
         return 0;
     }
 }
-
+//*/
+///*
 [System.Serializable]
 public class Limb {
     // not sure if this is necessary, keeping track of bones and the related
@@ -108,6 +113,11 @@ public class Limb {
     
     public Limb() {
         musc = new SpringMuscle();
+    }
+    
+    public Vector3 force() {
+        // TODO
+        return Vector3.up;
     }
 }
 //*/
@@ -127,23 +137,23 @@ public class PhysicalControllerSkeleton {
 
 [System.Serializable]
 public class ConstrainedPhysicalControllerSkeleton {
-    public Joint[] UpperBody;
-    public Joint Pelvis;
-    public Joint RHip;
-    public Joint LHip;
-    public Joint RKnee;
-    public Joint LKnee;
-    public Joint RFoot;
-    public Joint LFoot;
+    public PhysicalJoint[] UpperBody;
+    public PhysicalJoint Pelvis;
+    public PhysicalJoint RHip;
+    public PhysicalJoint LHip;
+    public PhysicalJoint RKnee;
+    public PhysicalJoint LKnee;
+    public PhysicalJoint RFoot;
+    public PhysicalJoint LFoot;
 }
  
 [AddComponentMenu("Physical Motion Controller/Physical Motion Controller")]
 public class PhysicalMotionController : MonoBehaviour {
     public ConstrainedPhysicalControllerSkeleton skeleton;
-    public PIDServo pidservo;
+    public PIDServo forceController;
+    public PIDServo balanceController;
     public SpringMuscle testMuscle;
     public float bodyMass;
-    //public MotionVisualizer visualizer;
     public float gravity = 10.0f;
     public float desiredAccel = 1.0f;
     private float angle;
@@ -151,7 +161,6 @@ public class PhysicalMotionController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         angle = 0.0f;
-        //visualizer = GetComponent<MotionVisualizer>();
 	}
 	
 	// Update is called once per frame
@@ -159,10 +168,13 @@ public class PhysicalMotionController : MonoBehaviour {
 	    if (Input.GetKeyDown(KeyCode.Return)) {
             TestJump(testMuscle);
         }
+        //forceController.modify(testMuscle.force(0.0));
+        /*
         if (IsRotating()) {
             skeleton.RKnee.Rotate(0.0f, 0.0f, angle * Time.deltaTime);
         }
-        //visualizer.UpdateTraces();
+        //*/
+        
 	}
     
     void TestJump(Muscle musc) {
