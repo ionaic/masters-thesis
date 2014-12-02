@@ -9,6 +9,7 @@ public class BalanceVisualization : MonoBehaviour {
     MeshFilter meshFilter;
     MeshRenderer meshRenderer;
     PhysicalMotionController controller;
+    Mesh supportingPlaneMesh;
 
     private int[] faces = { 0, 1, 2, 
                             0, 2, 3, 
@@ -16,19 +17,25 @@ public class BalanceVisualization : MonoBehaviour {
                             3, 2, 0 };
 	// Use this for initialization
 	void Start () {
+        supportingPlaneMesh = new Mesh();
         meshFilter = GetComponent<MeshFilter>();
         meshRenderer = GetComponent<MeshRenderer>();
         controller = GetComponent<PhysicalMotionController>();
 
-        meshFilter.mesh = new Mesh();
-	    meshFilter.mesh.vertices = controller.supportingPlane;
-        meshFilter.mesh.triangles = faces;
+        meshFilter.mesh = supportingPlaneMesh;
+        controller.UpdateSupportingPoly();
+        supportingPlaneMesh.triangles = faces;
+        UpdateMesh();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        //Debug.Log("Supporting Plane: " + controller.supportingPlane.Length);
-	    meshFilter.mesh.vertices = controller.supportingPlane;
-        meshFilter.mesh.RecalculateNormals();
+        //Debug.Log("Supporting Poly: " + controller.supportingPoly.Length);
+        UpdateMesh();
 	}
+    
+    void UpdateMesh() {
+	    supportingPlaneMesh.vertices = controller.supportingPoly;
+        supportingPlaneMesh.RecalculateNormals();
+    }
 }

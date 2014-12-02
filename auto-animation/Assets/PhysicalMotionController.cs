@@ -160,15 +160,16 @@ public class PhysicalMotionController : MonoBehaviour {
     public float bodyMass;
     public float gravity = 10.0f;
     public float desiredAccel = 1.0f;
-    public Vector3[] supportingPlane;
-    public Vector3 supportingPlaneCentroid;
+    public Vector3[] supportingPoly;
+    public Vector3 supportingPolyCentroid;
     public Vector3 CenterOfMass;
     private float angle;
 
 	// Use this for initialization
 	void Start () {
         angle = 0.0f;
-        supportingPlane = new Vector3[4];
+        //supportingPoly = new Vector3[4];
+        UpdateSupportingPoly();
 	}
 	
 	// Update is called once per frame
@@ -202,26 +203,30 @@ public class PhysicalMotionController : MonoBehaviour {
         return false;
     }
     
-    void UpdateSupportingPoly() {
+    public void UpdateSupportingPoly() {
         // TODO currently assuming the supporting plane includes entire foot,
         // is this ok? think of the plane when on tiptoes, the heel still sort
         // of describes where the bounds of the plane should be even though the
         // toes are the only things contacting the ground
-        supportingPlane[0] = skeleton.LHeel.jointTransform.position;
-        supportingPlane[1] = skeleton.LFoot.jointTransform.position;
-        supportingPlane[2] = skeleton.RFoot.jointTransform.position;
-        supportingPlane[3] = skeleton.RHeel.jointTransform.position;
+        Debug.Log("supportingPolyLen " + supportingPoly.Length);
+        if (supportingPoly.Length == 0) {
+            supportingPoly = new Vector3[4];
+        }
 
-        float min_z =   Mathf.Min(supportingPlane[0].z,
-                        Mathf.Min(supportingPlane[1].z, 
-                        Mathf.Min(supportingPlane[2].z,
-                                  supportingPlane[3].z)));
-        supportingPlane[0].z = supportingPlane[1].z = supportingPlane[2].z =
-            supportingPlane[3].z = min_z;
+        supportingPoly[0] = skeleton.LHeel.jointTransform.position;
+        supportingPoly[1] = skeleton.LFoot.jointTransform.position;
+        supportingPoly[2] = skeleton.RFoot.jointTransform.position;
+        supportingPoly[3] = skeleton.RHeel.jointTransform.position;
 
-        supportingPlaneCentroid = (supportingPlane[0] + supportingPlane[1] +
-            supportingPlane[2] + supportingPlane[3]) / 4.0f;
-        Debug.Log("supportingPlane[0] " + supportingPlane[0]);
+        Debug.Log("supportingPoly3D " + supportingPoly[0] + supportingPoly[1] + supportingPoly[2] + supportingPoly[3]);
+
+        float min_y =   Mathf.Min(supportingPoly[0].y, Mathf.Min(supportingPoly[1].y, Mathf.Min(supportingPoly[2].y, supportingPoly[3].y)));
+
+        supportingPoly[0].y = supportingPoly[1].y = supportingPoly[2].y = supportingPoly[3].y = min_y; 
+
+        supportingPolyCentroid = (supportingPoly[0] + supportingPoly[1] + supportingPoly[2] + supportingPoly[3]) / 4.0f; 
+
+        Debug.Log("supportingPoly " + supportingPoly[0] + supportingPoly[1] + supportingPoly[2] + supportingPoly[3]);
     }
 
     void UpdateCOM() {
