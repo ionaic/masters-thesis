@@ -5,9 +5,14 @@ using System.Collections;
 
 public class TargetMovement : MonoBehaviour {
     public float translationAmount = 0.01f;
-	
+    public Transform targetTransform;
+
 	// Update is called once per frame
 	void Update () {
+        if (!targetTransform) {
+            targetTransform = transform;
+        }
+
         Vector3 t = Vector3.zero;
 	    if (Input.GetKey(KeyCode.H)) {
             t.x -= translationAmount;
@@ -27,6 +32,6 @@ public class TargetMovement : MonoBehaviour {
 	    if (Input.GetKey(KeyCode.M)) {
             t.z -= translationAmount;
         }
-        transform.Translate(t, Camera.main.transform);
+        targetTransform.Translate(t, Camera.main.transform);
 	}
 }

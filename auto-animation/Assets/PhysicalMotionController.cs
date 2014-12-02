@@ -164,6 +164,7 @@ public class PhysicalMotionController : MonoBehaviour {
     public Vector3 supportingPolyCentroid;
     public Vector3 CenterOfMass;
     private float angle;
+    private float desiredForce;
 
 	// Use this for initialization
 	void Start () {
@@ -175,7 +176,7 @@ public class PhysicalMotionController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	    if (Input.GetKeyDown(KeyCode.Return)) {
-            TestJump(testMuscle);
+            TestJump2(testMuscle);
         }
         //forceController.modify(testMuscle.force(0.0));
         /*
@@ -189,11 +190,21 @@ public class PhysicalMotionController : MonoBehaviour {
     void TestJump(Muscle musc) {
         // just try bending to get a force to accelerate upwards at net of 2.0f
         // m/s/s
-        angle = musc.desiredAngle(bodyMass * gravity + bodyMass *
-            desiredAccel);
+        if (!desiredForce) {
+            desiredForce = bodyMass * gravity + bodyMass * desiredAccel;
+        }
+        angle = musc.desiredAngle(desiredForce);
         Debug.Log("radian angle " + angle);
         angle *= Mathf.Rad2Deg;
         Debug.Log("degree angle " + angle);
+    }
+    void TestJump2(Muscle musc) {
+        // just try bending to get a force to accelerate upwards at net of 2.0f
+        // m/s/s
+        if (!desiredForce) {
+            desiredForce = bodyMass * gravity + bodyMass * desiredAccel;
+        }
+        float force_err = desiredForce - musc.force();
     }
     bool IsRotating() {
         //float curAngle = skeleton.RKnee.jointTransform.localRotation.eulerAngles.z;

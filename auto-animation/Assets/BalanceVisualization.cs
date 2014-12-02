@@ -26,6 +26,7 @@ public class BalanceVisualization : MonoBehaviour {
         controller.UpdateSupportingPoly();
         supportingPlaneMesh.triangles = faces;
         UpdateMesh();
+        meshFilter.sharedMesh = supportingPlaneMesh;
 	}
 	
 	// Update is called once per frame
