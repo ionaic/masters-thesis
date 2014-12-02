@@ -60,7 +60,6 @@ public class PhysicalJoint : MonoBehaviour {
     public void Rotate(Vector3 point, Vector3 axis, float angle) {
         axis.Normalize();
         jointTransform.RotateAround(point, ConstrainAxis(axis), angle);
-        //ReClamp();
     }
     public void ReClamp() {
         Vector3 angles = jointTransform.eulerAngles;
@@ -83,8 +82,6 @@ public class PhysicalJoint : MonoBehaviour {
     }
 
     void Start() {
-        if (!jointTransform) {
-            jointTransform = this.transform;
-        }
+        jointTransform = this.transform;
     }
 }

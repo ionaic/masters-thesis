@@ -133,6 +133,8 @@ public class PhysicalControllerSkeleton {
     public Transform LKnee;
     public Transform RFoot;
     public Transform LFoot;
+    public Transform RHeel;
+    public Transform LHeel;
 }
 
 [System.Serializable]
@@ -145,6 +147,8 @@ public class ConstrainedPhysicalControllerSkeleton {
     public PhysicalJoint LKnee;
     public PhysicalJoint RFoot;
     public PhysicalJoint LFoot;
+    public PhysicalJoint RHeel;
+    public PhysicalJoint LHeel;
 }
  
 [AddComponentMenu("Physical Motion Controller/Physical Motion Controller")]
@@ -156,11 +160,15 @@ public class PhysicalMotionController : MonoBehaviour {
     public float bodyMass;
     public float gravity = 10.0f;
     public float desiredAccel = 1.0f;
+    public Vector3[] supportingPlane;
+    public Vector3 supportingPlaneCentroid;
+    public Vector3 CenterOfMass;
     private float angle;
 
 	// Use this for initialization
 	void Start () {
         angle = 0.0f;
+        supportingPlane = new Vector3[4];
 	}
 	
 	// Update is called once per frame
@@ -174,7 +182,7 @@ public class PhysicalMotionController : MonoBehaviour {
             skeleton.RKnee.Rotate(0.0f, 0.0f, angle * Time.deltaTime);
         }
         //*/
-        
+        UpdateSupportingPoly();
 	}
     
     void TestJump(Muscle musc) {
@@ -192,5 +200,31 @@ public class PhysicalMotionController : MonoBehaviour {
         //return !Mathf.Approximately(curAngle, angle) && Mathf.Abs(curAngle -
         //    angle) > 5.0f;
         return false;
+    }
+    
+    void UpdateSupportingPoly() {
+        // TODO currently assuming the supporting plane includes entire foot,
+        // is this ok? think of the plane when on tiptoes, the heel still sort
+        // of describes where the bounds of the plane should be even though the
+        // toes are the only things contacting the ground
+        supportingPlane[0] = skeleton.LHeel.jointTransform.position;
+        supportingPlane[1] = skeleton.LFoot.jointTransform.position;
+        supportingPlane[2] = skeleton.RFoot.jointTransform.position;
+        supportingPlane[3] = skeleton.RHeel.jointTransform.position;
+
+        float min_z =   Mathf.Min(supportingPlane[0].z,
+                        Mathf.Min(supportingPlane[1].z, 
+                        Mathf.Min(supportingPlane[2].z,
+                                  supportingPlane[3].z)));
+        supportingPlane[0].z = supportingPlane[1].z = supportingPlane[2].z =
+            supportingPlane[3].z = min_z;
+
+        supportingPlaneCentroid = (supportingPlane[0] + supportingPlane[1] +
+            supportingPlane[2] + supportingPlane[3]) / 4.0f;
+        Debug.Log("supportingPlane[0] " + supportingPlane[0]);
+    }
+
+    void UpdateCOM() {
+
     }
 }
