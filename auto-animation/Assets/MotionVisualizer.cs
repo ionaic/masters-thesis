@@ -77,6 +77,7 @@ public class MotionVisualizer : MonoBehaviour {
     public float secondsPerGhostSample;
     private float secondsSinceGhost;
     private List<GameObject> ghosts;
+    private bool paused;
 
     void Start() {
         secondsSinceGhost = 0.0f;
@@ -90,6 +91,8 @@ public class MotionVisualizer : MonoBehaviour {
     }
     
     void Update() {
+        paused = Input.GetKey(KeyCode.Space);
+
         if (Input.GetKey(KeyCode.P)) {
             useParticles = !useParticles;
         }
@@ -105,6 +108,10 @@ public class MotionVisualizer : MonoBehaviour {
     }
 
     void FixedUpdate() {
+        if (paused) {
+            Debug.Log("Paused");
+            return;
+        }
         if (useParticles || showParticles) {
             UpdateTraces(Time.deltaTime);
         }

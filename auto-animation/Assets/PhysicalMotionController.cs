@@ -20,6 +20,7 @@ public class PIDServo {
 //*/
 
 public abstract class Muscle {
+    public abstract float force();
     public abstract float force(float length);
     public abstract float desiredAngle(float force);
 }
@@ -39,8 +40,11 @@ public class SpringMuscle : Muscle {
     public float bone_width;
     
     public override float force(float length) {
+        return -k * (length - l_0);
+    }
+    public override float force() {
         // calculate the force of the muscle given a length
-        return -k * length;
+        return -k * (bone_width / Mathf.Sin(Mathf.PI - anchors[1].jointTransform.localRotation.x / 2.0f));
     }
     public override float desiredAngle(float force) {
         // given a desired force from the muscle, what angle (radians) should
@@ -190,9 +194,8 @@ public class PhysicalMotionController : MonoBehaviour {
     void TestJump(Muscle musc) {
         // just try bending to get a force to accelerate upwards at net of 2.0f
         // m/s/s
-        if (!desiredForce) {
-            desiredForce = bodyMass * gravity + bodyMass * desiredAccel;
-        }
+        desiredForce = bodyMass * gravity + bodyMass * desiredAccel;
+
         angle = musc.desiredAngle(desiredForce);
         Debug.Log("radian angle " + angle);
         angle *= Mathf.Rad2Deg;
@@ -201,9 +204,8 @@ public class PhysicalMotionController : MonoBehaviour {
     void TestJump2(Muscle musc) {
         // just try bending to get a force to accelerate upwards at net of 2.0f
         // m/s/s
-        if (!desiredForce) {
-            desiredForce = bodyMass * gravity + bodyMass * desiredAccel;
-        }
+        desiredForce = bodyMass * gravity + bodyMass * desiredAccel;
+
         float force_err = desiredForce - musc.force();
     }
     bool IsRotating() {

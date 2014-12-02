@@ -6,6 +6,7 @@ using System.Collections;
 public class TargetMovement : MonoBehaviour {
     public float translationAmount = 0.01f;
     public Transform targetTransform;
+    public bool selfRelative;
 
 	// Update is called once per frame
 	void Update () {
@@ -32,6 +33,11 @@ public class TargetMovement : MonoBehaviour {
 	    if (Input.GetKey(KeyCode.M)) {
             t.z -= translationAmount;
         }
-        targetTransform.Translate(t, Camera.main.transform);
+        if (selfRelative) {
+            targetTransform.Translate(t);
+        }
+        else {
+            targetTransform.Translate(t, Camera.main.transform);
+        }
 	}
 }
