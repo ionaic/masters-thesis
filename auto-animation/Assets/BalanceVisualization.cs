@@ -13,7 +13,7 @@ public class BalanceVisualization : MonoBehaviour {
 
     private int[] faces = { 0, 1, 2, 
                             0, 2, 3, 
-                            2, 1, 0, // include back faces as well
+                            3, 2, 1, // include back faces as well
                             3, 2, 0 };
     private Vector3[] norms = { 
          Vector3.up,
@@ -43,6 +43,7 @@ public class BalanceVisualization : MonoBehaviour {
         meshFilter.mesh = supportingPlaneMesh;
         controller.UpdateSupportingPoly();
         UpdateMesh();
+        
         supportingPlaneMesh.triangles = faces;
         supportingPlaneMesh.normals = norms;
         supportingPlaneMesh.uv = uv;
@@ -57,7 +58,14 @@ public class BalanceVisualization : MonoBehaviour {
 	}
     
     void UpdateMesh() {
-	    supportingPlaneMesh.vertices = controller.supportingPoly;
+        Vector3[] verts = new Vector3[4];
+            
+        verts[0] = transform.InverseTransformPoint(controller.supportingPoly[0]);
+        verts[1] = transform.InverseTransformPoint(controller.supportingPoly[1]);
+        verts[2] = transform.InverseTransformPoint(controller.supportingPoly[2]);
+        verts[3] = transform.InverseTransformPoint(controller.supportingPoly[3]);
+
+	    supportingPlaneMesh.vertices = verts;
         //supportingPlaneMesh.RecalculateNormals();
     }
 }

@@ -172,6 +172,11 @@ public class PhysicalMotionController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        // just in case the array isn't allocated yet
+        if (supportingPoly.Length == 0) {
+            supportingPoly = new Vector3[4];
+        }
+
         angle = 0.0f;
         //supportingPoly = new Vector3[4];
         UpdateSupportingPoly();
@@ -222,6 +227,8 @@ public class PhysicalMotionController : MonoBehaviour {
         // of describes where the bounds of the plane should be even though the
         // toes are the only things contacting the ground
         Debug.Log("supportingPolyLen " + supportingPoly.Length);
+
+        // just in case the array isn't allocated yet
         if (supportingPoly.Length == 0) {
             supportingPoly = new Vector3[4];
         }
@@ -231,15 +238,12 @@ public class PhysicalMotionController : MonoBehaviour {
         supportingPoly[2] = skeleton.RFoot.jointTransform.position;
         supportingPoly[3] = skeleton.RHeel.jointTransform.position;
 
-        Debug.Log("supportingPoly3D " + supportingPoly[0] + supportingPoly[1] + supportingPoly[2] + supportingPoly[3]);
-
         float min_y =   Mathf.Min(supportingPoly[0].y, Mathf.Min(supportingPoly[1].y, Mathf.Min(supportingPoly[2].y, supportingPoly[3].y)));
 
         supportingPoly[0].y = supportingPoly[1].y = supportingPoly[2].y = supportingPoly[3].y = min_y; 
 
         supportingPolyCentroid = (supportingPoly[0] + supportingPoly[1] + supportingPoly[2] + supportingPoly[3]) / 4.0f; 
 
-        Debug.Log("supportingPoly " + supportingPoly[0] + supportingPoly[1] + supportingPoly[2] + supportingPoly[3]);
     }
 
     void UpdateCOM() {
