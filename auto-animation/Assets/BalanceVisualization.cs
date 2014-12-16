@@ -46,7 +46,6 @@ public class BalanceVisualization : MonoBehaviour {
         supportingPlaneMesh.triangles = faces;
         supportingPlaneMesh.normals = norms;
         supportingPlaneMesh.uv = uv;
-        UpdateMesh();
         meshFilter.sharedMesh = supportingPlaneMesh;
     }
 	
@@ -59,6 +58,6 @@ public class BalanceVisualization : MonoBehaviour {
     
     void UpdateMesh() {
 	    supportingPlaneMesh.vertices = controller.supportingPoly;
-        supportingPlaneMesh.RecalculateNormals();
+        //supportingPlaneMesh.RecalculateNormals();
     }
 }
