@@ -29,7 +29,7 @@ Animations of human characters are used heavily in video games, movies, and othe
 
 Specifying these animation frames is work intensive, taking up significant time and resources to produce for a single character.  Recent work in animation generation seeks to automate this process, replacing the manual process with a procedural one.  Physics based simulations can be used to produce controllers for the skeleton, determining joint positions and rotations for keyframes automatically.  Not only does this reduce the effort involved in the creation process, but this also provides a basis for dynamic interaction between a character's animation and the environment, which is not possible with manual keyframe animations.
 
-We present a controller that takes a skeleton as input, with additional parameters describing the character, which produces a sequence of poses for a keyframe animation.  The additional character parameters describe the character's mass as well as the constraints placed on each joint to prevent unnatural rotations.  
+We present a controller that takes a skeleton as input, with additional parameters describing the character, which produces a sequence of poses for a keyframe animation.  The additional character parameters describe the character's mass as well as the constraints placed on each joint to prevent unnatural rotations.  Weight is specified per-joint to allow for calculation of the character's center of mass.
 
 % figure of current keyframe animation process in maya
 % accompanying video for presentation
