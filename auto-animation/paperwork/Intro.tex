@@ -16,24 +16,36 @@
 % - what can be done (auto animation)
 % - overview of controllers
 % - overview of the technique
-% explain contributions
-% - what is the contribution of this technique
-% - Unity3D -> what am I getting from outside sources
-% - what am I making myself
-
-Animations of human characters are used heavily in video games, movies, and other fields.  Creation of such animations is largely done by hand by artists using keyframing.  In a keyframe animation, certain ``key'' parts of the animated sequence are specified, with the remaining frames filled in, or ``tweened'' using an automated interpolation method or manual frame addition.  For 2D animation, this occurs as a series of images which are played back in order to produce the animation.  In 3D, keyframe animations are performed on a 3D model.
+Animations of human characters are used heavily in video games, movies, and other fields.  Especially with the increasing usage of complex environment traversal in both film and video games, many similar animations of athletic motions must be created with small changes to tune the motion to the particular situation, environment, and character.  Creation of such animations is largely done by hand by artists using keyframing.  In a keyframe animation, certain ``key'' parts of the animated sequence are specified, with the remaining frames filled in, or ``tweened'' using an automated interpolation method or manual frame addition.  For 2D animation, this occurs as a series of images which are played back in order to produce the animation.  In 3D, keyframe animations are performed on a 3D model.
 
 % figure of sprite animation frames
+\begin{figure}[htp]
+    \centering
+    \includegraphics{images/spritesheet.png}
+    \caption[Example of a 2D spritesheet]{This example shows a 2D spritesheet used to produce a jumping animation for a stick figure character.  The frames in this case are laid out in a single image for demonstration purposes, progressing in order starting with frame 0.
 
 3D models are described as a mesh, a collection of primitive polygons (i.e. quadrilaterals or triangles) which are stored as vertices.  This mesh describes what is drawn, including any texture, color, and other material information.  Along with the mesh, a skeleton, or rig, is stored.  The rig describes a heirarchical structure of bones and accompanying joints.  Each vertex is given a series of weights describing the impact each joint has on its transformation.  This allows many vertices, and therefore many polygons, to be transformed at once in organized groups, simplifying the problem of animating the model to a matter of transforming the skeleton in the desired manner.  To animate this 3D model, an artist specifies keyframes of the animation by positioning the skeleton at different time steps.  The stored keyframes, instead of an image, are the transformations of each joint at this frame or step of the animation, which a rendering or game engine can interpolate between to produce the final result.
 
-Specifying these animation frames is work intensive, taking up significant time and resources to produce for a single character.  Recent work in animation generation seeks to automate this process, replacing the manual process with a procedural one.  Physics based simulations can be used to produce controllers for the skeleton, determining joint positions and rotations for keyframes automatically.  Not only does this reduce the effort involved in the creation process, but this also provides a basis for dynamic interaction between a character's animation and the environment, which is not possible with manual keyframe animations.
+Specifying these animation frames is work intensive, taking up significant time and resources to produce for a single character.  Additionally, similar animations may need to be produced for slightly different scenarios, with only minor modifications required.  These minor modifications can be to fit a different setting, such as a character jumping on Earth or on the moon, or can be for different characters, such as a large person moving in contrast with a small child.  Though the movement itself may be similar, manual changes must be made, requiring artist time which could be spent generating new assets.  
 
-We present a controller that takes a skeleton as input, with additional parameters describing the character, which produces a sequence of poses for a keyframe animation.  The additional character parameters describe the character's mass as well as the constraints placed on each joint to prevent unnatural rotations.  Weight is specified per-joint to allow for calculation of the character's center of mass.
+Recent work in animation generation seeks to automate this process, replacing the manual process with a procedural one.  Physics based simulations can be used to produce controllers for the skeleton, determining joint positions and rotations for keyframes automatically.  Not only does this reduce the effort involved in the creation process, but this also provides a basis for dynamic interaction between a character's animation and the environment, which is not possible with manual keyframe animations.
+
+We present a controller that takes a skeleton as input, with additional parameters describing the character, which produces a sequence of poses for a keyframe animation.  The additional character parameters describe the character's mass as well as the constraints placed on each joint to prevent unnatural rotations.  Weight is specified per-joint to allow for calculation of the character's center of mass.  Our controller works with the initial flex and takeoff stage of the jumping motion.  The motion is calculated by modeling muscles as simple springs attached to the skeleton at 2 points.  Spring constants for the muscles are determined by the user, which are applied in a linear spring calculation to determine the approximate change from rest length required to achieve a particular force.  This change from rest length approximates the flexion required, which can be used to calculate a plausible amount of bend for the wind-up motion of a jump.
+
+To control the motion and maintain plausibility, calculations are performed to determine the character's center of mass and supporting polygon.  As the character should maintain balance while flexing its joints, the position of the character's joints are adjusted to keep the center of mass positioned over the supporting polygon.  Flexion proceeds with the character bending progressively, maintaining balance while moving to achieve the desired spring force in its leg muscles.
+
+The next stage of the motion, the take-off where the character releases from the ground, uses the potential energy of the spring-muscles and accelerates the character's center of mass upward.  Application of force works from the joints and muscles closest to the center of mass outwards through the skeleton.
 
 % figure of current keyframe animation process in maya
 % accompanying video for presentation
 % accompanying figure/video of the resulting animation in 3d
+
+% explain contributions
+% - what is the contribution of this technique
+% - Unity3D -> what am I getting from outside sources
+% - what am I making myself
+\section{Contributions}
+	Unity 3D is a game engine which we used to develop this system.  It provides infrastructure for rendering, scene management, skeletal animation, asset import and management, lighting, and scripting.  The system developed leverages the provided features through the Unity3D scripting interface.  We developed scripts for calculation of muscle forces, as well as for applying the force to an imported model.  Models were created in AutoDesk Maya and imported using Unity3D's asset import as Unity3D game objects with attached Transform components which allow arbitrary transformations.
 
 %sean's stuff below here
 
