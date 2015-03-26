@@ -64,22 +64,22 @@ the {\tt glGenBuffers()} and {\tt glBindBuffer()} commands. The function {\tt gl
 
 Listing~\ref{lst:modern_triangle} shows a C++ code sample of specifying the same triangle in Listing~\ref{lst:simple_triangle} with modern OpenGL\@. Listing~\ref{lst:vertex_shader} and~\ref{lst:fragment_shader} show the necessary vertex and fragment shaders, respectively.
 
-\lstinputlisting[ caption={[Modern OpenGL C++ Colored Triangle]Rendering a triangle with a red, blue, and green 
-    corner. The C++ code generates the necessary VBO, one for position and one for color, inserts the data, and 
-    then renders the triangle.},
-    label={lst:modern_triangle}]
-{data/modern_triangle.cpp}
+%\lstinputlisting[ caption={[Modern OpenGL C++ Colored Triangle]Rendering a triangle with a red, blue, and green 
+%    corner. The C++ code generates the necessary VBO, one for position and one for color, inserts the data, and 
+%    then renders the triangle.},
+%    label={lst:modern_triangle}]
+%{data/modern_triangle.cpp}
 
-\lstinputlisting[ caption={[Colored Triangle Vertex Shader]The vertex shader for {\tt triangleProgram}. The 
-    shader receives the position and color data and passes this information to the fragment shader through the 
-    out variable.},
-    label={lst:vertex_shader}]
-{data/simple.vert}
+%\lstinputlisting[ caption={[Colored Triangle Vertex Shader]The vertex shader for {\tt triangleProgram}. The 
+%    shader receives the position and color data and passes this information to the fragment shader through the 
+%    out variable.},
+%    label={lst:vertex_shader}]
+%{data/simple.vert}
 
-\lstinputlisting[ caption={[Colored Triangle Fragment Shader]The fragment shader for {\tt triangleProgram}. The 
-    shader receives the interpolated color and position from the vertex shader and outputs data to the screen.},   
-    label={lst:fragment_shader}]
-{data/simple.frag}
+%\lstinputlisting[ caption={[Colored Triangle Fragment Shader]The fragment shader for {\tt triangleProgram}. The 
+%    shader receives the interpolated color and position from the vertex shader and outputs data to the screen.},   
+%    label={lst:fragment_shader}]
+%{data/simple.frag}
 
 Functionality related to the matrix stack was also deprecated for modern OpenGL\@. Developers must now manage their own matrices and vectors. This was another side effect of removing the fixed function pipeline. Much like the addition of shaders, the modern OpenGL specification made this change to allow for greater flexibility. Developers do not have to conform to using the {\tt GL\_MODELVIEW} and {\tt GL\_PROJECTION} matrices for their transformations. The GLM library
 \cite{glm_website} was developed to duplicate this missing functionality and act as a CPU implementation of the OpenGL Shader Language (GLSL) vector and matrix operations. These matrices and other variables are passed to the shaders as uniform variables (variables that are constant across all invocations of a shader). The vertex shader is now responsible for performing any relevant operations on a per-vertex basis. These operations include transforming a vertex's position in model or

@@ -17,6 +17,8 @@
 \renewcommand{\captionfont}{\bfseries} % bold caption (needed with caption 
                                        % package to restore boldface.)                       
 
+\usepackage{subcaption}
+
 \captionsetup[algorithm]{labelsep=colon}
 
 \usepackage{graphics}
@@ -118,17 +120,18 @@
  
 \include{TitlePage}   % titlepage material for Master's thesis or project
 \include{Acknowledgement}
-\include{Abstract} 	% abstract
+%\include{Abstract} 	% abstract
 \include{Intro} 	% chapter 1
 \include{PreviousWorks}
-\include{Visualization}
-\include{Validation}
-\include{Results}
-\include{FutureWork}
+\include{Animation}
+%\include{Visualization}
+%\include{Validation}
+%\include{Results}
+%\include{FutureWork}
 \specialhead{References}
 
 \bibliography{IEEEabrv,research}
 \bibliographystyle{ieeetran}
-% \include{Bibliography} 	% bibliography
+\include{Bibliography} 	% bibliography
 %\include{rpiapp} 	% appendix
 \end{document}
