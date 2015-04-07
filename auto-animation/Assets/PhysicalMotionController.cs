@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-///*
+/*
 [System.Serializable]
 public class PIDServo {
     // PID servo function object
@@ -19,6 +19,7 @@ public class PIDServo {
 }
 //*/
 
+/*
 public abstract class Muscle {
     public abstract float force();
     public abstract float force(float length);
@@ -58,6 +59,7 @@ public class SpringMuscle : Muscle {
         return Mathf.Acos(cos);
     }
 }
+//*/
 
 /*
 [System.Serializable]
@@ -140,7 +142,7 @@ public class PhysicalControllerSkeleton {
     public Transform RHeel;
     public Transform LHeel;
 }
-
+/*
 [System.Serializable]
 public class ConstrainedPhysicalControllerSkeleton {
     public PhysicalJoint[] UpperBody;
@@ -154,6 +156,7 @@ public class ConstrainedPhysicalControllerSkeleton {
     public PhysicalJoint RHeel;
     public PhysicalJoint LHeel;
 }
+//*/
  
 [AddComponentMenu("Physical Motion Controller/Physical Motion Controller")]
 public class PhysicalMotionController : MonoBehaviour {
@@ -180,6 +183,9 @@ public class PhysicalMotionController : MonoBehaviour {
         angle = 0.0f;
         //supportingPoly = new Vector3[4];
         UpdateSupportingPoly();
+
+        // initial estimate of path/velocity to get from start to end
+        // calculation of intermediate goal states from starting point and final goal
 	}
 	
 	// Update is called once per frame
@@ -194,6 +200,10 @@ public class PhysicalMotionController : MonoBehaviour {
         }
         //*/
         UpdateSupportingPoly();
+
+        // Downward/windup phase OR
+        // Upward/accel phase OR if done
+        // In Air
 	}
     
     void TestJump(Muscle musc) {
@@ -247,6 +257,10 @@ public class PhysicalMotionController : MonoBehaviour {
     }
 
     void UpdateCOM() {
+
+    }
+
+    void WindupPhase() {
 
     }
 }
