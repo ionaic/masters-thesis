@@ -20,13 +20,17 @@
 \usepackage{rotating}
 \usepackage{verbatim}
 \usepackage{epstopdf}
+\usepackage{sidecap}
+%\usepackage{pstricks}
+%\usepackage{caption}
+%\usepackage{subcaption}
 
 \newtheorem{Def}{Definition}
-%\renewcommand{\titlesize}{\Huge}
-%\renewcommand{\authorsize}{\Large}
-%\renewcommand{\instsize}{\large}
+\renewcommand{\titlesize}{\Huge}
+\renewcommand{\authorsize}{\Large}
+\renewcommand{\instsize}{\large}
 \renewcommand{\sectionsize}{\Large}
-\title{ Modular Controllers \\for Jumping Motions}
+\title{Controller for Jumping Animations to Achieve Target Position}
 
 % The author's or authors' names
 \author{\ \\ Ian Ooi and Barbara Cutler}
@@ -51,49 +55,42 @@
 
 \begin{minipage}[t]{10.5in}
 	\section*{Overview}
-		We describe composable controllers for the generation of plausible human jumping motions with a forward physics based simulation.  Jumping is described as the acceleration of a character's center of mass to achieve upward motion, with the character's support breaking contact with the ground.  
-
-		\vspace{.3in}
-	\section*{Goals}
-		\begin{itemize}
-			\item Development of control algorithm for jumping motion divided into stages 
-			\item Demonstration of control algorithm in a variety of situations, showing adaptivity of the system to different heights, distances, and obstacles in between
-			\item Deconstruction of the motion into composable segments for a modular approach to the overall motion
-		\end{itemize}
+		We describe a controller for the generation of plausible human jumping motions with a forward physics based simulation.  Jumping is described as the acceleration of a character's center of mass to achieve upward motion, with the character breaking contact with the ground.  The motion is further divided into several stages of a windup or lead-up in which the character prepares to accelerate their center of mass, an acceleration stage in which the character applies a force to accelerate upward to leave the ground, an in-air stage in which the character is airborne, and finally landing.  We develop this controller in a modular manner, allowing it to be composed with other controllers to create complex compound motions, focusing on the stages before the character is in the air.  The controller models the muscles as springs which produce forces on the limbs of the leg.  Force is distributed to different springs, with joints bent to not only gain potential energy in the springs but to also to maintain balance.  Balance is maintained by positioning the center of mass over the supporting plane formed by the character's feet.
 
 		\vspace{.3in}
 
-		\section*{Sketch of the stages of jumping}
-			\begin{figure}
-				\centering
-				\includegraphics[width=0.8\columnwidth]{movement_sketches/combined_jump.eps}
-				\caption{
-			We break the motion of jumping into three phases: takeoff, in-	air, and landing.  The focus is on the takeoff, which is itself broken into a lead-up, wind-up, and take off.  The lead-up is a phase in which the character gathers forward momentum, which is partially converted into upward thrust by the wind-up.  The angle at which the character positions its legs ($\theta$) allows it to use the linear velocity to compress the legs and gather spring potential energy, which can be used for an upward thrust.  For in-air, the character re-positions its legs for landing, and finally, in the landing phase, uses the springiness of the legs to maximize the time over which the force is distributed (minimize $\frac{da}{dt}$).}
-			\end{figure}
-			
+	\section*{Background and Motivation}
+        Animations for video games and other entertainment applications are usually produced manually by an artist, then played back at appropriate times.  They are specified by keyframes, selected important frames where a static pose of a 3D model is set.  Interpolation is performed between these frames to produce a smooth animation.  
+		\begin{figure}
+			\centering
+            \includegraphics[height=5in]{skel_example/skel1.png}
+            \includegraphics[height=5in]{skel_example/skel2.png}
+			\caption{Example Model and Rig.  The model lacks definition for the upper body in its skeleton as the main focus is activity of the lower body as well as overall body position.}
+		\end{figure}
+		
+
 	\end{minipage}
 	\hfill
 \begin{minipage}[t]{17in}
-	\section*{Background}
-		Producing athletic animations for human characters is difficult.  One method, motion capture is used for production of realistic animations for human athletics and other motions, however it requires the collection of information for each motion and does not adapt to the virtual environment.  Muscle-based approaches produce realistic motions which adapt to the environment, using a complex model of the musculo-skeletal structure.  Geijtenbeek et al. use a rough, user created muscle routing on a skeleton to produce various gaits that are learned based on the velocity and environment.  The muscle routing is optimized to remain within a region while providing optimal forces on the skeleton based on freedom of motion of the skeletal joints and the calculated optimal length of the muscle.  This model is then used to compute sequences of muscle activations, modeling neural signals, which produce the final animations.  This method is effective, producing good results in various levels of gravity on at least 10 different bipedal skeletons \cite{muscle_based_bipeds}.
+    \section*{Implementation}
+		\begin{figure}
+			\centering
+            \includegraphics[width=0.2\columnwidth]{jump_sequence/jump1Cropped.png}
+            \includegraphics[width=0.2\columnwidth]{jump_sequence/jump2Cropped.png}
+            \includegraphics[width=0.2\columnwidth]{jump_sequence/jump3Cropped.png}
+            \includegraphics[width=0.2\columnwidth]{jump_sequence/jump4Cropped.png}
+            \includegraphics[width=0.2\columnwidth]{jump_sequence/jump5Cropped.png}
+            \includegraphics[width=0.2\columnwidth]{jump_sequence/jump6Cropped.png}
+            \includegraphics[width=0.2\columnwidth]{jump_sequence/jump7Cropped.png}
+            \includegraphics[width=0.2\columnwidth]{jump_sequence/jump8Cropped.png}
+			\caption{Sequence of frames for a windup and acceleration for a simple human character.  Due to the focus on the lower body activity, this character lacks arms as well as complexity in its upper body skeleton.}
+		\end{figure}
 
-		\begin{figure}
-			\centering
-			\includegraphics[width=0.2\columnwidth]{muscle_based/muscle_routing.eps}
-			\caption{Example of a muscle routing on a skeleton from Geijtenbeek et al. \cite{muscle_based_bipeds}.}
-		\end{figure}
-		
-		Inverse kinematics approaches attempt to generate the motion based on a desired final position, determining the skeletal position by solving the system given constraints.  Koga et. al use path planning, inverse kinematics, and forward simulation to generate animations of arm motions for robots and humans working cooperatively.  They produce arm manipulations that avoid collisions and result in final positions and orientations for specified parts of the arm to produce motions such as a human putting on glasses and a robot arm and human cooperating to flip a chessboard \cite{motion_intentions}.  
-		
-		\begin{figure}
-			\centering
-			\includegraphics[width=0.3\columnwidth]{falling_motion/falling1.eps}
-			\hspace{0.1\columnwidth}
-			\includegraphics[width=0.3\columnwidth]{falling_motion/falling3.eps}
-			\caption{Breakdown of a hands-first falling approach from Ha et al. \cite{falling_landing} and of a feet-first landing approach.  Ha et al. use a rolling strategy to minimize stress on the body and produce a realistic fall.}
-		\end{figure}
-		
-		Physical simulations utilize a rigid-body character with a user-defined skeleton to find optimal poses based on desired conditions.  Ha et al. utilize such a scheme to generate landing motions for human characters based off linear velocity, global angular velocity, and angle of attack.  The system chooses either a feet first or hands first landing strategy and moves into a roll to reduce stress on the body using principles from biomechanics and robotics.  A sampling method is applied to determine successful conditions, producing bounding planes for the data.  The movement is broken into stages of airborne and landing, in which the character re-positions for the designated landing strategy, and executes the landing strategy respectively. Each of these is separated into impact, roll, and get-up stages.  Movement and joint positions are produced using PID servos \cite{falling_landing}.  Other work on producing such controllers was produced by Faloutsos et al. who described a method of composing such controllers by giving pre-conditions, post-conditions, and intermediate state requirements.  The composed controllers are then chosen at each step based on the current pose and which controller is deemed most suitable \cite{composable_controllers}.  Hodgins et al. created several controllers for running, vaulting, and bicycling, creating realistic motions and secondary motion using rigid bodies and spring-mass simulations \cite{anim_human_athletics}.  Geijtenbeek and Pronost provide a detailed review of physics based simulations \cite{inter_physics_anim}.
+        \begin{figure}
+            \centering
+            \includegraphics[height=10in]{system_diag.eps}
+            \caption{The controller proceeds through the above stages, beginning with an initial calculation of the force vector required to move the character to the desired position given start and end positions as well as initial velocity, working through a chosen jump policy to decide on time to take as well as jump height.  Next the controller finds the required angles of the joints to produce this force, modeling the muscles as simple springs anchored to two different bones across a joint which gain spring potential from stretching as the joint bends.  This is performed iteratively using a PD controller, with an error function considering positioning of the center of mass over the supporting plane in addition to the force available in the springs.  Force of the springs is used only to find joint angles.  The character then extends, unbending the joints, progressing until the feet leave the ground and the character enters the airborne phase.}
+        \end{figure}
 
 \end{minipage}
 %
@@ -103,28 +100,33 @@
 	\section*{Results and Visualization}
 		
 	\section*{Future Work}
-		To produce realistic animations, we will require an optimizable model of the stages of the jump.  Effective jumping can be broken into several phases: lead-up, take-off, airborne, and landing.  The lead-up phase can be taken as an initial condition providing forward, linear velocity.  Variables to consider include the angle of the legs during the wind-up (called a ``block'' in parkour and freerunning), angle of take-off, linear velocity, and the length and height of the jump.  The jump will be targeted to a particular height at the peak and a landing position.  When jumping, the feet must be repositioned to prepare for a landing, moving from feet behind the character's frontal plane to in front of the frontal plane.  For the airborne phase, the character tucks its legs to avoid collisions, before landing in a similar manner to the feet-first method described in Ha et al. (sans roll) \cite{falling_landing}.
-		\vspace{0.3in}
-		\begin{figure}
-			\centering
-			\includegraphics[width=0.5\columnwidth]{falling_motion/falling2.eps}
-			\caption{An example of a generated falling motion from Ha et al. \cite{falling_landing}.}		
-		\end{figure}
+        Further work is underway to allow for more flexible starting conditions such as a running start.  Currently there is some flexibility allowing for previous velocity to be considered for force calculations, but control of the body using leg swings has yet to be implemented.
+
+        Another desirable addition would be to take a more complex muscle system into account.  The current muscle model was chosen due to simplicity as an initial step, but ignores many factors which affect force output such as found in \cite{muscle_based_bipeds} which would aid in plausibility and accuracy.
+
+        Additional controllers could be also combined with this to produce complex motions such as parkour vaults and flips, which are becoming more prevalent in both films and video games.  This would also require the controller to take more complex skeletons into account, utilizing arms and upper body movement more.
 		
 	\vspace{0.3in}
 
 	{\small
 	\bibliographystyle{abbrv}
-	\nocite{muscle_based_bipeds}
-	\nocite{anim_human_athletics}
-	\nocite{composable_controllers}
-	\nocite{soft_contacts}
-	\nocite{falling_landing}
-	\nocite{vball_footwork_block}
-	\nocite{static_block_jumps}
-	\nocite{inter_physics_anim}
-	\nocite{opt_motion_synth}
-	\nocite{motion_intentions}
+    \nocite{muscle_based_bipeds}
+    \nocite{anim_human_athletics}
+    \nocite{composable_controllers}
+    %\nocite{soft_contacts}
+    \nocite{falling_landing}
+    %\nocite{vball_footwork_block}
+    %\nocite{static_block_jumps}
+    %\nocite{inter_physics_anim}
+    %\nocite{opt_motion_synth}
+    %\nocite{motion_intentions}
+    %\nocite{block_spike_survey}
+    %\nocite{robust_ctrl_policies}
+    %\nocite{automatic_gait}
+    %\nocite{humanoid_robots_jump}
+    %\nocite{cat_hindlimb_activity}
+    %\nocite{cat_thigh_activity}
+
 	\bibliography{refs}
 	}
 \end{minipage}
