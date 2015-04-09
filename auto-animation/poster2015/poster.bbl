@@ -1,0 +1,27 @@
+\begin{thebibliography}{1}
+
+\bibitem{composable_controllers}
+P.~Faloutsos, M.~van~de Panne, and D.~Terzopoulos.
+\newblock Composable controllers for physics-based character animation.
+\newblock In {\em Proceedings of the 28th Annual Conference on Computer
+  Graphics and Interactive Techniques}, SIGGRAPH '01, pages 251--260, New York,
+  NY, USA, 2001. ACM.
+
+\bibitem{muscle_based_bipeds}
+T.~Geijtenbeek, M.~van~de Panne, and A.~F. van~der Stappen.
+\newblock Flexible muscle-based locomotion for bipedal creatures.
+\newblock {\em ACM Transactions on Graphics}, 32(6), 2013.
+
+\bibitem{falling_landing}
+S.~Ha, Y.~Ye, and C.~K. Liu.
+\newblock Falling and landing motion control for character animation.
+\newblock {\em ACM Trans. Graph.}, 31(6):155:1--155:9, Nov. 2012.
+
+\bibitem{anim_human_athletics}
+J.~K. Hodgins, W.~L. Wooten, D.~C. Brogan, and J.~F. O'Brien.
+\newblock Animating human athletics.
+\newblock In {\em Proceedings of the 22Nd Annual Conference on Computer
+  Graphics and Interactive Techniques}, SIGGRAPH '95, pages 71--78, New York,
+  NY, USA, 1995. ACM.
+
+\end{thebibliography}
