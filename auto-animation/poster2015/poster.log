@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.11.3)  9 APR 2015 05:08
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.11.3)  9 APR 2015 19:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -490,24 +490,24 @@ File: jump_sequence/jump8Cropped.png Graphic file (type png)
 <use jump_sequence/jump8Cropped.png>
 Package pdftex.def Info: jump_sequence/jump8Cropped.png used on input line 85.
 (pdftex.def)             Requested size: 245.71425pt x 204.75922pt.
-Package epstopdf Info: Source file: <system_diag.eps>
-(epstopdf)                    date: 2015-04-09 03:41:12
-(epstopdf)                    size: 27056 bytes
-(epstopdf)             Output file: <system_diag-eps-converted-to.pdf>
-(epstopdf)                    date: 2015-04-09 03:41:41
-(epstopdf)                    size: 12003 bytes
-(epstopdf)             Command: <repstopdf --outfile=system_diag-eps-converted-
-to.pdf system_diag.eps>
+Package epstopdf Info: Source file: <system_diag_horiz.eps>
+(epstopdf)                    date: 2015-04-09 19:46:05
+(epstopdf)                    size: 27110 bytes
+(epstopdf)             Output file: <system_diag_horiz-eps-converted-to.pdf>
+(epstopdf)                    date: 2015-04-09 19:46:09
+(epstopdf)                    size: 11927 bytes
+(epstopdf)             Command: <repstopdf --outfile=system_diag_horiz-eps-conv
+erted-to.pdf system_diag_horiz.eps>
 (epstopdf)             \includegraphics on input line 91.
 Package epstopdf Info: Output file is already uptodate.
 
-<system_diag-eps-converted-to.pdf, id=12, 487.8225pt x 774.895pt>
-File: system_diag-eps-converted-to.pdf Graphic file (type pdf)
+<system_diag_horiz-eps-converted-to.pdf, id=12, 1341.01pt x 288.07625pt>
+File: system_diag_horiz-eps-converted-to.pdf Graphic file (type pdf)
 
-<use system_diag-eps-converted-to.pdf>
-Package pdftex.def Info: system_diag-eps-converted-to.pdf used on input line 91
-.
-(pdftex.def)             Requested size: 454.97285pt x 722.7pt.
+<use system_diag_horiz-eps-converted-to.pdf>
+Package pdftex.def Info: system_diag_horiz-eps-converted-to.pdf used on input l
+ine 91.
+(pdftex.def)             Requested size: 982.87573pt x 211.14227pt.
  (./poster.bbl
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <20.74> not available
 (Font)              Font shape `OT1/phv/b/n' tried instead on input line 1.
@@ -520,21 +520,21 @@ LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <20.74> not available
 jump2Cropped.png> <./jump_sequence/jump3Cropped.png> <./jump_sequence/jump4Crop
 ped.png> <./jump_sequence/jump5Cropped.png> <./jump_sequence/jump6Cropped.png> 
 <./jump_sequence/jump7Cropped.png> <./jump_sequence/jump8Cropped.png> <./system
-_diag-eps-converted-to.pdf>] (./poster.aux) ) 
+_diag_horiz-eps-converted-to.pdf>] (./poster.aux) ) 
 Here is how much of TeX's memory you used:
  3486 strings out of 495028
- 51635 string characters out of 6181497
+ 51665 string characters out of 6181497
  115826 words of memory out of 5000000
  6581 multiletter control sequences out of 15000+600000
  26036 words of font info for 59 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  42i,8n,26p,1149b,359s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fon
-ts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/urw/courier
-/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on poster.pdf (1 page, 132267 bytes).
+{/usr/share/texlive/texmf-di
+st/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/urw/c
+ourier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8
+a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
+Output written on poster.pdf (1 page, 132187 bytes).
 PDF statistics:
  53 PDF objects out of 1000 (max. 8388607)
  22 compressed objects within 1 object stream
