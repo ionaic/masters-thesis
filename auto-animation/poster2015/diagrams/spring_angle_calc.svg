@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg4230"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="spring_angle_calc.svg">
+  <defs
+     id="defs4232">
+    <mask
+       maskUnits="userSpaceOnUse"
+       id="mask4829">
+      <rect
+         style="fill:#ffffff;stroke:none"
+         id="rect4831"
+         width="532.85718"
+         height="360"
+         x="105.71428"
+         y="122.36217" />
+    </mask>
+    <mask
+       maskUnits="userSpaceOnUse"
+       id="mask4833">
+      <rect
+         style="fill:#ffffff;stroke:none"
+         id="rect4835"
+         width="532.85718"
+         height="360"
+         x="112.85714"
+         y="129.50504" />
+    </mask>
+    <mask
+       maskUnits="userSpaceOnUse"
+       id="mask4837">
+      <rect
+         style="fill:#ffffff;stroke:none"
+         id="rect4839"
+         width="532.85718"
+         height="360"
+         x="112.85714"
+         y="129.50504" />
+    </mask>
+    <mask
+       maskUnits="userSpaceOnUse"
+       id="mask4841">
+      <rect
+         style="fill:#ffffff;stroke:none"
+         id="rect4843"
+         width="532.85718"
+         height="360"
+         x="112.85714"
+         y="129.50504" />
+    </mask>
+    <mask
+       maskUnits="userSpaceOnUse"
+       id="mask4845">
+      <rect
+         style="fill:#ffffff;stroke:none"
+         id="rect4847"
+         width="532.85718"
+         height="360"
+         x="112.85714"
+         y="129.50504" />
+    </mask>
+    <mask
+       maskUnits="userSpaceOnUse"
+       id="mask4849">
+      <rect
+         style="fill:#ffffff;stroke:none"
+         id="rect4851"
+         width="532.85718"
+         height="360"
+         x="112.85714"
+         y="129.50504"
+         transform="matrix(0.51279388,-0.85851176,0.85851176,0.51279388,0,0)" />
+    </mask>
+    <mask
+       maskUnits="userSpaceOnUse"
+       id="mask4853">
+      <rect
+         style="fill:#ffffff;stroke:none"
+         id="rect4855"
+         width="532.85718"
+         height="360"
+         x="112.85714"
+         y="129.50504" />
+    </mask>
+    <mask
+       maskUnits="userSpaceOnUse"
+       id="mask3105">
+      <rect
+         transform="matrix(0.99999926,0.00121986,0.00124255,0.99999923,0,0)"
+         y="-85.24836"
+         x="410.92755"
+         height="66.428391"
+         width="145.96466"
+         id="rect3107"
+         style="fill:#ffffff;stroke:#ffffff;stroke-width:0.93592048" />
+    </mask>
+    <mask
+       maskUnits="userSpaceOnUse"
+       id="mask3937">
+      <rect
+         mask="none"
+         transform="matrix(0.881494,0.47219523,-0.4858443,0.87404538,0,0)"
+         y="193.01053"
+         x="411.55139"
+         height="62.766178"
+         width="138.13629"
+         id="rect3939"
+         style="fill:#ffffff;stroke:#000000;stroke-width:0.88502383" />
+    </mask>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="270.03551"
+     inkscape:cy="789.18532"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1615"
+     inkscape:window-height="1026"
+     inkscape:window-x="1505"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata4235">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:none;stroke:#000000"
+       id="rect4246"
+       width="330"
+       height="128.57141"
+       x="38.57143"
+       y="205.21933"
+       ry="0"
+       mask="url(#mask4853)" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:1"
+       id="rect4246-1"
+       width="330"
+       height="128.57141"
+       x="474.82956"
+       y="-274.49921"
+       ry="0"
+       transform="matrix(0.51279388,0.85851176,-0.85851176,0.51279388,0,0)"
+       mask="url(#mask4849)" />
+    <text
+       xml:space="preserve"
+       style="font-size:26px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="156.57364"
+       y="276.565"
+       id="text4774"
+       sodipodi:linespacing="125%"
+       mask="url(#mask4845)"><tspan
+         sodipodi:role="line"
+         id="tspan4776"
+         x="156.57364"
+         y="276.565"
+         style="font-style:italic">bone1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:26px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="459.79318"
+       y="438.79092"
+       id="text4774-3"
+       sodipodi:linespacing="125%"
+       mask="url(#mask4841)"><tspan
+         sodipodi:role="line"
+         id="tspan4776-2"
+         x="459.79318"
+         y="438.79092"
+         style="font-style:italic">bone2</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:4.80000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 267.14286,188.07647 104.28571,0 121.42857,64.28571 78.57143,132.85715"
+       id="path4799"
+       inkscape:connector-curvature="0"
+       mask="url(#mask4837)" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4803"
+       style="font-size:26px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><flowRegion
+         id="flowRegion4805"><rect
+           id="rect4807"
+           width="77.14286"
+           height="28.571428"
+           x="491.42856"
+           y="130.93361" /></flowRegion><flowPara
+         id="flowPara4809">sprisprin</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4811"
+       style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       transform="translate(-220,-41.428573)"
+       mask="url(#mask4829)"><flowRegion
+         id="flowRegion4813"><rect
+           id="rect4815"
+           width="64.285706"
+           height="28.571421"
+           x="495.71429"
+           y="122.36218"
+           style="font-size:20px" /></flowRegion><flowPara
+         id="flowPara4817">spring muscle</flowPara></flowRoot>    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 304.28571,181.21933 310,108.36218"
+       id="path4857"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.88502383"
+       id="rect4859"
+       width="138.13629"
+       height="62.766178"
+       x="415.31497"
+       y="-35.392143"
+       transform="matrix(0.881494,0.47219523,-0.4858443,0.87404538,0,0)"
+       mask="url(#mask3105)" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 447.85714,191.50504 25,-42.14286"
+       id="path3109"
+       inkscape:connector-curvature="0" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3111"
+       style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       transform="translate(-80,1.4285714)"><flowRegion
+         id="flowRegion3113"><rect
+           id="rect3115"
+           width="211.4286"
+           height="49.285728"
+           x="470.71429"
+           y="117.36218" /></flowRegion><flowPara
+         id="flowPara3117"
+         style="font-size:20px">spring displacement</flowPara></flowRoot>    <path
+       sodipodi:type="arc"
+       style="fill:none;stroke:#000000;stroke-opacity:1"
+       id="path3929"
+       sodipodi:cx="347.85715"
+       sodipodi:cy="365.93362"
+       sodipodi:rx="63.57143"
+       sodipodi:ry="63.57143"
+       d="m 411.42858,365.93362 a 63.57143,63.57143 0 1 1 -127.14286,0 63.57143,63.57143 0 1 1 127.14286,0 z"
+       transform="translate(20,-32.142857)"
+       mask="url(#mask3937)" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 325,392.36218 -20.71429,33.57143"
+       id="path3945"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="254.28572"
+       y="445.21933"
+       id="text3947"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3949"
+         x="254.28572"
+         y="445.21933">joint angle</tspan></text>
+  </g>
+</svg>
