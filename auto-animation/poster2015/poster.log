@@ -1,16 +1,23 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.11.3)  10 APR 2015 02:24
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.1.15)  10 APR 2015 04:29
 entering extended mode
- restricted \write18 enabled.
- %&-line parsing enabled.
 **poster.tex
-(./poster.tex
+(C:\Users\Oberon\Documents\Thesis\auto-animation\poster2015\poster.tex
 LaTeX2e <2011/06/27>
-Babel <3.9h> and hyphenation patterns for 2 languages loaded.
-(./sciposter.cls
+Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
+abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
+croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, ga
+lician, german, german-x-2012-05-30, greek, gujarati, hindi, hungarian, iceland
+ic, indonesian, interlingua, irish, italian, kannada, kurmanji, latin, latvian,
+ lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerman, n
+german-x-2012-05-30, nynorsk, oriya, panjabi, pinyin, polish, portuguese, roman
+ian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swissgerm
+an, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usengl
+ishmax, welsh, loaded.
+(C:\Users\Oberon\Documents\Thesis\auto-animation\poster2015\sciposter.cls
 Document Class: sciposter 2004/10/11 v1.12 scientific poster class (MHFW, AMW)
-(/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\article.cls"
 Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
-(/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\size10.clo"
 File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
@@ -25,7 +32,7 @@ File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
 )
-(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\ifthen.sty"
 Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
 )
 \papermargin=\skip43
@@ -34,37 +41,37 @@ Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
 Package poster Warning: Unknown option 26pt on input line 221.
 
 \tempsize=\skip44
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
 Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
 
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\trig.sty"
 Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 )
-(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/graphics.cfg
-File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\graphics.cfg"
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
 )
 Package graphics Info: Driver file: pdftex.def on input line 91.
 
-(/usr/share/texlive/texmf-dist/tex/latex/pdftex-def/pdftex.def
+("C:\Program Files\MiKTeX 2.9\tex\latex\pdftex-def\pdftex.def"
 File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
 
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty"
 Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
 )
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty"
 Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 )
 \Gread@gobject=\count87
 ))
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\color.sty"
 Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
 
-(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/color.cfg
+("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\color.cfg"
 File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: pdftex.def on input line 130.
 )
-(/usr/share/texlive/texmf-dist/tex/latex/shadow/shadow.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\ltxmisc\shadow.sty"
 Package: shadow 2003/02/19 v1.3 shadow boxes (M.O.)
 \txtwdth=\dimen103
 \sht=\dimen104
@@ -74,7 +81,7 @@ Package: shadow 2003/02/19 v1.3 shadow boxes (M.O.)
 \sboxrule=\dimen107
 \sdim=\dimen108
 )
-(/usr/share/texlive/texmf-dist/tex/latex/a0poster/a0size.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\a0poster\a0size.sty"
 File: a0size.sty 2004/01/31 v1.22b a0poster class (GK, MW)
 LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 229.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
@@ -83,10 +90,10 @@ LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
 (Font)                  OMX/cmex/m/n --> OMX/cmex/m/n on input line 229.
 \big@size=\dimen109
 )
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/times.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\times.sty"
 Package: times 2005/04/12 PSNFSS-v9.2a (SPQR) 
 )
-(/usr/share/texlive/texmf-dist/tex/latex/boxedminipage/boxedminipage.sty)
+("C:\Program Files\MiKTeX 2.9\tex\latex\boxedminipage\boxedminipage.sty")
 \titlewidth=\skip45
 \logowidth=\skip46
 \parstartskip=\skip47
@@ -99,13 +106,13 @@ Package: times 2005/04/12 PSNFSS-v9.2a (SPQR)
 \c@algorithm=\count89
 \secrulewidth=\skip53
 )
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/epsfig.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\epsfig.sty"
 Package: epsfig 1999/02/16 v1.7a (e)psfig emulation (SPQR)
 
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
 Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
 
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
 Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \KV@toks@=\toks14
 )
@@ -115,41 +122,41 @@ Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \epsfxsize=\dimen112
 \epsfysize=\dimen113
 )
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
-Package: amsmath 2013/01/14 v2.14 AMS math features
+("C:\Program Files\MiKTeX 2.9\tex\latex\ams\math\amsmath.sty"
+Package: amsmath 2000/07/18 v2.13 AMS math features
 \@mathmargin=\skip54
 
 For additional information on amsmath, use the `?' option.
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\ams\math\amstext.sty"
 Package: amstext 2000/06/29 v2.01
 
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\ams\math\amsgen.sty"
 File: amsgen.sty 1999/11/30 v2.0
 \@emptytoks=\toks15
 \ex@=\dimen114
 ))
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\ams\math\amsbsy.sty"
 Package: amsbsy 1999/11/29 v1.2d
 \pmbraise@=\dimen115
 )
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\ams\math\amsopn.sty"
 Package: amsopn 1999/12/14 v2.01 operator names
 )
 \inf@bad=\count90
-LaTeX Info: Redefining \frac on input line 210.
+LaTeX Info: Redefining \frac on input line 211.
 \uproot@=\count91
 \leftroot@=\count92
-LaTeX Info: Redefining \overline on input line 306.
+LaTeX Info: Redefining \overline on input line 307.
 \classnum@=\count93
 \DOTSCASE@=\count94
-LaTeX Info: Redefining \ldots on input line 378.
-LaTeX Info: Redefining \dots on input line 381.
-LaTeX Info: Redefining \cdots on input line 466.
+LaTeX Info: Redefining \ldots on input line 379.
+LaTeX Info: Redefining \dots on input line 382.
+LaTeX Info: Redefining \cdots on input line 467.
 \Mathstrutbox@=\box27
 \strutbox@=\box28
 \big@size=\dimen116
-LaTeX Font Info:    Redeclaring font encoding OML on input line 566.
-LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
 \macc@depth=\count95
 \c@MaxMatrixCols=\count96
 \dotsspace@=\muskip10
@@ -170,20 +177,20 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
 \multlinegap=\skip55
 \multlinetaggap=\skip56
 \mathdisplay@stack=\toks19
-LaTeX Info: Redefining \[ on input line 2665.
-LaTeX Info: Redefining \] on input line 2666.
+LaTeX Info: Redefining \[ on input line 2666.
+LaTeX Info: Redefining \] on input line 2667.
 )
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
-Package: amssymb 2013/01/14 v3.01 AMS font symbols
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\amssymb.sty"
+Package: amssymb 2009/06/22 v3.00
 
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
-Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\amsfonts.sty"
+Package: amsfonts 2009/06/22 v3.00 Basic AMSFonts support
 \symAMSa=\mathgroup4
 \symAMSb=\mathgroup5
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
-(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 96.
 ))
-(/usr/share/texlive/texmf-dist/tex/latex/tools/multicol.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\tools\multicol.sty"
 Package: multicol 2011/06/27 v1.7a multicolumn formatting (FMi)
 \c@tracingmulticols=\count102
 \mult@box=\box29
@@ -231,10 +238,10 @@ Package: multicol 2011/06/27 v1.7a multicolumn formatting (FMi)
 \colbreak@box=\box54
 \multicol@sort@counter=\count110
 )
-(/usr/share/texlive/texmf-dist/tex/latex/wallpaper/wallpaper.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\wallpaper\wallpaper.sty"
 Package: wallpaper 2005/01/18, v1.01 easy wallpaper formatting (MHFW)
 
-(/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\tools\calc.sty"
 Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
 \calc@Acount=\count111
 \calc@Bcount=\count112
@@ -247,13 +254,13 @@ LaTeX Info: Redefining \addtolength on input line 77.
 \calc@Ccount=\count113
 \calc@Cskip=\skip61
 )
-(/usr/share/texlive/texmf-dist/tex/latex/eso-pic/eso-pic.sty
-Package: eso-pic 2013/10/06 v2.0d eso-pic (RN)
+("C:\Program Files\MiKTeX 2.9\tex\latex\eso-pic\eso-pic.sty"
+Package: eso-pic 2010/10/06 v2.0c eso-pic (RN)
 
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/atbegshi.sty
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\atbegshi.sty"
 Package: atbegshi 2011/10/05 v1.16 At begin shipout hook (HO)
 
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.sty"
 Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
 Package ifpdf Info: pdfTeX in PDF mode is detected.
 )))
@@ -266,7 +273,7 @@ Package ifpdf Info: pdfTeX in PDF mode is detected.
 \tileX=\skip68
 \tileY=\skip69
 )
-(/usr/share/texlive/texmf-dist/tex/latex/rotating/rotating.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\rotating\rotating.sty"
 Package: rotating 2009/03/28 v2.16a rotated objects in LaTeX
 \c@r@tfl@t=\count114
 \rotFPtop=\skip70
@@ -274,34 +281,34 @@ Package: rotating 2009/03/28 v2.16a rotated objects in LaTeX
 \rot@float@box=\box55
 \rot@mess@toks=\toks20
 )
-(/usr/share/texlive/texmf-dist/tex/latex/tools/verbatim.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\tools\verbatim.sty"
 Package: verbatim 2003/08/22 v1.5q LaTeX2e package for verbatim enhancements
 \every@verbatim=\toks21
 \verbatim@line=\toks22
 \verbatim@in@stream=\read1
 )
-(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\epstopdf.sty"
 Package: epstopdf 2010/02/09 v2.5 Conversion with epstopdf on the fly (HO)
 
-(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\epstopdf-base.sty"
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
-(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\grfext.sty"
 Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
 
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\kvdefinekeys.sty"
 Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
 ))
-(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\kvoptions.sty"
 Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
 
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\kvsetkeys.sty"
 Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
 
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\etexcmds.sty"
 Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
 
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifluatex.sty"
 Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
 Package ifluatex Info: LuaTeX not detected.
 )
@@ -310,7 +317,7 @@ Package etexcmds Info: Could not find \expanded.
 (etexcmds)             that some package has redefined \expanded.
 (etexcmds)             In the latter case, load this package earlier.
 )))
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\pdftexcmds.sty"
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
 )
 Package pdftexcmds Info: LuaTeX not detected.
@@ -322,12 +329,8 @@ Package grfext Info: Graphics extension search list:
 (grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 452.
-
-(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
-e
-)))
-(/usr/share/texlive/texmf-dist/tex/latex/sidecap/sidecap.sty
+))
+("C:\Program Files\MiKTeX 2.9\tex\latex\sidecap\sidecap.sty"
 Package: sidecap 2003/06/06 v1.6f SideCap Package (RN/HjG)
 \SC@BOXWD=\dimen133
 \SC@CAPWD=\dimen134
@@ -337,9 +340,8 @@ Package: sidecap 2003/06/06 v1.6f SideCap Package (RN/HjG)
 \SC@BOX=\box56
 )
 \c@Def=\count116
- (./poster.aux)
-\openout1 = `poster.aux'.
 
+(C:\Users\Oberon\Documents\Thesis\auto-animation\poster2015\poster.aux)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 50.
 LaTeX Font Info:    ... okay on input line 50.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 50.
@@ -354,10 +356,10 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 50.
 LaTeX Font Info:    ... okay on input line 50.
 LaTeX Font Info:    Try loading font information for OT1+phv on input line 50.
 
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1phv.fd
+("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ot1phv.fd"
 File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 )
-(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count117
 \scratchdimen=\dimen137
@@ -373,10 +375,10 @@ File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 )
 -- Paper type set to a0.
 \AtBeginShipoutBox=\box58
-(/usr/share/texlive/texmf-dist/tex/latex/ms/ragged2e.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\ms\ragged2e.sty"
 Package: ragged2e 2009/05/21 v2.1 ragged2e Package (MS)
 
-(/usr/share/texlive/texmf-dist/tex/latex/ms/everysel.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\ms\everysel.sty"
 Package: everysel 2011/10/28 v1.2 EverySelectfont Package (MS)
 
 ABD: EverySelectfont initializing macros
@@ -398,13 +400,13 @@ LaTeX Info: Redefining \selectfont on input line 126.
 \JustifyingParindent=\skip85
 )
 Package epstopdf Info: Source file: <logos/lgpseal.eps>
-(epstopdf)                    date: 2015-04-10 02:23:15
+(epstopdf)                    date: 2015-04-10 03:39:22
 (epstopdf)                    size: 211190 bytes
 (epstopdf)             Output file: <logos/lgpseal-eps-converted-to.pdf>
-(epstopdf)                    date: 2015-04-10 02:24:25
+(epstopdf)                    date: 2015-04-10 03:39:22
 (epstopdf)                    size: 29021 bytes
-(epstopdf)             Command: <repstopdf --outfile=logos/lgpseal-eps-converte
-d-to.pdf logos/lgpseal.eps>
+(epstopdf)             Command: <epstopdf --outfile=logos/lgpseal-eps-converted
+-to.pdf logos/lgpseal.eps>
 (epstopdf)             \includegraphics on input line 54.
 Package epstopdf Info: Output file is already uptodate.
 
@@ -417,13 +419,13 @@ Package pdftex.def Info: logos/lgpseal-eps-converted-to.pdf used on input line
 (pdftex.def)             Requested size: 65.24358pt x 66.24733pt.
 LaTeX Font Info:    Try loading font information for U+msa on input line 54.
 
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
+File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
 LaTeX Font Info:    Try loading font information for U+msb on input line 54.
 
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
+File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <51.6> not available
 (Font)              Font shape `OT1/phv/b/n' tried instead on input line 54.
@@ -431,7 +433,7 @@ LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <35.83> not available
 (Font)              Font shape `OT1/phv/b/n' tried instead on input line 54.
 LaTeX Font Info:    Try loading font information for OT1+pcr on input line 54.
 
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ot1pcr.fd"
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 <logos/logo_cs_design_1.png, id=2, 2007.5pt x 2007.5pt>
@@ -526,14 +528,14 @@ File: jump_sequence/jump8Cropped.png Graphic file (type png)
 Package pdftex.def Info: jump_sequence/jump8Cropped.png used on input line 88.
 (pdftex.def)             Requested size: 245.71425pt x 204.75922pt.
 Package epstopdf Info: Source file: <diagrams/system_diag_horiz.eps>
-(epstopdf)                    date: 2015-04-10 02:00:26
-(epstopdf)                    size: 27110 bytes
+(epstopdf)                    date: 2015-04-10 03:39:22
+(epstopdf)                    size: 27671 bytes
 (epstopdf)             Output file: <diagrams/system_diag_horiz-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2015-04-10 02:00:26
+(epstopdf)                    date: 2015-04-10 03:39:22
 (epstopdf)                    size: 11927 bytes
-(epstopdf)             Command: <repstopdf --outfile=diagrams/system_diag_horiz
--eps-converted-to.pdf diagrams/system_diag_horiz.eps>
+(epstopdf)             Command: <epstopdf --outfile=diagrams/system_diag_horiz-
+eps-converted-to.pdf diagrams/system_diag_horiz.eps>
 (epstopdf)             \includegraphics on input line 94.
 Package epstopdf Info: Output file is already uptodate.
 
@@ -544,64 +546,129 @@ File: diagrams/system_diag_horiz-eps-converted-to.pdf Graphic file (type pdf)
 Package pdftex.def Info: diagrams/system_diag_horiz-eps-converted-to.pdf used o
 n input line 94.
 (pdftex.def)             Requested size: 982.87573pt x 211.14227pt.
+
+<visualization/supporting_plane.png, id=15, 602.25pt x 602.25pt>
+File: visualization/supporting_plane.png Graphic file (type png)
+
+<use visualization/supporting_plane.png>
+Package pdftex.def Info: visualization/supporting_plane.png used on input line 
+112.
+(pdftex.def)             Requested size: 151.76082pt x 151.75677pt.
+
+<visualization/particles1.png, id=16, 602.25pt x 602.25pt>
+File: visualization/particles1.png Graphic file (type png)
+
+<use visualization/particles1.png>
+Package pdftex.def Info: visualization/particles1.png used on input line 113.
+(pdftex.def)             Requested size: 151.76082pt x 151.75677pt.
+
+<visualization/particles2.png, id=17, 602.25pt x 602.25pt>
+File: visualization/particles2.png Graphic file (type png)
+
+<use visualization/particles2.png>
+Package pdftex.def Info: visualization/particles2.png used on input line 114.
+(pdftex.def)             Requested size: 151.76082pt x 151.75677pt.
+
+<visualization/particles3.png, id=18, 602.25pt x 602.25pt>
+File: visualization/particles3.png Graphic file (type png)
+
+<use visualization/particles3.png>
+Package pdftex.def Info: visualization/particles3.png used on input line 115.
+(pdftex.def)             Requested size: 151.76082pt x 151.75677pt.
+
+<visualization/particles4.png, id=19, 602.25pt x 602.25pt>
+File: visualization/particles4.png Graphic file (type png)
+
+<use visualization/particles4.png>
+Package pdftex.def Info: visualization/particles4.png used on input line 116.
+(pdftex.def)             Requested size: 151.76082pt x 151.75677pt.
+
+<visualization/particles5.png, id=20, 602.25pt x 602.25pt>
+File: visualization/particles5.png Graphic file (type png)
+
+<use visualization/particles5.png>
+Package pdftex.def Info: visualization/particles5.png used on input line 117.
+(pdftex.def)             Requested size: 151.76082pt x 151.75677pt.
 Package epstopdf Info: Source file: <diagrams/spring_angle_calc.eps>
-(epstopdf)                    date: 2015-04-10 02:00:26
-(epstopdf)                    size: 64339 bytes
+(epstopdf)                    date: 2015-04-10 03:39:22
+(epstopdf)                    size: 65276 bytes
 (epstopdf)             Output file: <diagrams/spring_angle_calc-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2015-04-10 02:00:26
+(epstopdf)                    date: 2015-04-10 03:39:22
 (epstopdf)                    size: 62089 bytes
-(epstopdf)             Command: <repstopdf --outfile=diagrams/spring_angle_calc
--eps-converted-to.pdf diagrams/spring_angle_calc.eps>
-(epstopdf)             \includegraphics on input line 149.
+(epstopdf)             Command: <epstopdf --outfile=diagrams/spring_angle_calc-
+eps-converted-to.pdf diagrams/spring_angle_calc.eps>
+(epstopdf)             \includegraphics on input line 154.
 Package epstopdf Info: Output file is already uptodate.
 
-<diagrams/spring_angle_calc-eps-converted-to.pdf, id=15, 461.725pt x 360.34625p
+<diagrams/spring_angle_calc-eps-converted-to.pdf, id=21, 461.725pt x 360.34625p
 t>
 File: diagrams/spring_angle_calc-eps-converted-to.pdf Graphic file (type pdf)
  <use diagrams/spring_angle_calc-eps-converted-to.pdf>
 Package pdftex.def Info: diagrams/spring_angle_calc-eps-converted-to.pdf used o
-n input line 149.
-(pdftex.def)             Requested size: 370.40912pt x 289.07999pt.
+n input line 154.
+(pdftex.def)             Requested size: 185.20103pt x 144.54pt.
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <17.28> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 150.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 155.
 LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <17.28> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 150.
- (./poster.bbl)
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 155.
+
+(C:\Users\Oberon\Documents\Thesis\auto-animation\poster2015\poster.bbl)
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./logos/lgpseal-eps-conver
-ted-to.pdf> <./logos/logo_cs_design_1.png
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <C:/Users/Oberon/Documents
+/Thesis/auto-animation/poster2015/logos/lgpseal-eps-converted-to.pdf> <C:/Users
+/Oberon/Documents/Thesis/auto-animation/poster2015/logos/logo_cs_design_1.png
 
-pdfTeX warning: pdflatex (file ./logos/logo_cs_design_1.png): large interlaced 
-PNG might cause out of memory (use non-interlaced PNG to fix this)
-> <./skel_example/skel1.png> <./skel_example/skel2.png> <./jump_sequence/jump1C
-ropped.png> <./jump_sequence/jump2Cropped.png> <./jump_sequence/jump3Cropped.pn
-g> <./jump_sequence/jump4Cropped.png> <./jump_sequence/jump5Cropped.png> <./jum
-p_sequence/jump6Cropped.png> <./jump_sequence/jump7Cropped.png> <./jump_sequenc
-e/jump8Cropped.png> <./diagrams/system_diag_horiz-eps-converted-to.pdf> <./diag
-rams/spring_angle_calc-eps-converted-to.pdf>] (./poster.aux) ) 
+pdfTeX warning: pdflatex (file C:/Users/Oberon/Documents/Thesis/auto-animation/
+poster2015/logos/logo_cs_design_1.png): large interlaced PNG might cause out of
+ memory (use non-interlaced PNG to fix this)
+> <C:/Users/Oberon/Documents/Thesis/auto-animation/poster2015/skel_example/skel
+1.png> <C:/Users/Oberon/Documents/Thesis/auto-animation/poster2015/skel_example
+/skel2.png> <C:/Users/Oberon/Documents/Thesis/auto-animation/poster2015/jump_se
+quence/jump1Cropped.png> <C:/Users/Oberon/Documents/Thesis/auto-animation/poste
+r2015/jump_sequence/jump2Cropped.png> <C:/Users/Oberon/Documents/Thesis/auto-an
+imation/poster2015/jump_sequence/jump3Cropped.png> <C:/Users/Oberon/Documents/T
+hesis/auto-animation/poster2015/jump_sequence/jump4Cropped.png> <C:/Users/Obero
+n/Documents/Thesis/auto-animation/poster2015/jump_sequence/jump5Cropped.png> <C
+:/Users/Oberon/Documents/Thesis/auto-animation/poster2015/jump_sequence/jump6Cr
+opped.png> <C:/Users/Oberon/Documents/Thesis/auto-animation/poster2015/jump_seq
+uence/jump7Cropped.png> <C:/Users/Oberon/Documents/Thesis/auto-animation/poster
+2015/jump_sequence/jump8Cropped.png> <C:/Users/Oberon/Documents/Thesis/auto-ani
+mation/poster2015/diagrams/system_diag_horiz-eps-converted-to.pdf> <C:/Users/Ob
+eron/Documents/Thesis/auto-animation/poster2015/visualization/supporting_plane.
+png> <C:/Users/Oberon/Documents/Thesis/auto-animation/poster2015/visualization/
+particles1.png> <C:/Users/Oberon/Documents/Thesis/auto-animation/poster2015/vis
+ualization/particles2.png> <C:/Users/Oberon/Documents/Thesis/auto-animation/pos
+ter2015/visualization/particles3.png> <C:/Users/Oberon/Documents/Thesis/auto-an
+imation/poster2015/visualization/particles4.png> <C:/Users/Oberon/Documents/The
+sis/auto-animation/poster2015/visualization/particles5.png> <C:/Users/Oberon/Do
+cuments/Thesis/auto-animation/poster2015/diagrams/spring_angle_calc-eps-convert
+ed-to.pdf>]
+(C:\Users\Oberon\Documents\Thesis\auto-animation\poster2015\poster.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
- 3516 strings out of 495028
- 52437 string characters out of 6181497
- 120880 words of memory out of 5000000
- 6604 multiletter control sequences out of 15000+600000
- 30720 words of font info for 70 fonts, out of 8000000 for 9000
- 14 hyphenation exceptions out of 8191
- 42i,8n,27p,1209b,356s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texli
-ve/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/sh
-are/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/
-texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on poster.pdf (1 page, 635855 bytes).
+ 3538 strings out of 493921
+ 53405 string characters out of 3147279
+ 121869 words of memory out of 3000000
+ 6704 multiletter control sequences out of 15000+200000
+ 30720 words of font info for 70 fonts, out of 3000000 for 9000
+ 841 hyphenation exceptions out of 8191
+ 42i,8n,27p,1209b,356s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program File
+s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX
+ 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX 2.9/fon
+ts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
+public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/cour
+ier/ucrr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb
+><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Program F
+iles/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvro8a.pfb>
+Output written on poster.pdf (1 page, 760609 bytes).
 PDF statistics:
- 81 PDF objects out of 1000 (max. 8388607)
- 41 compressed objects within 1 object stream
+ 91 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 71 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 101 words of extra memory for PDF output out of 10000 (max. 10000000)
 

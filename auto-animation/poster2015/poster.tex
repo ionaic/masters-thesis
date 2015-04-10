@@ -108,10 +108,15 @@
         Visualization is performed using Unity3D, utilizing colored markers to track joints through the scene as well as a colored polygon to show the supporting polygon.  A simple human model is used to show the overall body position.
 
         \begin{figure}
-            \centering
-            %\includegraphics[]{}
-            \caption{}
-        \end{figure}
+			\centering
+            \includegraphics[width=0.15\columnwidth]{visualization/supporting_plane.png}
+            \includegraphics[width=0.15\columnwidth]{visualization/particles1.png}
+            \includegraphics[width=0.15\columnwidth]{visualization/particles2.png}
+            \includegraphics[width=0.15\columnwidth]{visualization/particles3.png}
+            \includegraphics[width=0.15\columnwidth]{visualization/particles4.png}
+            \includegraphics[width=0.15\columnwidth]{visualization/particles5.png}
+			\caption{A sequence of images for a windup of the character with visualizations of joint positions and the supporting plane.  Joints tracked are the hip (purple), left and right knee (blue and red resp.), and left and right ankle (green and orange resp.).  The supporting plane is shown as a red rectangle at the feet.  Tracked joints and colors can be changed through the Unity3D inspector.}
+		\end{figure}
 
 	\section*{Future Work}
         Further work is underway to allow for more flexible starting conditions such as a running start.  Currently there is some flexibility allowing for previous velocity to be considered for force calculations, but control of the body using leg swings has yet to be implemented.
@@ -122,7 +127,7 @@
 
         %Finally, the current implementation utilizes a highly simplified model of force application.  Torque should be taken into account, allowing the force assignment to be performed as a maximum flow problem, as well as more accurately describing the force contribution of each muscle group to the movement of the body.  Capacity for joints could be given by the arc traced by the bone primarily affected by the joint when fully extended and fully flexed.
 		
-	\vspace{0.3in}
+	\vspace{0.2in}
 
 	{\footnotesize
 	\bibliographystyle{abbrv}
@@ -146,7 +151,7 @@
     \begin{figure}
         \label{fig:bone_diag}
         \centering
-        \includegraphics[height=4in]{diagrams/spring_angle_calc.eps}
+        \includegraphics[height=2in]{diagrams/spring_angle_calc.eps}
         \caption{Diagram of the spring extension over ends of bones.}
     \end{figure}
 
