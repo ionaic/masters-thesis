@@ -23,9 +23,10 @@ public class PIDServo {
 public abstract class Muscle {
     public abstract float force();
     public abstract float force(float length);
-    public abstract float desiredAngle(float force);
+    public abstract float jointAngle(float force);
 }
-
+//*/
+/*
 [System.Serializable]
 public class SpringMuscle : Muscle {
     // Simple spring model of a muscle for determining target poses
@@ -47,7 +48,7 @@ public class SpringMuscle : Muscle {
         // calculate the force of the muscle given a length
         return -k * (bone_width / Mathf.Sin(Mathf.PI - anchors[1].jointTransform.localRotation.x / 2.0f));
     }
-    public override float desiredAngle(float force) {
+    public override float jointAngle(float force) {
         // given a desired force from the muscle, what angle (radians) should
         // the joint be at
         //float cos = (-k * bone_width) / (force + l_0);
@@ -86,7 +87,7 @@ public class HillMuscle : Muscle {
     public override float force(float length) {
         return (b * (F_max + a))/(v + b) + a;
     }
-    public override float desiredAngle(float force) {
+    public override float jointAngle(float force) {
         // given a desired force from the muscle, what angle should the joint
         // be at
         return 0;
@@ -100,7 +101,7 @@ public class VariedSpringMuscle : Muscle {
     public override float force(float length) {
         return length;
     }
-    public override float desiredAngle(float force) {
+    public override float jointAngle(float force) {
         // given a desired force from the muscle, what angle should the joint
         // be at
         return 0;
@@ -115,7 +116,7 @@ public class Limb {
     public float boneWidth;
     public Transform mainBone;
     public Transform anchorBone;
-    private Muscle musc;
+    private SpringMuscle musc;
     
     public Limb() {
         musc = new SpringMuscle();
@@ -206,17 +207,17 @@ public class PhysicalMotionController : MonoBehaviour {
         // In Air
 	}
     
-    void TestJump(Muscle musc) {
+    void TestJump(SpringMuscle musc) {
         // just try bending to get a force to accelerate upwards at net of 2.0f
         // m/s/s
         desiredForce = bodyMass * gravity + bodyMass * desiredAccel;
 
-        angle = musc.desiredAngle(desiredForce);
+        angle = musc.jointAngle(desiredForce);
         Debug.Log("radian angle " + angle);
         angle *= Mathf.Rad2Deg;
         Debug.Log("degree angle " + angle);
     }
-    void TestJump2(Muscle musc) {
+    void TestJump2(SpringMuscle musc) {
         // just try bending to get a force to accelerate upwards at net of 2.0f
         // m/s/s
         desiredForce = bodyMass * gravity + bodyMass * desiredAccel;

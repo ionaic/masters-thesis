@@ -11,7 +11,7 @@ public enum JumpPolicy {
 
 public enum JumpState {
     NotJumping,
-    Windup,
+    WindUp,
     Accel,
     InAir,
     Landing
@@ -19,20 +19,20 @@ public enum JumpState {
 
 [System.Serializable]
 public class JumpVariables {
-    Vector3 start;
-    Vector3 destination;
-    Vector3 initial_velocity;
-    Vector3 acceleration;
-    Vector3 min_possible_accel;
-    Vector3 max_possible_accel;
-    Vector3 force;
-    float error_allowance;
-    float time;
+    public Vector3 start;
+    public Vector3 destination;
+    public Vector3 initial_velocity;
+    public Vector3 acceleration;
+    public Vector3 min_possible_accel;
+    public Vector3 max_possible_accel;
+    public Vector3 force;
+    public float error_allowance;
+    public float time;
 
-    JumpState state;
-    JumpPolicy policy;
+    public JumpState state;
+    public JumpPolicy policy;
     
-    bool IsAccelerationPossible(Vector3 accel) {
+    public bool IsAccelerationPossible(Vector3 accel) {
         return (accel.x <= max_possible_accel.x &&
                 accel.y <= max_possible_accel.y &&
                 accel.z <= max_possible_accel.z && 
@@ -104,6 +104,8 @@ public class ConstrainedPhysicalControllerSkeleton {
     public PhysicalJoint LFoot;
     public PhysicalJoint RHeel;
     public PhysicalJoint LHeel;
+    public Vector3 COM;
+    public Vector3 support_center;
 }
 
 public class JumpController : MonoBehaviour {
@@ -166,9 +168,9 @@ public class JumpController : MonoBehaviour {
             }
         }
         else if (jumping.state == JumpState.InAir) {
-            if (motor.IsGrounded()) {
+            //if (motor.IsGrounded()) {
                 jumping.state = JumpState.Landing;
-            }
+            //}
         }
         else if (jumping.state == JumpState.Landing) {
             if (Landing()) {
@@ -189,14 +191,14 @@ public class JumpController : MonoBehaviour {
             // find t to minimize a
         }
         else {
-            jumping.acceleration = 2 * (jumping.destination - jumping.start - initial_velocity * jumping.time) / (t * t);
+            jumping.acceleration = 2 * (jumping.destination - jumping.start - jumping.initial_velocity * jumping.time) / (jumping.time * jumping.time);
         }
         jumping.force = jumping.acceleration * mass;
-        return IsAccelerationPossible(jumping.acceleration);
+        return jumping.IsAccelerationPossible(jumping.acceleration);
     }
 
     Vector3 BalanceError() {
-        return (skeleton.support_center - skeleton.COM).magnitude;
+        return (skeleton.support_center - skeleton.COM);
     }
         
     Vector3 ForceError() {
@@ -204,6 +206,7 @@ public class JumpController : MonoBehaviour {
         // assuming force generated is a straight line force in desired
         // direction, need to take torque into account to give force a
         // direction
+        return Vector3.zero;
         
     }
 
@@ -212,7 +215,7 @@ public class JumpController : MonoBehaviour {
     bool Windup() {
         Vector3 servo_modification = windupPD.modify(BalanceError());
         servo_modification += windupPD.modify(ForceError());
-        return Math.Abs(ForceError() + BalanceError().sqrMagnitude) <= jumping.error_allowance;
+        return Mathf.Abs(ForceError().magnitude + BalanceError().magnitude) <= jumping.error_allowance;
     }
 
     // function to handle accel phase

@@ -14,6 +14,7 @@ public class JumpMotor : MonoBehaviour {
     // if not jumping and grounded, we're standing or walking etc.
     // if not jumping and not grounded, falling
     private bool isJumping;
+    private Vector3 velocity;
     
     void Start () {
         // initialize to not be jumping
@@ -31,12 +32,12 @@ public class JumpMotor : MonoBehaviour {
     }
 
     // function to apply a jump to a character in a particular direction
-    void ApplyJump(Vector3 v) {
-
+    Vector3 ApplyJump(Vector3 v) {
+        return v;
     }
 
-    void ApplyGravity(Vector3 v) {
-
+    Vector3 ApplyGravity(Vector3 v) {
+        return v;
     }
 
     // function for moving character to a point
