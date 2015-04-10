@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.11.3)  10 APR 2015 01:39
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.11.3)  10 APR 2015 02:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -397,15 +397,24 @@ LaTeX Info: Redefining \selectfont on input line 126.
 \RaggedRightParindent=\skip84
 \JustifyingParindent=\skip85
 )
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <51.6> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 54.
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <35.83> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 54.
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 54.
+Package epstopdf Info: Source file: <logos/lgpseal.eps>
+(epstopdf)                    date: 2015-04-10 02:23:15
+(epstopdf)                    size: 211190 bytes
+(epstopdf)             Output file: <logos/lgpseal-eps-converted-to.pdf>
+(epstopdf)                    date: 2015-04-10 02:24:25
+(epstopdf)                    size: 29021 bytes
+(epstopdf)             Command: <repstopdf --outfile=logos/lgpseal-eps-converte
+d-to.pdf logos/lgpseal.eps>
+(epstopdf)             \includegraphics on input line 54.
+Package epstopdf Info: Output file is already uptodate.
 
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
-File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)
+<logos/lgpseal-eps-converted-to.pdf, id=1, 65.24374pt x 66.2475pt>
+File: logos/lgpseal-eps-converted-to.pdf Graphic file (type pdf)
+
+<use logos/lgpseal-eps-converted-to.pdf>
+Package pdftex.def Info: logos/lgpseal-eps-converted-to.pdf used on input line 
+54.
+(pdftex.def)             Requested size: 65.24358pt x 66.24733pt.
 LaTeX Font Info:    Try loading font information for U+msa on input line 54.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
@@ -416,19 +425,38 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 54.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
+LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <51.6> not available
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 54.
+LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <35.83> not available
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 54.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 54.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
+<logos/logo_cs_design_1.png, id=2, 2007.5pt x 2007.5pt>
+File: logos/logo_cs_design_1.png Graphic file (type png)
+
+<use logos/logo_cs_design_1.png>
+Package pdftex.def Info: logos/logo_cs_design_1.png used on input line 54.
+(pdftex.def)             Requested size: 2007.49512pt x 2007.49512pt.
+
+Overfull \hbox (10.54907pt too wide) in paragraph at lines 54--55
+[]$[]$  $[]$$[]$
+ []
+
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <24.88> not available
 (Font)              Font shape `OT1/phv/b/n' tried instead on input line 57.
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <29.86> not available
 (Font)              Font shape `OT1/phv/b/n' tried instead on input line 57.
-
-<skel_example/skel1.png, id=1, 324.21124pt x 558.085pt>
+<skel_example/skel1.png, id=4, 324.21124pt x 558.085pt>
 File: skel_example/skel1.png Graphic file (type png)
 
 <use skel_example/skel1.png>
 Package pdftex.def Info: skel_example/skel1.png used on input line 66.
 (pdftex.def)             Requested size: 209.92844pt x 361.34999pt.
 
-<skel_example/skel2.png, id=3, 210.7875pt x 499.8675pt>
+<skel_example/skel2.png, id=5, 210.7875pt x 499.8675pt>
 File: skel_example/skel2.png Graphic file (type png)
 
 <use skel_example/skel2.png>
@@ -442,131 +470,138 @@ Underfull \hbox (badness 1014) in paragraph at lines 63--70
 ex-i-bil-ity,
  []
 
-<jump_sequence/jump1Cropped.png, id=4, 602.25pt x 501.875pt>
+<jump_sequence/jump1Cropped.png, id=6, 602.25pt x 501.875pt>
 File: jump_sequence/jump1Cropped.png Graphic file (type png)
 
 <use jump_sequence/jump1Cropped.png>
 Package pdftex.def Info: jump_sequence/jump1Cropped.png used on input line 81.
 (pdftex.def)             Requested size: 245.71425pt x 204.75922pt.
 
-<jump_sequence/jump2Cropped.png, id=5, 602.25pt x 501.875pt>
+<jump_sequence/jump2Cropped.png, id=7, 602.25pt x 501.875pt>
 File: jump_sequence/jump2Cropped.png Graphic file (type png)
 
 <use jump_sequence/jump2Cropped.png>
 Package pdftex.def Info: jump_sequence/jump2Cropped.png used on input line 82.
 (pdftex.def)             Requested size: 245.71425pt x 204.75922pt.
 
-<jump_sequence/jump3Cropped.png, id=6, 602.25pt x 501.875pt>
+<jump_sequence/jump3Cropped.png, id=8, 602.25pt x 501.875pt>
 File: jump_sequence/jump3Cropped.png Graphic file (type png)
 
 <use jump_sequence/jump3Cropped.png>
 Package pdftex.def Info: jump_sequence/jump3Cropped.png used on input line 83.
 (pdftex.def)             Requested size: 245.71425pt x 204.75922pt.
 
-<jump_sequence/jump4Cropped.png, id=7, 602.25pt x 501.875pt>
+<jump_sequence/jump4Cropped.png, id=9, 602.25pt x 501.875pt>
 File: jump_sequence/jump4Cropped.png Graphic file (type png)
 
 <use jump_sequence/jump4Cropped.png>
 Package pdftex.def Info: jump_sequence/jump4Cropped.png used on input line 84.
 (pdftex.def)             Requested size: 245.71425pt x 204.75922pt.
 
-<jump_sequence/jump5Cropped.png, id=8, 602.25pt x 501.875pt>
+<jump_sequence/jump5Cropped.png, id=10, 602.25pt x 501.875pt>
 File: jump_sequence/jump5Cropped.png Graphic file (type png)
 
 <use jump_sequence/jump5Cropped.png>
 Package pdftex.def Info: jump_sequence/jump5Cropped.png used on input line 85.
 (pdftex.def)             Requested size: 245.71425pt x 204.75922pt.
 
-<jump_sequence/jump6Cropped.png, id=9, 602.25pt x 501.875pt>
+<jump_sequence/jump6Cropped.png, id=11, 602.25pt x 501.875pt>
 File: jump_sequence/jump6Cropped.png Graphic file (type png)
 
 <use jump_sequence/jump6Cropped.png>
 Package pdftex.def Info: jump_sequence/jump6Cropped.png used on input line 86.
 (pdftex.def)             Requested size: 245.71425pt x 204.75922pt.
 
-<jump_sequence/jump7Cropped.png, id=10, 602.25pt x 501.875pt>
+<jump_sequence/jump7Cropped.png, id=12, 602.25pt x 501.875pt>
 File: jump_sequence/jump7Cropped.png Graphic file (type png)
 
 <use jump_sequence/jump7Cropped.png>
 Package pdftex.def Info: jump_sequence/jump7Cropped.png used on input line 87.
 (pdftex.def)             Requested size: 245.71425pt x 204.75922pt.
 
-<jump_sequence/jump8Cropped.png, id=11, 602.25pt x 501.875pt>
+<jump_sequence/jump8Cropped.png, id=13, 602.25pt x 501.875pt>
 File: jump_sequence/jump8Cropped.png Graphic file (type png)
 
 <use jump_sequence/jump8Cropped.png>
 Package pdftex.def Info: jump_sequence/jump8Cropped.png used on input line 88.
 (pdftex.def)             Requested size: 245.71425pt x 204.75922pt.
-Package epstopdf Info: Source file: <system_diag_horiz.eps>
-(epstopdf)                    date: 2015-04-09 19:46:05
+Package epstopdf Info: Source file: <diagrams/system_diag_horiz.eps>
+(epstopdf)                    date: 2015-04-10 02:00:26
 (epstopdf)                    size: 27110 bytes
-(epstopdf)             Output file: <system_diag_horiz-eps-converted-to.pdf>
-(epstopdf)                    date: 2015-04-09 19:46:09
+(epstopdf)             Output file: <diagrams/system_diag_horiz-eps-converted-t
+o.pdf>
+(epstopdf)                    date: 2015-04-10 02:00:26
 (epstopdf)                    size: 11927 bytes
-(epstopdf)             Command: <repstopdf --outfile=system_diag_horiz-eps-conv
-erted-to.pdf system_diag_horiz.eps>
+(epstopdf)             Command: <repstopdf --outfile=diagrams/system_diag_horiz
+-eps-converted-to.pdf diagrams/system_diag_horiz.eps>
 (epstopdf)             \includegraphics on input line 94.
 Package epstopdf Info: Output file is already uptodate.
 
-<system_diag_horiz-eps-converted-to.pdf, id=12, 1341.01pt x 288.07625pt>
-File: system_diag_horiz-eps-converted-to.pdf Graphic file (type pdf)
-
-<use system_diag_horiz-eps-converted-to.pdf>
-Package pdftex.def Info: system_diag_horiz-eps-converted-to.pdf used on input l
-ine 94.
+<diagrams/system_diag_horiz-eps-converted-to.pdf, id=14, 1341.01pt x 288.07625p
+t>
+File: diagrams/system_diag_horiz-eps-converted-to.pdf Graphic file (type pdf)
+ <use diagrams/system_diag_horiz-eps-converted-to.pdf>
+Package pdftex.def Info: diagrams/system_diag_horiz-eps-converted-to.pdf used o
+n input line 94.
 (pdftex.def)             Requested size: 982.87573pt x 211.14227pt.
-Package epstopdf Info: Source file: <spring_angle_calc.eps>
-(epstopdf)                    date: 2015-04-10 00:34:41
+Package epstopdf Info: Source file: <diagrams/spring_angle_calc.eps>
+(epstopdf)                    date: 2015-04-10 02:00:26
 (epstopdf)                    size: 64339 bytes
-(epstopdf)             Output file: <spring_angle_calc-eps-converted-to.pdf>
-(epstopdf)                    date: 2015-04-10 00:35:40
+(epstopdf)             Output file: <diagrams/spring_angle_calc-eps-converted-t
+o.pdf>
+(epstopdf)                    date: 2015-04-10 02:00:26
 (epstopdf)                    size: 62089 bytes
-(epstopdf)             Command: <repstopdf --outfile=spring_angle_calc-eps-conv
-erted-to.pdf spring_angle_calc.eps>
+(epstopdf)             Command: <repstopdf --outfile=diagrams/spring_angle_calc
+-eps-converted-to.pdf diagrams/spring_angle_calc.eps>
 (epstopdf)             \includegraphics on input line 149.
 Package epstopdf Info: Output file is already uptodate.
 
-<spring_angle_calc-eps-converted-to.pdf, id=13, 461.725pt x 360.34625pt>
-File: spring_angle_calc-eps-converted-to.pdf Graphic file (type pdf)
-
-<use spring_angle_calc-eps-converted-to.pdf>
-Package pdftex.def Info: spring_angle_calc-eps-converted-to.pdf used on input l
-ine 149.
+<diagrams/spring_angle_calc-eps-converted-to.pdf, id=15, 461.725pt x 360.34625p
+t>
+File: diagrams/spring_angle_calc-eps-converted-to.pdf Graphic file (type pdf)
+ <use diagrams/spring_angle_calc-eps-converted-to.pdf>
+Package pdftex.def Info: diagrams/spring_angle_calc-eps-converted-to.pdf used o
+n input line 149.
 (pdftex.def)             Requested size: 370.40912pt x 289.07999pt.
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <17.28> not available
 (Font)              Font shape `OT1/phv/b/n' tried instead on input line 150.
 LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <17.28> not available
 (Font)              Font shape `OT1/phv/m/sl' tried instead on input line 150.
- (./poster.bbl) [1
+ (./poster.bbl)
+[1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./skel_example/skel1.png> 
-<./skel_example/skel2.png> <./jump_sequence/jump1Cropped.png> <./jump_sequence/
-jump2Cropped.png> <./jump_sequence/jump3Cropped.png> <./jump_sequence/jump4Crop
-ped.png> <./jump_sequence/jump5Cropped.png> <./jump_sequence/jump6Cropped.png> 
-<./jump_sequence/jump7Cropped.png> <./jump_sequence/jump8Cropped.png> <./system
-_diag_horiz-eps-converted-to.pdf> <./spring_angle_calc-eps-converted-to.pdf>] (
-./poster.aux) ) 
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./logos/lgpseal-eps-conver
+ted-to.pdf> <./logos/logo_cs_design_1.png
+
+pdfTeX warning: pdflatex (file ./logos/logo_cs_design_1.png): large interlaced 
+PNG might cause out of memory (use non-interlaced PNG to fix this)
+> <./skel_example/skel1.png> <./skel_example/skel2.png> <./jump_sequence/jump1C
+ropped.png> <./jump_sequence/jump2Cropped.png> <./jump_sequence/jump3Cropped.pn
+g> <./jump_sequence/jump4Cropped.png> <./jump_sequence/jump5Cropped.png> <./jum
+p_sequence/jump6Cropped.png> <./jump_sequence/jump7Cropped.png> <./jump_sequenc
+e/jump8Cropped.png> <./diagrams/system_diag_horiz-eps-converted-to.pdf> <./diag
+rams/spring_angle_calc-eps-converted-to.pdf>] (./poster.aux) ) 
 Here is how much of TeX's memory you used:
- 3504 strings out of 495028
- 52041 string characters out of 6181497
- 119834 words of memory out of 5000000
- 6596 multiletter control sequences out of 15000+600000
+ 3516 strings out of 495028
+ 52437 string characters out of 6181497
+ 120880 words of memory out of 5000000
+ 6604 multiletter control sequences out of 15000+600000
  30720 words of font info for 70 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 42i,8n,26p,1209b,352s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr
-/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic
-/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb
->
-Output written on poster.pdf (1 page, 226596 bytes).
+ 42i,8n,27p,1209b,356s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texli
+ve/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
+Output written on poster.pdf (1 page, 635855 bytes).
 PDF statistics:
- 73 PDF objects out of 1000 (max. 8388607)
- 36 compressed objects within 1 object stream
+ 81 PDF objects out of 1000 (max. 8388607)
+ 41 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 61 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 71 words of extra memory for PDF output out of 10000 (max. 10000000)
 

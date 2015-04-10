@@ -41,8 +41,8 @@
 
 \email{ooii@rpi.edu,cutler@cs.rpi.edu}  % shows author email address below institute
 
-\noleftlogo
-\norightlogo
+\leftlogo{logos/lgpseal.eps}
+\rightlogo{logos/logo_cs_design_1.png}
 
 %\setlength{\wpXoffset}{-30in}
 %\setlength{\wpYoffset}{-32.2in}
@@ -91,7 +91,7 @@
 
         \begin{figure}
             \centering
-            \includegraphics[width=0.8\columnwidth]{system_diag_horiz.eps}
+            \includegraphics[width=0.8\columnwidth]{diagrams/system_diag_horiz.eps}
             \caption{The controller proceeds through the above stages, beginning with an initial calculation of the force vector required to move the character to the desired position given start and end positions as well as initial velocity, working through a chosen jump policy to decide on time to take as well as jump height.  Next the controller finds the required angles of the joints to produce this force, modeling the muscles as simple springs anchored to two different bones across a joint which gain spring potential from stretching as the joint bends.  This is performed iteratively using a PD controller, with an error function considering positioning of the center of mass over the supporting polygon in addition to the force available in the springs.  Force of the springs is used only to find joint angles.  The character then extends, unbending the joints, progressing until the feet leave the ground and the character enters the airborne phase.}
         \end{figure}
 
@@ -146,7 +146,7 @@
     \begin{figure}
         \label{fig:bone_diag}
         \centering
-        \includegraphics[height=4in]{spring_angle_calc.eps}
+        \includegraphics[height=4in]{diagrams/spring_angle_calc.eps}
         \caption{Diagram of the spring extension over ends of bones.}
     \end{figure}
 
