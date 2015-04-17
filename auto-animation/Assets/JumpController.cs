@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public enum JumpPolicy {
+[System.Serializable]
+public enum PathSolutionPolicy {
     AirTime,
     HighestPossible,
     // LowestPossible, // lowest possible is known from whatever objects to clear
@@ -9,6 +10,7 @@ public enum JumpPolicy {
     MinimumForce
 }
 
+[System.Serializable]
 public enum JumpState {
     NotJumping,
     WindUp,
@@ -30,7 +32,7 @@ public class JumpVariables {
     public float time;
 
     public JumpState state;
-    public JumpPolicy policy;
+    public PathSolutionPolicy policy;
     
     public bool IsAccelerationPossible(Vector3 accel) {
         return (accel.x <= max_possible_accel.x &&
@@ -114,12 +116,16 @@ public class JumpController : MonoBehaviour {
     public JumpVariables jumping;
     public PIDServo windupPD;
     public ConstrainedPhysicalControllerSkeleton skeleton;
+    public JumpMotor motor;
     public float mass;
     
     void Start() {
         // initial estimate of path/velocity to get from start to end
         // calculation of intermediate goal states from starting point and final goal
         jumping.state = JumpState.NotJumping;
+        if (!motor) {
+            motor = gameObject.AddComponent<JumpMotor>() as JumpMotor;
+        }
     }
     
     void Update() {
@@ -144,7 +150,7 @@ public class JumpController : MonoBehaviour {
         }
         
         // Apply the direction to the CharacterMotor
-        //motor.inputMoveDirection = transform.rotation * directionVector;
+        motor.inputMoveDirection = transform.rotation * directionVector;
         // --------------------------------------
         bool inputJump = Input.GetButton("Jump");
         
@@ -168,9 +174,9 @@ public class JumpController : MonoBehaviour {
             }
         }
         else if (jumping.state == JumpState.InAir) {
-            //if (motor.IsGrounded()) {
+            if (motor.IsGrounded()) {
                 jumping.state = JumpState.Landing;
-            //}
+            }
         }
         else if (jumping.state == JumpState.Landing) {
             if (Landing()) {
@@ -181,13 +187,13 @@ public class JumpController : MonoBehaviour {
 
     // function to handle path estimate
     bool EstimatePath() {
-        if (jumping.policy == JumpPolicy.HighestPossible) {
+        if (jumping.policy == PathSolutionPolicy.HighestPossible) {
             // find acceleration to maximize vertical component of x - x_0
         }
-        else if (jumping.policy == JumpPolicy.FastAsPossible) {
+        else if (jumping.policy == PathSolutionPolicy.FastAsPossible) {
             // find acceleration minimizing t
         }
-        else if (jumping.policy == JumpPolicy.MinimumForce) {
+        else if (jumping.policy == PathSolutionPolicy.MinimumForce) {
             // find t to minimize a
         }
         else {
