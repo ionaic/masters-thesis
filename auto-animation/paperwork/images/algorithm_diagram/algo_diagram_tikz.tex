@@ -25,65 +25,31 @@
 
 \begin{document}
 % Define stage styles
-\tikzstyle{stage} = [rectangle, draw, fill=blue!20, text centered, rounded corners, minimum height=4em]
+\tikzstyle{stage} = [rectangle, draw, fill=blue!25, text centered, rounded corners, minimum height=4em, inner sep=8pt,node on layer=l2]
+\tikzstyle{substage} = [draw=blue,fill=white,dashed,rounded corners=0.25cm,align=flush center,text width=12em,inner sep=4pt,minimum height=1.5cm]
 \tikzstyle{line} = [draw, -latex']
 \tikzstyle{data} = [draw, cylinder, shape border rotate=90, aspect=0.25, fill=red!20, node distance=3cm, minimum height=2em, text centered]
 \tikzstyle{decision} = [diamond, draw, fill=white, text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
 
 \tikzstyle{lvl1} = [draw,fill=blue!50,rounded corners=0.5cm,inner sep=12pt,node on layer=l1]
-\tikzstyle{lvl2} = [draw,fill=blue!25,rounded corners=0.5cm,inner sep=8pt,node on layer=l2]
-\tikzstyle{lvl3} = [draw=blue,fill=white,dashed,rounded corners=0.25cm,align=flush center,text width=12em,inner sep=4pt,minimum height=1.5cm]
+
 \tikzstyle{title} = [font=\LARGE]
 \tikzstyle{myarrow} = [latex-latex, ultra thick, blue!80]
 \tikzstyle{ghost} = [draw=none, fill=none]
 
 \newcommand{\nodebox}[2]{\parbox[c]{#1}{\centering #2}}
 
-\begin{tikzpicture}[node distance = 2cm, auto]
-    % Place nodes
-	% Path Estimate Phase
-	%	Path Estimate Stage
-    \node [stage] (path) {\nodebox{10em}{Path Estimate \[a = \dfrac{2 (x - x_0 - v_0 t)}{t^2} \]}};
-    %	Path Estimate Data
-    \node [data, left of=path](t){\nodebox{4em}{Time ($t$)}};
-    \node [data, above of=path] (xf) {\nodebox{4em}{Target Position ($x$)}};
-    \node [data, left of=xf] (xi) {\nodebox{4em}{Initial Position ($x_0$)}};
-    \node [data, right of=xf] (vi) {\nodebox{4em}{Initial Velocity ($v_0$)}};
-    \node [data, below of=path] (accel) {\nodebox{6em}{Target Acceleration ($a$)}};
-    
-    % Bend Phase
-    %	Bend Stage
-    % before controller, need to calculate the desired force
-    \node [lvl2, below=10em of accel] (forceCalc) {\nodebox{12em}{Calculate desired force $F_{target} = \displaystyle\sum_{j=0}^n {m_j} a$}};
-    \node [lvl3, below=of forceCalc] (bendErr) {Calculate error from desired force magnitude ($E_{force}$)};
-    \node [lvl3, right=of bendErr] (bendBal) {Calculate balance error ($E_{balance}$)};
-    \node [data, below right=1em and -1em of bendErr] (bendErrAll) {\nodebox{12em}{$E_{all} = E_{force} + E_{balance}$}};
-    \node [decision, below=2em of bendErrAll] (bendPDTest) {$E_{all} \overset{?}{\le} \epsilon$};
-    \node [lvl3, left=2em of bendPDTest] (bendPDeq) {$u(i) = k_p E_{all}(i) + k_d \left(E_{all}(i) - E_{all}(i-1)\right)$};
-    \node [title, above right=3em and -2.5em of bendErr] (bendPDtitle) {PD Controller};
-    \node [ghost, below=1em of bendPDtitle] (bendRepeat) {};
-    \node [lvl2, fit=(bendPDtitle) (bendErr) (bendBal) (bendErrAll) (bendPDeq) (bendPDTest)] (bendPD) {};
-    %\node [lvl2, fit=(bendPDtitle) (bendErr) (bendBal) (bendErrAll) (bendPDeq) (bendPDTest), label={\LARGE Test}, label distance=-1em] (bendPD) {};
-    \node [title, right=of forceCalc] (bendTitle) {Bend Phase};
-    \node [lvl1, fit=(forceCalc) (bendTitle) (bendPD)] (bend) {};
-    %	Bend Data
-    \node [data, left=1em of accel] (mass) {\nodebox{7em}{Body Mass assigned to each limb ($\left\lbrace m_0, \ldots, m_n\right\rbrace$)}};
-	\node [data, left=10em of accel] (skeleton) {\nodebox{6em}{Model with skeleton attached ($J = \left\lbrace j_0, \ldots, j_n \right\rbrace$, contains at least a pelvis and both left and right hips, knees, ankles, heels, and toes)}};
-	\node [data, below=2em of skeleton] (mjoints){\nodebox{7em}{Muscled joints ($J_m = \lbrace$ $j_{pelvis}$, $j_{Lhip}$, $j_{Rhip}$, $j_{Lknee}$, $j_{Rknee}$, $j_{Lankle}$, $j_{Rankle}$, $j_{Lheel}$, $j_{Rheel}$, $j_{Ltoe}$, $j_{Rtoe}$ $\rbrace$}};
-	\node [data, right=4em of accel] (muscles) {\nodebox{7em}{Muscle spring constant for muscled joints ($\left\lbrace k_0, \ldots, k_11\right\rbrace$)}};
-	\node [data, right=2em of muscles] (jconst) {\nodebox{5em}{Rotation constraints for joints ($\theta_{min}, \theta_{max}$ $\forall j \in J_{muscled}$)}};
+\input{pathEstimate.tex}
+\input{bendPhase.tex}
+
+\begin{tikzpicture}[node distance = 1em, auto]
+   
 	
 	% unbend phase
-    \node [stage, below=5em of bend] (unbend) {Unbend Phase};
+	\node [data, below=7em of bendPDTest] (bentSkel) {\nodebox{6em}{Skeleton in bent position ($\theta_{x} \forall x \in J_m$)}};
+    \node [stage, below=of bentSkel] (unbend) {Unbend Phase};
     % Draw edges
-    \path [line, dashed] (path) -- (accel);
-    \path [line, dashed] (accel) -- (forceCalc);
-    \path [line,dashed] (mass) |- (forceCalc);
-    \path [line] (bend) -- (unbend);
-    \path [line,dashed] (xi) -- (path);
-    \path [line,dashed] (xf) -- (path);
-    \path [line,dashed] (t) -- (path);
-    \path [line,dashed] (vi) -- (path);
+    \path [line] (bendPDTest) -- (bentSkel);
 
 \end{tikzpicture}
 \end{document}

@@ -1,0 +1,17 @@
+\begin{tikzpicture}[node distance = 1em, auto]
+% Path Estimate Phase
+	%	Path Estimate Stage
+    \node [stage] (path) {\nodebox{10em}{Path Estimate \[a = \dfrac{2 (x - x_0 - v_0 t)}{t^2} \]}};
+    %	Path Estimate Data
+    \node [data, above of=path] (xf) {\nodebox{4em}{Target Position ($x$)}};
+    \node [data, left of=xf] (xi) {\nodebox{4em}{Initial Position ($x_0$)}};
+    \node [data, left of=xi](t){\nodebox{4em}{Time ($t$)}};
+    \node [data, right of=xf] (vi) {\nodebox{4em}{Initial Velocity ($v_0$)}};
+    \node [data, below of=path] (accel) {\nodebox{6em}{Target Acceleration ($a$)}};
+    
+    \path [line] (xi) |- (path);
+    \path [line] (xf) -- (path);
+    \path [line] (t) |- (path);
+    \path [line] (vi) |- (path);
+    \path [line] (path) -- (accel);
+\end{tikzpicture}
