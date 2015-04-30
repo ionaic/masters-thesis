@@ -1,12 +1,12 @@
-\documentclass[border=5pt]{standalone}
+\documentclass{article}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsfonts}
 \usepackage{tikz}
+\usepackage{caption}
 \usetikzlibrary{fit,positioning,shapes,arrows}
 \pgfdeclarelayer{l1}
-\pgfdeclarelayer{l2}
-\pgfsetlayers{l1,l2,main}
+\pgfsetlayers{l1,main}
 
 \makeatletter
 \pgfkeys{%
@@ -25,22 +25,27 @@
 
 \begin{document}
 % Define stage styles
-\tikzstyle{stage} = [rectangle, draw, fill=blue!25, text centered, rounded corners, minimum height=4em, inner sep=8pt,node on layer=l2]
-\tikzstyle{substage} = [draw=blue,fill=white,dashed,rounded corners=0.25cm,align=flush center,text width=12em,inner sep=4pt,minimum height=1.5cm]
+\tikzstyle{stage} = [rectangle, draw, fill=blue!25, text centered, rounded corners, minimum height=4em, inner sep=1.5em,node on layer=l1]
+\tikzstyle{substage} = [draw=blue,fill=white,dashed,rounded corners=0.25cm,align=flush center,text width=12em,inner sep=0.5em,minimum height=1.5cm]
 \tikzstyle{line} = [draw, -latex']
 \tikzstyle{data} = [draw, cylinder, shape border rotate=90, aspect=0.25, fill=red!20, node distance=3cm, minimum height=2em, text centered]
 \tikzstyle{decision} = [diamond, draw, fill=white, text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
 
-\tikzstyle{lvl1} = [draw,fill=blue!50,rounded corners=0.5cm,inner sep=12pt,node on layer=l1]
-
-\tikzstyle{title} = [font=\LARGE]
-\tikzstyle{myarrow} = [latex-latex, ultra thick, blue!80]
-\tikzstyle{ghost} = [draw=none, fill=none]
-
 \newcommand{\nodebox}[2]{\parbox[c]{#1}{\centering #2}}
 
-\input{pathEstimate.tex}
-\input{bendPhase.tex}
+Joint is described as an object containing a position, value, parent joint, child joint(s), and a set of triangles which transform as children of the joint with amounts designated by weights given per vertex of each triangle.
+
+\begin{figure}[h]
+	\centering
+	\input{pathEstimate.tex}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\resizebox{\textwidth}{!} {
+		\input{bendPhase.tex}
+	}
+\end{figure}
 
 \begin{tikzpicture}[node distance = 1em, auto]
    
@@ -49,7 +54,6 @@
 	\node [data, below=7em of bendPDTest] (bentSkel) {\nodebox{6em}{Skeleton in bent position ($\theta_{x} \forall x \in J_m$)}};
     \node [stage, below=of bentSkel] (unbend) {Unbend Phase};
     % Draw edges
-    \path [line] (bendPDTest) -- (bentSkel);
 
 \end{tikzpicture}
 \end{document}

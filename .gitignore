@@ -4,3 +4,4 @@ auto-animation/paperwork/Thesis_ooiis.out
 *.lot
 auto-animation/paperwork/Thesis_ooiis.blg
 *.synctex.gz
+*.gz(busy)
