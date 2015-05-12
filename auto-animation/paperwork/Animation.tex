@@ -11,12 +11,39 @@ Jumping is the acceleration of a character's center of mass upward.  This motion
 
 Next comes the take-off stage.  The character pushes against the floor with their feet, accelerating their center of mass to break contact with the floor.  
 
-\section{Force calculation}
+\section{Path Estimation}
+
+\begin{figure}[ht]
+	\label{fig:pathEstimate}
+	\centering
+	\input{images/algorithm_diagram/pathEstimate.tex}
+	\caption{Diagram of the path estimation step.}
+\end{figure}
+
+\begin{figure}[ht]
+	\label{fig:pathExample}
+	\caption{Example of a path estimation.}
+\end{figure}
+Before calculations relating to the model's skeleton are performed, an initial estimate of the jump path is performed.  The estimate uses a simple forward kinematic calculation to determine the force required to move an object through the air from the initial position of the model, denoted as $x_0$ in Figure \ref{fig:pathEstimate}, to a final position, denoted as $x$.  From this force, the acceleration can be determined using $F=ma$ from classical mechanics.
+
+This assumes the character is a rigid body with negligible air resistance acted upon by gravity of $10\frac{m}{s}$.  The 
+
+\section{Windup}
+\begin{figure}[ht]
+	\label{fig:bendPhase}
+	\centering
+	\resizebox{\textwidth}{!}{
+		\input{images/algorithm_diagram/bendPhase.tex}
+	}
+	\caption{Algorithm diagram of the windup phase.}
+\end{figure}
+\subsection{Center of Mass and Balance}
+\subsection{Force calculation}
 % calculation of the muscle flexion
+
+
 \subsection{Inverse Kinematic Solving}
 As the skeleton is a hierarchy assumed to be rooted at the hip, a problem arises with applying rotations to joints.  To keep a character's feet rooted to the floor as is expected, 
 
 
-\section{Center of Mass and Balance}
-
-\section{Thrust}
+\section{Thrust and Takeoff}

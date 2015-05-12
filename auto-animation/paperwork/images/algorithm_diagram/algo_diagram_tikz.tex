@@ -46,14 +46,8 @@ Joint is described as an object containing a position, value, parent joint, chil
 		\input{bendPhase.tex}
 	}
 \end{figure}
-
-\begin{tikzpicture}[node distance = 1em, auto]
-   
-	
-	% unbend phase
-	\node [data, below=7em of bendPDTest] (bentSkel) {\nodebox{6em}{Skeleton in bent position ($\theta_{x} \forall x \in J_m$)}};
-    \node [stage, below=of bentSkel] (unbend) {Unbend Phase};
-    % Draw edges
-
-\end{tikzpicture}
+\begin{figure}[h]
+	\centering
+	\input{unbendPhase.tex}
+\end{figure}
 \end{document}

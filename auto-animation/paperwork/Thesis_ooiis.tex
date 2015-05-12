@@ -44,6 +44,33 @@
 
 \renewcommand{\vec}[1]{\mathbf{#1}}
 
+% For tikz
+\usepackage{tikz}
+\usetikzlibrary{fit,positioning,shapes,arrows}
+\pgfdeclarelayer{l1}
+\pgfsetlayers{l1,main}
+\makeatletter
+\pgfkeys{%
+  /tikz/node on layer/.code={
+    \gdef\node@@on@layer{%
+      \setbox\tikz@tempbox=\hbox\bgroup\pgfonlayer{#1}\unhbox\tikz@tempbox\endpgfonlayer\egroup}
+    \aftergroup\node@on@layer
+  },
+  /tikz/end node on layer/.code={
+    \endpgfonlayer\endgroup\endgroup
+  }
+}
+
+\def\node@on@layer{\aftergroup\node@@on@layer}
+\makeatother
+% Define stage styles
+\tikzstyle{stage} = [rectangle, draw, fill=blue!25, text centered, rounded corners, minimum height=2cm, inner sep=0.5cm, node on layer=l1]
+\tikzstyle{substage} = [draw=blue,fill=white,dashed,rounded corners=0.25cm,align=flush center,text width=12em,inner sep=0.25cm,minimum height=1.5cm]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{data} = [draw, rectangle, shape border rotate=90, aspect=0.25, fill=red!20, minimum height=2em, text centered]
+\tikzstyle{decision} = [diamond, draw, fill=white, text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
+\newcommand{\nodebox}[2]{\parbox[c]{#1}{\centering #2}}
+
 % For rotating in the tables
 \usepackage{rotating} 
 \usepackage[T1]{fontenc}

@@ -1,48 +1,74 @@
-\begin{tikzpicture}[node distance = 3em, auto]
- % Place nodes
-	\node [data, below of=path] (accel) {\nodebox{6em}{Target Acceleration ($a$)}};
-    
-    % Bend Phase
-    %	Bend Stage
-    % before controller, need to calculate the desired force
-    \node [stage, below=7em of accel] (forceCalc) {\nodebox{12em}{Calculate desired force $F_{target} = \displaystyle\sum_{j=0}^n {m_j} a$}};
-    \node [substage, below=7em of forceCalc] (bendErr) {Calculate error from desired force magnitude ($E_{force}$)};
-    \node [substage, right=of bendErr] (bendBal) {Calculate balance error ($E_{balance}$)};
-    \node [data, below right=1em and -2.25em of bendErr] (bendErrAll) {\nodebox{12em}{$E_{all} = E_{force} + E_{balance}$}};
-    \node [decision, below=10em of bendErrAll] (bendPDTest) {$E_{all} \overset{?}{\le} \epsilon$};
-    \node [substage, left=8em of bendPDTest] (bendPDeq) {$u(i) = k_p E_{all}(i) + k_d \left(E_{all}(i) - E_{all}(i-1)\right)$};
-    
-    %\node [title, above right=3em and -2.5em of bendErr] (bendPDtitle) {PD Controller};
-    \node [stage, label={[shift={(-1em, 5.5em)}, rotate=90]180:\LARGE PD Controller}, fit=(bendErr) (bendBal) (bendErrAll) (bendPDeq) (bendPDTest)] (bendPD) {};
-    %	Bend Data
-    \node [data, left=1em of accel] (mass) {\nodebox{7em}{Body Mass assigned to each limb ($\left\lbrace m_0, \ldots, m_n\right\rbrace$)}};
-	\node [data, left=10em of accel] (skeleton) {\nodebox{6em}{Model with skeleton attached ($J = \left\lbrace j_0, \ldots, j_n \right\rbrace$, contains at least a pelvis and both left and right hips, knees, ankles, heels, and toes)}};
-	\node [data, below=2em of skeleton] (mjoints){\nodebox{7em}{Muscled joints ($J_m = \lbrace$ $j_{pelvis}$, $j_{Lhip}$, $j_{Rhip}$, $j_{Lknee}$, $j_{Rknee}$, $j_{Lankle}$, $j_{Rankle}$, $j_{Lheel}$, $j_{Rheel}$, $j_{Ltoe}$, $j_{Rtoe}$ $\rbrace$}};
-	\node [data, right=4em of accel] (muscles) {\nodebox{7em}{Muscle spring constant for muscled joints ($\left\lbrace k_0, \ldots, k_11\right\rbrace$)}};
-	\node [data, right=2em of muscles] (jconst) {\nodebox{5em}{Rotation constraints for joints ($\theta_{min}, \theta_{max}$ $\forall j \in J_{muscled}$)}};
-	\node [data, below=7em of bendPDTest] (bentSkel) {\nodebox{6em}{Skeleton in bent position ($\theta_{x} \forall x \in J_m$)}};
-	
-	%IK solver
-	\node [data, left=of bendPDeq] (IKCurJoint) {\nodebox{8em}{$R = position(j)$ $\forall j \in J_{ik} \subseteq J$ starting with the root (hip joint).}};
-	\node [data, left=1em of IKCurJoint] (IKTargetPos) {\nodebox{8em}{Target position for joint, in this case keeping $E$ in it's original position ($D$).}};
-	\node [data, left=1em of IKTargetPos] (IKEndJoint) {\nodebox{4em}{Joint to move to target ($E$).}};
-	\node [data, above right=2em and -2em of IKTargetPos] (IKRD) {\nodebox{6em}{Normalized vector $\vec{RD}$}};
-	\node [data, above left=2em and -2em of IKTargetPos] (IKRE) {\nodebox{6em}{Normalized vector $\vec{RE}$}};
-`	\node [substage, above=8em of IKTargetPos] (IKEq) {$\theta_j = \vec{RD} \times \vec{RE}$.};
-	\node [data, above left=1em of IKEq] (IKItrs) {\nodebox{6em}{Number of iterations for IK solver ($num_itr$)}};
-	\node [data, left=29em of bendErr] (IKPartBent) {\nodebox{5em}{Bent skeleton reflecting $u(i)$.}};
-	\node [stage, label={[shift={(-1em, 5.5em)}, rotate=90]180:\LARGE IK Solver}, fit=(IKCurJoint) (IKEndJoint) (IKTargetPos) (IKItrs) (IKRD) (IKEq) (IKPartBent)] (bendIK) {Requires joints to be in a single chain.};
-	
-	\path [line] (accel) -- (forceCalc);
+\begin{tikzpicture}[node distance = 0.5cm, auto]
+% Bend Phase
+    % before controller, need to calculate the desired 
+    % place nodes
+    \node [data, below of=path] (accel) {\nodebox{2.5cm}{Target Acceleration ($a$)}};
+	\node [data, left=of accel] (mass) {\nodebox{3.5cm}{Body Mass assigned to each limb ($\left\lbrace m_0, \ldots, m_n\right\rbrace$)}};
+    \node [stage, below= of accel] (forceCalc) {\nodebox{6cm}{Calculate desired force $F_{target} = \displaystyle\sum_{j=0}^n {m_j} a$}};
+    % connecting lines
+    \path [line] (accel) -- (forceCalc);
     \path [line] (mass) |- (forceCalc);
-    \path [line] (forceCalc) -- (bendErr);
-    \path [line] (bendErr) |- (bendErrAll);
+    % ----------------
+	
+    % PD controller
+    % place nodes
+    \node [substage, below=4cm of forceCalc] (bendErr) {Calculate error from desired force magnitude ($E_{force}$)};
+    \node [substage, left=2.5cm of bendErr] (bendBal) {Calculate balance error ($E_{balance}$)};
+    \node [substage, above=of bendBal] (comCalc) {\nodebox{5cm}{Calculate Center of Mass \[C_{mass} = \displaystyle\sum_{\forall m} m \cdot position(m)\]}};
+    \node [data, below left=1cm and -2cm of bendErr] (bendErrAll) {\nodebox{4cm}{$E_{all} = E_{force} + E_{balance}$}};
+    \node [decision, below=0.5cm of bendErrAll] (bendPDTest) {$E_{all} \overset{?}{\le} \epsilon$};
+    \node [substage, left=1cm of bendPDTest] (bendPDEq) {Set new hip position based on $u(i) = k_p E_{all}(i) + k_d \left(E_{all}(i) - E_{all}(i-1)\right)$};
+    \node [stage, label={[shift={(-0.5cm, 2cm)}, rotate=90]180:\LARGE PD Controller}, fit=(comCalc) (bendErr) (bendBal) (bendErrAll) (bendPDEq) (bendPDTest)] (bendPD) {};
+    \node [data, below=2cm of bendPDTest] (bentSkel) {\nodebox{3cm}{Skeleton in bent position ($\theta_{x} \forall x \in J_m$)}};
+    \node [data, below=1cm of bendPDEq] (bendPDConst) {
+    \nodebox{4cm}{Proportional and Derivative weights ($k_p, k_d$)}};
+    % connecting lines
+	\path [line] (forceCalc) -- (bendErr);
+	\path [line] (comCalc) -- (bendBal);
+	\path [line] (bendErr) |- (bendErrAll);
     \path [line] (bendBal) |- (bendErrAll);
     \path [line] (bendErrAll) -- (bendPDTest);
-    \path [line] (bendPDTest) -- (bendPDeq);
-    %\path [line] (bendPDeq) -- ++(0em, 25em) -| (bendBal);
-    %\path [line] (bendPDeq) |- (bendErr);
+    \path [line] (bendPDTest) -- (bendPDEq);
     \path [line] (bendPDTest) -- (bentSkel);
-    \path [line] (IKPartBent) -- (bendErr);
-    \path [line] (IKPartBent) -- ++(25em, 0em) -- ++(0em, 3em) -| (bendBal);
+    \path [line] (bendPDConst) -- (bendPDEq);
+    % ----------------
+    
+    % CoM inputs
+    % place nodes
+    \node [data, above =2cm of comCalc] (skeleton) {\nodebox{3cm}{Model with skeleton attached ($J = \left\lbrace j_0, \ldots, j_n \right\rbrace$, contains at least a pelvis and both left and right hips, knees, ankles, heels, and toes)}}; 
+    \node [data, left=2cm of skeleton] (mjoints){\nodebox{7cm}{Muscled joints ($J_m = \lbrace$ $j_{pelvis}$, $j_{Lhip}$, $j_{Rhip}$, $j_{Lknee}$, $j_{Rknee}$, $j_{Lankle}$, $j_{Rankle}$, $j_{Lheel}$, $j_{Rheel}$, $j_{Ltoe}$, $j_{Rtoe}$ $\rbrace$}};
+    \node [data, left=2cm of mjoints] (muscles) {\nodebox{7cm}{Muscle spring constant for muscled joints ($\left\lbrace k_0, \ldots, k_11\right\rbrace$)}};
+	\node [data, left=2cm of muscles] (jconst) {\nodebox{5cm}{Rotation constraints for joints ($\theta_{min}, \theta_{max}$ $\forall j \in J_{muscled}$)}};
+	
+	% connecting lines
+	\path [line] (skeleton) -- (comCalc);
+	\path [line] (mjoints) |- (comCalc);
+	\path [line] (muscles) |- (comCalc);
+	\path [line] (jconst) |- (comCalc);
+	% ----------------	
+	
+	% IK solver side stage
+	% place nodes
+	\node [data, left=6cmof bendPDEq] (IKCurJoint) {\nodebox{8cm}{$R = position(j)$ $\forall j \in J_{ik} \subseteq J$ starting with the root (hip joint).}};
+	\node [data, left=3cm of IKCurJoint] (IKTargetPos) {\nodebox{8cm}{Target position for joint, in this case keeping $E$ in it's original position ($D$).}};
+	\node [data, left=3cm of IKTargetPos] (IKEndJoint) {\nodebox{4cm}{Joint to move to target ($E$).}};
+	\node [data, above=2cm of IKCurJoint] (IKRD) {\nodebox{6cm}{Normalized vector $\vec{RD}$}};
+	\node [data, above=2cm of IKEndJoint] (IKRE) {\nodebox{6cm}{Normalized vector $\vec{RE}$}};
+`	\node [substage, above=8cm of IKTargetPos] (IKEq) {$\theta_j = \vec{RD} \times \vec{RE}$.};
+	\node [data, above left=3cm of IKEq] (IKItrs) {\nodebox{6cm}{Number of iterations for IK solver ($num_itr$)}};
+	\node [data, left=29cm of comCalc] (IKPartBent) {\nodebox{5cm}{Bent skeleton reflecting $u(i)$.}};
+	\node [stage, label={[shift={(-1cm, 5.5cm)}, rotate=90]180:\LARGE IK Solver}, fit=(IKCurJoint) (IKEndJoint) (IKTargetPos) (IKItrs) (IKRD) (IKEq) (IKPartBent)] (bendIK) {Requires joints to be in a single chain.};
+    % connecting lines
+    \path [line] (bendPDEq) -- (IKCurJoint);
+    \path [line] (IKPartBent) -- ++(25cm, 0cm) -- ++(0cm, -4.5cm) -| (bendErr);
+    \path [line] (IKPartBent) -- (comCalc);
+    \path [line] (IKCurJoint) -- (IKRD);
+    \path [line] (IKEndJoint) -- (IKRE);
+    \path [line] (IKTargetPos) |- (IKRD);
+    \path [line] (IKTargetPos) |- (IKRE);
+    \path [line] (IKRD) |- (IKEq);
+    \path [line] (IKRE) |- (IKEq);
+    \path [line] (IKEq) -- (IKPartBent);
+    \path [line] (IKItrs) |- (IKEq);
+    % ----------------
 \end{tikzpicture}
