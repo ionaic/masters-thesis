@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TexmakerSession quickmode="3">
-    <document hasfocus="false" master="false" line="0" bookmark1="0" bookmark2="0" file="C:/Users/Oberon/Documents/Thesis/auto-animation/paperwork/images/algorithm_diagram/pathEstimate.tex" bookmark3="0"/>
-    <document hasfocus="false" master="false" line="27" bookmark1="0" bookmark2="0" file="C:\Users\Oberon\Documents\Thesis\auto-animation\paperwork\images\algorithm_diagram\algo_diagram_tikz.tex" bookmark3="0"/>
     <document hasfocus="false" master="false" line="19" bookmark1="0" bookmark2="0" file="C:\Users\Oberon\Documents\Thesis\auto-animation\paperwork\images\algorithm_diagram\bendPhase.tex" bookmark3="0"/>
-    <document hasfocus="false" master="false" line="18" bookmark1="0" bookmark2="0" file="C:\Users\Oberon\Documents\Thesis\auto-animation\paperwork\Results.tex" bookmark3="0"/>
+    <document hasfocus="false" master="false" line="27" bookmark1="0" bookmark2="0" file="C:\Users\Oberon\Documents\Thesis\auto-animation\paperwork\images\algorithm_diagram\algo_diagram_tikz.tex" bookmark3="0"/>
+    <document hasfocus="false" master="false" line="0" bookmark1="0" bookmark2="0" file="C:/Users/Oberon/Documents/Thesis/auto-animation/paperwork/images/algorithm_diagram/pathEstimate.tex" bookmark3="0"/>
     <document hasfocus="false" master="false" line="6" bookmark1="0" bookmark2="0" file="C:/Users/Oberon/Documents/Thesis/auto-animation/paperwork/images/algorithm_diagram/unbendPhase.tex" bookmark3="0"/>
+    <document hasfocus="false" master="false" line="18" bookmark1="0" bookmark2="0" file="C:\Users\Oberon\Documents\Thesis\auto-animation\paperwork\Results.tex" bookmark3="0"/>
+    <document hasfocus="false" master="false" line="61" bookmark1="0" bookmark2="0" file="C:/Users/Oberon/Documents/Thesis/auto-animation/paperwork/Intro.tex" bookmark3="0"/>
+    <document hasfocus="false" master="false" line="107" bookmark1="0" bookmark2="0" file="C:\Users\Oberon\Documents\Thesis\auto-animation\poster2015\poster.tex" bookmark3="0"/>
     <document hasfocus="false" master="true" line="29" bookmark1="0" bookmark2="0" file="C:\Users\Oberon\Documents\Thesis\auto-animation\paperwork\Thesis_ooiis.tex" bookmark3="0"/>
-    <document hasfocus="false" master="false" line="27" bookmark1="0" bookmark2="0" file="C:\Users\Oberon\Documents\Thesis\auto-animation\paperwork\TitlePage.tex" bookmark3="0"/>
     <document hasfocus="false" master="false" line="170" bookmark1="0" bookmark2="0" file="C:\Users\Oberon\Documents\Thesis\auto-animation\paperwork\research.bib" bookmark3="0"/>
-    <document hasfocus="false" master="false" line="66" bookmark1="0" bookmark2="0" file="C:\Users\Oberon\Documents\Thesis\auto-animation\paperwork\Animation.tex" bookmark3="0"/>
-    <document hasfocus="true" master="false" line="24" bookmark1="0" bookmark2="0" file="C:/Users/Oberon/Documents/Thesis/auto-animation/paperwork/Intro.tex" bookmark3="0"/>
+    <document hasfocus="false" master="false" line="89" bookmark1="0" bookmark2="0" file="C:\Users\Oberon\Documents\Thesis\auto-animation\paperwork\Animation.tex" bookmark3="0"/>
+    <document hasfocus="false" master="false" line="27" bookmark1="0" bookmark2="0" file="C:\Users\Oberon\Documents\Thesis\auto-animation\paperwork\TitlePage.tex" bookmark3="0"/>
+    <document hasfocus="true" master="false" line="37" bookmark1="0" bookmark2="0" file="C:\Users\Oberon\Documents\Thesis\auto-animation\paperwork\PreviousWorks.tex" bookmark3="0"/>
 </TexmakerSession>
