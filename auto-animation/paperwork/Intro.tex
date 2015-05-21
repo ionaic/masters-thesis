@@ -21,8 +21,8 @@ Animations of human characters are used heavily in video games, movies, and othe
 % figure of sprite animation frames
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=\textwidth]{images/platformer_sprites_jump.png}
-    \includegraphics[width=\textwidth]{images/platformer_sprites_walk.png}
+    \includegraphics[width=\textwidth]{images/sprite_example/platformer_sprites_jump.png}
+    \includegraphics[width=\textwidth]{images/sprite_example/platformer_sprites_walk.png}
     \caption[Example of a 2D Sprite Animation]{This example shows a 2D sprite sheet used to produce a jumping animation for a stick figure character.  The frames in this case are laid out in a single image for demonstration purposes, progressing in order starting with frame 0, the frame farthest left in this sprite sheet.}
 \end{figure}
 
@@ -48,13 +48,18 @@ We present a controller that takes a skeleton as input, with additional paramete
 
 To control the motion and maintain plausibility, calculations are performed to determine the character's center of mass and supporting polygon.  As the character should maintain balance while flexing its joints, the position of the character's joints are adjusted to keep the center of mass positioned over the supporting polygon.  Flexion proceeds with the character bending progressively, maintaining balance while moving to achieve the desired spring force in its leg muscles.
 
-The next stage of the motion, the take-off where the character releases from the ground, uses the potential energy of the spring-muscles and accelerates the character's center of mass upward.  Application of force works from the joints and muscles closest to the center of mass outwards through the skeleton.  While not handled by our controller, the character would then proceed through the in-air portion of the jump, where the acceleration changes due to gravity as well as other forces before they finally land.  We assume a simple trajectory for the in-air phase, though more complex motions with turns, flips, or interaction with the environment could be created.  Other work has handled landing with a similar approach. \cite{falling_landing}%TODO CITE karen liu
+The next stage of the motion, the take-off where the character releases from the ground, uses the potential energy of the spring-muscles and accelerates the character's center of mass upward.  Application of force works from the joints and muscles closest to the center of mass outwards through the skeleton.  While not handled by our controller, the character would then proceed through the in-air portion of the jump, where the acceleration changes due to gravity as well as other forces before they finally land.  We assume a simple trajectory for the in-air phase, though more complex motions with turns, flips, or interaction with the environment could be created.  Other work has handled landing with a similar approach. \cite{falling_landing}
 
-Our controller is made to be a module, able to be used with other controllers as part of a larger system.  This allows each controller to do a smaller job well. Several such controllers can be connected to produce more complex animations or animation sequences, utilizing bounded starting and finishing conditions for the character. Additionally, certain cases during the duration cause the controller to stop early, for example a mid-air collision mid jump which would require a separate controller to handle this case.%TODO CITE modular controllers
+Our controller is made to be a module, able to be used with other controllers as part of a larger system.  This allows each controller to do a smaller job well. Several such controllers can be connected to produce more complex animations or animation sequences, utilizing bounded starting and finishing conditions for the character. Additionally, certain cases during the duration cause the controller to stop early, for example a mid-air collision mid jump which would require a separate controller to handle this case. \cite{composable_controllers}
 
 % figure of current keyframe animation process in maya
 % accompanying video for presentation
 % accompanying figure/video of the resulting animation in 3d
+
+\section{Skeleton and Joints}
+For the purposes of animation, a joint is an object with an associated position, associated transformation, a rotation describing the bend of the joint, a parent joint, and some number of child joints.  In the case of the root, the parent joint is absent and in the case of the end joints such as tips of the fingers there are no child joints.  These joints are structured in a tree, as the parent and child joints imply, with the root of the tree at the pelvis.
+
+Joints are associated with a set of vertices from the mesh to be animated.  Each of these may be associated with multiple joints, and are assigned a weight for each joint which acts as a scale factor for the transformations performed on the vertex.
 
 % explain contributions
 % - what is the contribution of this technique

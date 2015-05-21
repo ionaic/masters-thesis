@@ -24,11 +24,17 @@ Next comes the take-off stage.  The character pushes against the floor with thei
 	\label{fig:pathExample}
 	\caption{Example of a path estimation.}
 \end{figure}
-Before calculations relating to the model's skeleton are performed, an initial estimate of the jump path is performed.  The estimate uses a simple forward kinematic calculation to determine the force required to move an object through the air from the initial position of the model, denoted as $x_0$ in Figure \ref{fig:pathEstimate}, to a final position, denoted as $x$.  From this force, the acceleration can be determined using $F=ma$ from classical mechanics.
+Before calculations relating to the model's skeleton are performed, an initial estimate of the jump path is performed.  The estimate uses a simple forward kinematic calculation to determine the force required to move an object through the air from the initial position of the model, denoted as $x_0$ in Figure \ref{fig:pathEstimate}, to a final position, denoted as $x$.  To facilitate a character jumping while moving, the path estimate takes into account the initial velocity $v_0$.
 
-This assumes the character is a rigid body with negligible air resistance acted upon by gravity of $10\frac{m}{s}$.  The 
+The user specifies a desired time ($t$), which indicates the time the character will spend airborne during the animation, i.e. the time between when the character's feet break contact with the ground and when they regain contact with the ground.  This is useful as the desired animation can be more easily adjusted to fit a desired time as an in-game animation or to fit a particular storyboard for an animated film sequence.
 
 \section{Windup}
+From this force, the acceleration can be determined using $F=ma$ from classical mechanics.  This assumes the character is a rigid body with negligible air resistance acted upon by gravity of $10\frac{m}{s}$.  The mass is calculated as the summed total of the distributed masses assigned to the character's limbs, which are summed to produce a total mass for the character.
+
+Proportional derivative control is used to produce the windup motion once the initial path estimate is calculated.  The error function $E_{all}$ calculates error from the desired force $E_{force}$ as well as the balance $E_{balance}$.
+
+Once computed, error is compared to a threshold ($\epsilon$).  If the error is below the threshold, the skeleton is considered bent to the proper position for windup and the system proceeds to the thrust phase in which the character unbends.  If the value is above the threshold, a new position for the hip is calculated using proportional-derivative control, where the new position for the iteration of the controller, $u(i)$, is calculated as \[u(i) = k_p E_{all}(i - 1) + k_d(E_{all}(i-1) - E_{all}(i-2))\] where $i$ is the iteration, and $k_p$ and $k_d$ are weights which determine the rate of change. This new hip position is given to an inverse kinematics component to calculate the positions of the remaining leg joints, assuming the feet should remain in the same position.  These new joint positions and angles are then passed back to the PD controller to re-calculate the center of mass as well as the new force and balance errors for the next iteration.
+
 \begin{figure}[ht]
 	\label{fig:bendPhase}
 	\centering
@@ -36,14 +42,63 @@ This assumes the character is a rigid body with negligible air resistance acted 
 		\input{images/algorithm_diagram/bendPhase.tex}
 	}
 	\caption{Algorithm diagram of the windup phase.}
+	%TODO decision lines need to be labeled
 \end{figure}
-\subsection{Center of Mass and Balance}
+
 \subsection{Force calculation}
 % calculation of the muscle flexion
+\begin{figure}[ht]
+	\label{fig:forceCalc}
+	\centering
+	\includegraphics[width=10cm]{images/spring_calc/spring_angle_calc.eps}
+	\caption{Force calculation for a joint.}
+\end{figure}
+Current force is computed by approximating muscles as linear springs attached to two bones and crossing a joint.  The change in spring length is produced by the bend of the joint which opens a space between the rigid bones that the spring must stretch across.  This approximation uses spring constants that simulate a flexed muscle that has been stretched by an amount equal to \[\theta = cos^{-1} \left( \dfrac{2 k^2 r^2}{F^2} - 1 \right)\] which requires a more rigid spring constant.  In this equation, $r$, represents the width of the bone, which is a constant that changes the amount the character must bend to achieve a force.  This acts similarly to the $k$ value, which represents the stiffness of the spring, or a constant for the linear restoring force of the muscle.  
+%TODO For our simulations, we used values in the range ().
+%TODO values and equation
+%TODO tables of values with varied k and varied r and corresponding bend/angle
+\begin{table}[ht]
+	\label{tab:variedSpringValues}
+	\centering
+	\caption{A table of various values for k and r, demonstrating effect on the model's bend.  TODO Columns of k and r (varied individually), and image of fully bent character resulting from values.}
+\end{table}
+
+At each iteration of the PD controller, current force output of the legs is computed in the same way, with the total actual force, $F_{leg}$ computed as \[F_{leg} = F_{ankle} + F_{knee} + F_{hip}\] for each leg, with 
+%TODO does this setup effectively result in springs connected in series? No because you can assume that the muscles you don't want to unbend with remain rigid?
+%TODO does this give a sort of impulse function as you unbend at the hips and knees, then the ankles?
+%TODO this is where the torques come into play, and they're absolutely necessary
+
+\begin{figure}[ht]
+	\label{fig:forceErr}
+	\centering
+	\caption{Force error calculation}
+\end{figure}
+
+\subsection{Center of Mass and Balance}
+%TODO need to standardize usage of joint to anatomical, animation, or something else
+The center of mass is calculated as the centroid of the character.  More specifically, joint positions are averaged, with a weight assigned to each joint based on the weight of the limb associated.  
+\begin{figure}[ht]
+	\label{fig:balanceErr}
+	\centering
+	\caption{Balance error calculation.}
+\end{figure}
+
 
 
 \subsection{Inverse Kinematic Solving}
-As the skeleton is a hierarchy assumed to be rooted at the hip, a problem arises with applying rotations to joints.  To keep a character's feet rooted to the floor as is expected, 
+As the skeleton is a hierarchy assumed to be rooted at the hip, a problem arises with applying rotations to joints.  To keep a character's feet rooted to the floor as is expected, positions must be solved for using inverse kinematics.  Given the desired position for the hip, and the desired position of the foot, the joint angles and positions of the knee and ankle are solved for.  Constraints are placed on each joint, limiting the range of motion to an expected range as well as limiting the axes about which each joint can rotate, preventing unnatural directions of motion.  These values are specified per joint and can be edited by the user to simulate varied levels of flexibility or alternate body shapes.
+
+%TODO alternate body with digitigrade, Tauren or whatever from WoW, raptor style...
+%TODO Further justification of why choosing this method instead of learning is that this is more user-tunable as opposed to a learning heavy model which doesn't allow as much user tuning
+
+\begin{table}[ht]
+	\label{tab:jointConstraints}
+	\centering
+	\caption{Joint angle constraint values used for each joint, with accompanying images of expected motion range.}
+\end{figure}
 
 
 \section{Thrust and Takeoff}
+
+\section{Summary}
+\label{section:animation_summary}

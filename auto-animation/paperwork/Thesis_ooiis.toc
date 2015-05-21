@@ -1,14 +1,20 @@
 \contentsline {chapter}{LIST OF TABLES}{iii}{chapter*.3}
 \contentsline {chapter}{LIST OF FIGURES}{iv}{chapter*.5}
 \contentsline {chapter}{\numberline {1.}INTRODUCTION}{1}{chapter.1}
-\contentsline {section}{\numberline {1.1}Contributions}{4}{section.1.1}
+\contentsline {section}{\numberline {1.1}Skeleton and Joints}{4}{section.1.1}
+\contentsline {section}{\numberline {1.2}Contributions}{5}{section.1.2}
 \contentsline {chapter}{\numberline {2.}PREVIOUS WORK}{6}{chapter.2}
 \contentsline {section}{\numberline {2.1}Background}{6}{section.2.1}
 \contentsline {chapter}{\numberline {3.}ANIMATION}{8}{chapter.3}
 \contentsline {section}{\numberline {3.1}Path Estimation}{8}{section.3.1}
 \contentsline {section}{\numberline {3.2}Windup}{9}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Center of Mass and Balance}{9}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}Force calculation}{9}{subsection.3.2.2}
-\contentsline {subsection}{\numberline {3.2.3}Inverse Kinematic Solving}{9}{subsection.3.2.3}
-\contentsline {section}{\numberline {3.3}Thrust and Takeoff}{9}{section.3.3}
-\contentsline {chapter}{References}{10}{section*.13}
+\contentsline {subsection}{\numberline {3.2.1}Force calculation}{10}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Center of Mass and Balance}{12}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}Inverse Kinematic Solving}{12}{subsection.3.2.3}
+\contentsline {section}{\numberline {3.3}Thrust and Takeoff}{12}{section.3.3}
+\contentsline {section}{\numberline {3.4}Summary}{12}{section.3.4}
+\contentsline {chapter}{\numberline {4.}RESULTS}{13}{chapter.4}
+\contentsline {section}{\numberline {4.1}Images}{13}{section.4.1}
+\contentsline {section}{\numberline {4.2}Limitations}{13}{section.4.2}
+\contentsline {section}{\numberline {4.3}Summary}{13}{section.4.3}
+\contentsline {chapter}{References}{14}{section*.17}
