@@ -33,15 +33,6 @@ S.~Ha, Y.~Ye, and C.~K. Liu, ``Falling and landing motion control for character
   2012. [Online]. Available: \url{http://doi.acm.org/10.1145/2366145.2366174}
 \BIBentrySTDinterwordspacing
 
-\bibitem{motion_intentions}
-\BIBentryALTinterwordspacing
-Y.~Koga, K.~Kondo, J.~Kuffner, and J.-C. Latombe, ``Planning motions with
-  intentions,'' in \emph{Proceedings of the 21st Annual Conference on Computer
-  Graphics and Interactive Techniques}, ser. SIGGRAPH '94.\hskip 1em plus 0.5em
-  minus 0.4em\relax New York, NY, USA: ACM, 1994, pp. 395--408. [Online].
-  Available: \url{http://doi.acm.org/10.1145/192161.192266}
-\BIBentrySTDinterwordspacing
-
 \bibitem{composable_controllers}
 \BIBentryALTinterwordspacing
 P.~Faloutsos, M.~van~de Panne, and D.~Terzopoulos, ``Composable controllers for
@@ -49,6 +40,15 @@ P.~Faloutsos, M.~van~de Panne, and D.~Terzopoulos, ``Composable controllers for
   Conference on Computer Graphics and Interactive Techniques}, ser. SIGGRAPH
   '01.\hskip 1em plus 0.5em minus 0.4em\relax New York, NY, USA: ACM, 2001, pp.
   251--260. [Online]. Available: \url{http://doi.acm.org/10.1145/383259.383287}
+\BIBentrySTDinterwordspacing
+
+\bibitem{motion_intentions}
+\BIBentryALTinterwordspacing
+Y.~Koga, K.~Kondo, J.~Kuffner, and J.-C. Latombe, ``Planning motions with
+  intentions,'' in \emph{Proceedings of the 21st Annual Conference on Computer
+  Graphics and Interactive Techniques}, ser. SIGGRAPH '94.\hskip 1em plus 0.5em
+  minus 0.4em\relax New York, NY, USA: ACM, 1994, pp. 395--408. [Online].
+  Available: \url{http://doi.acm.org/10.1145/192161.192266}
 \BIBentrySTDinterwordspacing
 
 \bibitem{anim_human_athletics}

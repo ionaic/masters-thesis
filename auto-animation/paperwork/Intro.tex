@@ -24,6 +24,7 @@ Animations of human characters are used heavily in video games, movies, and othe
     \includegraphics[width=\textwidth]{images/sprite_example/platformer_sprites_jump.png}
     \includegraphics[width=\textwidth]{images/sprite_example/platformer_sprites_walk.png}
     \caption[Example of a 2D Sprite Animation]{This example shows a 2D sprite sheet used to produce a jumping animation for a stick figure character.  The frames in this case are laid out in a single image for demonstration purposes, progressing in order starting with frame 0, the frame farthest left in this sprite sheet.}
+    \label{fig:sprite_sheet}
 \end{figure}
 
 3D models are described as a mesh, a collection of primitive polygons (i.e. quadrilaterals or triangles) which are stored as vertices.  This mesh describes what is drawn, including any texture, color, and other material information.  Along with the mesh, a skeleton, or rig, is stored.  The rig describes a heirarchical structure of bones and accompanying joints.  Each vertex is given a series of weights describing the impact each joint has on its transformation.  This allows many vertices, and therefore many polygons, to be transformed at once in organized groups, simplifying the problem of animating the model to a matter of transforming the skeleton in the desired manner.  To animate this 3D model, an artist specifies keyframes of the animation by positioning the skeleton at different time steps.  The stored keyframes, instead of an image, are the transformations of each joint at this frame or step of the animation, which a rendering or game engine can interpolate between to produce the final result.
@@ -38,6 +39,7 @@ Animations of human characters are used heavily in video games, movies, and othe
 		\includegraphics[width=\textwidth]{images/simpleSkeleton2Screen2Cropped.png}
 	\end{subfigure}
 	\caption[Example of Rigged 3D Character Model]{Above is an example of a character model in AutoDesk Maya.  The character skin or mesh is shown in gray, with a rig shown in multicolor.  While it is visualized as a series of spherical joints with connecting solids, the rig itself does not have a visual component in practice.  The rig acts as a skeleton, deforming the mesh of the character model to make animation easier.  Additional tools such as deformer groups and inverse kinematics handles can be used to further simplify the creation of animations for artists.  While these tools simplify movement of the model, the artist still must position each joint for each frame of the animation, which is then stored for later playback.}
+	\label{fig:rig_character}
 \end{figure}
 
 Specifying these animation frames is work intensive, taking up significant time and resources to produce for a single character.  Additionally, similar animations may need to be produced for slightly different scenarios, with only minor modifications required.  These minor modifications can be to fit a different setting, such as a character jumping on Earth or on the moon, or can be for different characters, such as a large person moving in contrast with a small child.  Though the movement itself may be similar, manual changes must be made, requiring artist time which could be spent generating new assets.  
@@ -57,9 +59,9 @@ Our controller is made to be a module, able to be used with other controllers as
 % accompanying figure/video of the resulting animation in 3d
 
 \section{Skeleton and Joints}
-For the purposes of animation, a joint is an object with an associated position, associated transformation, a rotation describing the bend of the joint, a parent joint, and some number of child joints.  In the case of the root, the parent joint is absent and in the case of the end joints such as tips of the fingers there are no child joints.  These joints are structured in a tree, as the parent and child joints imply, with the root of the tree at the pelvis.
+For the purposes of animation, a joint is an object with an associated position, associated transformation, a parent joint, and some number of child joints.  In the case of the root, the parent joint is absent and in the case of the end joints such as tips of the fingers there are no child joints.  Each child joint is connected to the parent by a rigid bone, which protrudes from the parent at a given resting angle.  These joints are structured in a tree, as the parent and child joints imply, with the root of the tree at the pelvis.  This tree serves as a hierarchy for transformations.
 
-Joints are associated with a set of vertices from the mesh to be animated.  Each of these may be associated with multiple joints, and are assigned a weight for each joint which acts as a scale factor for the transformations performed on the vertex. 
+Joints are associated with a set of vertices from the mesh to be animated.  Each of these may be associated with multiple joints, and are assigned a weight for each joint which acts as a scale factor for the transformations performed on the vertex.
 
 % explain contributions
 % - what is the contribution of this technique
