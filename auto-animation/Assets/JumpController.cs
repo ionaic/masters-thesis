@@ -117,8 +117,8 @@ public class SpringMuscle {
     public Vector3 angularMomentum(float deltaTime, float force) {
         return torque(force) * deltaTime;
     }
-    public Vector3 angularVelocity() {
-        
+    public Vector3 instantLinearMomentum(float deltaTime, float force) {
+        Vector3 dir = new Vector3();
     }
     public float jointAngle(float force) {
         // given a desired force from the muscle, what angle (radians) should
@@ -145,6 +145,7 @@ public class ConstrainedPhysicalControllerSkeleton {
     public PhysicalJoint LFoot;
     public PhysicalJoint RHeel;
     public PhysicalJoint LHeel;
+    public SpringMuscle[] muscles;
     public Vector3 COM;
     public Vector3 support_center;
 
@@ -175,6 +176,11 @@ public class ConstrainedPhysicalControllerSkeleton {
             + RKnee.jointMass + LKnee.jointMass
             + RFoot.jointMass + LFoot.jointMass
             + RHeel.jointMass + LHeel.jointMass;
+    }
+
+    // acceleration vecetor from all of the muscles
+    public Vector3 acceleration() {
+
     }
 }
 
