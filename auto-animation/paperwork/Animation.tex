@@ -132,5 +132,10 @@ This approach, while for the specific case of single chains of joints, is simple
 \section{Thrust and Takeoff}
 Upward acceleration is animated by calculating the angular accelerations of the joints given the forces acting upon them and the resulting torques.  Torque is the change in angular momentum over time, allowing for the acceleration to be calculated as the mass can be assumed to be constant: \[\tau = \dfrac{dL}{dt} = m \dfrac{dv_{\theta}}{dt} = m a_{\theta}\] where $\tau$ is the torque of a joint, $L$ is the angular momentum, $m$ is the mass of the limb, which must take into account the mass of the rest of the body which is also moved by the limb, $v_{\theta}$ is the angular velocity and $a_{\theta}$ is the angular acceleration. This results in the below equation for determining angular acceleration. \[a_{\theta} = \dfrac{\tau}{m}\]
 
+Using angular acceleration, the intermediary poses for the model can be determined at each timestep.   For each frame, an explicit Euler integration is performed to determine first angular velocity and finally angle.  As the character continues to extend, a check is made for if the character has yet reached full extension.  At full extension, the character can no longer accelerate in the direction of the jump, and the character breaks contact with the ground to enter the in-air phase.
+
+\section{In Air Maneuvers and landing}
+While in the air, the character is limited in its maneuvers.  Small adjustments can be made, mainly preparations for landing.  As discussed in \cite{falling_landing}, a portion of the body may be raised or lowered if another portion is lowered or raised respectively.  This allows the character to control angular velocity with adjustments to pose.
+
 \section{Summary}
 \label{section:animation_summary}

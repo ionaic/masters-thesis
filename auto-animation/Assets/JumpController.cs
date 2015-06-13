@@ -70,7 +70,15 @@ public class SpringMuscle {
     // resting length (pretty much can initialize as length of bone)
     public float l_0;
     // the joints that affect the muscle length
+    // TODO should just make the skeleton class better and have a reference to the skeleton and understand what the parent and child anchor joints are
+    // the general solution would be to have a flexible number of anchors but we are using a simplified model with each muscle crossing one joint only
     public PhysicalJoint[] anchors;
+    // 0-1 distances referring to how far along the bone the muscle is anchored, with 0 being at the center joint and 1 at the anchor
+    public float[] anchorDistFromCenter;
+
+    // joint that this muscle crosses
+    public PhysicalJoint centerJoint;
+    
     // bone width
     public float bone_width;
     
@@ -78,8 +86,39 @@ public class SpringMuscle {
         // calculate the force of the muscle given a length
         return -k * (bone_width / Mathf.Sin(Mathf.PI - anchors[1].jointTransform.localRotation.x / 2.0f));
     }
-    public float force(float length) {
+    public Vector3 force(float length) {
         return -k * (length - l_0);
+    }
+    public Vector3[] torque(Vector3 force) {
+        // TODO is this at all correct what
+        // this function is for if the force is given with a direction
+        Vector3[] torques = new Vector3[];
+
+        // torque is displacement vector (anchor point to the joint center) cross product with force
+        torques[0] = Vector3.Cross(
+            (center.Position() - anchors[0].Position()) 
+            * anchorDistFromCenter[0], force);
+        torques[1] = Vector3.Cross(
+            (center.Position() - anchors[1].Position()) 
+            * anchorDistFromCenter[1], force);
+
+        return torques;
+    }
+    public Vector3 torque(float force) {
+        // vector indicating the moment arm which is the cross product of the
+        // vectors of the center of the joint to the muscle attachment points
+        // TODO should this be normalized?
+        Vector3 momentArm = Vector3.Cross(
+            anchors[0].Position() - center.Position(), 
+            anchors[1].Position() - center.Position());
+        // force times the moment arm
+        return force * momentArm;
+    }
+    public Vector3 angularMomentum(float deltaTime, float force) {
+        return torque(force) * deltaTime;
+    }
+    public Vector3 angularVelocity() {
+        
     }
     public float jointAngle(float force) {
         // given a desired force from the muscle, what angle (radians) should
@@ -108,6 +147,35 @@ public class ConstrainedPhysicalControllerSkeleton {
     public PhysicalJoint LHeel;
     public Vector3 COM;
     public Vector3 support_center;
+
+    public void UpdateCOM() {
+        Vector3 tempCom = Vector3.zero;
+        
+        tempCom += Pelvis.jointMass * Pelvis.Position();
+        tempCom += RHip.jointMass * RHip.Position();
+        tempCom += LHip.jointMass * LHip.Position();
+        tempCom += RKnee.jointMass * RKnee.Position();
+        tempCom += LKnee.jointMass * LKnee.Position();
+        tempCom += RFoot.jointMass * RFoot.Position();
+        tempCom += LFoot.jointMass * LFoot.Position();
+        tempCom += RHeel.jointMass * RHeel.Position();
+        tempCom += LHeel.jointMass * LHeel.Position();
+        
+        tempCom /= TotalMass();
+        COM = tempCom;
+    }
+    
+    public float TotalMass() {
+        float upperBody = 0.0f;
+        for (PhysicalJoint j : UpperBody) {
+            upperBody += j.jointMass;
+        }
+        return upperBody + Pelvis.jointMass 
+            + RHip.jointMass + LHip.jointMass 
+            + RKnee.jointMass + LKnee.jointMass
+            + RFoot.jointMass + LFoot.jointMass
+            + RHeel.jointMass + LHeel.jointMass;
+    }
 }
 
 public class JumpController : MonoBehaviour {
@@ -154,6 +222,8 @@ public class JumpController : MonoBehaviour {
         // --------------------------------------
         bool inputJump = Input.GetButton("Jump");
         
+        skeleton.UpdateCOM();
+
         // Downward/windup phase OR
         // Upward/accel phase OR if done
         // In Air
@@ -207,21 +277,23 @@ public class JumpController : MonoBehaviour {
         return (skeleton.support_center - skeleton.COM);
     }
         
-    Vector3 ForceError() {
+    Vector3 AccelError() {
         // TODO currently not taking torque of joints into account, just
         // assuming force generated is a straight line force in desired
         // direction, need to take torque into account to give force a
         // direction
-        return Vector3.zero;
+
+        // compare resultant angular acceleration to expected acceleration from force
         
+        return Vector3.zero;
     }
 
     // function to handle the windup phase
     // returns true when finished
     bool Windup() {
         Vector3 servo_modification = windupPD.modify(BalanceError());
-        servo_modification += windupPD.modify(ForceError());
-        return Mathf.Abs(ForceError().magnitude + BalanceError().magnitude) <= jumping.error_allowance;
+        servo_modification += windupPD.modify(AccelError());
+        return Mathf.Abs(AccelError().magnitude + BalanceError().magnitude) <= jumping.error_allowance;
     }
 
     // function to handle accel phase

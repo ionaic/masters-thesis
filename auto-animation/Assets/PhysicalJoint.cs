@@ -80,6 +80,11 @@ public class PhysicalJoint : MonoBehaviour {
     public Vector3 ConstrainedEuler(Vector3 eulerAngles) {
         return eulerAngles;
     }
+
+    public Vector3 Position() {
+        return jointTransform.position;
+    }
+
     void Awake() {
         if (!jointTransform) {
             jointTransform = this.transform;
