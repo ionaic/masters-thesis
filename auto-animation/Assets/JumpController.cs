@@ -109,16 +109,31 @@ public class SpringMuscle {
         // vectors of the center of the joint to the muscle attachment points
         // TODO should this be normalized?
         Vector3 momentArm = Vector3.Cross(
-            anchors[0].Position() - center.Position(), 
-            anchors[1].Position() - center.Position());
+            (anchors[0].Position() - center.Position()) * anchorDistFromCenter[0], 
+            (anchors[1].Position() - center.Position()) * anchorDistFromCenter[1]);
         // force times the moment arm
         return force * momentArm;
     }
     public Vector3 angularMomentum(float deltaTime, float force) {
         return torque(force) * deltaTime;
     }
-    public Vector3 instantLinearMomentum(float deltaTime, float force) {
-        Vector3 dir = new Vector3();
+    public Vector3 instantLinearAcceleration(float deltaTime, float force) {
+        // TODO this might be pointing the opposite direction of where we want
+        // it pointing
+
+        // TODO we need the moment of inertia to actually convert this, this math is wrong
+        // moment of inertia is I = mk^2 for all point masses that are part of this, i.e. assign point masses to the object (limb masses at center of bone?)
+
+        // this is actually measured at the end joints, but it is produced at
+        // the center joint!
+
+        // vector of the first bone in the joint (primary bone affected)
+        // crossed with the torque to get a direction
+        Vector3 angularMomentum = angularMomentum(deltaTime, force);
+        Vector3 dir = Vector3.Cross(anchors[0].Position() - center.Position(), angularMomentum).normalized();
+        // linear momentum is the radius times the angular momentum in a
+        // direction tangent to the circle at the current point
+        return dir * angularMomentum.magnitude * (anchors[0].Position() - center.Position()).magnitude;
     }
     public float jointAngle(float force) {
         // given a desired force from the muscle, what angle (radians) should
@@ -180,7 +195,11 @@ public class ConstrainedPhysicalControllerSkeleton {
 
     // acceleration vecetor from all of the muscles
     public Vector3 acceleration() {
-
+        // TODO need to account for the fact that different joints have different amounts of the mass they work with?
+        Vector3 resultantMomentum;
+        foreach (SpringMuscle m : muscles) {
+            
+        }
     }
 }
 

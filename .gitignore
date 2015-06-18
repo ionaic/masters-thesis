@@ -5,3 +5,5 @@ auto-animation/paperwork/Thesis_ooiis.out
 auto-animation/paperwork/Thesis_ooiis.blg
 *.synctex.gz
 *.gz(busy)
+*.dll
+*.log
