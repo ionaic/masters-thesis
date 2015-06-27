@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [System.Serializable]
 public enum PathSolutionPolicy {
@@ -69,6 +70,7 @@ public class JumpController : MonoBehaviour {
     public ConstrainedPhysicalControllerSkeleton skeleton;
     public JumpMotor motor;
     public float mass;
+    public JumpLogger logger;
     
     void Start() {
         // initial estimate of path/velocity to get from start to end
@@ -119,6 +121,25 @@ public class JumpController : MonoBehaviour {
         else if (jumping.state == JumpState.WindUp) {
             if (Windup()) {
                 jumping.state = JumpState.Accel;
+                
+                // log info
+                {
+                    List<string> data = new List<string>();
+                    data.Add(jumping.acceleration.ToString("G4"));
+                    for (int i = 0; i < 8; i++) {
+                        data.Add(skeleton[i].Angle().ToString("G4"));
+                    }
+                    logger.files[0].AddRow(data);
+                }
+            }
+            {
+                List<string> data = new List<string>();
+                data.Add(jumping.acceleration.ToString("G4"));
+                for (int i = 0; i < 8; i++) {
+                    data.Add(skeleton[i].Angle().ToString("G4"));
+                    data.Add(skeleton[i].Angle().ToString("G4"));
+                }
+                logger.files[1].AddRow(data);
             }
         }
         else if (jumping.state == JumpState.Accel) {

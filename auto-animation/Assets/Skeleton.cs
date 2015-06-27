@@ -1,8 +1,9 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [System.Serializable]
-public class ConstrainedPhysicalControllerSkeleton {
+public class ConstrainedPhysicalControllerSkeleton : IEnumerable<PhysicalJoint> {
     public PhysicalJoint[] UpperBody;
     public PhysicalJoint Pelvis;
     public PhysicalJoint RHip;
@@ -54,5 +55,51 @@ public class ConstrainedPhysicalControllerSkeleton {
             resultantAcceleration += m.instantLinearAcceleration(deltaTime);
         }
         return resultantAcceleration;
+    }
+    
+    public PhysicalJoint this[int index] {
+        get {
+            switch (index) {
+                case 0:
+                    return Pelvis;
+                case 1:
+                    return LHip;
+                case 2:
+                    return LKnee;
+                case 3:
+                    return  LFoot;
+                case 4:
+                    return RHip;
+                case 5:
+                    return RKnee;
+                case 6:
+                    return RFoot;
+                case 7:
+                    return RHeel;
+                case 8:
+                    return LHeel;
+                default:
+                    return UpperBody[index - 8];
+            }
+        }
+    }
+
+    IEnumerator System.Collections.IEnumerable.GetEnumerator() {
+        return GetEnumerator();
+    }
+    
+    public IEnumerator<PhysicalJoint> GetEnumerator() {
+        yield return Pelvis;
+        yield return LHip;
+        yield return LKnee;
+        yield return LFoot;
+        yield return RHip;
+        yield return RKnee;
+        yield return RFoot;
+        yield return RHeel;
+        yield return LHeel;
+        foreach (PhysicalJoint jnt in UpperBody) {
+            yield return jnt;
+        }
     }
 }

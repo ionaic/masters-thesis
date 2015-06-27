@@ -84,6 +84,10 @@ public class PhysicalJoint : MonoBehaviour {
     public Vector3 Position() {
         return jointTransform.position;
     }
+    
+    public Vector3 Angle() {
+        return jointTransform.eulerAngles;
+    }
 
     void Awake() {
         if (!jointTransform) {
