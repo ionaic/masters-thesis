@@ -13,6 +13,7 @@ public class JumpMotor : MonoBehaviour {
     // if jumping, apply forces until we're grounded and the upward velocity <= 0
     // if not jumping and grounded, we're standing or walking etc.
     // if not jumping and not grounded, falling
+    public Vector3 inputMoveDirection;
     private bool isJumping;
     private Vector3 velocity;
     
@@ -61,5 +62,9 @@ public class JumpMotor : MonoBehaviour {
     
     public void Jump(Vector3 jumpAccel) {
 
+    }
+    
+    public bool IsGrounded() {
+        return false;
     }
 }

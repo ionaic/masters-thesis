@@ -222,7 +222,7 @@ public class PhysicalMotionController : MonoBehaviour {
         // m/s/s
         desiredForce = bodyMass * gravity + bodyMass * desiredAccel;
 
-        float force_err = desiredForce - musc.force();
+        float force_err = desiredForce - musc.scalarForce();
     }
     bool IsRotating() {
         //float curAngle = skeleton.RKnee.jointTransform.localRotation.eulerAngles.z;
@@ -237,6 +237,7 @@ public class PhysicalMotionController : MonoBehaviour {
         // is this ok? think of the plane when on tiptoes, the heel still sort
         // of describes where the bounds of the plane should be even though the
         // toes are the only things contacting the ground
+        // TODO need to use the foot geometry not positions of joints
         Debug.Log("supportingPolyLen " + supportingPoly.Length);
 
         // just in case the array isn't allocated yet

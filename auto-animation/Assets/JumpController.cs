@@ -168,7 +168,7 @@ public class JumpController : MonoBehaviour {
 
         // compare resultant angular acceleration to expected acceleration from force
         
-        return skeleton.acceleration();
+        return skeleton.acceleration(jumping.windup_time);
     }
 
     // function to handle the windup phase
