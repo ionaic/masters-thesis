@@ -29,7 +29,8 @@ public class JumpVariables {
     public Vector3 max_possible_accel;
     public Vector3 force;
     public float error_allowance;
-    public float time;
+    public float windup_time;
+    public float air_time;
 
     public JumpState state;
     public PathSolutionPolicy policy;
@@ -57,149 +58,6 @@ public class PIDServo {
     }
     public Vector3 modify(Vector3 error) {
         return k_p * error + k_i * error + k_d * error;
-    }
-}
-
-[System.Serializable]
-public class SpringMuscle {
-    // Simple spring model of a muscle for determining target poses
-    // for this, find a target length that will produce the desired joint
-
-    // spring constant
-    public float k;
-    // resting length (pretty much can initialize as length of bone)
-    public float l_0;
-    // the joints that affect the muscle length
-    // TODO should just make the skeleton class better and have a reference to the skeleton and understand what the parent and child anchor joints are
-    // the general solution would be to have a flexible number of anchors but we are using a simplified model with each muscle crossing one joint only
-    public PhysicalJoint[] anchors;
-    // 0-1 distances referring to how far along the bone the muscle is anchored, with 0 being at the center joint and 1 at the anchor
-    public float[] anchorDistFromCenter;
-
-    // joint that this muscle crosses
-    public PhysicalJoint centerJoint;
-    
-    // bone width
-    public float bone_width;
-    
-    public float force() {
-        // calculate the force of the muscle given a length
-        return -k * (bone_width / Mathf.Sin(Mathf.PI - anchors[1].jointTransform.localRotation.x / 2.0f));
-    }
-    public Vector3 force(float length) {
-        return -k * (length - l_0);
-    }
-    public Vector3[] torque(Vector3 force) {
-        // TODO is this at all correct what
-        // this function is for if the force is given with a direction
-        Vector3[] torques = new Vector3[];
-
-        // torque is displacement vector (anchor point to the joint center) cross product with force
-        torques[0] = Vector3.Cross(
-            (center.Position() - anchors[0].Position()) 
-            * anchorDistFromCenter[0], force);
-        torques[1] = Vector3.Cross(
-            (center.Position() - anchors[1].Position()) 
-            * anchorDistFromCenter[1], force);
-
-        return torques;
-    }
-    public Vector3 torque(float force) {
-        // vector indicating the moment arm which is the cross product of the
-        // vectors of the center of the joint to the muscle attachment points
-        // TODO should this be normalized?
-        Vector3 momentArm = Vector3.Cross(
-            (anchors[0].Position() - center.Position()) * anchorDistFromCenter[0], 
-            (anchors[1].Position() - center.Position()) * anchorDistFromCenter[1]);
-        // force times the moment arm
-        return force * momentArm;
-    }
-    public Vector3 angularMomentum(float deltaTime, float force) {
-        return torque(force) * deltaTime;
-    }
-    public Vector3 instantLinearAcceleration(float deltaTime, float force) {
-        // TODO this might be pointing the opposite direction of where we want
-        // it pointing
-
-        // TODO we need the moment of inertia to actually convert this, this math is wrong
-        // moment of inertia is I = mk^2 for all point masses that are part of this, i.e. assign point masses to the object (limb masses at center of bone?)
-
-        // this is actually measured at the end joints, but it is produced at
-        // the center joint!
-
-        // vector of the first bone in the joint (primary bone affected)
-        // crossed with the torque to get a direction
-        Vector3 angularMomentum = angularMomentum(deltaTime, force);
-        Vector3 dir = Vector3.Cross(anchors[0].Position() - center.Position(), angularMomentum).normalized();
-        // linear momentum is the radius times the angular momentum in a
-        // direction tangent to the circle at the current point
-        return dir * angularMomentum.magnitude * (anchors[0].Position() - center.Position()).magnitude;
-    }
-    public float jointAngle(float force) {
-        // given a desired force from the muscle, what angle (radians) should
-        // the joint be at
-        //float cos = (-k * bone_width) / (force + l_0);
-        float cos = (2.0f * k * k * bone_width * bone_width) / (force * force)
-            - 1.0f;
-        cos = cos % 1.0f;
-        //return 2.0f * Mathf.Acos(cos - (cos / (2.0f * Mathf.PI)));
-        //return Mathf.Acos(cos - (cos / (2.0f * Mathf.PI)));
-        return Mathf.Acos(cos);
-    }
-}
-
-[System.Serializable]
-public class ConstrainedPhysicalControllerSkeleton {
-    public PhysicalJoint[] UpperBody;
-    public PhysicalJoint Pelvis;
-    public PhysicalJoint RHip;
-    public PhysicalJoint LHip;
-    public PhysicalJoint RKnee;
-    public PhysicalJoint LKnee;
-    public PhysicalJoint RFoot;
-    public PhysicalJoint LFoot;
-    public PhysicalJoint RHeel;
-    public PhysicalJoint LHeel;
-    public SpringMuscle[] muscles;
-    public Vector3 COM;
-    public Vector3 support_center;
-
-    public void UpdateCOM() {
-        Vector3 tempCom = Vector3.zero;
-        
-        tempCom += Pelvis.jointMass * Pelvis.Position();
-        tempCom += RHip.jointMass * RHip.Position();
-        tempCom += LHip.jointMass * LHip.Position();
-        tempCom += RKnee.jointMass * RKnee.Position();
-        tempCom += LKnee.jointMass * LKnee.Position();
-        tempCom += RFoot.jointMass * RFoot.Position();
-        tempCom += LFoot.jointMass * LFoot.Position();
-        tempCom += RHeel.jointMass * RHeel.Position();
-        tempCom += LHeel.jointMass * LHeel.Position();
-        
-        tempCom /= TotalMass();
-        COM = tempCom;
-    }
-    
-    public float TotalMass() {
-        float upperBody = 0.0f;
-        for (PhysicalJoint j : UpperBody) {
-            upperBody += j.jointMass;
-        }
-        return upperBody + Pelvis.jointMass 
-            + RHip.jointMass + LHip.jointMass 
-            + RKnee.jointMass + LKnee.jointMass
-            + RFoot.jointMass + LFoot.jointMass
-            + RHeel.jointMass + LHeel.jointMass;
-    }
-
-    // acceleration vecetor from all of the muscles
-    public Vector3 acceleration() {
-        // TODO need to account for the fact that different joints have different amounts of the mass they work with?
-        Vector3 resultantMomentum;
-        foreach (SpringMuscle m : muscles) {
-            
-        }
     }
 }
 
@@ -292,7 +150,7 @@ public class JumpController : MonoBehaviour {
             // find t to minimize a
         }
         else {
-            jumping.acceleration = 2 * (jumping.destination - jumping.start - jumping.initial_velocity * jumping.time) / (jumping.time * jumping.time);
+            jumping.acceleration = 2 * (jumping.destination - jumping.start - jumping.initial_velocity * jumping.air_time) / (jumping.air_time * jumping.air_time);
         }
         jumping.force = jumping.acceleration * mass;
         return jumping.IsAccelerationPossible(jumping.acceleration);
@@ -310,7 +168,7 @@ public class JumpController : MonoBehaviour {
 
         // compare resultant angular acceleration to expected acceleration from force
         
-        return Vector3.zero;
+        return skeleton.acceleration();
     }
 
     // function to handle the windup phase
