@@ -123,23 +123,12 @@ public class JumpController : MonoBehaviour {
                 jumping.state = JumpState.Accel;
                 
                 // log info
-                {
-                    List<string> data = new List<string>();
-                    data.Add(jumping.acceleration.ToString("G4"));
-                    for (int i = 0; i < 8; i++) {
-                        data.Add(skeleton[i].Angle().ToString("G4"));
-                    }
-                    logger.files[0].AddRow(data);
-                }
-            }
-            {
-                List<string> data = new List<string>();
-                data.Add(jumping.acceleration.ToString("G4"));
+                List<string> data_windup = new List<string>();
+                data_windup.Add(jumping.acceleration.ToString("G4"));
                 for (int i = 0; i < 8; i++) {
-                    data.Add(skeleton[i].Angle().ToString("G4"));
-                    data.Add(skeleton[i].Angle().ToString("G4"));
+                    data_windup.Add(skeleton[i].Angle().ToString("G4"));
                 }
-                logger.files[1].AddRow(data);
+                logger.files[0].AddRow(data_windup);
             }
         }
         else if (jumping.state == JumpState.Accel) {
@@ -156,6 +145,14 @@ public class JumpController : MonoBehaviour {
             if (Landing()) {
                 jumping.state = JumpState.NotJumping;
             }
+        }
+
+        // Dump all of the data of this iteration
+        List<string> data_pd = new List<string>();
+        data_pd.Add(jumping.acceleration.ToString("G4"));
+        for (int i = 0; i < 8; i++) {
+            data_pd.Add(skeleton[i].Angle().ToString("G4"));
+            data_pd.Add(skeleton[i].Angle().ToString("G4"));
         }
     }
 
