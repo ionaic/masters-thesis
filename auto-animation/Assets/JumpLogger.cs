@@ -26,6 +26,12 @@ public class JumpLogFile {
 [System.Serializable]
 public class JumpLogger {
     public JumpLogFile[] files;
+    
+    public void StartAll() {
+        foreach (JumpLogFile f in files) {
+            f.StartLog();
+        }
+    }
 
     public IEnumerable<JumpLogFile> GetFile(string filename) {
         IEnumerable<JumpLogFile> query =

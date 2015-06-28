@@ -79,6 +79,7 @@ public class JumpController : MonoBehaviour {
         if (!motor) {
             motor = gameObject.AddComponent<JumpMotor>() as JumpMotor;
         }
+        logger.StartAll();
     }
     
     void Update() {
@@ -106,6 +107,9 @@ public class JumpController : MonoBehaviour {
         motor.inputMoveDirection = transform.rotation * directionVector;
         // --------------------------------------
         bool inputJump = Input.GetButton("Jump");
+        if (inputJump) {
+            Debug.Log("JUMP!");
+        }
         
         skeleton.UpdateCOM();
 
@@ -113,6 +117,7 @@ public class JumpController : MonoBehaviour {
         // Upward/accel phase OR if done
         // In Air
         // Landing
+        //if (inputJump && jumping.state == JumpState.NotJumping) {
         if (inputJump && jumping.state == JumpState.NotJumping) {
             if (EstimatePath()) {
                 jumping.state = JumpState.WindUp;
@@ -123,6 +128,7 @@ public class JumpController : MonoBehaviour {
                 jumping.state = JumpState.Accel;
                 
                 // log info
+                Debug.Log("Logging to file: " + logger.files[0].filename);
                 List<string> data_windup = new List<string>();
                 data_windup.Add(jumping.acceleration.ToString("G4"));
                 for (int i = 0; i < 8; i++) {
@@ -148,12 +154,14 @@ public class JumpController : MonoBehaviour {
         }
 
         // Dump all of the data of this iteration
+        Debug.Log("Logging to file: " + logger.files[1].filename);
         List<string> data_pd = new List<string>();
         data_pd.Add(jumping.acceleration.ToString("G4"));
         for (int i = 0; i < 8; i++) {
             data_pd.Add(skeleton[i].Angle().ToString("G4"));
             data_pd.Add(skeleton[i].Angle().ToString("G4"));
         }
+        logger.files[1].AddRow(data_pd);
     }
 
     // function to handle path estimate
