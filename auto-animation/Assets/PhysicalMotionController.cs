@@ -238,7 +238,7 @@ public class PhysicalMotionController : MonoBehaviour {
         // of describes where the bounds of the plane should be even though the
         // toes are the only things contacting the ground
         // TODO need to use the foot geometry not positions of joints
-        Debug.Log("supportingPolyLen " + supportingPoly.Length);
+        //Debug.Log("supportingPolyLen " + supportingPoly.Length);
 
         // just in case the array isn't allocated yet
         if (supportingPoly.Length == 0) {

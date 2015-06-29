@@ -22,9 +22,11 @@ public enum JumpState {
 
 [System.Serializable]
 public class JumpVariables {
+    [HideInInspector]
     public Vector3 start;
     public Vector3 destination;
     public Vector3 initial_velocity;
+    [HideInInspector]
     public Vector3 acceleration;
     public Vector3 min_possible_accel;
     public Vector3 max_possible_accel;
@@ -119,11 +121,13 @@ public class JumpController : MonoBehaviour {
         // Landing
         //if (inputJump && jumping.state == JumpState.NotJumping) {
         if (inputJump && jumping.state == JumpState.NotJumping) {
+            Debug.Log("Not Jumping --> Path Estimate --> Windup");
             if (EstimatePath()) {
                 jumping.state = JumpState.WindUp;
             }
         }
         else if (jumping.state == JumpState.WindUp) {
+            Debug.Log("Windup --> Accel");
             if (Windup()) {
                 jumping.state = JumpState.Accel;
                 
@@ -138,16 +142,19 @@ public class JumpController : MonoBehaviour {
             }
         }
         else if (jumping.state == JumpState.Accel) {
+            Debug.Log("Accel --> In Air");
             if (Accel()) {
                 jumping.state = JumpState.InAir;
             }
         }
         else if (jumping.state == JumpState.InAir) {
+            Debug.Log("In Air --> Landing");
             if (motor.IsGrounded()) {
                 jumping.state = JumpState.Landing;
             }
         }
         else if (jumping.state == JumpState.Landing) {
+            Debug.Log("Landing --> Not Jumping");
             if (Landing()) {
                 jumping.state = JumpState.NotJumping;
             }
