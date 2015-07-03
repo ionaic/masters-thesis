@@ -89,6 +89,10 @@ public class PhysicalJoint : MonoBehaviour {
         return jointTransform.eulerAngles;
     }
 
+    public float Mass() {
+        return jointMass != 0 ? jointMass : 1.0f;
+    }
+
     void Awake() {
         if (!jointTransform) {
             jointTransform = this.transform;

@@ -24,12 +24,15 @@ public enum JumpState {
 public class JumpVariables {
     [HideInInspector]
     public Vector3 start;
+    [HideInInspector]
     public Vector3 destination;
+    public Transform target_location;
     public Vector3 initial_velocity;
     [HideInInspector]
     public Vector3 acceleration;
     public Vector3 min_possible_accel;
     public Vector3 max_possible_accel;
+    [HideInInspector]
     public Vector3 force;
     public float error_allowance;
     public float windup_time;
@@ -37,6 +40,12 @@ public class JumpVariables {
 
     public JumpState state;
     public PathSolutionPolicy policy;
+    
+    public void init() {
+        destination = target_location.position;
+
+        state = JumpState.NotJumping;
+    }
     
     public bool IsAccelerationPossible(Vector3 accel) {
         return (accel.x <= max_possible_accel.x &&
@@ -77,7 +86,9 @@ public class JumpController : MonoBehaviour {
     void Start() {
         // initial estimate of path/velocity to get from start to end
         // calculation of intermediate goal states from starting point and final goal
-        jumping.state = JumpState.NotJumping;
+        
+        jumping.init();
+
         if (!motor) {
             motor = gameObject.AddComponent<JumpMotor>() as JumpMotor;
         }
@@ -121,14 +132,20 @@ public class JumpController : MonoBehaviour {
         // Landing
         //if (inputJump && jumping.state == JumpState.NotJumping) {
         if (inputJump && jumping.state == JumpState.NotJumping) {
-            Debug.Log("Not Jumping --> Path Estimate --> Windup");
-            if (EstimatePath()) {
+            bool estimate_flag = EstimatePath();
+            Debug.Log("Path Estimate: " + estimate_flag);
+
+            if (estimate_flag) {
+                Debug.Log("Not Jumping --> Path Estimate --> Windup");
                 jumping.state = JumpState.WindUp;
             }
         }
         else if (jumping.state == JumpState.WindUp) {
-            Debug.Log("Windup --> Accel");
-            if (Windup()) {
+            bool windup_flag = Windup();
+            Debug.Log("Windup: " + windup_flag);
+
+            if (windup_flag) {
+                Debug.Log("Windup --> Accel");
                 jumping.state = JumpState.Accel;
                 
                 // log info
@@ -142,20 +159,29 @@ public class JumpController : MonoBehaviour {
             }
         }
         else if (jumping.state == JumpState.Accel) {
-            Debug.Log("Accel --> In Air");
-            if (Accel()) {
+            bool accel_flag = Accel();
+            Debug.Log("Accel: " + accel_flag);
+
+            if (accel_flag) {
+                Debug.Log("Accel --> In Air");
                 jumping.state = JumpState.InAir;
             }
         }
         else if (jumping.state == JumpState.InAir) {
-            Debug.Log("In Air --> Landing");
+            bool inAir_flag = motor.IsGrounded();
+            Debug.Log("InAir: " + inAir_flag);
+
             if (motor.IsGrounded()) {
+                Debug.Log("In Air --> Landing");
                 jumping.state = JumpState.Landing;
             }
         }
         else if (jumping.state == JumpState.Landing) {
-            Debug.Log("Landing --> Not Jumping");
-            if (Landing()) {
+            bool landing_flag = Landing();
+            Debug.Log("Landing: " + landing_flag);
+
+            if (landing_flag) {
+                Debug.Log("Landing --> Not Jumping");
                 jumping.state = JumpState.NotJumping;
             }
         }
@@ -186,22 +212,20 @@ public class JumpController : MonoBehaviour {
             jumping.acceleration = 2 * (jumping.destination - jumping.start - jumping.initial_velocity * jumping.air_time) / (jumping.air_time * jumping.air_time);
         }
         jumping.force = jumping.acceleration * mass;
+        Debug.Log("Estimated Accel: " + jumping.acceleration);
         return jumping.IsAccelerationPossible(jumping.acceleration);
     }
 
     Vector3 BalanceError() {
+        Debug.Log("Supp center: " + skeleton.support_center);
+        Debug.Log("COM: " + skeleton.COM);
         return (skeleton.support_center - skeleton.COM);
     }
         
     Vector3 AccelError() {
-        // TODO currently not taking torque of joints into account, just
-        // assuming force generated is a straight line force in desired
-        // direction, need to take torque into account to give force a
-        // direction
-
         // compare resultant angular acceleration to expected acceleration from force
         
-        return skeleton.acceleration(jumping.windup_time);
+        return (jumping.acceleration - skeleton.acceleration(jumping.windup_time));
     }
 
     // function to handle the windup phase
@@ -209,7 +233,15 @@ public class JumpController : MonoBehaviour {
     bool Windup() {
         Vector3 servo_modification = windupPD.modify(BalanceError());
         servo_modification += windupPD.modify(AccelError());
-        return Mathf.Abs(AccelError().magnitude + BalanceError().magnitude) <= jumping.error_allowance;
+        
+        // TODO propagate the change to the skeleton
+        float accel_err = Mathf.Abs(AccelError().magnitude);
+        float bal_err = Mathf.Abs(BalanceError().magnitude);
+        Debug.Log("Errors, accel: " + accel_err + "; bal: " + bal_err);
+        
+        float total_err = accel_err + bal_err;
+        Debug.Log("Total Error = " + total_err);
+        return total_err <= jumping.error_allowance;
     }
 
     // function to handle accel phase

@@ -21,15 +21,15 @@ public class ConstrainedPhysicalControllerSkeleton : IEnumerable<PhysicalJoint> 
     public void UpdateCOM() {
         Vector3 tempCom = Vector3.zero;
         
-        tempCom += Pelvis.jointMass * Pelvis.Position();
-        tempCom += RHip.jointMass * RHip.Position();
-        tempCom += LHip.jointMass * LHip.Position();
-        tempCom += RKnee.jointMass * RKnee.Position();
-        tempCom += LKnee.jointMass * LKnee.Position();
-        tempCom += RFoot.jointMass * RFoot.Position();
-        tempCom += LFoot.jointMass * LFoot.Position();
-        tempCom += RHeel.jointMass * RHeel.Position();
-        tempCom += LHeel.jointMass * LHeel.Position();
+        tempCom += Pelvis.Mass() * Pelvis.Position();
+        tempCom += RHip.Mass() * RHip.Position();
+        tempCom += LHip.Mass() * LHip.Position();
+        tempCom += RKnee.Mass() * RKnee.Position();
+        tempCom += LKnee.Mass() * LKnee.Position();
+        tempCom += RFoot.Mass() * RFoot.Position();
+        tempCom += LFoot.Mass() * LFoot.Position();
+        tempCom += RHeel.Mass() * RHeel.Position();
+        tempCom += LHeel.Mass() * LHeel.Position();
         
         tempCom /= TotalMass();
         COM = tempCom;
@@ -38,13 +38,13 @@ public class ConstrainedPhysicalControllerSkeleton : IEnumerable<PhysicalJoint> 
     public float TotalMass() {
         float upperBody = 0.0f;
         foreach (PhysicalJoint j in UpperBody) {
-            upperBody += j.jointMass;
+            upperBody += j.Mass();
         }
-        return upperBody + Pelvis.jointMass 
-            + RHip.jointMass + LHip.jointMass 
-            + RKnee.jointMass + LKnee.jointMass
-            + RFoot.jointMass + LFoot.jointMass
-            + RHeel.jointMass + LHeel.jointMass;
+        return upperBody + Pelvis.Mass() 
+            + RHip.Mass() + LHip.Mass() 
+            + RKnee.Mass() + LKnee.Mass()
+            + RFoot.Mass() + LFoot.Mass()
+            + RHeel.Mass() + LHeel.Mass();
     }
 
     // acceleration vecetor from all of the muscles
