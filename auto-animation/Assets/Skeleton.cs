@@ -34,6 +34,12 @@ public class ConstrainedPhysicalControllerSkeleton : IEnumerable<PhysicalJoint> 
         tempCom /= TotalMass();
         COM = tempCom;
     }
+
+    public void PositionPelvis(Vector3 servo_modification) {
+        Debug.Log("Reposition by " + servo_modification + " start: " + Pelvis.Position());
+        Pelvis.jointTransform.Translate(servo_modification);
+        Debug.Log("Reposition finish: " + Pelvis.Position());
+    }
     
     public float TotalMass() {
         float upperBody = 0.0f;

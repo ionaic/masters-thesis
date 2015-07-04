@@ -57,22 +57,6 @@ public class JumpVariables {
     }
 }
 
-[System.Serializable]
-public class PIDServo {
-    // PID servo function object
-    // function object instead of function so it can store the k values
-    public float k_p;
-    public float k_i;
-    public float k_d;
-    
-    public float modify(float error) {
-        return k_p * error + k_i * error + k_d * error;
-    }
-    public Vector3 modify(Vector3 error) {
-        return k_p * error + k_i * error + k_d * error;
-    }
-}
-
 public class JumpController : MonoBehaviour {
     // handle calculation of estimated path, joint contortions, "what to do"
     // handle button pushes etc.
@@ -232,7 +216,12 @@ public class JumpController : MonoBehaviour {
     // returns true when finished
     bool Windup() {
         Vector3 servo_modification = windupPD.modify(BalanceError());
+        Debug.Log("Modification with Balance: " + servo_modification);
         servo_modification += windupPD.modify(AccelError());
+        
+        Debug.Log("Modification with Balance + Accel: " + servo_modification);
+
+        skeleton.PositionPelvis(servo_modification);
         
         // TODO propagate the change to the skeleton
         float accel_err = Mathf.Abs(AccelError().magnitude);
@@ -241,6 +230,7 @@ public class JumpController : MonoBehaviour {
         
         float total_err = accel_err + bal_err;
         Debug.Log("Total Error = " + total_err);
+
         return total_err <= jumping.error_allowance;
     }
 

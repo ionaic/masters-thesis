@@ -91,7 +91,7 @@ public class MotionVisualizer : MonoBehaviour {
     }
     
     void Update() {
-        paused = Input.GetKey(KeyCode.Space);
+        paused = Input.GetKey(KeyCode.Return);
 
         if (Input.GetKey(KeyCode.P)) {
             useParticles = !useParticles;
