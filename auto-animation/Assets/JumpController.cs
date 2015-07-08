@@ -37,6 +37,7 @@ public class JumpVariables {
     public float error_allowance;
     public float windup_time;
     public float air_time;
+    public Vector3 last_err;
 
     public JumpState state;
     public PathSolutionPolicy policy;
@@ -66,6 +67,13 @@ public class JumpController : MonoBehaviour {
     public JumpMotor motor;
     public float mass;
     public JumpLogger logger;
+
+    // for debugging
+    void OnDrawGizmos() {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(skeleton.COM, 0.01f);
+        Gizmos.DrawRay(skeleton.COM, jumping.last_err);
+    }
     
     void Start() {
         // initial estimate of path/velocity to get from start to end
@@ -208,28 +216,25 @@ public class JumpController : MonoBehaviour {
         
     Vector3 AccelError() {
         // compare resultant angular acceleration to expected acceleration from force
-        
-        return (jumping.acceleration - skeleton.acceleration(jumping.windup_time));
+        Vector3 skel_accel = skeleton.acceleration(jumping.windup_time);
+        Debug.Log("cur accel: " + skel_accel + ";\ntarget: " + jumping.acceleration + ";\nerror: " + (jumping.acceleration - skel_accel));
+        return (jumping.acceleration - skel_accel);
     }
 
     // function to handle the windup phase
     // returns true when finished
     bool Windup() {
         Vector3 servo_modification = windupPD.modify(BalanceError());
-        Debug.Log("Modification with Balance: " + servo_modification);
         servo_modification += windupPD.modify(AccelError());
         
-        Debug.Log("Modification with Balance + Accel: " + servo_modification);
-
         skeleton.PositionPelvis(servo_modification);
         
         // TODO propagate the change to the skeleton
         float accel_err = Mathf.Abs(AccelError().magnitude);
         float bal_err = Mathf.Abs(BalanceError().magnitude);
-        Debug.Log("Errors, accel: " + accel_err + "; bal: " + bal_err);
         
         float total_err = accel_err + bal_err;
-        Debug.Log("Total Error = " + total_err);
+        jumping.last_err = servo_modification;
 
         return total_err <= jumping.error_allowance;
     }

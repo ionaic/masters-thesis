@@ -10,15 +10,14 @@ public class JumpLogFile {
     public string[] columns;
 
     public void StartLog() {
-        using (TextWriter file = File.AppendText(filename)) {
-            file.WriteLine();
-            file.WriteLine(string.Join(",", columns));
+        using (TextWriter file = File.CreateText(filename)) {
+            file.WriteLine(string.Join(";", columns));
         }
     }
     
     public void AddRow(List<string> data) {
         using (TextWriter file = File.AppendText(filename)) {
-            file.WriteLine(string.Join(",", data.ToArray()));
+            file.WriteLine(string.Join(";", data.ToArray()));
         }
     }
 }
