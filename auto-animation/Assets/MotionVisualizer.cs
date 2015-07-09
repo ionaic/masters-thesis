@@ -69,6 +69,7 @@ public class JointVisualizer {
 [System.Serializable]
 [AddComponentMenu("Visualization/Motion Visualizer")]
 public class MotionVisualizer : MonoBehaviour {
+    public CustomInputManager controls;
     public JointVisualizer[] joints;
     public bool showGhost;
     public bool showParticles;
@@ -91,16 +92,16 @@ public class MotionVisualizer : MonoBehaviour {
     }
     
     void Update() {
-        paused = Input.GetKey(KeyCode.Return);
+        paused = Input.GetKey(controls.visualization.pause);
 
-        if (Input.GetKey(KeyCode.P)) {
+        if (Input.GetKey(controls.visualization.useParticles)) {
             useParticles = !useParticles;
         }
 
-        if (Input.GetKey(KeyCode.G)) {
+        if (Input.GetKey(controls.visualization.useGhost)) {
             useGhost = !useGhost;
         }
-        if (Input.GetKey(KeyCode.X)) {
+        if (Input.GetKey(controls.visualization.deleteGhosts)) {
             foreach (GameObject g in ghosts) {
                 Destroy(g);
             }

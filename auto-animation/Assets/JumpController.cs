@@ -61,6 +61,7 @@ public class JumpVariables {
 public class JumpController : MonoBehaviour {
     // handle calculation of estimated path, joint contortions, "what to do"
     // handle button pushes etc.
+    public CustomInputManager controls;
     public JumpVariables jumping;
     public PIDServo windupPD;
     public ConstrainedPhysicalControllerSkeleton skeleton;
@@ -111,7 +112,7 @@ public class JumpController : MonoBehaviour {
         // Apply the direction to the CharacterMotor
         motor.inputMoveDirection = transform.rotation * directionVector;
         // --------------------------------------
-        bool inputJump = Input.GetButton("Jump");
+        bool inputJump = Input.GetKey(controls.jump) || Input.GetKey(controls.simulation.start);
         if (inputJump) {
             Debug.Log("JUMP!");
         }

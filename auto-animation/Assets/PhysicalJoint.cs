@@ -5,7 +5,7 @@ using System.Collections;
 [System.Serializable]
 public class PhysicalJoint : MonoBehaviour {
     public Transform jointTransform;
-
+    
     public float jointMass = 0.0f;
 
     public bool canRoll;
@@ -25,7 +25,12 @@ public class PhysicalJoint : MonoBehaviour {
     public float minYawAngle = 0.0f;
     [Range(-360.0f, 360.0f)]
     public float maxYawAngle = 360.0f;
+
+    private Vector3 restAngle;
     
+    // TODO this works for now since i'm allowing negative angles and I can
+    // work around it but the proble arises that negative angles are equivalent
+    // to a positive angle
     public bool CanRoll() {
         return canRoll && 
             (!Mathf.Approximately(minRollAngle, jointTransform.eulerAngles.z) || 
@@ -69,6 +74,33 @@ public class PhysicalJoint : MonoBehaviour {
         jointTransform.eulerAngles = angles;
     }
 
+    public void ReturnToRest() {
+        Angle(restAngle);
+    }
+    
+    public void RotateToMin() {
+        Angle(new Vector3(minPitchAngle, minYawAngle, minRollAngle));
+    }
+
+    public void RotateToMax() {
+        Angle(new Vector3(maxPitchAngle, maxYawAngle, maxRollAngle));
+    }
+
+    public bool AtMin() {
+        bool roll_min = !canRoll && Mathf.Approximately(minRollAngle, jointTransform.eulerAngles.z);
+        bool pitch_min = !canPitch && Mathf.Approximately(minPitchAngle, jointTransform.eulerAngles.x);
+        bool yaw_min = !canYaw && Mathf.Approximately(minYawAngle, jointTransform.eulerAngles.y);
+        return roll_min || pitch_min || yaw_min;
+    }
+
+    public bool AtMax() {
+        bool roll_max = !canRoll && Mathf.Approximately(maxRollAngle, jointTransform.eulerAngles.z);
+        bool pitch_max = !canPitch && Mathf.Approximately(maxPitchAngle, jointTransform.eulerAngles.x);
+        bool yaw_max = !canYaw && Mathf.Approximately(maxYawAngle, jointTransform.eulerAngles.y);
+        return roll_max || pitch_max || yaw_max;
+
+    }
+
     public Vector3 ConstrainAxis(Vector3 axis) {
         Vector3 tmp = axis;
         tmp.x = CanPitch() ? tmp.x : 0.0f;
@@ -88,6 +120,10 @@ public class PhysicalJoint : MonoBehaviour {
     public Vector3 Angle() {
         return jointTransform.eulerAngles;
     }
+    
+    public void Angle(Vector3 newAngles) {
+        jointTransform.eulerAngles = newAngles;
+    }
 
     public float Mass() {
         return jointMass != 0 ? jointMass : 1.0f;
@@ -97,6 +133,7 @@ public class PhysicalJoint : MonoBehaviour {
         if (!jointTransform) {
             jointTransform = this.transform;
         }
+        restAngle = jointTransform.eulerAngles;
     }
     void Start() {
         if (!jointTransform) {

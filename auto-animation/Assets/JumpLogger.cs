@@ -7,16 +7,17 @@ using System.Linq;
 [System.Serializable]
 public class JumpLogFile {
     public string filename;
+    public string logFolder = "C:\\Users\\Oberon\\Documents\\Thesis\\auto-animation\\logs\\";
     public string[] columns;
 
     public void StartLog() {
-        using (TextWriter file = File.CreateText(filename)) {
+        using (TextWriter file = File.CreateText(logFolder + filename)) {
             file.WriteLine(string.Join(";", columns));
         }
     }
     
     public void AddRow(List<string> data) {
-        using (TextWriter file = File.AppendText(filename)) {
+        using (TextWriter file = File.AppendText(logFolder + filename)) {
             file.WriteLine(string.Join(";", data.ToArray()));
         }
     }
