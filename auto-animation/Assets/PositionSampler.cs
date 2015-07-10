@@ -88,6 +88,7 @@ public class PositionSampler : MonoBehaviour {
         int sample_width = (int)(aabb_size.x / step) + 1,
             sample_height = (int)(aabb_size.y / step) + 1,
             sample_depth = (int)(aabb_size.z / step) + 1;
+        Debug.Log("Num samples: (" + sample_width + ", " + sample_height + ", " + sample_depth + ")");
 
         for (int swidth = 0; swidth < sample_width; swidth++) {
             for (int sdepth = 0; sdepth < sample_depth; sdepth++) {
