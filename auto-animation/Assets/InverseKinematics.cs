@@ -13,8 +13,12 @@ public class InverseKinematics : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+        Iterate();
+	}
+    
+    public void Iterate() {
         foreach (SingleChainIKHandle handle in scHandle) {
             handle.rotateToTarget();
         }
-	}
+    }
 }

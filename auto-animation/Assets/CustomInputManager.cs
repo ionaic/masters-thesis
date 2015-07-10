@@ -18,14 +18,14 @@ public class VisualizationControls {
 
 [System.Serializable]
 public class SamplingControls {
-    public KeyCode start;
+    public KeyCode start = KeyCode.S;
 }
 
 public class CustomInputManager : MonoBehaviour {
     public SimulationControls simulation;
     public VisualizationControls visualization;
+    public SamplingControls sampling;
     public KeyCode jump = KeyCode.Space;
-    public KeyCode samplePositions = KeyCode.S;
 	// Use this for initialization
 	void Start () {
 	

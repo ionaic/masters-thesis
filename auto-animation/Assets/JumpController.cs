@@ -209,13 +209,13 @@ public class JumpController : MonoBehaviour {
         return jumping.IsAccelerationPossible(jumping.acceleration);
     }
 
-    Vector3 BalanceError() {
+    public Vector3 BalanceError() {
         Debug.Log("Supp center: " + skeleton.support_center);
         Debug.Log("COM: " + skeleton.COM);
         return (skeleton.support_center - skeleton.COM);
     }
         
-    Vector3 AccelError() {
+    public Vector3 AccelError() {
         // compare resultant angular acceleration to expected acceleration from force
         Vector3 skel_accel = skeleton.acceleration(jumping.windup_time);
         Debug.Log("cur accel: " + skel_accel + ";\ntarget: " + jumping.acceleration + ";\nerror: " + (jumping.acceleration - skel_accel));

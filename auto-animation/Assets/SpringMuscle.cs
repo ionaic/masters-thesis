@@ -5,17 +5,18 @@ using System.Collections;
 public class SpringMuscle {
     // Simple spring model of a muscle for determining target poses
     // for this, find a target length that will produce the desired joint
+    public string muscleName;
 
     // spring constant
     public float k;
     // resting length (pretty much can initialize as length of bone)
-    public float l_0;
+    //public float l_0;
     // the joints that affect the muscle length
     // TODO should just make the skeleton class better and have a reference to the skeleton and understand what the parent and child anchor joints are
     // the general solution would be to have a flexible number of anchors but we are using a simplified model with each muscle crossing one joint only
-    public PhysicalJoint[] anchors;
+    public PhysicalJoint[] anchors = new PhysicalJoint[2];
     // 0-1 distances referring to how far along the bone the muscle is anchored, with 0 being at the center joint and 1 at the anchor
-    public float[] anchorDistFromCenter;
+    public float[] anchorDistFromCenter = new float[2];
 
     // joint that this muscle crosses
     public PhysicalJoint centerJoint;
@@ -28,9 +29,9 @@ public class SpringMuscle {
         // TODO is this correct, i can't find my notes on this
         return -k * (bone_width / Mathf.Sin(Mathf.PI - anchors[1].jointTransform.localRotation.x / 2.0f));
     }
-    public float force(float length) {
-        return -k * (length - l_0);
-    }
+    //public float force(float length) {
+    //    return -k * (length - l_0);
+    //}
     public Vector3[] torque(Vector3 force) {
         // TODO is this at all correct what
         // this function is for if the force is given with a direction

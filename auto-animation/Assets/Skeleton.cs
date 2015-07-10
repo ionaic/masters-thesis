@@ -17,6 +17,41 @@ public class ConstrainedPhysicalControllerSkeleton : IEnumerable<PhysicalJoint> 
     public SpringMuscle[] muscles;
     public Vector3 COM;
     public Vector3 support_center;
+    public Vector3[] supportingPoly;
+
+    public void UpdateSupportingPoly() {
+        // TODO currently assuming the supporting plane includes entire foot,
+        // is this ok? think of the plane when on tiptoes, the heel still sort
+        // of describes where the bounds of the plane should be even though the
+        // toes are the only things contacting the ground
+        // TODO need to use the foot geometry not positions of joints
+        //Debug.Log("supportingPolyLen " + supportingPoly.Length);
+
+        // just in case the array isn't allocated yet
+        if (supportingPoly.Length == 0) {
+            supportingPoly = new Vector3[4];
+        }
+
+        supportingPoly = jointBasedPoly();
+        
+        support_center = (supportingPoly[0] + supportingPoly[1] + supportingPoly[2] + supportingPoly[3]) / 4.0f; 
+
+    }
+
+    private Vector3[] jointBasedPoly() {
+        Vector3[] supportingPoly = new Vector3[4];
+
+        supportingPoly[0] = LHeel.jointTransform.position;
+        supportingPoly[1] = LFoot.jointTransform.position;
+        supportingPoly[2] = RFoot.jointTransform.position;
+        supportingPoly[3] = RHeel.jointTransform.position;
+
+        float min_y =   Mathf.Min(supportingPoly[0].y, Mathf.Min(supportingPoly[1].y, Mathf.Min(supportingPoly[2].y, supportingPoly[3].y)));
+
+        supportingPoly[0].y = supportingPoly[1].y = supportingPoly[2].y = supportingPoly[3].y = min_y; 
+        
+        return supportingPoly;
+    }
 
     public void UpdateCOM() {
         Vector3 tempCom = Vector3.zero;
