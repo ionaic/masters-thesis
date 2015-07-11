@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 [System.Serializable]
 public enum PathSolutionPolicy {
@@ -58,6 +59,8 @@ public class JumpVariables {
     }
 }
 
+[RequireComponent (typeof(InverseKinematics))]
+[RequireComponent (typeof(PositionSampler))]
 public class JumpController : MonoBehaviour {
     // handle calculation of estimated path, joint contortions, "what to do"
     // handle button pushes etc.
@@ -68,6 +71,7 @@ public class JumpController : MonoBehaviour {
     public JumpMotor motor;
     public JumpLogger logger;
     private InverseKinematics IK;
+    private PositionSampler sampler;
 
     // for debugging
     void OnDrawGizmos() {
@@ -88,6 +92,7 @@ public class JumpController : MonoBehaviour {
         logger.StartAll();
         
         IK = GetComponent<InverseKinematics>();
+        sampler = GetComponent<PositionSampler>();
     }
     
     void Update() {
@@ -135,6 +140,8 @@ public class JumpController : MonoBehaviour {
                 Debug.Log("Not Jumping --> Path Estimate --> Windup");
                 Debug.Log("Estimated accel: " + jumping.acceleration.ToString("G4"));
                 jumping.state = JumpState.WindUp;
+                // collect a sample field
+                sampler.SampleHipPositions();
             }
             else {
                 Debug.Log("Impossible jump given min and max possible");
@@ -233,12 +240,30 @@ public class JumpController : MonoBehaviour {
         Debug.Log("cur accel: " + skel_accel + ";\ntarget: " + jumping.acceleration + ";\nerror: " + (jumping.acceleration - skel_accel));
         return (jumping.acceleration - skel_accel);
     }
+    
+    public Vector3 DirToAchieveAccel() {
+        List<PositionSample> diffList = sampler.samples.Select(s => new PositionSample(s.pelvisPosition, jumping.acceleration - s.resultantAccel)).ToList();
+
+        // unpretty loop as there isn't really a reasonable way of doing this
+        // with linq
+        Vector3 min = diffList[0].resultantAccel;
+        int idx = 0;
+        for (int i = 0; i < diffList.Count(); ++i) {
+            if (min.sqrMagnitude > diffList[i].resultantAccel.sqrMagnitude) {
+                min = diffList[i].resultantAccel;
+                idx = i;
+            }
+        }
+
+        return (diffList[idx].pelvisPosition - skeleton.Pelvis.Position()).normalized;
+    }
 
     // function to handle the windup phase
     // returns true when finished
     bool Windup() {
         //Vector3 servo_modification = windupPD.modify(BalanceError());
-        Vector3 servo_modification = windupPD.modify(AccelError());
+        //Vector3 servo_modification = windupPD.modify(AccelError());
+        Vector3 servo_modification = windupPD.modify(DirToAchieveAccel());
         
         skeleton.PositionPelvis(servo_modification);
         

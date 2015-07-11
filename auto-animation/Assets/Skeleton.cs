@@ -142,7 +142,7 @@ public class ConstrainedPhysicalControllerSkeleton : IEnumerable<PhysicalJoint> 
         }
         return resultantAcceleration;
     }
-    
+
     public PhysicalJoint this[int index] {
         get {
             switch (index) {

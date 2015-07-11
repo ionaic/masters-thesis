@@ -2,12 +2,28 @@
 using System.Collections;
 using System.Collections.Generic;
 
+public class PositionSample {
+    public Vector3 pelvisPosition;
+    public Vector3 resultantAccel;
+    
+    public PositionSample() {
+        pelvisPosition = new Vector3();
+        resultantAccel = new Vector3();
+    }
+    
+    public PositionSample(Vector3 pos, Vector3 accel) {
+        pelvisPosition = pos;
+        resultantAccel = accel;
+    }
+}
+
 public class PositionSampler : MonoBehaviour {
     public float step;
     public JumpController controller;
     public CustomInputManager controls;
     private InverseKinematics ikmanager;
     private List<Vector3> dbg_pos;
+    public List<PositionSample> samples;
         
     private Vector3[] aabb;
     
@@ -16,6 +32,7 @@ public class PositionSampler : MonoBehaviour {
     void Start() {
         logger.StartAll();
         ikmanager = GetComponent<InverseKinematics>();
+        samples = new List<PositionSample>();
     }
 
 	void Update() {
@@ -83,6 +100,7 @@ public class PositionSampler : MonoBehaviour {
             total_force += force;
         }
         data_force.Add(total_force.ToString("G4"));
+        data_force.Add(controller.skeleton.acceleration(controller.jumping.windup_time).ToString("G4"));
 
         logger.files[0].AddRow(data_angle);
         logger.files[1].AddRow(data_force);
@@ -90,7 +108,14 @@ public class PositionSampler : MonoBehaviour {
         logger.files[3].AddRow(data_position);
     }
     
-    void SampleHipPositions() {
+    void CollectSample() {  
+        PositionSample sample = new PositionSample();
+        sample.pelvisPosition = controller.skeleton.Pelvis.Position();
+        sample.resultantAccel = controller.skeleton.acceleration(controller.jumping.windup_time);
+        samples.Add(sample);
+    }
+    
+    public void SampleHipPositions() {
         dbg_pos = new List<Vector3>();
 
         controller.skeleton.UpdateCOM();
@@ -126,6 +151,7 @@ public class PositionSampler : MonoBehaviour {
                     controller.skeleton.UpdateSupportingPoly();
                     // write the sample
                     WriteSampleToLogs();
+                    CollectSample();
                 }
             }
         }
