@@ -41,7 +41,7 @@ public class PositionSampler : MonoBehaviour {
     
     void WriteSampleToLogs() {
         Debug.Log("Writing to sample logs");
-        string balance_err = controller.BalanceError().ToString();
+        string balance_err = controller.BalanceError().ToString("G4");
 
         List<string> data_angle = new List<string>();
         List<string> data_force = new List<string>();
@@ -49,20 +49,31 @@ public class PositionSampler : MonoBehaviour {
         List<string> data_position = new List<string>();
 
         data_position.Add(balance_err);
-        data_position.Add(controller.skeleton.LHip.Position().ToString());
-        data_position.Add(controller.skeleton.RHip.Position().ToString());
-        data_position.Add(controller.skeleton.LKnee.Position().ToString());
-        data_position.Add(controller.skeleton.RKnee.Position().ToString());
-        data_position.Add(controller.skeleton.LFoot.Position().ToString());
-        data_position.Add(controller.skeleton.RFoot.Position().ToString());
+        data_position.Add(controller.skeleton.LHip.Position().ToString("G4"));
+        data_position.Add(controller.skeleton.RHip.Position().ToString("G4"));
+        data_position.Add(controller.skeleton.LKnee.Position().ToString("G4"));
+        data_position.Add(controller.skeleton.RKnee.Position().ToString("G4"));
+        data_position.Add(controller.skeleton.LAnkle.Position().ToString("G4"));
+        data_position.Add(controller.skeleton.RAnkle.Position().ToString("G4"));
 
         data_angle.Add(balance_err);
-        data_angle.Add(controller.skeleton.LHip.Angle().ToString());
-        data_angle.Add(controller.skeleton.RHip.Angle().ToString());
-        data_angle.Add(controller.skeleton.LKnee.Angle().ToString());
-        data_angle.Add(controller.skeleton.RKnee.Angle().ToString());
-        data_angle.Add(controller.skeleton.LFoot.Angle().ToString());
-        data_angle.Add(controller.skeleton.RFoot.Angle().ToString());
+        data_angle.Add(controller.skeleton.LHip.Angle().ToString("G4"));
+        data_angle.Add(controller.skeleton.RHip.Angle().ToString("G4"));
+        data_angle.Add(controller.skeleton.LKnee.Angle().ToString("G4"));
+        data_angle.Add(controller.skeleton.RKnee.Angle().ToString("G4"));
+        data_angle.Add(controller.skeleton.LAnkle.Angle().ToString("G4"));
+        data_angle.Add(controller.skeleton.RAnkle.Angle().ToString("G4"));
+        
+        data_force.Add(balance_err);
+        float total_force = 0.0f;
+        foreach (SpringMuscle musc in controller.skeleton.muscles) {
+            float force = musc.scalarForce();
+            data_force.Add(force.ToString("G4"));
+            data_torque.Add(musc.torque(force).ToString("G4"));
+            
+            total_force += force;
+        }
+        data_force.Add(total_force.ToString("G4"));
 
         logger.files[0].AddRow(data_angle);
         logger.files[1].AddRow(data_force);
@@ -73,6 +84,7 @@ public class PositionSampler : MonoBehaviour {
     void SampleHipPositions() {
         controller.skeleton.UpdateCOM();
         controller.skeleton.UpdateSupportingPoly();
+        TransformData[] reset = controller.skeleton.GetResetArray();
         
         List<Vector3> tmp = new List<Vector3>(controller.skeleton.supportingPoly);
         tmp.Add(controller.skeleton.Pelvis.Position());
@@ -94,14 +106,16 @@ public class PositionSampler : MonoBehaviour {
             for (int sdepth = 0; sdepth < sample_depth; sdepth++) {
                 for (int sheight = 0; sheight < sample_height; sheight++) {
                     Vector3 displacement = new Vector3(swidth * step, sheight * step, sdepth * step);
-                    controller.skeleton.Pelvis.Position(base_pos + displacement);
+                    controller.skeleton.Pelvis.Position(base_pos - displacement);
                     ikmanager.Iterate();
                     WriteSampleToLogs();
                 }
             }
         }
         
-        controller.skeleton.Pelvis.Position(base_pos);
+        //controller.skeleton.Pelvis.Position(base_pos);
+        //ikmanager.Iterate();
+        controller.skeleton.ResetFromArray(reset);
     }
 	
 	// Update is called once per frame
@@ -115,6 +129,7 @@ public class PositionSampler : MonoBehaviour {
             for (controller.skeleton.LKnee.RotateToMin(), controller.skeleton.RKnee.RotateToMin(); 
                 !controller.skeleton.LKnee.AtMax() && !controller.skeleton.RKnee.AtMax(); 
                 controller.skeleton.LKnee.Rotate(astep), controller.skeleton.RKnee.Rotate(astep)) {
+                WriteSampleToLogs();
             }
         }
 	}

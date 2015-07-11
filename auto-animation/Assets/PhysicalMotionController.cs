@@ -138,8 +138,8 @@ public class PhysicalControllerSkeleton {
     public Transform LHip;
     public Transform RKnee;
     public Transform LKnee;
-    public Transform RFoot;
-    public Transform LFoot;
+    public Transform RAnkle;
+    public Transform LAnkle;
     public Transform RHeel;
     public Transform LHeel;
 }
@@ -152,8 +152,8 @@ public class ConstrainedPhysicalControllerSkeleton {
     public PhysicalJoint LHip;
     public PhysicalJoint RKnee;
     public PhysicalJoint LKnee;
-    public PhysicalJoint RFoot;
-    public PhysicalJoint LFoot;
+    public PhysicalJoint RAnkle;
+    public PhysicalJoint LAnkle;
     public PhysicalJoint RHeel;
     public PhysicalJoint LHeel;
 }
@@ -246,8 +246,8 @@ public class PhysicalMotionController : MonoBehaviour {
         }
 
         supportingPoly[0] = skeleton.LHeel.jointTransform.position;
-        supportingPoly[1] = skeleton.LFoot.jointTransform.position;
-        supportingPoly[2] = skeleton.RFoot.jointTransform.position;
+        supportingPoly[1] = skeleton.LAnkle.jointTransform.position;
+        supportingPoly[2] = skeleton.RAnkle.jointTransform.position;
         supportingPoly[3] = skeleton.RHeel.jointTransform.position;
 
         float min_y =   Mathf.Min(supportingPoly[0].y, Mathf.Min(supportingPoly[1].y, Mathf.Min(supportingPoly[2].y, supportingPoly[3].y)));

@@ -13,7 +13,7 @@ public class InverseKinematics : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        Iterate();
+        //Iterate();
 	}
     
     public void Iterate() {

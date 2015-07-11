@@ -66,8 +66,8 @@ public class JumpController : MonoBehaviour {
     public PIDServo windupPD;
     public ConstrainedPhysicalControllerSkeleton skeleton;
     public JumpMotor motor;
-    public float mass;
     public JumpLogger logger;
+    private InverseKinematics IK;
 
     // for debugging
     void OnDrawGizmos() {
@@ -86,6 +86,8 @@ public class JumpController : MonoBehaviour {
             motor = gameObject.AddComponent<JumpMotor>() as JumpMotor;
         }
         logger.StartAll();
+        
+        IK = GetComponent<InverseKinematics>();
     }
     
     void Update() {
@@ -150,6 +152,8 @@ public class JumpController : MonoBehaviour {
                 }
                 logger.files[0].AddRow(data_windup);
             }
+
+            IK.Iterate();
         }
         else if (jumping.state == JumpState.Accel) {
             bool accel_flag = Accel();
@@ -159,6 +163,8 @@ public class JumpController : MonoBehaviour {
                 Debug.Log("Accel --> In Air");
                 jumping.state = JumpState.InAir;
             }
+
+            IK.Iterate();
         }
         else if (jumping.state == JumpState.InAir) {
             bool inAir_flag = motor.IsGrounded();
@@ -204,7 +210,7 @@ public class JumpController : MonoBehaviour {
         else {
             jumping.acceleration = 2 * (jumping.destination - jumping.start - jumping.initial_velocity * jumping.air_time) / (jumping.air_time * jumping.air_time);
         }
-        jumping.force = jumping.acceleration * mass;
+        jumping.force = jumping.acceleration * skeleton.TotalMass();
         Debug.Log("Estimated Accel: " + jumping.acceleration);
         return jumping.IsAccelerationPossible(jumping.acceleration);
     }
@@ -225,8 +231,8 @@ public class JumpController : MonoBehaviour {
     // function to handle the windup phase
     // returns true when finished
     bool Windup() {
-        Vector3 servo_modification = windupPD.modify(BalanceError());
-        servo_modification += windupPD.modify(AccelError());
+        //Vector3 servo_modification = windupPD.modify(BalanceError());
+        Vector3 servo_modification = windupPD.modify(AccelError());
         
         skeleton.PositionPelvis(servo_modification);
         

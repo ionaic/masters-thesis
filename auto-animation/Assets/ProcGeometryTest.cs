@@ -20,8 +20,8 @@ public class ProcGeometryTest : MonoBehaviour {
         vertices[3] = new Vector3(width, 0, 0);
         
         vertices[0] = transform.InverseTransformPoint(controller.skeleton.LHeel.jointTransform.position);
-        vertices[1] = transform.InverseTransformPoint(controller.skeleton.LFoot.jointTransform.position);
-        vertices[2] = transform.InverseTransformPoint(controller.skeleton.RFoot.jointTransform.position);
+        vertices[1] = transform.InverseTransformPoint(controller.skeleton.LAnkle.jointTransform.position);
+        vertices[2] = transform.InverseTransformPoint(controller.skeleton.RAnkle.jointTransform.position);
         vertices[3] = transform.InverseTransformPoint(controller.skeleton.RHeel.jointTransform.position);
 
         mesh.vertices = vertices;
