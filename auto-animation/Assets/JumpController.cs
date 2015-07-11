@@ -133,7 +133,12 @@ public class JumpController : MonoBehaviour {
 
             if (estimate_flag) {
                 Debug.Log("Not Jumping --> Path Estimate --> Windup");
+                Debug.Log("Estimated accel: " + jumping.acceleration.ToString("G4"));
                 jumping.state = JumpState.WindUp;
+            }
+            else {
+                Debug.Log("Impossible jump given min and max possible");
+                jumping.state = JumpState.NotJumping;
             }
         }
         else if (jumping.state == JumpState.WindUp) {
@@ -217,8 +222,8 @@ public class JumpController : MonoBehaviour {
     }
 
     public Vector3 BalanceError() {
-        Debug.Log("Supp center: " + skeleton.support_center);
-        Debug.Log("COM: " + skeleton.COM);
+        //Debug.Log("Supp center: " + skeleton.support_center);
+        //Debug.Log("COM: " + skeleton.COM);
         return (skeleton.support_center - skeleton.COM);
     }
         

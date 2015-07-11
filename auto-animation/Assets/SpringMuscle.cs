@@ -54,6 +54,7 @@ public class SpringMuscle {
         Vector3 momentArm = Vector3.Cross(
             (anchors[0].Position() - centerJoint.Position()) * anchorDistFromCenter[0], 
             (anchors[1].Position() - centerJoint.Position()) * anchorDistFromCenter[1]);
+        Debug.Log("torque moment arm: " + momentArm);
         // force times the moment arm
         return force * momentArm;
     }
@@ -72,8 +73,11 @@ public class SpringMuscle {
 
         // vector of the first bone in the joint (primary bone affected)
         // crossed with the torque to get a direction
+        Debug.Log("ILA calc force: " + force);
         Vector3 am = angularMomentum(deltaTime, force);
+        Debug.Log("Angular momentum: " + am);
         Vector3 dir = Vector3.Cross(anchors[0].Position() - centerJoint.Position(), am).normalized;
+        //Debug.Log("Direction for linear accel: " + dir);
         // linear momentum is the radius times the angular momentum in a
         // direction tangent to the circle at the current point
         return dir * am.magnitude * (anchors[0].Position() - centerJoint.Position()).magnitude;

@@ -120,9 +120,9 @@ public class ConstrainedPhysicalControllerSkeleton : IEnumerable<PhysicalJoint> 
     }
 
     public void PositionPelvis(Vector3 servo_modification) {
-        Debug.Log("Reposition by " + servo_modification + " start: " + Pelvis.Position());
+        //Debug.Log("Reposition by " + servo_modification + " start: " + Pelvis.Position());
         Pelvis.jointTransform.Translate(servo_modification);
-        Debug.Log("Reposition finish: " + Pelvis.Position());
+        //Debug.Log("Reposition finish: " + Pelvis.Position());
     }
     
     public float TotalMass() {
