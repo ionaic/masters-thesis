@@ -7,6 +7,7 @@ public class PositionSampler : MonoBehaviour {
     public JumpController controller;
     public CustomInputManager controls;
     private InverseKinematics ikmanager;
+    private List<Vector3> dbg_pos;
         
     private Vector3[] aabb;
     
@@ -37,11 +38,19 @@ public class PositionSampler : MonoBehaviour {
                 Gizmos.DrawSphere(point, 0.01f);
             }
         }
+        
+        Gizmos.color = Color.yellow;
+        if (dbg_pos != null) {
+            foreach (Vector3 v in dbg_pos) {
+                Gizmos.DrawSphere(v, 0.01f);
+            }
+        }
     }
     
     void WriteSampleToLogs() {
         Debug.Log("Writing to sample logs");
         string balance_err = controller.BalanceError().ToString("G4");
+        dbg_pos.Add(controller.skeleton.Pelvis.Position());
 
         List<string> data_angle = new List<string>();
         List<string> data_force = new List<string>();
@@ -82,6 +91,8 @@ public class PositionSampler : MonoBehaviour {
     }
     
     void SampleHipPositions() {
+        dbg_pos = new List<Vector3>();
+
         controller.skeleton.UpdateCOM();
         controller.skeleton.UpdateSupportingPoly();
         TransformData[] reset = controller.skeleton.GetResetArray();
@@ -90,7 +101,8 @@ public class PositionSampler : MonoBehaviour {
         tmp.Add(controller.skeleton.Pelvis.Position());
         aabb = JumpUtil.minAABB3d(tmp.ToArray());
 
-        Vector3 base_pos = controller.skeleton.Pelvis.Position();
+        // use the min corner of the box
+        Vector3 base_pos = aabb[0];
 
         Debug.Log("AABB: " + JumpUtil.ArrayToString(aabb));
 
@@ -106,8 +118,13 @@ public class PositionSampler : MonoBehaviour {
             for (int sdepth = 0; sdepth < sample_depth; sdepth++) {
                 for (int sheight = 0; sheight < sample_height; sheight++) {
                     Vector3 displacement = new Vector3(swidth * step, sheight * step, sdepth * step);
-                    controller.skeleton.Pelvis.Position(base_pos - displacement);
+                    // move the pelvis
+                    controller.skeleton.Pelvis.Position(base_pos + displacement);
+                    // update values to match new position
                     ikmanager.Iterate();
+                    controller.skeleton.UpdateCOM();
+                    controller.skeleton.UpdateSupportingPoly();
+                    // write the sample
                     WriteSampleToLogs();
                 }
             }

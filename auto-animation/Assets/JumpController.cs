@@ -120,6 +120,7 @@ public class JumpController : MonoBehaviour {
         }
         
         skeleton.UpdateCOM();
+        skeleton.UpdateSupportingPoly();
 
         // Downward/windup phase OR
         // Upward/accel phase OR if done
