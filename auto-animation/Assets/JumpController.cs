@@ -247,15 +247,16 @@ public class JumpController : MonoBehaviour {
         // unpretty loop as there isn't really a reasonable way of doing this
         // with linq
         Vector3 min = diffList[0].resultantAccel;
-        int idx = 0;
+        Vector3 minPos = diffList[0].pelvisPosition;
         for (int i = 0; i < diffList.Count(); ++i) {
+            //if (min.sqrMagnitude + minPos.sqrMagnitude > diffList[i].resultantAccel.sqrMagnitude + (minPos - skeleton.Pelvis.Position()).sqrMagnitude) {
             if (min.sqrMagnitude > diffList[i].resultantAccel.sqrMagnitude) {
                 min = diffList[i].resultantAccel;
-                idx = i;
+                minPos = diffList[i].pelvisPosition;
             }
         }
 
-        return (diffList[idx].pelvisPosition - skeleton.Pelvis.Position()).normalized;
+        return (minPos - skeleton.Pelvis.Position()).normalized;
     }
 
     // function to handle the windup phase
