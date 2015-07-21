@@ -10,21 +10,21 @@ public class PhysicalJoint : MonoBehaviour {
     public float jointMass = 0.0f;
 
     public bool canRoll;
-    [Range(-360.0f, 360.0f)]
+    [Range(0.0f, 360.0f)]
     public float minRollAngle = 0.0f;
-    [Range(-360.0f, 360.0f)]
+    [Range(0.0f, 360.0f)]
     public float maxRollAngle = 360.0f;
 
     public bool canPitch;
-    [Range(-360.0f, 360.0f)]
+    [Range(0.0f, 360.0f)]
     public float minPitchAngle = 0.0f;
-    [Range(-360.0f, 360.0f)]
+    [Range(0.0f, 360.0f)]
     public float maxPitchAngle = 360.0f;
 
     public bool canYaw;
-    [Range(-360.0f, 360.0f)]
+    [Range(0.0f, 360.0f)]
     public float minYawAngle = 0.0f;
-    [Range(-360.0f, 360.0f)]
+    [Range(0.0f, 360.0f)]
     public float maxYawAngle = 360.0f;
 
     private Vector3 restAngle;
@@ -34,18 +34,18 @@ public class PhysicalJoint : MonoBehaviour {
     // to a positive angle
     public bool CanRoll() {
         return canRoll && 
-            (!Mathf.Approximately(minRollAngle, jointTransform.eulerAngles.z) || 
-            !Mathf.Approximately(maxRollAngle, jointTransform.eulerAngles.z));
+            (!Mathf.Approximately(minRollAngle, internalAngle.z) || 
+            !Mathf.Approximately(maxRollAngle, internalAngle.z));
     }
     public bool CanPitch() {
         return canPitch && 
-            (!Mathf.Approximately(minPitchAngle, jointTransform.eulerAngles.x) || 
-            !Mathf.Approximately(maxPitchAngle, jointTransform.eulerAngles.x));
+            (!Mathf.Approximately(minPitchAngle, internalAngle.x) || 
+            !Mathf.Approximately(maxPitchAngle, internalAngle.x));
     }
     public bool CanYaw() {
         return canYaw && 
-            (!Mathf.Approximately(minYawAngle, jointTransform.eulerAngles.y) || 
-            !Mathf.Approximately(maxYawAngle, jointTransform.eulerAngles.y));
+            (!Mathf.Approximately(minYawAngle, internalAngle.y) || 
+            !Mathf.Approximately(maxYawAngle, internalAngle.y));
     }
 
     public void Rotate(Vector3 eulerAngles) {
@@ -68,11 +68,11 @@ public class PhysicalJoint : MonoBehaviour {
         jointTransform.RotateAround(point, ConstrainAxis(axis), angle);
     }
     public void ReClamp() {
-        Vector3 angles = jointTransform.eulerAngles;
+        Vector3 angles = internalAngle;
         angles.x = Mathf.Clamp(angles.x, minPitchAngle, maxPitchAngle);
         angles.y = Mathf.Clamp(angles.y, minYawAngle, maxYawAngle);
         angles.z = Mathf.Clamp(angles.z, minRollAngle, maxRollAngle);
-        jointTransform.eulerAngles = angles;
+        internalAngle = angles;
     }
 
     public void ReturnToRest() {
@@ -88,16 +88,16 @@ public class PhysicalJoint : MonoBehaviour {
     }
 
     public bool AtMin() {
-        bool roll_min = !canRoll && Mathf.Approximately(minRollAngle, jointTransform.eulerAngles.z);
-        bool pitch_min = !canPitch && Mathf.Approximately(minPitchAngle, jointTransform.eulerAngles.x);
-        bool yaw_min = !canYaw && Mathf.Approximately(minYawAngle, jointTransform.eulerAngles.y);
+        bool roll_min = !canRoll && Mathf.Approximately(minRollAngle, internalAngle.z);
+        bool pitch_min = !canPitch && Mathf.Approximately(minPitchAngle, internalAngle.x);
+        bool yaw_min = !canYaw && Mathf.Approximately(minYawAngle, internalAngle.y);
         return roll_min || pitch_min || yaw_min;
     }
 
     public bool AtMax() {
-        bool roll_max = !canRoll && Mathf.Approximately(maxRollAngle, jointTransform.eulerAngles.z);
-        bool pitch_max = !canPitch && Mathf.Approximately(maxPitchAngle, jointTransform.eulerAngles.x);
-        bool yaw_max = !canYaw && Mathf.Approximately(maxYawAngle, jointTransform.eulerAngles.y);
+        bool roll_max = !canRoll && Mathf.Approximately(maxRollAngle, internalAngle.z);
+        bool pitch_max = !canPitch && Mathf.Approximately(maxPitchAngle, internalAngle.x);
+        bool yaw_max = !canYaw && Mathf.Approximately(maxYawAngle, internalAngle.y);
         return roll_max || pitch_max || yaw_max;
 
     }
@@ -123,11 +123,11 @@ public class PhysicalJoint : MonoBehaviour {
     }
     
     public Vector3 Angle() {
-        return jointTransform.eulerAngles;
+        return internalAngle;
     }
     
     public void Angle(Vector3 newAngles) {
-        jointTransform.eulerAngles = newAngles;
+        internalAngle = newAngles;
     }
 
     public float Mass() {
