@@ -5,6 +5,7 @@ using System.Collections;
 [System.Serializable]
 public class PhysicalJoint : MonoBehaviour {
     public Transform jointTransform;
+    private Vector3 internalAngle;
     
     public float jointMass = 0.0f;
 

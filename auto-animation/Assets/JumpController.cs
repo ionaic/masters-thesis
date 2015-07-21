@@ -39,14 +39,19 @@ public class JumpVariables {
     public float windup_time;
     public float air_time;
     public Vector3 last_err;
+    //public TransformData[] restPose;
+    public Vector3 pelvisRestPos;
 
     public JumpState state;
     public PathSolutionPolicy policy;
     
-    public void init() {
+    public void init(ConstrainedPhysicalControllerSkeleton skeleton) {
         destination = target_location.position;
 
         state = JumpState.NotJumping;
+
+        //restPose = skeleton.GetResetArray();
+        pelvisRestPos = skeleton.Pelvis.Position();
     }
     
     public bool IsAccelerationPossible(Vector3 accel) {
@@ -84,7 +89,7 @@ public class JumpController : MonoBehaviour {
         // initial estimate of path/velocity to get from start to end
         // calculation of intermediate goal states from starting point and final goal
         
-        jumping.init();
+        jumping.init(skeleton);
 
         if (!motor) {
             motor = gameObject.AddComponent<JumpMotor>() as JumpMotor;
@@ -126,6 +131,8 @@ public class JumpController : MonoBehaviour {
         
         skeleton.UpdateCOM();
         skeleton.UpdateSupportingPoly();
+
+        Debug.Log("Pelvis rest pos: " + jumping.pelvisRestPos);
 
         // Downward/windup phase OR
         // Upward/accel phase OR if done
@@ -242,6 +249,20 @@ public class JumpController : MonoBehaviour {
     }
     
     public Vector3 DirToAchieveAccel() {
+        // take the differences between desired acceleration and current acceleration
+        List<PositionSample> diffList = sampler.samples.Select(s => new PositionSample(s.pelvisPosition, jumping.acceleration - s.resultantAccel)).ToList();
+        // order by the difference in acceleration
+        diffList = diffList.OrderBy(s => s.resultantAccel.sqrMagnitude).ToList();
+        
+        // get the top 10
+        //List<PositionSample> shortList = diffList.GetRange(0, 10);
+        //shortList = shortList.OrderBy(s => (s.pelvisPosition - skeleton.Pelvis.Position()).sqrMagnitude).ToList();
+
+        // take the closest point in the top 10 of lowest accel differences
+        return (diffList[0].pelvisPosition - skeleton.Pelvis.Position()).normalized;
+    }
+
+    Vector3 PickFirstClosestWithPos() {
         List<PositionSample> diffList = sampler.samples.Select(s => new PositionSample(s.pelvisPosition, jumping.acceleration - s.resultantAccel)).ToList();
 
         // unpretty loop as there isn't really a reasonable way of doing this
@@ -249,7 +270,23 @@ public class JumpController : MonoBehaviour {
         Vector3 min = diffList[0].resultantAccel;
         Vector3 minPos = diffList[0].pelvisPosition;
         for (int i = 0; i < diffList.Count(); ++i) {
-            //if (min.sqrMagnitude + minPos.sqrMagnitude > diffList[i].resultantAccel.sqrMagnitude + (minPos - skeleton.Pelvis.Position()).sqrMagnitude) {
+            if (min.sqrMagnitude + (jumping.pelvisRestPos - minPos).sqrMagnitude > diffList[i].resultantAccel.sqrMagnitude + (minPos - skeleton.Pelvis.Position()).sqrMagnitude) {
+                min = diffList[i].resultantAccel;
+                minPos = diffList[i].pelvisPosition;
+            }
+        }
+
+        return (minPos - skeleton.Pelvis.Position()).normalized;
+    }
+    
+    Vector3 PickFirstClosest() {
+        List<PositionSample> diffList = sampler.samples.Select(s => new PositionSample(s.pelvisPosition, jumping.acceleration - s.resultantAccel)).ToList();
+
+        // unpretty loop as there isn't really a reasonable way of doing this
+        // with linq
+        Vector3 min = diffList[0].resultantAccel;
+        Vector3 minPos = diffList[0].pelvisPosition;
+        for (int i = 0; i < diffList.Count(); ++i) {
             if (min.sqrMagnitude > diffList[i].resultantAccel.sqrMagnitude) {
                 min = diffList[i].resultantAccel;
                 minPos = diffList[i].pelvisPosition;

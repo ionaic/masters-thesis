@@ -51,7 +51,7 @@ public class ConstrainedPhysicalControllerSkeleton : IEnumerable<PhysicalJoint> 
     public Vector3 COM;
     public Vector3 support_center;
     public Vector3[] supportingPoly;
-
+    
     public int Size() {
         return 11 + UpperBody.Length;
     }
@@ -70,7 +70,7 @@ public class ConstrainedPhysicalControllerSkeleton : IEnumerable<PhysicalJoint> 
             reset[idx].SetTransformFrom(this[idx].jointTransform);
         }
     }
-
+    
     public void UpdateSupportingPoly() {
         // TODO currently assuming the supporting plane includes entire foot,
         // is this ok? think of the plane when on tiptoes, the heel still sort
