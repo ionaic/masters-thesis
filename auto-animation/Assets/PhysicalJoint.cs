@@ -61,18 +61,28 @@ public class PhysicalJoint : MonoBehaviour {
         float clampedZ = CanRoll() ? 
             Mathf.Clamp(roll, minRollAngle, maxRollAngle)
             : 0.0f;
+
+        // update internal representation
+        internalAngle.x += clampedX;
+        internalAngle.y += clampedY;
+        internalAngle.z += clampedZ;
+
         jointTransform.Rotate(clampedX, clampedY, clampedZ);
     }
+
     public void Rotate(Vector3 point, Vector3 axis, float angle) {
         axis.Normalize();
         jointTransform.RotateAround(point, ConstrainAxis(axis), angle);
     }
+
     public void ReClamp() {
         Vector3 angles = internalAngle;
         angles.x = Mathf.Clamp(angles.x, minPitchAngle, maxPitchAngle);
         angles.y = Mathf.Clamp(angles.y, minYawAngle, maxYawAngle);
         angles.z = Mathf.Clamp(angles.z, minRollAngle, maxRollAngle);
         internalAngle = angles;
+        jointTransform.eulerAngles = restAngle;
+        jointTransform.Rotate(internalAngle);
     }
 
     public void ReturnToRest() {
@@ -128,6 +138,8 @@ public class PhysicalJoint : MonoBehaviour {
     
     public void Angle(Vector3 newAngles) {
         internalAngle = newAngles;
+        jointTransform.eulerAngles = restAngle;
+        jointTransform.Rotate(internalAngle);
     }
 
     public float Mass() {
