@@ -4,28 +4,29 @@ using System.Collections;
 [AddComponentMenu("Physical Motion Controller/Joint")]
 [System.Serializable]
 public class PhysicalJoint : MonoBehaviour {
+    public float shieldArea = 5.0f;
     public Transform jointTransform;
     private Vector3 internalAngle;
     
     public float jointMass = 0.0f;
 
     public bool canRoll;
-    [Range(0.0f, 360.0f)]
-    public float minRollAngle = 0.0f;
-    [Range(0.0f, 360.0f)]
-    public float maxRollAngle = 360.0f;
+    [Range(-180.0f, 180.0f)]
+    public float minRollAngle = -180.0f;
+    [Range(-180.0f, 180.0f)]
+    public float maxRollAngle = 180.0f;
 
     public bool canPitch;
-    [Range(0.0f, 360.0f)]
-    public float minPitchAngle = 0.0f;
-    [Range(0.0f, 360.0f)]
-    public float maxPitchAngle = 360.0f;
+    [Range(-180.0f, 180.0f)]
+    public float minPitchAngle = -180.0f;
+    [Range(-180.0f, 180.0f)]
+    public float maxPitchAngle = 180.0f;
 
     public bool canYaw;
-    [Range(0.0f, 360.0f)]
-    public float minYawAngle = 0.0f;
-    [Range(0.0f, 360.0f)]
-    public float maxYawAngle = 360.0f;
+    [Range(-180.0f, 180.0f)]
+    public float minYawAngle = -180.0f;
+    [Range(-180.0f, 180.0f)]
+    public float maxYawAngle = 180.0f;
 
     private Vector3 restAngle;
     
