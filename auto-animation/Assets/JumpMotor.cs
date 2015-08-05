@@ -20,6 +20,7 @@ public class JumpMotor : MonoBehaviour {
     void Start () {
         // initialize to not be jumping
         isJumping = false;
+        velocity = Vector3.zero;
     }
     
     void Update() {
@@ -65,6 +66,6 @@ public class JumpMotor : MonoBehaviour {
     }
     
     public bool IsGrounded() {
-        return false;
+        return !isJumping;
     }
 }

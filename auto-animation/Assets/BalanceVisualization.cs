@@ -37,7 +37,7 @@ public class BalanceVisualization : MonoBehaviour {
     void CreateMesh() {
         supportingPlaneMesh = new Mesh();
         meshFilter = GetComponent<MeshFilter>();
-        meshRenderer = GetComponent<MeshRenderer>();
+        //meshRenderer = GetComponent<MeshRenderer>();
         controller = GetComponent<PhysicalMotionController>();
 
         meshFilter.mesh = supportingPlaneMesh;

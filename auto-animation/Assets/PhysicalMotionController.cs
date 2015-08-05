@@ -119,7 +119,6 @@ public class Limb {
     private SpringMuscle musc;
     
     public Limb() {
-        musc = new SpringMuscle();
     }
     
     public Vector3 force() {
@@ -223,6 +222,7 @@ public class PhysicalMotionController : MonoBehaviour {
         desiredForce = bodyMass * gravity + bodyMass * desiredAccel;
 
         float force_err = desiredForce - musc.scalarForce();
+        Debug.Log("force_err: " + force_err);
     }
     bool IsRotating() {
         //float curAngle = skeleton.RKnee.jointTransform.localRotation.eulerAngles.z;
