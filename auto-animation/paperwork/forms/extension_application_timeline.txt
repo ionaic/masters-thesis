@@ -1,0 +1,22 @@
+Timeline for completion
+[finished by date] <task type>: task
+using must-do (required), should-do (optional but desirable), and could-do (reach goal if extra time remains) levels to indicate "hardness" of requirement. if blank, assume must-do.
+
+[Aug. 14, 1 week] code: sample selection for hip position for windup needs to be fixed
+[Aug. 28, 2 weeks] code: test release once windup sampling is correct (currently seems to work, but planning for some tweaking once the sample selected is better)
+[Aug. 28, 2 weeks] code: test in-air once windup sampling is correct (see reason for release)
+[Sept. 4, 1 week] code: (should-do) use unity's animation builder to save animation as animation clip (keyframe animation) once generated
+[Sept. 11, 1 week] result analysis: analysis of output animation
+[Sept. 11, 1 week] result analysis: feedback on output animation from Prof. Lawson, Prof. Cutler
+[Sept. 18, 1 week] writing: revise introduction, condense to abstract
+[Sept. 18, 1 week] writing: revise animation chapter
+[Sept. 25, 1 week] writing: bulk up previous work, finish collecting citations into bib file
+[Sept. 25, 1 week] writing: finish future work chapter
+[Oct. 9, 2 weeks] writing: finish visualization chapter
+[Oct. 9, 2 weeks] writing: result analysis chapter
+[Oct. 16, 1 week] writing: conclusion chapter
+[Oct. 28] writing: final revisions
+[1 week] result analysis: (could-do) comparison to image sequences of jumping human(s)
+[1 week] result analysis: (could-do) comparison to kinect data of human(s) jumping
+
+Iteration on revisions assumed to continue alongside the focused chapter for writing
