@@ -172,6 +172,10 @@ public class PhysicalJoint : MonoBehaviour {
         jointTransform.eulerAngles = restAngle;
         jointTransform.Rotate(internalAngle);
     }
+    
+    public float EnergyForBend() {
+        return 0.0f;
+    }
 
     public float Mass() {
         return jointMass != 0 ? jointMass : 1.0f;
