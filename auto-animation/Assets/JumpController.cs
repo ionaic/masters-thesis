@@ -238,7 +238,16 @@ public class JumpController : MonoBehaviour {
     public Vector3 BalanceError() {
         //Debug.Log("Supp center: " + skeleton.support_center);
         //Debug.Log("COM: " + skeleton.COM);
-        return (skeleton.support_center - skeleton.COM);
+        Vector3 err = skeleton.support_center - skeleton.COM;
+        err.z = 0.0f;
+        return err;
+    }
+    
+    // estimation of the balance error at this new position
+    public Vector3 EstimateBalanceError(Vector3 pos) {
+        Vector3 err = skeleton.support_center - pos;
+        err.z = 0.0f;
+        return err;
     }
         
     public Vector3 AccelError() {
@@ -255,8 +264,8 @@ public class JumpController : MonoBehaviour {
         diffList = diffList.OrderBy(s => s.resultantAccel.sqrMagnitude).ToList();
         
         // get the top 10
-        //List<PositionSample> shortList = diffList.GetRange(0, 10);
-        //shortList = shortList.OrderBy(s => (s.pelvisPosition - skeleton.Pelvis.Position()).sqrMagnitude).ToList();
+        List<PositionSample> shortList = diffList.GetRange(0, 10);
+        shortList = shortList.OrderBy(s => EstimateBalanceError(s.pelvisPosition).sqrMagnitude).ToList();
 
         // take the closest point in the top 10 of lowest accel differences
         return (diffList[0].pelvisPosition - skeleton.Pelvis.Position()).normalized;

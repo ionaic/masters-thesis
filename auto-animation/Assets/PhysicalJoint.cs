@@ -48,6 +48,31 @@ public class PhysicalJoint : MonoBehaviour {
             (!Mathf.Approximately(minYawAngle, internalAngle.y) || 
             !Mathf.Approximately(maxYawAngle, internalAngle.y));
     }
+    
+    public Vector3 AxisConstraints() {
+        return ConstrainAxis(Vector3.one);
+    }
+
+    public Vector3 DirToNext() {
+        // TODO fails on pelvis because of weird 3 way connection
+        int number = 0;
+        Vector3 totalDir = Vector3.zero;
+
+        // average the directions to each child that is a physicaljoint
+        foreach(Transform child in transform) {
+            PhysicalJoint joint = child.gameObject.GetComponent<PhysicalJoint>();
+            if (joint) {
+                totalDir += joint.Position();
+                number++;
+            }
+        }
+        if (number > 0) {
+            return (totalDir / number) - Position();
+        }
+        else {
+            return Vector3.forward;
+        }
+    }
 
     public void Rotate(Vector3 eulerAngles) {
         Rotate(eulerAngles.x, eulerAngles.y, eulerAngles.z);
@@ -126,7 +151,12 @@ public class PhysicalJoint : MonoBehaviour {
     }
 
     public Vector3 Position() {
-        return jointTransform.position;
+        if (jointTransform) {
+            return jointTransform.position;
+        }
+        else {
+            return this.transform.position;
+        }
     }
 
     public void Position(Vector3 newpos) {
@@ -146,16 +176,18 @@ public class PhysicalJoint : MonoBehaviour {
     public float Mass() {
         return jointMass != 0 ? jointMass : 1.0f;
     }
-
-    void Awake() {
+    
+    public void Init() {
         if (!jointTransform) {
             jointTransform = this.transform;
         }
         restAngle = jointTransform.eulerAngles;
     }
+
+    void Awake() {
+        Init();
+    }
     void Start() {
-        if (!jointTransform) {
-            jointTransform = this.transform;
-        }
+        Init();
     }
 }
