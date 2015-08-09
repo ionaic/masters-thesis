@@ -264,8 +264,8 @@ public class JumpController : MonoBehaviour {
         diffList = diffList.OrderBy(s => s.resultantAccel.sqrMagnitude).ToList();
         
         // get the top 10
-        List<PositionSample> shortList = diffList.GetRange(0, 10);
-        shortList = shortList.OrderBy(s => EstimateBalanceError(s.pelvisPosition).sqrMagnitude).ToList();
+        //List<PositionSample> shortList = diffList.GetRange(0, 10);
+        //shortList = shortList.OrderBy(s => EstimateBalanceError(s.pelvisPosition).sqrMagnitude).ToList();
 
         // take the closest point in the top 10 of lowest accel differences
         return (diffList[0].pelvisPosition - skeleton.Pelvis.Position()).normalized;
