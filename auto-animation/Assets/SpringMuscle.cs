@@ -29,6 +29,10 @@ public class SpringMuscle {
         // TODO is this correct, i can't find my notes on this
         return -k * (bone_width / Mathf.Sin((Mathf.PI - Mathf.Deg2Rad * anchors[1].Angle().x) / 2.0f));
     }
+
+    public float springDisplacement() {
+        return (bone_width / Mathf.Sin((Mathf.PI - Mathf.Deg2Rad * anchors[1].Angle().x) / 2.0f));
+    }
     //public float force(float length) {
     //    return -k * (length - l_0);
     //}
@@ -76,11 +80,12 @@ public class SpringMuscle {
         //Debug.Log("ILA calc force: " + force);
         Vector3 am = angularMomentum(deltaTime, force);
         //Debug.Log("Angular momentum: " + am);
-        Vector3 dir = Vector3.Cross(anchors[0].Position() - centerJoint.Position(), am).normalized;
+        //Vector3 dir = Vector3.Cross(anchors[0].Position() - centerJoint.Position(), am).normalized;
+        Vector3 dir = Vector3.Cross(am, anchors[0].Position() - centerJoint.Position()).normalized;
         //Debug.Log("Direction for linear accel: " + dir);
         // linear momentum is the radius times the angular momentum in a
         // direction tangent to the circle at the current point
-        return dir * am.magnitude * (anchors[0].Position() - centerJoint.Position()).magnitude;
+        return dir * am.magnitude;// * (anchors[0].Position() - centerJoint.Position()).magnitude;
     }
     public Vector3 instantLinearAcceleration(float deltaTime) {
         return instantLinearAcceleration(deltaTime, scalarForce());

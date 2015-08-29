@@ -4,7 +4,6 @@ using System.Collections;
 [AddComponentMenu("Physical Motion Controller/Joint")]
 [System.Serializable]
 public class PhysicalJoint : MonoBehaviour {
-    public float shieldArea = 5.0f;
     public Transform jointTransform;
     private Vector3 internalAngle;
     

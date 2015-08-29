@@ -132,7 +132,7 @@ public class JumpController : MonoBehaviour {
         skeleton.UpdateCOM();
         skeleton.UpdateSupportingPoly();
 
-        Debug.Log("Pelvis rest pos: " + jumping.pelvisRestPos);
+        //Debug.Log("Pelvis rest pos: " + jumping.pelvisRestPos);
 
         // Downward/windup phase OR
         // Upward/accel phase OR if done
@@ -149,6 +149,7 @@ public class JumpController : MonoBehaviour {
                 jumping.state = JumpState.WindUp;
                 // collect a sample field
                 sampler.SampleHipPositions();
+                sampler.LogSamples();
             }
             else {
                 Debug.Log("Impossible jump given min and max possible");
@@ -246,14 +247,15 @@ public class JumpController : MonoBehaviour {
     // estimation of the balance error at this new position
     public Vector3 EstimateBalanceError(Vector3 pos) {
         Vector3 err = skeleton.support_center - pos;
-        err.z = 0.0f;
+        // NOTE assumes that feet are flat and that y is the vertical
+        err.y = 0.0f;
         return err;
     }
         
     public Vector3 AccelError() {
         // compare resultant angular acceleration to expected acceleration from force
         Vector3 skel_accel = skeleton.acceleration(jumping.windup_time);
-        Debug.Log("cur accel: " + skel_accel + ";\ntarget: " + jumping.acceleration + ";\nerror: " + (jumping.acceleration - skel_accel));
+        //Debug.Log("cur accel: " + skel_accel + ";\ntarget: " + jumping.acceleration + ";\nerror: " + (jumping.acceleration - skel_accel));
         return (jumping.acceleration - skel_accel);
     }
     
