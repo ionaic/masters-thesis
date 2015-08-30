@@ -139,11 +139,10 @@ public class MotionVisualizer : MonoBehaviour {
         if (secondsSinceGhost >= secondsPerGhostSample) {
             GameObject ghost = Instantiate(gameObject) as GameObject;
             Destroy(ghost.GetComponent<BalanceVisualization>());
-            Destroy(ghost.GetComponent<PhysicalMotionController>());
+            Destroy(ghost.GetComponent<JumpController>());
             Destroy(ghost.GetComponent<MotionVisualizer>());
             Destroy(ghost.GetComponent<MotionVisualizer>());
             Destroy(ghost.GetComponent<StaticParticleManager>());
-            Destroy(ghost.GetComponent<TargetMovement>());
             Destroy(ghost.GetComponent<InverseKinematics>());
             secondsSinceGhost = 0.0f;
             ghosts.Add(ghost);

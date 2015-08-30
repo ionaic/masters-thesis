@@ -27,7 +27,7 @@ public class SpringMuscle {
     public float scalarForce() {
         // calculate the force of the muscle given a length
         // TODO is this correct, i can't find my notes on this
-        return -k * (bone_width / Mathf.Sin((Mathf.PI - Mathf.Deg2Rad * anchors[1].Angle().x) / 2.0f));
+        return k * (bone_width / Mathf.Sin((Mathf.PI - Mathf.Deg2Rad * anchors[1].Angle().x) / 2.0f));
     }
 
     public float springDisplacement() {
