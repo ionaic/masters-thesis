@@ -72,6 +72,7 @@ public class JumpController : MonoBehaviour {
     public CustomInputManager controls;
     public JumpVariables jumping;
     public PIDServo windupPD;
+    public PIDServo balancePD;
     public ConstrainedPhysicalControllerSkeleton skeleton;
     public JumpMotor motor;
     public JumpLogger logger;
@@ -132,7 +133,6 @@ public class JumpController : MonoBehaviour {
         skeleton.UpdateCOM();
         skeleton.UpdateSupportingPoly();
 
-        //Debug.Log("Pelvis rest pos: " + jumping.pelvisRestPos);
 
         // Downward/windup phase OR
         // Upward/accel phase OR if done
@@ -165,7 +165,6 @@ public class JumpController : MonoBehaviour {
                 jumping.state = JumpState.Accel;
                 
                 // log info
-                Debug.Log("Logging to file: " + logger.files[0].filename);
                 List<string> data_windup = new List<string>();
                 data_windup.Add(jumping.acceleration.ToString("G4"));
                 for (int i = 0; i < 8; i++) {
@@ -207,7 +206,6 @@ public class JumpController : MonoBehaviour {
         }
 
         // Dump all of the data of this iteration
-        Debug.Log("Logging to file: " + logger.files[1].filename);
         List<string> data_pd = new List<string>();
         data_pd.Add(jumping.acceleration.ToString("G4"));
         for (int i = 0; i < 8; i++) {
@@ -232,7 +230,6 @@ public class JumpController : MonoBehaviour {
             jumping.acceleration = 2 * (jumping.destination - jumping.start - jumping.initial_velocity * jumping.air_time) / (jumping.air_time * jumping.air_time);
         }
         jumping.force = jumping.acceleration * skeleton.TotalMass();
-        Debug.Log("Estimated Accel: " + jumping.acceleration);
         return jumping.IsAccelerationPossible(jumping.acceleration);
     }
 
@@ -242,6 +239,23 @@ public class JumpController : MonoBehaviour {
         Vector3 err = skeleton.support_center - skeleton.COM;
         err.z = 0.0f;
         return err;
+    }
+    
+    public void UpperBodyBalance(Vector3 err) {
+        // move the upper body to rebalance the character
+        // TODO
+        // rebalance by calculating the amount to move the upper body to reposition center of mass
+        // need a 2d back and forth for balancing, so rotating so upper body is more forward or more backward
+        // +theta moves more forward, -theta moves more backward
+        
+        Vector3 rotation_amt = balancePD.modify(err);
+        
+        Debug.Log("Upper Body Balance rotation: " + rotation_amt);
+    
+        skeleton.Pelvis.Rotate(rotation_amt);
+        
+        // TODO can we just rotate the hip joints back to compensate, it's a single level...
+        IK.Iterate();
     }
     
     // estimation of the balance error at this new position
@@ -265,12 +279,15 @@ public class JumpController : MonoBehaviour {
         // order by the difference in acceleration
         diffList = diffList.OrderBy(s => s.resultantAccel.sqrMagnitude).ToList();
         
+        Debug.Log("Selected sample: " + diffList[0].pelvisPosition);
+        
         // get the top 10
         //List<PositionSample> shortList = diffList.GetRange(0, 10);
         //shortList = shortList.OrderBy(s => EstimateBalanceError(s.pelvisPosition).sqrMagnitude).ToList();
 
         // take the closest point in the top 10 of lowest accel differences
-        return (diffList[0].pelvisPosition - skeleton.Pelvis.Position()).normalized;
+        //return (diffList[0].pelvisPosition - skeleton.Pelvis.Position()).normalized;
+        return diffList[0].pelvisPosition - skeleton.Pelvis.Position();
     }
 
     Vector3 PickFirstClosestWithPos() {
@@ -313,6 +330,8 @@ public class JumpController : MonoBehaviour {
         //Vector3 servo_modification = windupPD.modify(BalanceError());
         //Vector3 servo_modification = windupPD.modify(AccelError());
         Vector3 servo_modification = windupPD.modify(DirToAchieveAccel());
+        
+        UpperBodyBalance(BalanceError());
         
         skeleton.PositionPelvis(servo_modification);
         
