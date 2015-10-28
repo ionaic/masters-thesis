@@ -7,11 +7,17 @@
 \chapter{ANIMATION}
 \label{chapter:animation}
 
-Jumping is the acceleration of a character's center of mass upward.  This motion can be divided into several stages.  First is the lead-up or wind-up stage in which the character flexes or gathers momentum to perform the jump.  This takes the form of a slight crouch (TODO reference cat jumping paper or the background section.  should this be in background?) which prepares the character to exert the necessary force against the ground.  
+Jumping is the acceleration of a character's center of mass upward.  This motion can be divided into several stages.  First is the lead-up or wind-up stage in which the character flexes or gathers momentum to perform the jump.  This takes the form of a slight crouch (TODO reference cat jumping paper or the background .  should this be in background?) which prepares the character to exert the necessary force against the ground.  
 
 Next comes the take-off stage.  The character pushes against the floor with their feet, accelerating their center of mass to break contact with the floor.  
 
-\section{Path Estimation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               Torque Method                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Torque-based simulation}
+One method of simulation we attempted used springs placed along the length of each limbs to produce a torque on the joints of the character.  This method failed for unknown reasons.  Torques on the joints results from the force of the muscle pulling a bone to rotate about the joint, resulting in a complex system of motion with each bone rotating around the joints.  These rotations combine to move the body in a direction, allowing a character's control to be centered around degree and timing of muscle activation. \cite{muscle_based_bipeds}  In our case, we take the muscle as fully activated, which means that it has a spring constant defining the strength of the muscle.  This muscle is then stretched to produce the desired torque by bending the affected limb.  The restoring force of the spring-muscles produce torques which are used to calculate angular momentum, and from that linear momentum.  
+
+\subsection{Path Estimation}
 
 \begin{figure}[ht]
 	\centering
@@ -28,7 +34,7 @@ Before calculations relating to the model's skeleton are performed, an initial e
 
 The user specifies a desired time ($t$), which indicates the time the character will spend airborne during the animation, i.e. the time between when the character's feet break contact with the ground and when they regain contact with the ground.  This is useful as the desired animation can be more easily adjusted to fit a desired time as an in-game animation or to fit a particular storyboard for an animated film sequence.
 
-\section{Windup}
+\subsection{Windup}
 From this force, the acceleration can be determined using $F=ma$ from classical mechanics.  This assumes the character is a rigid body with negligible air resistance acted upon by gravity of $10\frac{m}{s}$.  The mass is calculated as the summed total of the distributed masses assigned to the character's limbs, which are summed to produce a total mass for the character.
 
 Proportional derivative control is used to produce the windup motion once the initial path estimate is calculated.  The error function $E_{all}$ calculates error from the desired force $E_{force}$ as well as the balance $E_{balance}$.
@@ -51,7 +57,7 @@ Once computed, error is compared to a threshold ($\epsilon$).  If the error is b
 	\label{tab:windup_pd_vals}
 \end{table}
 
-\subsection{Force calculation}
+\subsubsection{Force calculation}
 %TODO force calculation should be done with error in net torque instead of error in force as we don't really have a resultant force here and the net force really means nothing
 % calculation of the muscle flexion
 \begin{figure}[ht]
@@ -83,7 +89,7 @@ At each iteration of the PD controller, current force output of the legs is comp
 
 To calculate the error used for PD control, the vector between the two forces is measured, indicating the change required in both direction and magnitude.  As we require the force to act in the direction of acceleration, the main adjustment is the force magnitude.  When instead considering the torque magnitude, the magnitude alone can be considered. (TODO I think I need to be using the torque magnitude instead of a force here).
 
-\subsection{Center of Mass and Balance}
+\subsubsection{Center of Mass and Balance}
 %TODO need to standardize usage of joint to anatomical, animation, or something else
 The center of mass (CoM) is calculated as the centroid of the character.  More specifically, joint positions are averaged, with a weight assigned to each joint based on the weight of the limb associated.  The CoM must be recalculated with each update to the character's pose as the shift in weight changes the position.
 
@@ -98,7 +104,7 @@ Using the calculated CoM, the balance of the character can be determined by the 
 To quantify balance, the vector between the center of the supporting polygon and the position of the CoM is measured.  This vector is then projected into the same plane as the supporting polygon, giving a 2 dimensional error between where the CoM is currently and where it would need to be to be perfectly centered.  The PD controller then attempts to minimize the magnitude of this vector by moving in the proscribed direction while bending to achieve the desired force, constraining the number of solutions possible to provide the desired force.
 % does the vertical distance have effect?  you're going to fall over more easily if you're on a stilt as opposed to crouching over your feet as the moment will be (bigger? is that bigger?).  the lever will be more able to move your weight easily
 
-\subsection{Inverse Kinematic Solving}
+\subsubsection{Inverse Kinematic Solving}
 As the skeleton is a hierarchy assumed to be rooted at the hip, a problem arises with applying rotations to joints.  To keep a character's feet rooted to the floor as is expected, positions must be solved for using inverse kinematics.  Given the desired position for the hip, and the desired position of the foot, the joint angles and positions of the knee and ankle are solved for.  Constraints are placed on each joint, limiting the range of motion to an expected range as well as limiting the axes about which each joint can rotate, preventing unnatural directions of motion.  These values are specified per joint and can be edited by the user to simulate varied levels of flexibility or alternate body shapes.
 
 %TODO alternate body with digitigrade, Tauren or whatever from WoW, raptor style...
@@ -129,13 +135,24 @@ A solution to the joint positions is found using these constraints, and gradient
 
 This approach, while for the specific case of single chains of joints, is simpler to implement than other approaches such as the pseudo-inverse of the Jacobian.  In addition, this approach allows some flexibility, specifically in constraints of the joints.  As each joint is addressed individually instead of the system as a whole, any constraints placed on the joint can easily be accounted for by simply preventing the joint from rotating out of the desired range while the rest of the system continues to move as close as possible to the solution.  One downside is that a halting condition must be determined, through a minimum acceptable distance.  To handle the case where the joint cannot be moved within this minimum distance, a maximum number of iterations must be designated.  In practice, 100 iterations is enough to converge, with as few as 30 working well for our simulation.
 
-\section{Thrust and Takeoff}
+\subsection{Thrust and Takeoff}
 Upward acceleration is animated by calculating the angular accelerations of the joints given the forces acting upon them and the resulting torques.  Torque is the change in angular momentum over time, allowing for the acceleration to be calculated as the mass can be assumed to be constant: \[\tau = \dfrac{dL}{dt} = m \dfrac{dv_{\theta}}{dt} = m a_{\theta}\] where $\tau$ is the torque of a joint, $L$ is the angular momentum, $m$ is the mass of the limb, which must take into account the mass of the rest of the body which is also moved by the limb, $v_{\theta}$ is the angular velocity and $a_{\theta}$ is the angular acceleration. This results in the below equation for determining angular acceleration. \[a_{\theta} = \dfrac{\tau}{m}\]
 
 Using angular acceleration, the intermediary poses for the model can be determined at each timestep.   For each frame, an explicit Euler integration is performed to determine first angular velocity and finally angle.  As the character continues to extend, a check is made for if the character has yet reached full extension.  At full extension, the character can no longer accelerate in the direction of the jump, and the character breaks contact with the ground to enter the in-air phase.
 
-\section{In Air Maneuvers and landing}
-While in the air, the character is limited in its maneuvers.  Small adjustments can be made, mainly preparations for landing.  As discussed in \cite{falling_landing}, a portion of the body may be raised or lowered if another portion is lowered or raised respectively.  This allows the character to control angular velocity with adjustments to pose.
+\subsection{Sampling}
+To determine which of numerous possible solutions is the most desirable, we take several samples.  A sample is described by the position of the pelvis joint, the resulting linear momentum, and a vector describing the displacement of the character's center of mass from the center of its support to indicate balance as described above.
+
+Samples were restricted to a box defined by a rectangle around the character's feet with a height reaching the position of the character's pelvis when standing at rest.  Any sample outside of this volume is assumed to put the character off balance.  Samples were then taken at uniformly distributed positions in this region.  To select the minimum sample, the collected data were organized first by the difference between the linear momentum calculated and the desired linear momentum, and the top ten percent were selected.  Ten percent was found empirically to be a good selection of points to select the most balanced from while also retrieving points with very low differences from the desired.
+
+\subsection{Rebalancing}
+As the character re-positions its pelvis, the balance must be calculated again and its position accordingly re-adjusted.  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               Energy                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Energy based calculation}
+
 
 \section{Summary}
-\label{section:animation_summary}
+\label{subsection:animation_summary}

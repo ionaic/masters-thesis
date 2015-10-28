@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class TransformData {
     Vector3 position;
@@ -131,6 +132,10 @@ public class ConstrainedPhysicalControllerSkeleton : IEnumerable<PhysicalJoint> 
             total += j.Mass();
         }
         return total;
+    }
+
+    public float scalarElasticEnergy() {
+        return muscles.Sum(m => m.ScalarElasticEnergy());
     }
 
     // acceleration vecetor from all of the muscles

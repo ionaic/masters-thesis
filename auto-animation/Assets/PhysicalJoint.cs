@@ -28,6 +28,7 @@ public class PhysicalJoint : MonoBehaviour {
     public float maxYawAngle = 180.0f;
 
     private Vector3 restAngle;
+    private Quaternion restRotation;
     
     // TODO this works for now since i'm allowing negative angles and I can
     // work around it but the proble arises that negative angles are equivalent
@@ -161,6 +162,10 @@ public class PhysicalJoint : MonoBehaviour {
     public void Position(Vector3 newpos) {
         jointTransform.position = newpos;
     }
+
+    public Quaternion RestRotation() {
+        return restRotation;
+    }
     
     public Vector3 Angle() {
         return internalAngle;
@@ -185,6 +190,7 @@ public class PhysicalJoint : MonoBehaviour {
             jointTransform = this.transform;
         }
         restAngle = jointTransform.eulerAngles;
+        restRotation = jointTransform.rotation;
     }
 
     void Awake() {
