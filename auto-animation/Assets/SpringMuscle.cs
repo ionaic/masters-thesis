@@ -34,6 +34,25 @@ public class SpringMuscle {
         return -k * displacement * displacement;
     }
 
+    public bool IsLimbExtended(float full_extension = -0.9f) {
+        Vector3 a = (anchors[0].Position() - centerJoint.Position()).normalized;
+        Vector3 b = (anchors[1].Position() - centerJoint.Position()).normalized;
+        return Vector3.Dot(a, b) < full_extension;
+    }
+    // gives a 
+    public float LimbUsage() {
+        Vector3 a = (anchors[0].Position() - centerJoint.Position()).normalized;
+        Vector3 b = (anchors[1].Position() - centerJoint.Position()).normalized;
+        // -1 to 1 dot product as they are unit vectors
+        float usage = Vector3.Dot(a, b);
+        // move to 0 to 1 range
+        usage = (usage + 1.0f) / 2.0f;
+        // 0 is the limb is extended, no usage
+        // 1 is fully flexed, max usage (greater actually as the vectors are
+        //   the same!)
+        return usage;
+    }
+
     public float springDisplacement() {
         return (bone_width / Mathf.Sin((Mathf.PI - Mathf.Deg2Rad * anchors[1].Angle().x) / 2.0f));
     }

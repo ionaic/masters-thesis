@@ -308,24 +308,14 @@ public class JumpController : MonoBehaviour {
     }
     
     public Vector3 DirToAchieveAccel() {
-        // take the differences between desired acceleration and current acceleration
-        List<PositionSample> diffList = sampler.samples.Select(s => new PositionSample(s.pelvisPosition, jumping.acceleration - s.resultantAccel)).ToList();
-        // order by the difference in acceleration
-        diffList = diffList.OrderBy(s => s.resultantAccel.sqrMagnitude).ToList();
-        
-        Debug.Log("Selected sample: " + diffList[0].pelvisPosition);
-        
-        // get the top 10
-        //List<PositionSample> shortList = diffList.GetRange(0, 10);
-        //shortList = shortList.OrderBy(s => EstimateBalanceError(s.pelvisPosition).sqrMagnitude).ToList();
-
-        // take the closest point in the top 10 of lowest accel differences
-        //return (diffList[0].pelvisPosition - skeleton.Pelvis.Position()).normalized;
+        // use a dot product, if the dot product is >= the desired magnitude, we're a go
+        List<PositionSample> diffList = sampler.samples.Where(s => Vector3.Dot(jumping.acceleration, s.resultantAccel) >= jumping.acceleration.magnitude).ToList();
+        diffList.OrderBy(s => EstimateBalanceError(s.COM).sqrMagnitude).ToList();
         return diffList[0].pelvisPosition - skeleton.Pelvis.Position();
     }
 
     Vector3 PickFirstClosestWithPos() {
-        List<PositionSample> diffList = sampler.samples.Select(s => new PositionSample(s.pelvisPosition, jumping.acceleration - s.resultantAccel)).ToList();
+        List<PositionSample> diffList = sampler.samples.Select(s => new PositionSample(s.pelvisPosition, jumping.acceleration - s.resultantAccel, s.COM)).ToList();
 
         // unpretty loop as there isn't really a reasonable way of doing this
         // with linq
@@ -342,7 +332,7 @@ public class JumpController : MonoBehaviour {
     }
     
     Vector3 PickFirstClosest() {
-        List<PositionSample> diffList = sampler.samples.Select(s => new PositionSample(s.pelvisPosition, jumping.acceleration - s.resultantAccel)).ToList();
+        List<PositionSample> diffList = sampler.samples.Select(s => new PositionSample(s.pelvisPosition, jumping.acceleration - s.resultantAccel, s.COM)).ToList();
 
         // unpretty loop as there isn't really a reasonable way of doing this
         // with linq
@@ -405,7 +395,7 @@ public class JumpController : MonoBehaviour {
         IK.Iterate();
 
         // TODO check if we are fully extended, if so you're done. go home.
-        return true;
+        return skeleton.CheckExtension();
     }
 
     // function to handle the acceleration/upward phase

@@ -56,6 +56,15 @@ public class ConstrainedPhysicalControllerSkeleton : IEnumerable<PhysicalJoint> 
     public int Size() {
         return 11 + UpperBody.Length;
     }
+    
+    public bool CheckExtension() {
+        bool flag = true;
+        // check if all limbs are fully extended
+        foreach (SpringMuscle m in muscles) {
+            flag = flag && m.IsLimbExtended();
+        }
+        return flag;
+    }
 
     public TransformData[] GetResetArray() {
         List<TransformData> tmp = new List<TransformData>();

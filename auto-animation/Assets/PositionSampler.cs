@@ -5,16 +5,19 @@ using System.Linq;
 
 public class PositionSample {
     public Vector3 pelvisPosition;
+    public Vector3 COM;
     public Vector3 resultantAccel;
     
     public PositionSample() {
         pelvisPosition = new Vector3();
         resultantAccel = new Vector3();
+        COM = new Vector3();
     }
     
-    public PositionSample(Vector3 pos, Vector3 accel) {
+    public PositionSample(Vector3 pos, Vector3 accel, Vector3 com) {
         pelvisPosition = pos;
         resultantAccel = accel;
+        COM = com;
     }
 }
 
@@ -114,6 +117,7 @@ public class PositionSampler : MonoBehaviour {
         PositionSample sample = new PositionSample();
         sample.pelvisPosition = controller.skeleton.Pelvis.Position();
         sample.resultantAccel = controller.skeleton.acceleration(controller.jumping.windup_time);
+        sample.COM = controller.skeleton.COM;
         samples.Add(sample);
     }
     
