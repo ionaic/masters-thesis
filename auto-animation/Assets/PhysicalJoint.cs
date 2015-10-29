@@ -162,6 +162,13 @@ public class PhysicalJoint : MonoBehaviour {
     public void Position(Vector3 newpos) {
         jointTransform.position = newpos;
     }
+    
+    public void Translate(Vector3 displacement) {
+        jointTransform.position = jointTransform.position + displacement;
+    }
+    public void Translate(float x, float y, float z) {
+        Translate(new Vector3(x, y, z));
+    }
 
     public Quaternion RestRotation() {
         return restRotation;

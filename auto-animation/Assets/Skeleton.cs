@@ -58,12 +58,20 @@ public class ConstrainedPhysicalControllerSkeleton : IEnumerable<PhysicalJoint> 
     }
     
     public bool CheckExtension() {
-        bool flag = true;
+        bool ext_flag = true;
         // check if all limbs are fully extended
         foreach (SpringMuscle m in muscles) {
-            flag = flag && m.IsLimbExtended();
+            if (m.centerJoint == LHip || m.centerJoint == RHip) {
+                continue;
+            }
+            else {
+                ext_flag = ext_flag && m.IsLimbExtended();
+            }
         }
-        return flag;
+        
+        // check if feet on floor
+        //if (
+        return ext_flag;
     }
 
     public TransformData[] GetResetArray() {

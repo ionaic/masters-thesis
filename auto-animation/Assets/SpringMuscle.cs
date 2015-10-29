@@ -26,7 +26,6 @@ public class SpringMuscle {
     
     public float scalarForce() {
         // calculate the force of the muscle given a length
-        // TODO is this correct, i can't find my notes on this
         return k * (bone_width / Mathf.Sin((Mathf.PI - Mathf.Deg2Rad * anchors[1].Angle().x) / 2.0f));
     }
     public float ScalarElasticEnergy() {
@@ -39,7 +38,7 @@ public class SpringMuscle {
         Vector3 b = (anchors[1].Position() - centerJoint.Position()).normalized;
         return Vector3.Dot(a, b) < full_extension;
     }
-    // gives a 
+    // gives a [0,1] value indicating how bent the joint is
     public float LimbUsage() {
         Vector3 a = (anchors[0].Position() - centerJoint.Position()).normalized;
         Vector3 b = (anchors[1].Position() - centerJoint.Position()).normalized;

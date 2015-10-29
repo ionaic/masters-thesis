@@ -26,6 +26,7 @@ public enum JumpState {
 
 [System.Serializable]
 public class JumpVariables {
+    // this ended up replacing a JumpMotor
     [HideInInspector]
     public Vector3 start;
     [HideInInspector]
@@ -42,15 +43,19 @@ public class JumpVariables {
     public float windup_time; // times are in seconds
     public float air_time;
     public Vector3 gravity;
+    public Vector3 drag;
     public Vector3 last_err;
     //public TransformData[] restPose;
     public Vector3 pelvisRestPos;
+    public Vector3 velocity;
+    public Vector3 takeoff_velocity;
 
     public JumpState state;
     public PathSolutionPolicy policy;
     
     public void init(ConstrainedPhysicalControllerSkeleton skeleton) {
         destination = target_location.position;
+        start = 0.5f * skeleton.LToe.Position() + 0.5f * skeleton.RToe.Position();
 
         state = JumpState.NotJumping;
 
@@ -88,6 +93,8 @@ public class JumpController : MonoBehaviour {
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(skeleton.COM, 0.01f);
         Gizmos.DrawRay(skeleton.COM, jumping.last_err);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawRay(skeleton.Pelvis.transform.position, jumping.acceleration);
     }
     
     void Start() {
@@ -175,6 +182,8 @@ public class JumpController : MonoBehaviour {
                     data_windup.Add(skeleton[i].Angle().ToString("G4"));
                 }
                 logger.files[0].AddRow(data_windup);
+            
+                jumping.takeoff_velocity = Vector3.zero;
             }
 
             IK.Iterate();
@@ -186,15 +195,16 @@ public class JumpController : MonoBehaviour {
             if (accel_flag) {
                 Debug.Log("Accel --> In Air");
                 jumping.state = JumpState.InAir;
+                jumping.velocity = jumping.acceleration * jumping.windup_time;
             }
 
             IK.Iterate();
         }
         else if (jumping.state == JumpState.InAir) {
-            bool inAir_flag = motor.IsGrounded();
+            bool inAir_flag = InAir();
             Debug.Log("InAir: " + inAir_flag);
 
-            if (motor.IsGrounded()) {
+            if (inAir_flag) {
                 Debug.Log("In Air --> Landing");
                 jumping.state = JumpState.Landing;
             }
@@ -258,7 +268,7 @@ public class JumpController : MonoBehaviour {
             // find t to minimize a
         }
         else {
-            jumping.acceleration = 2 * (jumping.destination - jumping.start - jumping.initial_velocity * jumping.air_time) / (jumping.air_time * jumping.air_time);
+            jumping.acceleration = 2.0f * (jumping.destination - jumping.start - jumping.initial_velocity * jumping.air_time) / (jumping.air_time * jumping.air_time);
         }
         jumping.force = jumping.acceleration * skeleton.TotalMass();
         return jumping.IsAccelerationPossible(jumping.acceleration);
@@ -310,8 +320,13 @@ public class JumpController : MonoBehaviour {
     public Vector3 DirToAchieveAccel() {
         // use a dot product, if the dot product is >= the desired magnitude, we're a go
         List<PositionSample> diffList = sampler.samples.Where(s => Vector3.Dot(jumping.acceleration, s.resultantAccel) >= jumping.acceleration.magnitude).ToList();
-        diffList.OrderBy(s => EstimateBalanceError(s.COM).sqrMagnitude).ToList();
-        return diffList[0].pelvisPosition - skeleton.Pelvis.Position();
+        diffList.OrderBy(s => EstimateBalanceError(s.COM).sqrMagnitude);
+        if (diffList.Count() > 0) {
+            return diffList.First().pelvisPosition - skeleton.Pelvis.Position();
+        }
+        else {
+            return skeleton.Pelvis.Position();
+        }
     }
 
     Vector3 PickFirstClosestWithPos() {
@@ -383,29 +398,40 @@ public class JumpController : MonoBehaviour {
     // function to handle accel phase
     bool Accel() {
         // time and deltaTime are both given in seconds
-        float rate = Time.deltaTime/jumping.windup_time;
+        //float rate = Time.deltaTime/jumping.windup_time;
         
         // slowly straighten out the pelvis bend to straighten upper body
-        skeleton.Pelvis.jointTransform.rotation = Quaternion.Slerp(skeleton.Pelvis.jointTransform.rotation, skeleton.Pelvis.RestRotation(), rate);
+        //skeleton.Pelvis.jointTransform.rotation = Quaternion.Slerp(skeleton.Pelvis.jointTransform.rotation, skeleton.Pelvis.RestRotation(), rate);
         
         // move pelvis in direction of acceleration
-        skeleton.Pelvis.Position(skeleton.Pelvis.Position() + skeleton.acceleration(jumping.windup_time) * Time.deltaTime);
+        skeleton.Pelvis.Translate(jumping.takeoff_velocity * Time.deltaTime);
+        jumping.takeoff_velocity += jumping.acceleration * Time.deltaTime;
 
         // iterate IK
         IK.Iterate();
 
-        // TODO check if we are fully extended, if so you're done. go home.
+        // check if we are fully extended, if so you're done. go home.
         return skeleton.CheckExtension();
     }
 
     // function to handle the acceleration/upward phase
     bool InAir() {
+        Vector3 vdt = jumping.velocity * Time.deltaTime;
+        // apply the jump to the controller
+        transform.Translate(vdt.x, 0.0f, vdt.z);
+        // reposition skeleton within controller
+        skeleton.Pelvis.Translate(0.0f, vdt.y, 0.0f);
+        // reposition feet seeking IK targets (do we need to?)
+        // update the velocity
+        // gravity is negative by convention
+        jumping.velocity += jumping.gravity;
         return true;
     }
 
     // function to handle landing
     bool Landing() {
         // NOOP since we're not handling landing
-        return true;
+        // reset simulation to beginning
+        return false;
     }
 }

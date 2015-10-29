@@ -15,7 +15,7 @@ public class JumpMotor : MonoBehaviour {
     // if not jumping and not grounded, falling
     public Vector3 inputMoveDirection;
     private bool isJumping;
-    private Vector3 velocity;
+    public Vector3 velocity;
     
     void Start () {
         // initialize to not be jumping
@@ -61,8 +61,8 @@ public class JumpMotor : MonoBehaviour {
 
     }
     
-    public void Jump(Vector3 jumpAccel) {
-
+    public void Jump(Vector3 jumpVelocity) {
+        velocity = jumpVelocity;
     }
     
     public bool IsGrounded() {
