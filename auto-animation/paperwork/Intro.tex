@@ -38,7 +38,7 @@ Animations of human characters are used heavily in video games, movies, and othe
 	\begin{subfigure}[b]{0.3\textwidth}
 		\includegraphics[width=\textwidth]{images/simpleSkeleton2Screen2Cropped.png}
 	\end{subfigure}
-	\caption[Example of Rigged 3D Character Model]{Above is an example of a character model in AutoDesk Maya.  The character skin or mesh is shown in gray, with a rig shown in multicolor.  While it is visualized as a series of spherical joints with connecting solids, the rig itself does not have a visual component in practice.  The rig acts as a skeleton, deforming the mesh of the character model to make animation easier.  Additional tools such as deformer groups and inverse kinematics handles can be used to further simplify the creation of animations for artists.  While these tools simplify movement of the model, the artist still must position each joint for each frame of the animation, which is then stored for later playback.}
+	\caption[Example of Rigged 3D Character Model]{Above is an example of a character model in \maya.  The character skin or mesh is shown in gray, with a rig shown in multicolor.  While it is visualized as a series of spherical joints with connecting solids, the rig itself does not have a visual component in practice.  The rig acts as a skeleton, deforming the mesh of the character model to make animation easier.  Additional tools such as deformer groups and inverse kinematics handles can be used to further simplify the creation of animations for artists.  While these tools simplify movement of the model, the artist still must position each joint for each frame of the animation, which is then stored for later playback.}
 	\label{fig:rig_character}
 \end{figure}
 
@@ -58,16 +58,30 @@ Our controller is made to be a module, able to be used with other controllers as
 % accompanying video for presentation
 % accompanying figure/video of the resulting animation in 3d
 
-\section{Skeleton and Joints}
+\section{Setup and Inputs}
+The character in our system consists of a mesh, a skeleton, and a controller which has itself several sub-components.  First we constructed a mesh, a 3D visual representation of our character.  Our mesh is a simple, blocky humanoid, lacking arms in order to focus more heavily on the lower body motion of the figure.  A more complex human character, or even a humanoid non-human character could be substituted.  This mesh consists of vertices, which each have a position as well as other information not relevant to our simulation such as normal and texture coordinate, which are used by \unity for displaying the mesh.  This mesh can also be referred to as a character model, but in the context of this simulation we will refer to it as the mesh.  Three vertices form a triangular face, though these are often created as quadrilaterals by the artist as the topology of the model can be simpler to work with due to the grid patterns formed as compared to triangular meshes.  In the case of quad meshes, the mesh is often treated as a triangle mesh by the game engine or renderer, with each quad producing two triangles.
+
+Our mesh was created using \maya, positioning the vertices in groups or individually, using several rectangular prisms as a base.  Using the edge loop tool, more vertices were inserted, with loops of edges circling the torso and legs to produce the final shape.  This mesh was then rigged, meaning a skeleton was added.  As described in further detail in \ref{subsection:skel_joints}, joints were positioned individually relative to the mesh, attempting to mimic the positioning of joints in the human skeleton.  The connections were made simply, with each joint acting as a ball and socket joint, meaning that constraints needed to be specified at a later stage to facilitate hinge joints such as the knee and ankle and that complex, multi-boned structures as found in the foot and shin were simplified to a single bone connecting two joints.  The hierarchy of joints for the skeleton was rooted at the pelvis with three children: one leading to the upper body and one to each hip.  From there a single joint was used for the manipulation of the upper body, with separate joints for each hip, knee, ankle, toe, and heel.  Though there is no movement in the toe, placing a bone for the foot requires an end joint for the bone to connect to.
+
+Joints are then associated with the mesh through weight painting, in which each vertex of the mesh is assigned a weight for each joint.  This weight designates if and how much the vertex transforms when a 
+
+\subsection{User Specified Constants}
+\label{subsection:user_constants}
+
+\subsection{Skeleton and Joints}
+\label{subsection:skel_joints}
 For the purposes of animation, a joint is an object with an associated position, associated transformation, a parent joint, and some number of child joints.  In the case of the root, the parent joint is absent and in the case of the end joints such as tips of the fingers there are no child joints.  Each child joint is connected to the parent by a rigid bone, which protrudes from the parent at a given resting angle.  These joints are structured in a tree, as the parent and child joints imply, with the root of the tree at the pelvis.  This tree serves as a hierarchy for transformations.
 
-Joints are associated with a set of vertices from the mesh to be animated.  Each of these may be associated with multiple joints, and are assigned a weight for each joint which acts as a scale factor for the transformations performed on the vertex.
+Joints are associated with a set of vertices from the mesh to be animated.  Each of these may be associated with multiple joints, and are assigned a weight for each joint which acts as a scale factor for the transformations performed on the vertex.  When a joint is transformed, the transformation is propagated to the children
+
+\section{An Example of Animation Creation}
+To motivate the necessity for an automated animation method, we present an example of the method for producing an animation by hand.  
 
 % explain contributions
 % - what is the contribution of this technique
 % - Unity3D -> what am I getting from outside sources
 % - what am I making myself
 \section{Contributions}
-	This thesis describes a controller which simulates a jumping motion on a character.  The generated animation is created to be plausible in appearance, though it may not be a physically accurate representation.  Specifically, we contribute a model for the windup and take-off phases of a jump and created a controller using this model in Unity3D.
+	This thesis describes a controller which simulates a jumping motion on a character.  The generated animation is created to be plausible in appearance, though it may not be a physically accurate representation.  Specifically, we contribute a model for the windup and take-off phases of a jump and created a controller using this model in \unity.
 
-	Unity 3D is a game engine which we used to develop this system.  It provides infrastructure for rendering, scene management, skeletal animation, asset import and management, lighting, and scripting.  The system developed leverages the provided features through the Unity3D scripting interface.  We developed scripts for calculation of muscle forces, as well as for applying the force to an imported model.  Models were created in AutoDesk Maya and imported using Unity3D's asset import as Unity3D game objects with attached Transform components which allow arbitrary transformations.
+	\unity is a game engine which we used to develop this system.  It provides infrastructure for rendering, scene management, skeletal animation, asset import and management, lighting, and scripting.  The system developed leverages the provided features through the \unit scripting interface.  We developed scripts for calculation of muscle forces, as well as for applying the force to an imported model.  Models were created in \maya and imported using \unity's asset import as \unity game objects with attached Transform components which allow arbitrary transformations.
