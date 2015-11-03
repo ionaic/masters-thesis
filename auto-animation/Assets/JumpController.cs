@@ -44,12 +44,16 @@ public class JumpVariables {
     public float air_time;
     public Vector3 gravity;
     public Vector3 drag;
+    [HideInInspector]
     public Vector3 last_err;
     //public TransformData[] restPose;
     public Vector3 pelvisRestPos;
+    [HideInInspector]
     public Vector3 velocity;
+    [HideInInspector]
     public Vector3 takeoff_velocity;
 
+    [HideInInspector]
     public JumpState state;
     public PathSolutionPolicy policy;
     
