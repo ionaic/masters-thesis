@@ -64,7 +64,7 @@ To motivate the necessity for an automated animation method, we present an examp
 
 Once the rig and mesh are set up, an animator must manipulate the mesh to pose the model.  For a jumping motion they would need to decide how they want to start the animation to allow blending from other movements such as walking, running, or standing.  They must then position the model and record a keyframe.  Keyframes are hand-created frames of the animation which a renderer or game engine may interpolate between to produce a final animation, allowing an animator to create and store few frames, while still creating a 60 frame per second animation in the final setting.  This also allows few frames to be stored to produce any framerate of animation, while also reducing the storage requirements in exchange for a minor increase in computation, which is an extra interpolation for each joint in the character.
 
-
+While the keyframes can be sparse and there are tools for aiding in generation, this process requires heavy manual input for each animation for each character.  Characters that move differently due to differences in weight or body makeup must be animated separately, requiring an artist to perform similar, time consuming work.  With a simulation based approach this work could be reduced to setting variables such as weight, height, and musculature.
 
 % explain contributions
 % - what is the contribution of this technique

@@ -52,6 +52,7 @@ public class ConstrainedPhysicalControllerSkeleton : IEnumerable<PhysicalJoint> 
     public Vector3 COM;
     public Vector3 support_center;
     public Vector3[] supportingPoly;
+    public float floorContactEpsilon = 0.1;
     
     public int Size() {
         return 11 + UpperBody.Length;
@@ -72,6 +73,13 @@ public class ConstrainedPhysicalControllerSkeleton : IEnumerable<PhysicalJoint> 
         // check if feet on floor
         //if (
         return ext_flag;
+    }
+    public bool IsGrounded() {
+        bool flag = false;
+        
+        flag = (LToe.Position().y < floorContactEpsilon) && (RToe.Position().y < floorContactEpsilon);
+
+        return flag;
     }
 
     public TransformData[] GetResetArray() {

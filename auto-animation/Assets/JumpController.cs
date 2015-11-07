@@ -429,13 +429,14 @@ public class JumpController : MonoBehaviour {
         // update the velocity
         // gravity is negative by convention
         jumping.velocity += jumping.gravity;
-        return true;
+        return skeleton.IsGrounded();
     }
 
     // function to handle landing
     bool Landing() {
         // NOOP since we're not handling landing
         // reset simulation to beginning
+        // can assume the bend is from loading the springs with elastic potential transferred from the energy of the jump/fall
         return false;
     }
 }

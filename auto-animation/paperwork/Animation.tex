@@ -42,6 +42,8 @@ Within the controller there are a number of constants the user can specify, outs
 
 The times indicate how much time the character is expected to spend in the air and winding up for the jump.  Air time in our case consists of the portion of the animation where the character's feet are not in contact with the ground plane.  Windup time refers to the time in which the character has their feet on the ground and is in the process of accelerating their mass upwards as the initial takeoff portion of the jump.  A long windup time gives a very slow, exaggerated jumping motion while a short windup gives a very rapid, clipped motion.  While we allow the user to specify any time for both air and windup, in practice there is a limited range of values that are possible for the character.
 
+%TODO example windup times with our chosen values
+
 \subsection{Skeleton, Joints, and Muscles}
 \label{subsection:skel_joints}
 For the purposes of animation, a joint is an object with an associated position, associated transformation, a parent joint, and some number of child joints.  In the case of the root, the parent joint is absent and in the case of the end joints such as tips of the fingers there are no child joints.  Each child joint is connected to the parent by a rigid bone, which protrudes from the parent at a given resting angle.  These joints are structured in a tree, as the parent and child joints imply, with the root of the tree at the pelvis.  This tree serves as a hierarchy for transformations.
@@ -191,7 +193,7 @@ As the character re-positions its pelvis, the balance must be calculated again a
 %               Energy                %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Energy based calculation}
-
+Another way we considered using for simulation was energy based.  We assumed that the energy required to lift the mass of the character and move it the necessary distance is 
 
 \section{Summary}
 \label{subsection:animation_summary}
