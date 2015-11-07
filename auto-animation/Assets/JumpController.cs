@@ -93,6 +93,9 @@ public class JumpController : MonoBehaviour {
     private InverseKinematics IK;
     private PositionSampler sampler;
     public CameraView cameraView;
+    public float secondsBetweenFrames = 1.0f;
+    public float timeElapsed = 0.0f;
+    private float timeSinceSample = 0.0f;
 
     // for debugging
     void OnDrawGizmos() {
@@ -115,12 +118,14 @@ public class JumpController : MonoBehaviour {
         logger.StartAll();
         
         cameraView = GetComponent<CameraView>();
+        cameraView.UseSideView();
         
         IK = GetComponent<InverseKinematics>();
         sampler = GetComponent<PositionSampler>();
     }
     
     void Update() {
+        timeElapsed += Time.fixedDeltaTime;
         if (Input.GetKey(controls.cam.sideView)) {
             cameraView.UseSideView();
         }
@@ -130,8 +135,15 @@ public class JumpController : MonoBehaviour {
         else if (Input.GetKey(controls.cam.slantView)) {
             cameraView.UseSlantView();
         }
+        //else if (Input.GetKey(controls.cam.trackingView)) {
+        //    cameraView.UseTrackingView();
+        //}
+
         if (Input.GetKey(controls.cam.screenshot)) {
             cameraView.TakeScreenshot();
+        }
+        if (Input.GetKey(controls.cam.frameset)) {
+            cameraView.GrabFrameSet();
         }
         
         // FPS movement from Unity3D Standard Assets
@@ -172,6 +184,7 @@ public class JumpController : MonoBehaviour {
         // Landing
         //if (inputJump && jumping.state == JumpState.NotJumping) {
         if (inputJump && jumping.state == JumpState.NotJumping) {
+            timeElapsed = 0.0f;
             bool estimate_flag = EstimatePath();
             Debug.Log("Path Estimate: " + estimate_flag);
 
@@ -238,6 +251,9 @@ public class JumpController : MonoBehaviour {
                 Debug.Log("Landing --> Not Jumping");
                 jumping.state = JumpState.NotJumping;
             }
+            Debug.Log("Total Simulation Time: " + timeElapsed);
+            sampler.simulationTimes.Add(timeElapsed);
+            timeElapsed = 0.0f;
         }
 
         // Dump all of the data of this iteration
@@ -248,6 +264,14 @@ public class JumpController : MonoBehaviour {
             data_pd.Add(skeleton[i].Angle().ToString("G4"));
         }
         logger.files[1].AddRow(data_pd);
+
+        if (timeSinceSample >= secondsBetweenFrames) {
+            cameraView.GrabFrameSet();
+            timeSinceSample = 0.0f;
+        }
+        else {
+            timeSinceSample += Time.fixedDeltaTime;
+        }
     }
 
     public Vector3 CalculateRequiredVelocity() {
@@ -393,7 +417,7 @@ public class JumpController : MonoBehaviour {
         
         UpperBodyBalance(BalanceError());
         
-        skeleton.PositionPelvis(servo_modification);
+        skeleton.PositionPelvis(servo_modification * Time.deltaTime);
         
         float accel_err = AccelError().magnitude;
         float bal_err = BalanceError().magnitude;

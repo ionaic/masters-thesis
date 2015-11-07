@@ -21,6 +21,8 @@ public class CameraControls {
     public KeyCode sideView = KeyCode.Alpha0;
     public KeyCode slantView = KeyCode.Alpha9;
     public KeyCode frontView = KeyCode.Alpha8;
+    public KeyCode trackingView = KeyCode.Alpha7;
+    public KeyCode frameset = KeyCode.F11;
     public KeyCode screenshot = KeyCode.F12;
 }
 

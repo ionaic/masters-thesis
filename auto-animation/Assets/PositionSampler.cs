@@ -28,6 +28,7 @@ public class PositionSampler : MonoBehaviour {
     private InverseKinematics ikmanager;
     private List<Vector3> dbg_pos;
     public List<PositionSample> samples;
+    public List<float> simulationTimes;
         
     private Vector3[] aabb;
     
