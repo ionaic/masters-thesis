@@ -1,0 +1,3 @@
+need section in thesis intro detailing process of making a model, rigging, and animating in maya
+
+section discussing the setup and inputs to the program including the various knobs you can change

@@ -52,7 +52,7 @@ public class ConstrainedPhysicalControllerSkeleton : IEnumerable<PhysicalJoint> 
     public Vector3 COM;
     public Vector3 support_center;
     public Vector3[] supportingPoly;
-    public float floorContactEpsilon = 0.1;
+    public float floorContactEpsilon = 0.1f;
     
     public int Size() {
         return 11 + UpperBody.Length;

@@ -79,6 +79,7 @@ public class JumpVariables {
 
 [RequireComponent (typeof(InverseKinematics))]
 [RequireComponent (typeof(PositionSampler))]
+[RequireComponent (typeof(CameraView))]
 public class JumpController : MonoBehaviour {
     // handle calculation of estimated path, joint contortions, "what to do"
     // handle button pushes etc.
@@ -91,6 +92,7 @@ public class JumpController : MonoBehaviour {
     public JumpLogger logger;
     private InverseKinematics IK;
     private PositionSampler sampler;
+    public CameraView cameraView;
 
     // for debugging
     void OnDrawGizmos() {
@@ -112,11 +114,26 @@ public class JumpController : MonoBehaviour {
         }
         logger.StartAll();
         
+        cameraView = GetComponent<CameraView>();
+        
         IK = GetComponent<InverseKinematics>();
         sampler = GetComponent<PositionSampler>();
     }
     
     void Update() {
+        if (Input.GetKey(controls.cam.sideView)) {
+            cameraView.UseSideView();
+        }
+        else if (Input.GetKey(controls.cam.frontView)) {
+            cameraView.UseFrontView();
+        }
+        else if (Input.GetKey(controls.cam.slantView)) {
+            cameraView.UseSlantView();
+        }
+        if (Input.GetKey(controls.cam.screenshot)) {
+            cameraView.TakeScreenshot();
+        }
+        
         // FPS movement from Unity3D Standard Assets
         // Get the input vector from keyboard or analog stick
         Vector3 directionVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
