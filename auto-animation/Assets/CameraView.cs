@@ -3,119 +3,111 @@ using System.Collections;
 
 [System.Serializable]
 public class CameraView : MonoBehaviour {
+    [HideInInspector]
     public Camera SideView;
+    [HideInInspector]
     public Camera SlantView;
+    [HideInInspector]
     public Camera FrontView;
-    //public Camera TrackingView;
+    [HideInInspector]
+    public Camera TrackingView;
+    public Camera MainView;
+
+    public string whichCamera = "camera";
+    
+    public FrameCapture Side;
+    public FrameCapture Slant;
+    public FrameCapture Front;
+    public FrameCapture Tracking;
     
     public static int sideNumber = 1; 
     public static int slantNumber = 1; 
     public static int frontNumber = 1; 
-    //public static int trackingNumber = 1;
+    public static int trackingNumber = 1;
+    public static int mainNumber = 1;
     public static string fileName = "_frame";
     public string destinationFolder;
+    
+    public void Start() {
+        SideView = Side.GetComponent<Camera>();
+        SlantView = Slant.GetComponent<Camera>();
+        FrontView = Front.GetComponent<Camera>();
+        TrackingView = Tracking.GetComponent<Camera>();
+    }
 
     public void TakeScreenshot() {
-        int number = sideNumber;
-        if (SlantView.enabled) {
-            number = slantNumber;
+        int number = mainNumber;
+        if (whichCamera == "side") {
+            number = sideNumber;
         }
-        else if (FrontView.enabled) {
+        else if (whichCamera == "front") {
             number = frontNumber;
         }
-        //else if (TrackingView.enabled) {
-        //    number = trackingNumber;
-        //}
+        else if (whichCamera == "slant") {
+            number = slantNumber;
+        }
+        else if (whichCamera == "tracking") {
+            number = trackingNumber;
+        }
 
         string name = number.ToString("D4");
-        string camera = GetCameraName();
  
-        while (System.IO.File.Exists(destinationFolder + camera + fileName + name + ".png")) {
+        while (System.IO.File.Exists(destinationFolder + whichCamera + fileName + name + ".png")) {
             number++;
             name = number.ToString("D4");
         }
  
-        if (SideView.enabled) {
+        if (whichCamera == "side") {
             sideNumber = number + 1;
         }
-        else if (FrontView.enabled) {
+        else if (whichCamera == "front") {
             frontNumber = number + 1;
         }
-        else if (SlantView.enabled) {
+        else if (whichCamera == "slant") {
             slantNumber = number + 1;
         }
-        //else if (TrackingView.enabled) {
-        //    trackingNumber = number + 1;
-        //}
+        else if (whichCamera == "tracking") {
+            trackingNumber = number + 1;
+        }
+        else {
+            mainNumber = number + 1;
+        }
+    
+        Debug.Log("Capture screenshot from camera " + whichCamera);
  
-        Application.CaptureScreenshot(destinationFolder + camera + fileName + name + ".png");
+        Application.CaptureScreenshot(destinationFolder + whichCamera + fileName + name + ".png");
     }
 
     public void GrabFrameSet() {
         // grab a screenshot from every camera angle
-        bool side  = SideView.enabled;
-        bool front = FrontView.enabled;
-        bool slant = SlantView.enabled;
-        //bool track = TrackingView.enabled;
-
-        UseSideView();
-        TakeScreenshot();
-
-        UseFrontView();
-        TakeScreenshot();
-
-        UseSlantView();
-        TakeScreenshot();
-
-        //UseTrackingView();
-        //TakeScreenshot();
-
-        SideView.enabled  = side;
-        FrontView.enabled = front;
-        SlantView.enabled = slant;
-        //TrackingView.enabled = track;
-    }
-    
-    public string GetCameraName() {
-        if (SideView.enabled) {
-            return "side";
-        }
-        else if (FrontView.enabled) {
-            return "front";
-        }
-        else if (SlantView.enabled) {
-            return "slant";
-        }
-        //else if (TrackingView.enabled) {
-        //    return "tracking";
-        //}
-        else {
-            return "";
-        }
+        Side.CaptureFrame(fileName, destinationFolder);
+        Front.CaptureFrame(fileName, destinationFolder);
+        Slant.CaptureFrame(fileName, destinationFolder);
+        Tracking.CaptureFrame(fileName, destinationFolder);
     }
     
     public void UseSideView() {
-        SideView.enabled        = true;
-        SlantView.enabled       = false;
-        FrontView.enabled       = false;
-        //TrackingView.enabled    = false;
+        MainView.transform.position = SideView.transform.position;
+        MainView.transform.rotation = SideView.transform.rotation;
+        
+        whichCamera = "side";
     }
     public void UseSlantView() {
-        SideView.enabled        = false;
-        SlantView.enabled       = true;
-        FrontView.enabled       = false;
-        //TrackingView.enabled    = false;
+        MainView.transform.position = SlantView.transform.position;
+        MainView.transform.rotation = SlantView.transform.rotation;
+
+        whichCamera = "slant";
     }
     public void UseFrontView() {
-        SideView.enabled        = false;
-        SlantView.enabled       = false;
-        FrontView.enabled       = true;
-        //TrackingView.enabled    = false;
+        MainView.transform.position = FrontView.transform.position;
+        MainView.transform.rotation = FrontView.transform.rotation;
+
+        whichCamera = "front";
     }
-    //public void UseTrackingView() {
-    //    SideView.enabled        = false;
-    //    SlantView.enabled       = false;
-    //    FrontView.enabled       = false;
-    //    TrackingView.enabled    = false;
-    //}
+    public void UseTrackingView() {
+        MainView.transform.position = TrackingView.transform.position;
+        MainView.transform.rotation = TrackingView.transform.rotation;
+
+        whichCamera = "tracking";
+    }
 }

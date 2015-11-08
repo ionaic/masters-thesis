@@ -92,6 +92,7 @@ public class JumpController : MonoBehaviour {
     public JumpLogger logger;
     private InverseKinematics IK;
     private PositionSampler sampler;
+    [HideInInspector]
     public CameraView cameraView;
     public float secondsBetweenFrames = 1.0f;
     public float timeElapsed = 0.0f;
@@ -118,14 +119,16 @@ public class JumpController : MonoBehaviour {
         logger.StartAll();
         
         cameraView = GetComponent<CameraView>();
-        cameraView.UseSideView();
         
         IK = GetComponent<InverseKinematics>();
         sampler = GetComponent<PositionSampler>();
     }
     
     void Update() {
-        timeElapsed += Time.fixedDeltaTime;
+        if (jumping.state != JumpState.NotJumping) {
+            timeElapsed += Time.fixedDeltaTime;
+        }
+
         if (Input.GetKey(controls.cam.sideView)) {
             cameraView.UseSideView();
         }
@@ -135,9 +138,9 @@ public class JumpController : MonoBehaviour {
         else if (Input.GetKey(controls.cam.slantView)) {
             cameraView.UseSlantView();
         }
-        //else if (Input.GetKey(controls.cam.trackingView)) {
-        //    cameraView.UseTrackingView();
-        //}
+        else if (Input.GetKey(controls.cam.trackingView)) {
+            cameraView.UseTrackingView();
+        }
 
         if (Input.GetKey(controls.cam.screenshot)) {
             cameraView.TakeScreenshot();
@@ -182,9 +185,10 @@ public class JumpController : MonoBehaviour {
         // Upward/accel phase OR if done
         // In Air
         // Landing
-        //if (inputJump && jumping.state == JumpState.NotJumping) {
         if (inputJump && jumping.state == JumpState.NotJumping) {
             timeElapsed = 0.0f;
+            cameraView.GrabFrameSet();
+
             bool estimate_flag = EstimatePath();
             Debug.Log("Path Estimate: " + estimate_flag);
 
@@ -265,15 +269,17 @@ public class JumpController : MonoBehaviour {
         }
         logger.files[1].AddRow(data_pd);
 
-        if (timeSinceSample >= secondsBetweenFrames) {
-            cameraView.GrabFrameSet();
-            timeSinceSample = 0.0f;
-        }
-        else {
-            timeSinceSample += Time.fixedDeltaTime;
+        if (jumping.state != JumpState.NotJumping) {
+            if (timeSinceSample >= secondsBetweenFrames) {
+                cameraView.GrabFrameSet();
+                timeSinceSample = 0.0f;
+            }
+            else {
+                timeSinceSample += Time.fixedDeltaTime;
+            }
         }
     }
-
+    
     public Vector3 CalculateRequiredVelocity() {
         // W = mgh
         // the distance you travel causes work when taking off
