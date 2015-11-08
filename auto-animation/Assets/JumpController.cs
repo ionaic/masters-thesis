@@ -105,6 +105,14 @@ public class JumpController : MonoBehaviour {
         Gizmos.DrawRay(skeleton.COM, jumping.last_err);
         Gizmos.color = Color.yellow;
         Gizmos.DrawRay(skeleton.Pelvis.transform.position, jumping.acceleration);
+        Gizmos.color = Color.green;
+        Gizmos.DrawRay(jumping.start, jumping.destination - jumping.start);
+        Gizmos.color = Color.grey;
+        if (sampler != null && sampler.samples != null) {
+            foreach (PositionSample sample in sampler.samples) {
+                Gizmos.DrawRay(sample.pelvisPosition, sample.resultantAccel);
+            }
+        }
     }
     
     void Start() {
@@ -359,25 +367,26 @@ public class JumpController : MonoBehaviour {
         err.y = 0.0f;
         return err;
     }
-        
-    public float AccelError() {
-        // compare resultant angular acceleration to expected acceleration from force
-        //Vector3 skel_accel = skeleton.acceleration(jumping.windup_time);
-        //Debug.Log("Skel Accel | needed: " + skel_accel + " | " + jumping.acceleration);
-        //Debug.Log("cur accel: " + skel_accel + ";\ntarget: " + jumping.acceleration + ";\nerror: " + (jumping.acceleration - skel_accel));
-        //return (jumping.acceleration - skel_accel);
-        Vector3 accel = skeleton.acceleration(jumping.windup_time);
+
+    public float AccelError(Vector3 accel) {
         // dot product is |A| |B| scaled by cos, and I want dot prod to be >=
         // |A||A| as that means they are codirectional or close enough and that
         // |B| >= |A| and is large enough to compensate for non-co-directional
+        
+        Debug.Log("AccelError " + jumping.acceleration.sqrMagnitude + " " + Vector3.Dot(jumping.acceleration, accel) + "; Between calc: " + accel + " and desired: " + jumping.acceleration);
+
         // this will have + error if adjustment is needed, error <= 0 if ok
         return jumping.acceleration.sqrMagnitude - Vector3.Dot(jumping.acceleration, accel);
+    }
+    public float AccelError() {
+        return AccelError(skeleton.acceleration(jumping.windup_time));
     }
     
     public Vector3 DirToAchieveAccel() {
         // use a dot product, if the dot product is >= the desired magnitude, we're a go
-        List<PositionSample> diffList = sampler.samples.Where(s => Vector3.Dot(jumping.acceleration, s.resultantAccel) >= jumping.acceleration.sqrMagnitude).ToList();
+        List<PositionSample> diffList = sampler.samples.Where(s => AccelError(s.resultantAccel) <= jumping.error_allowance).ToList();
         diffList.OrderBy(s => EstimateBalanceError(s.COM).sqrMagnitude);
+        Debug.Log("Viable Sample Count " + diffList.Count());
         if (diffList.Count() > 0) {
             return (diffList.First().pelvisPosition - skeleton.Pelvis.Position()).normalized;
         }
@@ -433,6 +442,7 @@ public class JumpController : MonoBehaviour {
         skeleton.PositionPelvis(servo_modification * Time.fixedDeltaTime);
         
         float accel_err = AccelError();
+        Debug.Log("Accel Error: " + accel_err);
         if (accel_err <= 0.0f) {
             accel_err = 0.0f;
         }
@@ -449,7 +459,6 @@ public class JumpController : MonoBehaviour {
         //z_bound = z_bound && (Mathf.Abs(accel_diff.z) < Mathf.Abs(jumping.acceleration.z));
 
         //Debug.Log("bounds (x, y, z) " + accel_diff + " >= " + jumping.acceleration + ": (" + x_bound + ", " + y_bound + ", " + z_bound + ")");
-        Debug.Log("Accel Error: " + accel_err);
         
         float total_err = accel_err + bal_err;
         jumping.last_err = servo_modification;

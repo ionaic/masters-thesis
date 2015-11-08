@@ -55,9 +55,7 @@ public class SpringMuscle {
     public float springDisplacement() {
         return (bone_width / Mathf.Sin((Mathf.PI - Mathf.Deg2Rad * anchors[1].Angle().x) / 2.0f));
     }
-    //public float force(float length) {
-    //    return -k * (length - l_0);
-    //}
+
     public Vector3[] torque(Vector3 force) {
         // TODO is this at all correct what
         // this function is for if the force is given with a direction
@@ -88,9 +86,6 @@ public class SpringMuscle {
         return torque(force) * deltaTime;
     }
     public Vector3 instantLinearAcceleration(float deltaTime, float force) {
-        // TODO this might be pointing the opposite direction of where we want
-        // it pointing
-
         // TODO we need the moment of inertia to actually convert this, this math is wrong
         // moment of inertia is I = mk^2 for all point masses that are part of this, i.e. assign point masses to the object (limb masses at center of bone?)
 
@@ -99,12 +94,9 @@ public class SpringMuscle {
 
         // vector of the first bone in the joint (primary bone affected)
         // crossed with the torque to get a direction
-        //Debug.Log("ILA calc force: " + force);
         Vector3 am = angularMomentum(deltaTime, force);
-        //Debug.Log("Angular momentum: " + am);
-        Vector3 dir = Vector3.Cross(anchors[0].Position() - centerJoint.Position(), am).normalized;
-        //Vector3 dir = Vector3.Cross(am, anchors[0].Position() - centerJoint.Position()).normalized;
-        //Debug.Log("Direction for linear accel: " + dir);
+        Vector3 dir = -1.0f * Vector3.Cross(anchors[0].Position() - centerJoint.Position(), am).normalized;
+
         // linear momentum is the radius times the angular momentum in a
         // direction tangent to the circle at the current point
         return dir * am.magnitude;// * (anchors[0].Position() - centerJoint.Position()).magnitude;

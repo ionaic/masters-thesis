@@ -11,7 +11,6 @@ public class CameraView : MonoBehaviour {
     public Camera FrontView;
     [HideInInspector]
     public Camera TrackingView;
-    public Camera MainView;
 
     public string whichCamera = "camera";
     
@@ -24,7 +23,7 @@ public class CameraView : MonoBehaviour {
     public static int slantNumber = 1; 
     public static int frontNumber = 1; 
     public static int trackingNumber = 1;
-    public static int mainNumber = 1;
+    public static int startNumber = 1;
     public static string fileName = "_frame";
     public string destinationFolder;
     
@@ -41,7 +40,7 @@ public class CameraView : MonoBehaviour {
     }
 
     public void TakeScreenshot() {
-        int number = mainNumber;
+        int number = startNumber;
         if (whichCamera == "side") {
             number = sideNumber;
         }
@@ -75,7 +74,7 @@ public class CameraView : MonoBehaviour {
             trackingNumber = number + 1;
         }
         else {
-            mainNumber = number + 1;
+            startNumber = number + 1;
         }
     
         Debug.Log("Capture screenshot from camera " + whichCamera);
@@ -92,26 +91,34 @@ public class CameraView : MonoBehaviour {
     }
     
     public void UseSideView() {
-        MainView.transform.position = SideView.transform.position;
-        MainView.transform.rotation = SideView.transform.rotation;
+        SideView.enabled        = true;
+        SlantView.enabled       = false;
+        FrontView.enabled       = false;
+        TrackingView.enabled    = false;
         
         whichCamera = "side";
     }
     public void UseSlantView() {
-        MainView.transform.position = SlantView.transform.position;
-        MainView.transform.rotation = SlantView.transform.rotation;
+        SideView.enabled        = false;
+        SlantView.enabled       = true;
+        FrontView.enabled       = false;
+        TrackingView.enabled    = false;
 
         whichCamera = "slant";
     }
     public void UseFrontView() {
-        MainView.transform.position = FrontView.transform.position;
-        MainView.transform.rotation = FrontView.transform.rotation;
+        SideView.enabled        = false;
+        SlantView.enabled       = false;
+        FrontView.enabled       = true;
+        TrackingView.enabled    = false;
 
         whichCamera = "front";
     }
     public void UseTrackingView() {
-        MainView.transform.position = TrackingView.transform.position;
-        MainView.transform.rotation = TrackingView.transform.rotation;
+        SideView.enabled        = false;
+        SlantView.enabled       = false;
+        FrontView.enabled       = false;
+        TrackingView.enabled    = true;
 
         whichCamera = "tracking";
     }
