@@ -33,6 +33,11 @@ public class CameraView : MonoBehaviour {
         SlantView = Slant.GetComponent<Camera>();
         FrontView = Front.GetComponent<Camera>();
         TrackingView = Tracking.GetComponent<Camera>();
+
+        // create the directory if it does not already exist
+        if (System.IO.Directory.Exists(destinationFolder)) {
+            System.IO.Directory.CreateDirectory(destinationFolder);
+        }
     }
 
     public void TakeScreenshot() {
