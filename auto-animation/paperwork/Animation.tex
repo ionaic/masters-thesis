@@ -187,7 +187,7 @@ Samples were restricted to a box defined by a rectangle around the character's f
 %To select the minimum sample, the collected data were organized first by the difference between the linear momentum calculated and the desired linear momentum, and the top ten percent were selected.  Ten percent was found empirically to be a good selection of points to select the most balanced from while also retrieving points with very low differences from the desired.
 
 \subsection{Rebalancing}
-As the character re-positions its pelvis, the balance must be calculated again and its position accordingly re-adjusted.  To maintain the position of the legs, we use the upper body to achieve balance.  A separate PD controller is used to regulate the rate of movement
+As the character re-positions its pelvis, the balance must be calculated again and its position accordingly re-adjusted.  To maintain the position of the legs, we use the upper body to achieve balance.  A separate PD controller is used to regulate the rate of movement.  While the character shifts its balance to achieve a particular acceleration, it bends its upper body, moving the weight forward, backward, left, or right to attempt to center itself over its supporting polygon.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %               Energy                %
