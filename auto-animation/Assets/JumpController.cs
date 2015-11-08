@@ -360,23 +360,30 @@ public class JumpController : MonoBehaviour {
         return err;
     }
         
-    public Vector3 AccelError() {
+    public float AccelError() {
         // compare resultant angular acceleration to expected acceleration from force
-        Vector3 skel_accel = skeleton.acceleration(jumping.windup_time);
-        Debug.Log("Skel Accel | needed: " + skel_accel + " | " + jumping.acceleration);
+        //Vector3 skel_accel = skeleton.acceleration(jumping.windup_time);
+        //Debug.Log("Skel Accel | needed: " + skel_accel + " | " + jumping.acceleration);
         //Debug.Log("cur accel: " + skel_accel + ";\ntarget: " + jumping.acceleration + ";\nerror: " + (jumping.acceleration - skel_accel));
-        return (jumping.acceleration - skel_accel);
+        //return (jumping.acceleration - skel_accel);
+        Vector3 accel = skeleton.acceleration(jumping.windup_time);
+        // dot product is |A| |B| scaled by cos, and I want dot prod to be >=
+        // |A||A| as that means they are codirectional or close enough and that
+        // |B| >= |A| and is large enough to compensate for non-co-directional
+        // this will have + error if adjustment is needed, error <= 0 if ok
+        return jumping.acceleration.sqrMagnitude - Vector3.Dot(jumping.acceleration, accel);
     }
     
     public Vector3 DirToAchieveAccel() {
         // use a dot product, if the dot product is >= the desired magnitude, we're a go
-        List<PositionSample> diffList = sampler.samples.Where(s => Vector3.Dot(jumping.acceleration, s.resultantAccel) >= jumping.acceleration.magnitude).ToList();
+        List<PositionSample> diffList = sampler.samples.Where(s => Vector3.Dot(jumping.acceleration, s.resultantAccel) >= jumping.acceleration.sqrMagnitude).ToList();
         diffList.OrderBy(s => EstimateBalanceError(s.COM).sqrMagnitude);
         if (diffList.Count() > 0) {
-            return diffList.First().pelvisPosition - skeleton.Pelvis.Position();
+            return (diffList.First().pelvisPosition - skeleton.Pelvis.Position()).normalized;
         }
         else {
-            return skeleton.Pelvis.Position();
+            //return skeleton.Pelvis.Position();
+            return Vector3.zero;
         }
     }
 
@@ -423,22 +430,26 @@ public class JumpController : MonoBehaviour {
         
         UpperBodyBalance(BalanceError());
         
-        skeleton.PositionPelvis(servo_modification * Time.deltaTime);
+        skeleton.PositionPelvis(servo_modification * Time.fixedDeltaTime);
         
-        float accel_err = AccelError().magnitude;
+        float accel_err = AccelError();
+        if (accel_err <= 0.0f) {
+            accel_err = 0.0f;
+        }
         float bal_err = BalanceError().magnitude;
         bal_err = 0.0f;
     
-        Vector3 accel_diff = AccelError();
-        bool x_bound = Mathf.Sign(accel_diff.x) == Mathf.Sign(jumping.acceleration.x);
-        bool y_bound = Mathf.Sign(accel_diff.y) == Mathf.Sign(jumping.acceleration.y);
-        bool z_bound = Mathf.Sign(accel_diff.z) == Mathf.Sign(jumping.acceleration.z);
+        //Vector3 accel_diff = AccelError();
+        //bool x_bound = Mathf.Sign(accel_diff.x) == Mathf.Sign(jumping.acceleration.x);
+        //bool y_bound = Mathf.Sign(accel_diff.y) == Mathf.Sign(jumping.acceleration.y);
+        //bool z_bound = Mathf.Sign(accel_diff.z) == Mathf.Sign(jumping.acceleration.z);
     
-        x_bound = x_bound && (Mathf.Abs(accel_diff.x) < Mathf.Abs(jumping.acceleration.x));
-        y_bound = y_bound && (Mathf.Abs(accel_diff.y) < Mathf.Abs(jumping.acceleration.y));
-        z_bound = z_bound && (Mathf.Abs(accel_diff.z) < Mathf.Abs(jumping.acceleration.z));
+        //x_bound = x_bound && (Mathf.Abs(accel_diff.x) < Mathf.Abs(jumping.acceleration.x));
+        //y_bound = y_bound && (Mathf.Abs(accel_diff.y) < Mathf.Abs(jumping.acceleration.y));
+        //z_bound = z_bound && (Mathf.Abs(accel_diff.z) < Mathf.Abs(jumping.acceleration.z));
 
-        Debug.Log("bounds (x, y, z) " + accel_diff + " >= " + jumping.acceleration + ": (" + x_bound + ", " + y_bound + ", " + z_bound + ")");
+        //Debug.Log("bounds (x, y, z) " + accel_diff + " >= " + jumping.acceleration + ": (" + x_bound + ", " + y_bound + ", " + z_bound + ")");
+        Debug.Log("Accel Error: " + accel_err);
         
         float total_err = accel_err + bal_err;
         jumping.last_err = servo_modification;
@@ -449,25 +460,25 @@ public class JumpController : MonoBehaviour {
     // function to handle accel phase
     bool Accel() {
         // time and deltaTime are both given in seconds
-        //float rate = Time.deltaTime/jumping.windup_time;
+        //float rate = Time.fixedDeltaTime/jumping.windup_time;
         
         // slowly straighten out the pelvis bend to straighten upper body
         //skeleton.Pelvis.jointTransform.rotation = Quaternion.Slerp(skeleton.Pelvis.jointTransform.rotation, skeleton.Pelvis.RestRotation(), rate);
         
         // move pelvis in direction of acceleration
-        skeleton.Pelvis.Translate(jumping.takeoff_velocity * Time.deltaTime);
-        jumping.takeoff_velocity += jumping.acceleration * Time.deltaTime;
+        skeleton.Pelvis.Translate(jumping.takeoff_velocity * Time.fixedDeltaTime);
+        jumping.takeoff_velocity += jumping.acceleration * Time.fixedDeltaTime;
 
         // iterate IK
         IK.Iterate();
 
         // check if we are fully extended, if so you're done. go home.
-        return skeleton.CheckExtension();
+        return skeleton.CheckExtension() || !skeleton.IsGrounded();
     }
 
     // function to handle the acceleration/upward phase
     bool InAir() {
-        Vector3 vdt = jumping.velocity * Time.deltaTime;
+        Vector3 vdt = jumping.velocity * Time.fixedDeltaTime;
         // apply the jump to the controller
         transform.Translate(vdt.x, 0.0f, vdt.z);
         // reposition skeleton within controller
@@ -476,6 +487,8 @@ public class JumpController : MonoBehaviour {
         // update the velocity
         // gravity is negative by convention
         jumping.velocity += jumping.gravity;
+        
+        IK.Iterate();
         return skeleton.IsGrounded();
     }
 
@@ -484,6 +497,6 @@ public class JumpController : MonoBehaviour {
         // NOOP since we're not handling landing
         // reset simulation to beginning
         // can assume the bend is from loading the springs with elastic potential transferred from the energy of the jump/fall
-        return false;
+        return true;
     }
 }
