@@ -1,17 +1,21 @@
 \begin{tikzpicture}[node distance=1cm and 1cm, auto]
 % Path Estimate Phase
 	%	Path Estimate Stage
-    \node [stage] (path) {\nodebox{5cm}{Path Estimate \[a = \dfrac{2 (x - x_0 - v_0 t)}{t^2} \]}};
+    \node [stage] (path) {\nodebox{6cm}{Path Estimate \[a = \dfrac{2 (x - x_0 - v_0 t_{windup})}{t_{windup}^2} + \dfrac{t_{air} g}{2}\]}};
     %	Path Estimate Data
-    \node [data, above= of path] (xf) {\nodebox{2cm}{Target Position ($x$)}};
-    \node [data, left= of xf] (xi) {\nodebox{2cm}{Initial Position ($x_0$)}};
-    \node [data, left= of xi](t) {\nodebox{2cm}{Time ($t$)}};
+    \node [data, above= of path] (xi) {\nodebox{2cm}{Initial Position ($x_0$)}};
+    \node [data, right= of xi] (xf) {\nodebox{2cm}{Target Position ($x$)}};
+    \node [data, left= of xi](t) {\nodebox{2cm}{Windup Time ($t_{windup}$)}};
+    \node [data, left= of t](tair) {\nodebox{2cm}{Air Time ($t_{air}$)}};
     \node [data, right= of xf] (vi) {\nodebox{2cm}{Initial Velocity ($v_0$)}};
+    \node [data, below left=1cm and -1cm of vi] (g) {\nodebox{2cm}{Gravity ($g$)}};
     \node [data, below= of path] (accel) {\nodebox{3cm}{Target Acceleration ($a$)}};
     
-    \path [line] (xi) |- (path);
+    \path [line] (xi) -- (path);
     \path [line] (xf) -- (path);
-    \path [line] (t) |- (path);
+    \path [line] (t) -- (path);
+	\path [line] (tair) |- (path);
     \path [line] (vi) |- (path);
     \path [line] (path) -- (accel);
+    \path [line] (g) |- (path);
 \end{tikzpicture}

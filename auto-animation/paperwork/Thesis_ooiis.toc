@@ -19,15 +19,17 @@
 \contentsline {subsection}{\numberline {3.2.3}Thrust and Takeoff}{18}{subsection.3.2.3}
 \contentsline {subsection}{\numberline {3.2.4}Sampling}{19}{subsection.3.2.4}
 \contentsline {subsection}{\numberline {3.2.5}Rebalancing}{19}{subsection.3.2.5}
-\contentsline {section}{\numberline {3.3}Energy based calculation}{19}{section.3.3}
-\contentsline {section}{\numberline {3.4}Summary}{19}{section.3.4}
-\contentsline {chapter}{\numberline {4.}VISUALIZATION}{20}{chapter.4}
-\contentsline {section}{\numberline {4.1}Motion Visualization}{20}{section.4.1}
-\contentsline {section}{\numberline {4.2}Summary}{20}{section.4.2}
-\contentsline {chapter}{\numberline {5.}RESULTS}{21}{chapter.5}
-\contentsline {section}{\numberline {5.1}Images}{21}{section.5.1}
-\contentsline {section}{\numberline {5.2}Limitations}{21}{section.5.2}
-\contentsline {section}{\numberline {5.3}Summary}{21}{section.5.3}
-\contentsline {chapter}{\numberline {6.}FUTURE WORK AND CONCLUSION}{22}{chapter.6}
-\contentsline {section}{\numberline {6.1}Conclusion}{22}{section.6.1}
-\contentsline {chapter}{References}{23}{section*.18}
+\contentsline {section}{\numberline {3.3}Energy Based Calculation}{19}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Path Estimation}{20}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Solutions to the Energy Assignment Problem}{20}{subsection.3.3.2}
+\contentsline {section}{\numberline {3.4}Summary}{21}{section.3.4}
+\contentsline {chapter}{\numberline {4.}VISUALIZATION}{22}{chapter.4}
+\contentsline {section}{\numberline {4.1}Motion Visualization}{22}{section.4.1}
+\contentsline {section}{\numberline {4.2}Summary}{22}{section.4.2}
+\contentsline {chapter}{\numberline {5.}RESULTS}{23}{chapter.5}
+\contentsline {section}{\numberline {5.1}Images}{23}{section.5.1}
+\contentsline {section}{\numberline {5.2}Limitations}{23}{section.5.2}
+\contentsline {section}{\numberline {5.3}Summary}{23}{section.5.3}
+\contentsline {chapter}{\numberline {6.}FUTURE WORK AND CONCLUSION}{24}{chapter.6}
+\contentsline {section}{\numberline {6.1}Conclusion}{24}{section.6.1}
+\contentsline {chapter}{References}{25}{section*.18}

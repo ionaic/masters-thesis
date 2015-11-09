@@ -3,10 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+// for sqlite
+using Mono.Data.Sqlite;
+using System.Data;
+using System;
+
 public class PositionSample {
     public Vector3 pelvisPosition;
     public Vector3 COM;
     public Vector3 resultantAccel;
+    public float accelError;
     
     public PositionSample() {
         pelvisPosition = new Vector3();
@@ -18,6 +24,15 @@ public class PositionSample {
         pelvisPosition = pos;
         resultantAccel = accel;
         COM = com;
+    }
+    
+    public List<string> ToStringList() {
+        List<string> data = new List<string>();
+        data.Add(pelvisPosition.ToString("G4"));
+        data.Add(COM.ToString("G4"));
+        data.Add(resultantAccel.ToString("G4"));
+        data.Add(accelError.ToString("G4"));
+        return data;
     }
 }
 
@@ -119,21 +134,15 @@ public class PositionSampler : MonoBehaviour {
         sample.pelvisPosition = controller.skeleton.Pelvis.Position();
         sample.resultantAccel = controller.skeleton.acceleration(controller.jumping.windup_time);
         sample.COM = controller.skeleton.COM;
+        sample.accelError = controller.AccelError(sample.resultantAccel);
         samples.Add(sample);
     }
     
     public void LogSamples() {
         foreach (PositionSample s in samples) {
-            Debug.Log("Logging sample " + s);
-            List<string> sample_points = new List<string>();
-
-            sample_points.Add(s.pelvisPosition.ToString("G4"));
-            sample_points.Add(s.resultantAccel.ToString("G4"));
-
-            logger.files[4].AddRow(sample_points);
+            logger.files[4].AddRow(s.ToStringList());
         }
     }
-    // TODO read samples from a logfile or database
     
     public void SampleHipPositions() {
         dbg_pos = new List<Vector3>();

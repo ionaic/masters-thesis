@@ -7,15 +7,6 @@ using System.Linq;
 // several for the body and just calculate the energy required to make a vert jump
 
 [System.Serializable]
-public enum PathSolutionPolicy {
-    AirTime,
-    HighestPossible,
-    // LowestPossible, // lowest possible is known from whatever objects to clear
-    FastAsPossible,
-    MinimumForce
-}
-
-[System.Serializable]
 public enum JumpState {
     NotJumping,
     WindUp,
@@ -33,10 +24,8 @@ public class JumpVariables {
     public Vector3 destination;
     public Transform target_location;
     public Vector3 initial_velocity;
-    [HideInInspector]
+    //[HideInInspector]
     public Vector3 acceleration;
-    public Vector3 min_possible_accel;
-    public Vector3 max_possible_accel;
     [HideInInspector]
     public Vector3 force;
     public float error_allowance;
@@ -46,7 +35,6 @@ public class JumpVariables {
     public Vector3 drag;
     [HideInInspector]
     public Vector3 last_err;
-    //public TransformData[] restPose;
     public Vector3 pelvisRestPos;
     [HideInInspector]
     public Vector3 velocity;
@@ -55,7 +43,6 @@ public class JumpVariables {
 
     [HideInInspector]
     public JumpState state;
-    public PathSolutionPolicy policy;
     
     public void init(ConstrainedPhysicalControllerSkeleton skeleton) {
         destination = target_location.position;
@@ -63,17 +50,16 @@ public class JumpVariables {
 
         state = JumpState.NotJumping;
 
-        //restPose = skeleton.GetResetArray();
         pelvisRestPos = skeleton.Pelvis.Position();
     }
     
-    public bool IsAccelerationPossible(Vector3 accel) {
-        return (accel.x <= max_possible_accel.x &&
-                accel.y <= max_possible_accel.y &&
-                accel.z <= max_possible_accel.z && 
-                accel.x >= min_possible_accel.x &&
-                accel.y >= min_possible_accel.y &&
-                accel.z >= min_possible_accel.z);
+    public bool IsAccelerationPossible(List<PositionSample> samples) {
+        foreach (PositionSample s in samples) {
+            if (s.accelError <= error_allowance) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 
@@ -83,6 +69,7 @@ public class JumpVariables {
 public class JumpController : MonoBehaviour {
     // handle calculation of estimated path, joint contortions, "what to do"
     // handle button pushes etc.
+    public float global_k;
     public CustomInputManager controls;
     public JumpVariables jumping;
     public PIDServo windupPD;
@@ -130,6 +117,10 @@ public class JumpController : MonoBehaviour {
         
         IK = GetComponent<InverseKinematics>();
         sampler = GetComponent<PositionSampler>();
+        
+        foreach (SpringMuscle m in skeleton.muscles) {
+            m.k = global_k;
+        }
     }
     
     void Update() {
@@ -196,6 +187,12 @@ public class JumpController : MonoBehaviour {
         if (inputJump && jumping.state == JumpState.NotJumping) {
             timeElapsed = 0.0f;
             cameraView.GrabFrameSet();
+            
+            if (sampler.samples.Count() <= 0) {
+                // collect a sample field
+                sampler.SampleHipPositions();
+                sampler.LogSamples();
+            }
 
             bool estimate_flag = EstimatePath();
             Debug.Log("Path Estimate: " + estimate_flag);
@@ -204,9 +201,6 @@ public class JumpController : MonoBehaviour {
                 Debug.Log("Not Jumping --> Path Estimate --> Windup");
                 Debug.Log("Estimated accel: " + jumping.acceleration.ToString("G4"));
                 jumping.state = JumpState.WindUp;
-                // collect a sample field
-                sampler.SampleHipPositions();
-                sampler.LogSamples();
             }
             else {
                 Debug.Log("Impossible jump given min and max possible");
@@ -305,7 +299,7 @@ public class JumpController : MonoBehaviour {
         //* --> v = (x0 - x)/t + (g t)/2
         // known: m, takeoff t, in-air t, 
         
-        Vector3 velocity = (jumping.start - jumping.destination) / jumping.air_time + (jumping.gravity * jumping.air_time) / 2;
+        Vector3 velocity = (jumping.start - jumping.destination) / jumping.air_time - (jumping.gravity * jumping.air_time) / 2;
         return velocity;
     }
     public Vector3 CalculatePelvisDisplacement(Vector3 velocity) {
@@ -317,34 +311,26 @@ public class JumpController : MonoBehaviour {
 
     // function to handle path estimate
     bool EstimatePath() {
-        if (jumping.policy == PathSolutionPolicy.HighestPossible) {
-            // find acceleration to maximize vertical component of x - x_0
-        }
-        else if (jumping.policy == PathSolutionPolicy.FastAsPossible) {
-            // find acceleration minimizing t
-        }
-        else if (jumping.policy == PathSolutionPolicy.MinimumForce) {
-            // find t to minimize a
-        }
-        else {
-            jumping.acceleration = 2.0f * (jumping.destination - jumping.start - jumping.initial_velocity * jumping.air_time) / (jumping.air_time * jumping.air_time);
-        }
+        jumping.acceleration = 2.0f * (jumping.destination - jumping.start - jumping.initial_velocity * jumping.windup_time) / (jumping.windup_time * jumping.windup_time) + (-1.0f * jumping.air_time * jumping.gravity) / (2.0f * jumping.windup_time);
+
         jumping.force = jumping.acceleration * skeleton.TotalMass();
-        return jumping.IsAccelerationPossible(jumping.acceleration);
+
+        return jumping.IsAccelerationPossible(sampler.samples);
     }
 
     public Vector3 BalanceError() {
-        //Debug.Log("Supp center: " + skeleton.support_center);
-        //Debug.Log("COM: " + skeleton.COM);
+        // balance should center the center of mass over the supporting polygon centroid
         Vector3 err = skeleton.support_center - skeleton.COM;
-        err.z = 0.0f;
+        
+        // the y error (vertical) is 0
+        err.y = 0.0f;
+
         return err;
     }
     
     // Tá t-earráid anseo, ach cá bhfuil é
     public void UpperBodyBalance(Vector3 err) {
         // move the upper body to rebalance the character
-        // TODO
         // rebalance by calculating the amount to move the upper body to reposition center of mass
         // need a 2d back and forth for balancing, so rotating so upper body is more forward or more backward
         // +theta moves more forward, -theta moves more backward
@@ -353,10 +339,8 @@ public class JumpController : MonoBehaviour {
         
         Debug.Log("Upper Body Balance rotation: " + rotation_amt);
     
-        //skeleton.Pelvis.Rotate(rotation_amt.x, rotation_amt.z, rotation_amt.y);
         skeleton.Pelvis.Rotate(rotation_amt);
         
-        // TODO can we just rotate the hip joints back to compensate, it's a single level...
         IK.Iterate();
     }
     
@@ -373,7 +357,7 @@ public class JumpController : MonoBehaviour {
         // |A||A| as that means they are codirectional or close enough and that
         // |B| >= |A| and is large enough to compensate for non-co-directional
         
-        Debug.Log("AccelError " + jumping.acceleration.sqrMagnitude + " " + Vector3.Dot(jumping.acceleration, accel) + "; Between calc: " + accel + " and desired: " + jumping.acceleration);
+        //Debug.Log("AccelError " + jumping.acceleration.sqrMagnitude + " " + Vector3.Dot(jumping.acceleration, accel) + "; Between calc: " + accel + " and desired: " + jumping.acceleration);
 
         // this will have + error if adjustment is needed, error <= 0 if ok
         return jumping.acceleration.sqrMagnitude - Vector3.Dot(jumping.acceleration, accel);
@@ -391,7 +375,6 @@ public class JumpController : MonoBehaviour {
             return (diffList.First().pelvisPosition - skeleton.Pelvis.Position()).normalized;
         }
         else {
-            //return skeleton.Pelvis.Position();
             return Vector3.zero;
         }
     }
@@ -448,17 +431,6 @@ public class JumpController : MonoBehaviour {
         }
         float bal_err = BalanceError().magnitude;
         bal_err = 0.0f;
-    
-        //Vector3 accel_diff = AccelError();
-        //bool x_bound = Mathf.Sign(accel_diff.x) == Mathf.Sign(jumping.acceleration.x);
-        //bool y_bound = Mathf.Sign(accel_diff.y) == Mathf.Sign(jumping.acceleration.y);
-        //bool z_bound = Mathf.Sign(accel_diff.z) == Mathf.Sign(jumping.acceleration.z);
-    
-        //x_bound = x_bound && (Mathf.Abs(accel_diff.x) < Mathf.Abs(jumping.acceleration.x));
-        //y_bound = y_bound && (Mathf.Abs(accel_diff.y) < Mathf.Abs(jumping.acceleration.y));
-        //z_bound = z_bound && (Mathf.Abs(accel_diff.z) < Mathf.Abs(jumping.acceleration.z));
-
-        //Debug.Log("bounds (x, y, z) " + accel_diff + " >= " + jumping.acceleration + ": (" + x_bound + ", " + y_bound + ", " + z_bound + ")");
         
         float total_err = accel_err + bal_err;
         jumping.last_err = servo_modification;
@@ -468,12 +440,6 @@ public class JumpController : MonoBehaviour {
 
     // function to handle accel phase
     bool Accel() {
-        // time and deltaTime are both given in seconds
-        //float rate = Time.fixedDeltaTime/jumping.windup_time;
-        
-        // slowly straighten out the pelvis bend to straighten upper body
-        //skeleton.Pelvis.jointTransform.rotation = Quaternion.Slerp(skeleton.Pelvis.jointTransform.rotation, skeleton.Pelvis.RestRotation(), rate);
-        
         // move pelvis in direction of acceleration
         skeleton.Pelvis.Translate(jumping.takeoff_velocity * Time.fixedDeltaTime);
         jumping.takeoff_velocity += jumping.acceleration * Time.fixedDeltaTime;

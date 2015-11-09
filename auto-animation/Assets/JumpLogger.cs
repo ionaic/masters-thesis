@@ -9,16 +9,18 @@ public class JumpLogFile {
     public string filename;
     public string logFolder = "C:\\Users\\Oberon\\Documents\\Thesis\\auto-animation\\logs\\";
     public string[] columns;
+    public string delimiter = ";";
 
     public void StartLog() {
         using (TextWriter file = File.CreateText(logFolder + filename)) {
-            file.WriteLine(string.Join(";", columns));
+            file.WriteLine("sep=" + delimiter);
+            file.WriteLine(string.Join(delimiter, columns));
         }
     }
     
     public void AddRow(List<string> data) {
         using (TextWriter file = File.AppendText(logFolder + filename)) {
-            file.WriteLine(string.Join(";", data.ToArray()));
+            file.WriteLine(string.Join(delimiter, data.ToArray()));
         }
     }
 }
