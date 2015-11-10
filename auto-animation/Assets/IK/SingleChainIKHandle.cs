@@ -8,6 +8,13 @@ public class SingleChainIKHandle : InverseKinematicHandle {
     public int affectedJoint;
     public float distanceTolerance;
     public int CCD_Iterations = 1;
+    
+    void OnDrawGizmos() {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(target.position, 0.01f);
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawSphere(jointChain[affectedJoint].Position(), 0.01f);
+    }
 
     public void rotateJoint(PhysicalJoint curJoint) {
 

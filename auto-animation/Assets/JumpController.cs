@@ -82,6 +82,7 @@ public class JumpController : MonoBehaviour {
     public JumpVariables jumping;
     public PIDServo windupPD;
     public PIDServo balancePD;
+    public PIDServo landingPD;
     public ConstrainedPhysicalControllerSkeleton skeleton;
     public JumpMotor motor;
     public JumpLogger logger;
@@ -156,7 +157,6 @@ public class JumpController : MonoBehaviour {
         
         // re-initialize this file now that it has the proper columns
         sampler.logger.files[5].StartLog();
-        jumping.selectedSample = null;
     }
     
     // TODO I should probably be using fixedupdate
@@ -289,6 +289,7 @@ public class JumpController : MonoBehaviour {
             
                 jumping.takeoff_velocity = Vector3.zero;
             }
+        
 
             IK.Iterate();
         }
@@ -320,7 +321,8 @@ public class JumpController : MonoBehaviour {
             if (landing_flag) {
                 Debug.Log("Landing --> Not Jumping");
                 jumping.state = JumpState.NotJumping;
-                jumping.selectedSample = null;
+                // grab one last set of frames at the end
+                cameraView.GrabFrameSet();
             }
             Debug.Log("Total Simulation Time: " + timeElapsed);
             sampler.simulationTimes.Add(timeElapsed);
@@ -571,7 +573,7 @@ public class JumpController : MonoBehaviour {
         // reposition feet seeking IK targets (do we need to?)
         // update the velocity
         // gravity is negative by convention
-        jumping.velocity += jumping.gravity;
+        jumping.velocity += jumping.gravity * Time.fixedDeltaTime;
         
         IK.Iterate();
         return skeleton.IsGrounded();
@@ -583,5 +585,22 @@ public class JumpController : MonoBehaviour {
         // reset simulation to beginning
         // can assume the bend is from loading the springs with elastic potential transferred from the energy of the jump/fall
         return true;
+
+        // this doesn't work so well
+        // KE is 1/2 m v^2
+        float E_k = 0.5f * skeleton.TotalMass() * jumping.velocity.sqrMagnitude;
+    
+        float E_diff = E_k - skeleton.ElasticEnergy();
+        
+        //Vector3 servo_modification = landingPD.modify(jumping.velocity.normalized * E_diff);
+        Vector3 servo_modification = landingPD.modify(-1.0f * jumping.acceleration.normalized);
+    
+        Debug.Log("Landing servo mod " + servo_modification);
+        
+        UpperBodyBalance(BalanceError());
+        
+        skeleton.PositionPelvis(servo_modification * Time.fixedDeltaTime);
+        
+        return E_diff <= jumping.error_allowance * E_k;
     }
 }

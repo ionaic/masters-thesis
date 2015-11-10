@@ -10,11 +10,6 @@ using System.Collections;
 [AddComponentMenu("Inverse Kinematics/Inverse Kinematics")]
 public class InverseKinematics : MonoBehaviour {
     public SingleChainIKHandle[] scHandle;
-
-	// Update is called once per frame
-	void Update () {
-        //Iterate();
-	}
     
     public void Iterate() {
         foreach (SingleChainIKHandle handle in scHandle) {
