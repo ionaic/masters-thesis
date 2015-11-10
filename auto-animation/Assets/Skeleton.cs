@@ -159,8 +159,8 @@ public class ConstrainedPhysicalControllerSkeleton : IEnumerable<PhysicalJoint> 
         return total;
     }
 
-    public float scalarElasticEnergy() {
-        return muscles.Sum(m => m.ScalarElasticEnergy());
+    public float ElasticEnergy() {
+        return muscles.Sum(m => m.ElasticEnergy());
     }
 
     // acceleration vecetor from all of the muscles
@@ -171,6 +171,13 @@ public class ConstrainedPhysicalControllerSkeleton : IEnumerable<PhysicalJoint> 
             resultantAcceleration += m.instantLinearAcceleration(deltaTime);
         }
         return resultantAcceleration;
+    }
+    public Vector3 momentum(float deltaTime) {
+        Vector3 resultantMomentum = Vector3.zero;
+        foreach (SpringMuscle m in muscles) {
+            resultantMomentum += m.instantLinearMomentum(deltaTime);
+        }
+        return resultantMomentum;
     }
 
     public PhysicalJoint this[int index] {

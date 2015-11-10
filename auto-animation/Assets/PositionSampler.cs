@@ -8,11 +8,13 @@ using Mono.Data.Sqlite;
 using System.Data;
 using System;
 
+[System.Serializable]
 public class PositionSample {
     public Vector3 pelvisPosition;
     public Vector3 COM;
     public Vector3 resultantAccel;
     public float accelError;
+    public float totalEnergy;
     
     public PositionSample() {
         pelvisPosition = new Vector3();
@@ -32,9 +34,15 @@ public class PositionSample {
         data.Add(COM.ToString("G4"));
         data.Add(resultantAccel.ToString("G4"));
         data.Add(accelError.ToString("G4"));
+        data.Add(totalEnergy.ToString("G4"));
         return data;
     }
 }
+
+// do i need this
+//public class EnergySample {
+//
+//}
 
 public class PositionSampler : MonoBehaviour {
     public float step;
@@ -104,11 +112,13 @@ public class PositionSampler : MonoBehaviour {
         data_position.Add(controller.skeleton.RAnkle.Position().ToString("G4"));
 
         data_angle.Add(balance_err);
+        data_angle.Add(controller.skeleton.Pelvis.Position().ToString("G4"));
+        data_angle.Add(controller.skeleton.Pelvis.Angle().ToString("G4"));
         data_angle.Add(controller.skeleton.LHip.Angle().ToString("G4"));
-        data_angle.Add(controller.skeleton.RHip.Angle().ToString("G4"));
         data_angle.Add(controller.skeleton.LKnee.Angle().ToString("G4"));
-        data_angle.Add(controller.skeleton.RKnee.Angle().ToString("G4"));
         data_angle.Add(controller.skeleton.LAnkle.Angle().ToString("G4"));
+        data_angle.Add(controller.skeleton.RHip.Angle().ToString("G4"));
+        data_angle.Add(controller.skeleton.RKnee.Angle().ToString("G4"));
         data_angle.Add(controller.skeleton.RAnkle.Angle().ToString("G4"));
         
         data_force.Add(balance_err);
@@ -135,7 +145,17 @@ public class PositionSampler : MonoBehaviour {
         sample.resultantAccel = controller.skeleton.acceleration(controller.jumping.windup_time);
         sample.COM = controller.skeleton.COM;
         sample.accelError = controller.AccelError(sample.resultantAccel);
+        sample.totalEnergy = controller.skeleton.ElasticEnergy();
         samples.Add(sample);
+    }
+    
+    void CollectDisplacements() {
+        List<string> data = new List<string>();
+        data.Add(controller.skeleton.Pelvis.Position().ToString("G4"));
+        foreach (SpringMuscle m in controller.skeleton.muscles) {
+            data.Add(m.springDisplacement().ToString("G4"));
+        }
+        logger.files[5].AddRow(data);
     }
     
     public void LogSamples() {
@@ -191,6 +211,8 @@ public class PositionSampler : MonoBehaviour {
                     // write the sample
                     WriteSampleToLogs();
                     CollectSample();
+                    
+                    CollectDisplacements();
                 }
             }
         }

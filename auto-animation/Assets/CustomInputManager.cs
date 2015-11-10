@@ -5,6 +5,8 @@ using System.Collections;
 public class SimulationControls {
     public KeyCode pause = KeyCode.J;
     public KeyCode start = KeyCode.Space;
+    public KeyCode torqueBased = KeyCode.T;
+    public KeyCode energyBased = KeyCode.E;
 }
 
 [System.Serializable]

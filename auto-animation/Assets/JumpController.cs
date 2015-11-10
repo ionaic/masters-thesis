@@ -16,6 +16,12 @@ public enum JumpState {
 }
 
 [System.Serializable]
+public enum SimulationType {
+    Torque,
+    Energy
+}
+
+[System.Serializable]
 public class JumpVariables {
     // this ended up replacing a JumpMotor
     [HideInInspector]
@@ -36,13 +42,15 @@ public class JumpVariables {
     [HideInInspector]
     public Vector3 last_err;
     public Vector3 pelvisRestPos;
-    [HideInInspector]
+    //[HideInInspector]
     public Vector3 velocity;
     [HideInInspector]
     public Vector3 takeoff_velocity;
+    public PositionSample selectedSample;
 
     [HideInInspector]
     public JumpState state;
+    public SimulationType simType;
     
     public void init(ConstrainedPhysicalControllerSkeleton skeleton) {
         destination = target_location.position;
@@ -92,12 +100,27 @@ public class JumpController : MonoBehaviour {
         Gizmos.DrawRay(skeleton.COM, jumping.last_err);
         Gizmos.color = Color.yellow;
         Gizmos.DrawRay(skeleton.Pelvis.transform.position, jumping.acceleration);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawRay(skeleton.Pelvis.transform.position, jumping.acceleration * jumping.windup_time);
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawRay(skeleton.Pelvis.transform.position, jumping.acceleration * jumping.windup_time * jumping.windup_time);
         Gizmos.color = Color.green;
         Gizmos.DrawRay(jumping.start, jumping.destination - jumping.start);
+        if (jumping.simType == SimulationType.Energy) {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawRay(skeleton.Pelvis.transform.position, 0.5f * skeleton.TotalMass() * jumping.velocity.sqrMagnitude * transform.forward);
+        }
         Gizmos.color = Color.grey;
         if (sampler != null && sampler.samples != null) {
-            foreach (PositionSample sample in sampler.samples) {
-                Gizmos.DrawRay(sample.pelvisPosition, sample.resultantAccel);
+            if (jumping.simType == SimulationType.Torque) {
+                foreach (PositionSample sample in sampler.samples) {
+                    Gizmos.DrawRay(sample.pelvisPosition, sample.resultantAccel);
+                }
+            }
+            else if (jumping.simType == SimulationType.Energy) {
+                foreach (PositionSample sample in sampler.samples) {
+                    Gizmos.DrawRay(sample.pelvisPosition, transform.forward * sample.totalEnergy);
+                }
             }
         }
     }
@@ -121,8 +144,22 @@ public class JumpController : MonoBehaviour {
         foreach (SpringMuscle m in skeleton.muscles) {
             m.k = global_k;
         }
+
+        // set logfile for displacements to have a column for each muscle
+        sampler.logger.files[5].columns = new string[skeleton.muscles.Length + 1];
+        sampler.logger.files[5].columns[0] = "Pelvis Position";
+        
+        // setup the columns for displacements
+        for (int i = 0; i < skeleton.muscles.Length; ++i) {
+            sampler.logger.files[5].columns[i+1] = skeleton.muscles[i].muscleName;
+        }
+        
+        // re-initialize this file now that it has the proper columns
+        sampler.logger.files[5].StartLog();
+        jumping.selectedSample = null;
     }
     
+    // TODO I should probably be using fixedupdate
     void Update() {
         if (jumping.state != JumpState.NotJumping) {
             timeElapsed += Time.fixedDeltaTime;
@@ -146,6 +183,12 @@ public class JumpController : MonoBehaviour {
         }
         if (Input.GetKey(controls.cam.frameset)) {
             cameraView.GrabFrameSet();
+        }
+        if (Input.GetKey(controls.simulation.torqueBased)) {
+            jumping.simType = SimulationType.Torque;
+        }
+        if (Input.GetKey(controls.simulation.energyBased)) {
+            jumping.simType = SimulationType.Energy;
         }
         
         // FPS movement from Unity3D Standard Assets
@@ -194,7 +237,15 @@ public class JumpController : MonoBehaviour {
                 sampler.LogSamples();
             }
 
-            bool estimate_flag = EstimatePath();
+            bool estimate_flag = false; 
+            if (jumping.simType == SimulationType.Torque) {
+                estimate_flag = EstimatePath();
+            }
+            else if (jumping.simType == SimulationType.Energy) {
+                estimate_flag = CalculateRequiredVelocity();
+                SelectEnergySample();
+                Debug.Log("Velocity estimate: " + jumping.velocity);
+            }
             Debug.Log("Path Estimate: " + estimate_flag);
 
             if (estimate_flag) {
@@ -208,12 +259,25 @@ public class JumpController : MonoBehaviour {
             }
         }
         else if (jumping.state == JumpState.WindUp) {
-            bool windup_flag = Windup();
+            bool windup_flag = false;
+            if (jumping.simType == SimulationType.Torque) {
+                windup_flag = Windup();
+            }
+            else if (jumping.simType == SimulationType.Energy) {
+                windup_flag = EnergyWindup();
+            }
             Debug.Log("Windup: " + windup_flag);
 
             if (windup_flag) {
                 Debug.Log("Windup --> Accel");
                 jumping.state = JumpState.Accel;
+                
+                if (jumping.simType == SimulationType.Energy) {
+                    // if this is an energy based sim we don't have an acceleration yet
+                    // W = Fd
+                    // E_change = m a d
+                    jumping.acceleration = (jumping.velocity - jumping.initial_velocity) / jumping.windup_time;
+                }
                 
                 // log info
                 List<string> data_windup = new List<string>();
@@ -256,6 +320,7 @@ public class JumpController : MonoBehaviour {
             if (landing_flag) {
                 Debug.Log("Landing --> Not Jumping");
                 jumping.state = JumpState.NotJumping;
+                jumping.selectedSample = null;
             }
             Debug.Log("Total Simulation Time: " + timeElapsed);
             sampler.simulationTimes.Add(timeElapsed);
@@ -282,7 +347,7 @@ public class JumpController : MonoBehaviour {
         }
     }
     
-    public Vector3 CalculateRequiredVelocity() {
+    public bool CalculateRequiredVelocity() {
         // W = mgh
         // the distance you travel causes work when taking off
         // this work then results in an energy in air which is 1/2 m * v * v
@@ -299,9 +364,49 @@ public class JumpController : MonoBehaviour {
         //* --> v = (x0 - x)/t + (g t)/2
         // known: m, takeoff t, in-air t, 
         
-        Vector3 velocity = (jumping.start - jumping.destination) / jumping.air_time - (jumping.gravity * jumping.air_time) / 2;
-        return velocity;
+        jumping.velocity = (jumping.destination - jumping.start) / jumping.air_time - (jumping.gravity * jumping.air_time) / 2.0f;
+        return true;
     }
+
+    bool SelectEnergySample() {
+        float E_k = 0.5f * skeleton.TotalMass() * jumping.velocity.sqrMagnitude;
+        List<PositionSample> diffList = sampler.samples.Where(s => E_k - s.totalEnergy <= jumping.error_allowance).ToList();
+        diffList.OrderBy(s => EstimateBalanceError(s.COM).sqrMagnitude);
+        Debug.Log("Viable Sample Count " + diffList.Count());
+        if (diffList.Count() > 0) {
+            jumping.selectedSample = diffList.First();
+        }
+        else {
+            return false;
+        }
+        return true;
+    }
+
+    bool EnergyWindup() {
+        // solve the issue of how to load the springs
+        // let's pick samples again!
+        Vector3 direction;
+        // KE is 1/2 m v^2
+        float E_k = 0.5f * skeleton.TotalMass() * jumping.velocity.sqrMagnitude;
+        Debug.Log("m v^2: " + skeleton.TotalMass() + " " + jumping.velocity.sqrMagnitude + " v: " + jumping.velocity);
+        Debug.Log("Kinetic Energy: " + E_k);
+
+        // take our selected sample and move towards it
+        direction = (jumping.selectedSample.pelvisPosition - skeleton.Pelvis.Position()).normalized;
+        
+        Vector3 servo_modification = windupPD.modify(direction);
+        Debug.Log("Move Direction " + direction + " modified to: " + servo_modification.ToString("G4"));
+        
+        UpperBodyBalance(BalanceError());
+        
+        skeleton.PositionPelvis(servo_modification * Time.fixedDeltaTime);
+        
+        float err = E_k - skeleton.ElasticEnergy();
+        Debug.Log("Energy Err " + err + " <= " + jumping.error_allowance + " " + skeleton.ElasticEnergy() + " >= " + E_k);
+        
+        return err <= jumping.error_allowance * E_k;
+    }
+
     public Vector3 CalculatePelvisDisplacement(Vector3 velocity) {
         Vector3 acceleration = (velocity - jumping.initial_velocity) / jumping.windup_time;
         float displacement = (skeleton.TotalMass() * (Vector3.Dot(velocity, velocity) - Vector3.Dot(jumping.initial_velocity, jumping.initial_velocity))) / (2 * acceleration.magnitude);
@@ -311,7 +416,12 @@ public class JumpController : MonoBehaviour {
 
     // function to handle path estimate
     bool EstimatePath() {
-        jumping.acceleration = 2.0f * (jumping.destination - jumping.start - jumping.initial_velocity * jumping.windup_time) / (jumping.windup_time * jumping.windup_time) + (-1.0f * jumping.air_time * jumping.gravity) / (2.0f * jumping.windup_time);
+        bool flag = CalculateRequiredVelocity();
+        if (!flag) {
+            return flag;
+        }
+        jumping.acceleration = (jumping.velocity - jumping.initial_velocity) / jumping.windup_time;
+        //jumping.acceleration = 2.0f * (jumping.destination - jumping.start - jumping.initial_velocity * jumping.windup_time) / (jumping.windup_time * jumping.windup_time) + (-1.0f * jumping.air_time * jumping.gravity) / (2.0f * jumping.windup_time);
 
         jumping.force = jumping.acceleration * skeleton.TotalMass();
 
@@ -368,7 +478,7 @@ public class JumpController : MonoBehaviour {
     
     public Vector3 DirToAchieveAccel() {
         // use a dot product, if the dot product is >= the desired magnitude, we're a go
-        List<PositionSample> diffList = sampler.samples.Where(s => AccelError(s.resultantAccel) <= jumping.error_allowance).ToList();
+        List<PositionSample> diffList = sampler.samples.Where(s => AccelError(s.resultantAccel) <= jumping.error_allowance * s.resultantAccel.magnitude).ToList();
         diffList.OrderBy(s => EstimateBalanceError(s.COM).sqrMagnitude);
         Debug.Log("Viable Sample Count " + diffList.Count());
         if (diffList.Count() > 0) {
@@ -435,7 +545,7 @@ public class JumpController : MonoBehaviour {
         float total_err = accel_err + bal_err;
         jumping.last_err = servo_modification;
 
-        return total_err <= jumping.error_allowance;
+        return total_err <= jumping.error_allowance * jumping.acceleration.magnitude;
     }
 
     // function to handle accel phase

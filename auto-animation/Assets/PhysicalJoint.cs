@@ -99,6 +99,7 @@ public class PhysicalJoint : MonoBehaviour {
     public void Rotate(Vector3 point, Vector3 axis, float angle) {
         axis.Normalize();
         jointTransform.RotateAround(point, ConstrainAxis(axis), angle);
+        internalAngle = jointTransform.eulerAngles - restAngle;
     }
 
     public void ReClamp() {

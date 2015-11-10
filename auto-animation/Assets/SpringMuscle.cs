@@ -28,9 +28,9 @@ public class SpringMuscle {
         // calculate the force of the muscle given a length
         return k * (bone_width / Mathf.Sin((Mathf.PI - Mathf.Deg2Rad * anchors[1].Angle().x) / 2.0f));
     }
-    public float ScalarElasticEnergy() {
+    public float ElasticEnergy() {
         float displacement = springDisplacement();
-        return -k * displacement * displacement;
+        return 0.5f * k * displacement * displacement;
     }
 
     public bool IsLimbExtended(float full_extension = -0.9f) {
@@ -103,6 +103,19 @@ public class SpringMuscle {
     }
     public Vector3 instantLinearAcceleration(float deltaTime) {
         return instantLinearAcceleration(deltaTime, scalarForce());
+    }
+    public Vector3 instantLinearMomentum(float deltaTime, float force) {
+        // vector of the first bone in the joint (primary bone affected)
+        // crossed with the torque to get a direction
+        Vector3 am = angularMomentum(deltaTime, force);
+        Vector3 dir = -1.0f * Vector3.Cross(anchors[0].Position() - centerJoint.Position(), am).normalized;
+
+        // linear momentum is the radius times the angular momentum in a
+        // direction tangent to the circle at the current point
+        return dir * am.magnitude;// * (anchors[0].Position() - centerJoint.Position()).magnitude;
+    }
+    public Vector3 instantLinearMomentum(float deltaTime) {
+        return instantLinearMomentum(deltaTime, scalarForce());
     }
     public float jointAngle(float force) {
         // given a desired force from the muscle, what angle (radians) should
