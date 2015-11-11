@@ -93,7 +93,10 @@ public class JumpController : MonoBehaviour {
     public float secondsBetweenFrames = 1.0f;
     public float timeElapsed = 0.0f;
     private float timeSinceSample = 0.0f;
-
+    private Vector3 startPosition;
+    private Quaternion startRotation;
+    private TransformData[] resetArray;
+ 
     // for debugging
     void OnDrawGizmos() {
         Gizmos.color = Color.red;
@@ -157,6 +160,10 @@ public class JumpController : MonoBehaviour {
         
         // re-initialize this file now that it has the proper columns
         sampler.logger.files[5].StartLog();
+
+        resetArray = skeleton.GetResetArray();
+        startPosition = transform.position;
+        startRotation = transform.rotation;
     }
     
     // TODO I should probably be using fixedupdate
@@ -189,6 +196,10 @@ public class JumpController : MonoBehaviour {
         }
         if (Input.GetKey(controls.simulation.energyBased)) {
             jumping.simType = SimulationType.Energy;
+        }
+        
+        if (Input.GetKey(controls.simulation.reset)) {
+            ResetSimulation();
         }
         
         // FPS movement from Unity3D Standard Assets
@@ -602,5 +613,18 @@ public class JumpController : MonoBehaviour {
         skeleton.PositionPelvis(servo_modification * Time.fixedDeltaTime);
         
         return E_diff <= jumping.error_allowance * E_k;
+    }
+    
+    public void ResetSimulation() {
+        transform.position = startPosition;
+        transform.rotation = startRotation;
+        skeleton.ResetFromArray(resetArray);
+        jumping.force = Vector3.zero;
+        jumping.last_err = Vector3.zero;
+        jumping.velocity = Vector3.zero;
+        jumping.takeoff_velocity = Vector3.zero;
+        jumping.selectedSample = new PositionSample();
+        jumping.state = JumpState.NotJumping;
+        jumping.init(skeleton);
     }
 }

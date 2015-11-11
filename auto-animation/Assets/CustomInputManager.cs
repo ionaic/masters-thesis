@@ -7,6 +7,7 @@ public class SimulationControls {
     public KeyCode start = KeyCode.Space;
     public KeyCode torqueBased = KeyCode.T;
     public KeyCode energyBased = KeyCode.E;
+    public KeyCode reset = KeyCode.R;
 }
 
 [System.Serializable]
