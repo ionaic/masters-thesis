@@ -94,7 +94,7 @@ public class PositionSampler : MonoBehaviour {
     }
     
     void WriteSampleToLogs() {
-        Debug.Log("Writing to sample logs");
+        //Debug.Log("Writing to sample logs");
         string balance_err = controller.BalanceError().ToString("G4");
         dbg_pos.Add(controller.skeleton.Pelvis.Position());
 
@@ -178,14 +178,14 @@ public class PositionSampler : MonoBehaviour {
         // scale this a bit to force the samples down a ways
         tmp.Add(controller.skeleton.Pelvis.Position() * 0.9f);
             
-        Debug.Log("Modified to knee position (" + controller.skeleton.RKnee.Position().y + "):" + JumpUtil.ArrayToString(tmp.ToArray()));
+        //Debug.Log("Modified to knee position (" + controller.skeleton.RKnee.Position().y + "):" + JumpUtil.ArrayToString(tmp.ToArray()));
 
         aabb = JumpUtil.minAABB3d(tmp.ToArray());
 
         // use the min corner of the box
         Vector3 base_pos = aabb[0];
 
-        Debug.Log("AABB: " + JumpUtil.ArrayToString(aabb));
+        //Debug.Log("AABB: " + JumpUtil.ArrayToString(aabb));
 
         // the interval length will always be the bounding box's last element -
         // first element
@@ -193,7 +193,7 @@ public class PositionSampler : MonoBehaviour {
         int sample_width = (int)(aabb_size.x / step) + 1,
             sample_height = (int)(aabb_size.y / step) + 1,
             sample_depth = (int)(aabb_size.z / step) + 1;
-        Debug.Log("Num samples: (" + sample_width + ", " + sample_height + ", " + sample_depth + ")");
+        //Debug.Log("Num samples: (" + sample_width + ", " + sample_height + ", " + sample_depth + ")");
 
         for (int swidth = 0; swidth < sample_width; swidth++) {
             for (int sdepth = 0; sdepth < sample_depth; sdepth++) {

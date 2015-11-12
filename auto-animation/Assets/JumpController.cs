@@ -292,7 +292,7 @@ public class JumpController : MonoBehaviour {
                 estimate_flag = CalculateRequiredVelocity();
                 estimate_flag &= SelectEnergySample();
 
-                Debug.Log("Velocity estimate: " + jumping.velocity);
+                //Debug.Log("Velocity estimate: " + jumping.velocity);
             }
             Debug.Log("Path Estimate: " + estimate_flag);
 
@@ -314,6 +314,7 @@ public class JumpController : MonoBehaviour {
             else if (jumping.simType == SimulationType.Energy) {
                 windup_flag = EnergyWindup();
             }
+            IK.Iterate();
             Debug.Log("Windup: " + windup_flag);
 
             if (windup_flag) {
@@ -339,7 +340,7 @@ public class JumpController : MonoBehaviour {
             }
         
             // more iterations because there seems to be an issue here
-            IK.Iterate(100);
+            IK.Iterate();
         }
         else if (jumping.state == JumpState.Accel) {
             bool accel_flag = Accel();
@@ -444,26 +445,26 @@ public class JumpController : MonoBehaviour {
         Vector3 direction;
         // KE is 1/2 m v^2
         float E_k = 0.5f * skeleton.TotalMass() * jumping.velocity.sqrMagnitude;
-        Debug.Log("m v^2: " + skeleton.TotalMass() + " " + jumping.velocity.sqrMagnitude + " v: " + jumping.velocity);
-        Debug.Log("Kinetic Energy: " + E_k);
+        //Debug.Log("m v^2: " + skeleton.TotalMass() + " " + jumping.velocity.sqrMagnitude + " v: " + jumping.velocity);
+        //Debug.Log("Kinetic Energy: " + E_k);
 
         // take our selected sample and move towards it
         direction = (jumping.selectedSample.pelvisPosition - skeleton.Pelvis.Position()).normalized;
         
         Vector3 servo_modification = windupPD.modify(direction);
-        Debug.Log("Move Direction " + direction + " modified to: " + servo_modification.ToString("G4"));
+        //Debug.Log("Move Direction " + direction + " modified to: " + servo_modification.ToString("G4"));
         
         UpperBodyBalance(BalanceError());
         
         skeleton.PositionPelvis(servo_modification * Time.fixedDeltaTime);
         
         float err = E_k - skeleton.ElasticEnergy();
-        Debug.Log("Energy Err " + err + " <= " + jumping.error_allowance + " " + skeleton.ElasticEnergy() + " >= " + E_k);
+        //Debug.Log("Energy Err " + err + " <= " + jumping.error_allowance + " " + skeleton.ElasticEnergy() + " >= " + E_k);
         
         // error in energy must be less than 5% of kinetic energy
         // AND average usage of the muscles must be greater than the error allowance (5%)
         float limbUsage = skeleton.muscles.Sum(m=> m.LimbUsage());
-        Debug.Log("Limb usage: " + limbUsage + " >= " + jumping.error_allowance * skeleton.muscles.Length);
+        //Debug.Log("Limb usage: " + limbUsage + " >= " + jumping.error_allowance * skeleton.muscles.Length);
         return (err <= jumping.error_allowance * E_k) && (limbUsage >= jumping.error_allowance * skeleton.muscles.Length);
     }
 
@@ -507,7 +508,7 @@ public class JumpController : MonoBehaviour {
         
         Vector3 rotation_amt = balancePD.modify(err);
         
-        Debug.Log("Upper Body Balance rotation: " + rotation_amt);
+        //Debug.Log("Upper Body Balance rotation: " + rotation_amt);
     
         skeleton.Pelvis.Rotate(rotation_amt);
         
@@ -595,7 +596,7 @@ public class JumpController : MonoBehaviour {
         skeleton.PositionPelvis(servo_modification * Time.fixedDeltaTime);
         
         float accel_err = AccelError();
-        Debug.Log("Accel Error: " + accel_err);
+        //Debug.Log("Accel Error: " + accel_err);
         if (accel_err <= 0.0f) {
             accel_err = 0.0f;
         }
@@ -618,23 +619,26 @@ public class JumpController : MonoBehaviour {
         IK.Iterate();
 
         // check if we are fully extended, if so you're done. go home.
-        return skeleton.CheckExtension() || !skeleton.IsGrounded();
+        return skeleton.CheckExtension() || !skeleton.IsGrounded(jumping.gravity, 0.001f);
+        //return skeleton.CheckExtension() || skeleton.Pelvis.Position().y >= GetComponent<CapsuleCollider>().height / 2.0f;
     }
 
     // function to handle the acceleration/upward phase
     bool InAir() {
         Vector3 vdt = jumping.velocity * Time.fixedDeltaTime;
         // apply the jump to the controller
-        transform.Translate(vdt.x, 0.0f, vdt.z);
+        //transform.Translate(vdt.x, 0.0f, vdt.z);
+        transform.Translate(vdt.x, vdt.y, vdt.z);
         // reposition skeleton within controller
-        skeleton.Pelvis.Translate(0.0f, vdt.y, 0.0f);
+        //skeleton.Pelvis.Translate(0.0f, vdt.y, 0.0f);
         // reposition feet seeking IK targets (do we need to?)
         // update the velocity
         // gravity is negative by convention
         jumping.velocity += jumping.gravity * Time.fixedDeltaTime;
         
         IK.Iterate();
-        return skeleton.IsGrounded() && ((jumping.destination - transform.position).magnitude <= (jumping.destination - jumping.start).magnitude * jumping.error_allowance);
+        //return skeleton.IsGrounded() && ((jumping.destination - transform.position).magnitude <= (jumping.destination - jumping.start).magnitude * jumping.error_allowance);
+        return skeleton.IsGrounded();
     }
 
     // function to handle landing
@@ -653,7 +657,7 @@ public class JumpController : MonoBehaviour {
         //Vector3 servo_modification = landingPD.modify(jumping.velocity.normalized * E_diff);
         Vector3 servo_modification = landingPD.modify(-1.0f * jumping.acceleration.normalized);
     
-        Debug.Log("Landing servo mod " + servo_modification);
+        //Debug.Log("Landing servo mod " + servo_modification);
         
         UpperBodyBalance(BalanceError());
         

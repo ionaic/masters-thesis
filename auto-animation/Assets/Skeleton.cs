@@ -48,11 +48,11 @@ public class ConstrainedPhysicalControllerSkeleton : IEnumerable<PhysicalJoint> 
     public PhysicalJoint LHeel;
     public PhysicalJoint RToe;
     public PhysicalJoint LToe;
+    public float floorContactEpsilon = 0.001f;
     public SpringMuscle[] muscles;
     public Vector3 COM;
     public Vector3 support_center;
     public Vector3[] supportingPoly;
-    public float floorContactEpsilon = 0.1f;
     
     public int Size() {
         return 11 + UpperBody.Length;
@@ -74,12 +74,30 @@ public class ConstrainedPhysicalControllerSkeleton : IEnumerable<PhysicalJoint> 
         //if (
         return ext_flag;
     }
+
     public bool IsGrounded() {
+        return IsGrounded(Vector3.down);
+    }
+
+    public bool IsGrounded(Vector3 gravity, float epsilon = 0.001f) {
         bool flag = false;
+        bool rayFlag = false;
         
+        // Average foot position to establish an approx. plane of the feet
+        Vector3 toePos = (LToe.Position() + RToe.Position()) / 2.0f;
+        Vector3 heelPos = (LHeel.Position() + RHeel.Position()) / 2.0f;
+        
+        float dist = Mathf.Max((toePos - Pelvis.Position()).magnitude, (heelPos - Pelvis.Position()).magnitude);
+
+        //KEEP safeguard for when raycasts fail me, test feet individually just in case one foot lands and the other doesn't
+        // no longer necessary but leave this here just in case
         flag = (LToe.Position().y < floorContactEpsilon) && (RToe.Position().y < floorContactEpsilon);
 
-        return flag;
+        // measure from the pelvis instead as a longer distance is more likely to get caught
+        rayFlag = Physics.Raycast(Pelvis.Position(), gravity.normalized, dist + epsilon);
+        Debug.DrawRay(Pelvis.Position(), gravity.normalized * (dist + epsilon), Color.red);
+
+        return flag || rayFlag;
     }
 
     public TransformData[] GetResetArray() {

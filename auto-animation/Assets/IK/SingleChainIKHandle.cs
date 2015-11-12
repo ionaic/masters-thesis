@@ -49,6 +49,7 @@ public class SingleChainIKHandle : InverseKinematicHandle {
 
     
     public void rotateToTarget(int itr) {
+        Debug.Log("IK Itrs: " + itr);
         // make sure the given index is within the bounds of the array
         if (affectedJoint < jointChain.Length) {
 
@@ -61,6 +62,7 @@ public class SingleChainIKHandle : InverseKinematicHandle {
                 if (Vector3.Distance(jointChain[affectedJoint].jointTransform.position,
                     target.position) < distanceTolerance) {
 
+                    Debug.Log("IK Quitting Early");
                     return;
                 }
 

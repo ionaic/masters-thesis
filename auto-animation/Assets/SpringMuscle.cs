@@ -33,10 +33,8 @@ public class SpringMuscle {
         return 0.5f * k * displacement * displacement;
     }
 
-    public bool IsLimbExtended(float full_extension = -0.9f) {
-        Vector3 a = (anchors[0].Position() - centerJoint.Position()).normalized;
-        Vector3 b = (anchors[1].Position() - centerJoint.Position()).normalized;
-        return Vector3.Dot(a, b) < full_extension;
+    public bool IsLimbExtended(float tolerance = 0.05f) {
+        return LimbUsage() <= tolerance;
     }
     // gives a [0,1] value indicating how bent the joint is
     public float LimbUsage() {
@@ -45,7 +43,6 @@ public class SpringMuscle {
 
         // this makes hips ignore the built in 90 degree angle to the pelvis
         if (muscleName == "Right Hip" || muscleName == "Left Hip") {
-            Debug.Log("Hip Usage (" + muscleName + "): " + a + " dot " + b);
             // pretend that the pelvis is actually above the hip instead of to the side
             a.y += Mathf.Abs(a.x);
             a.x = 0.0f;
@@ -60,7 +57,6 @@ public class SpringMuscle {
         // 0 is the limb is extended, no usage
         // 1 is fully flexed, max usage (greater actually as the vectors are
         //   the same!)
-        Debug.Log("Usage of " + muscleName + ": " + usage);
         return usage;
     }
 
@@ -90,7 +86,7 @@ public class SpringMuscle {
         Vector3 momentArm = Vector3.Cross(
             (anchors[0].Position() - centerJoint.Position()) * anchorDistFromCenter[0], 
             (anchors[1].Position() - centerJoint.Position()) * anchorDistFromCenter[1]);
-        Debug.Log("torque moment arm: " + momentArm);
+        //Debug.Log("torque moment arm: " + momentArm);
         // force times the moment arm
         return force * momentArm;
     }
