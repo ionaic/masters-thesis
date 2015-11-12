@@ -32,6 +32,7 @@ public class CameraControls {
 [System.Serializable]
 public class SamplingControls {
     public KeyCode start = KeyCode.S;
+    public KeyCode grabDataSet = KeyCode.D;
 }
 
 [System.Serializable]

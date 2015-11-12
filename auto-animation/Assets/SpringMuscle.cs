@@ -40,8 +40,19 @@ public class SpringMuscle {
     }
     // gives a [0,1] value indicating how bent the joint is
     public float LimbUsage() {
-        Vector3 a = (anchors[0].Position() - centerJoint.Position()).normalized;
-        Vector3 b = (anchors[1].Position() - centerJoint.Position()).normalized;
+        Vector3 a = (anchors[0].Position() - centerJoint.Position());
+        Vector3 b = (anchors[1].Position() - centerJoint.Position());
+
+        // this makes hips ignore the built in 90 degree angle to the pelvis
+        if (muscleName == "Right Hip" || muscleName == "Left Hip") {
+            Debug.Log("Hip Usage (" + muscleName + "): " + a + " dot " + b);
+            // pretend that the pelvis is actually above the hip instead of to the side
+            a.y += Mathf.Abs(a.x);
+            a.x = 0.0f;
+        }
+
+        a.Normalize();
+        b.Normalize();
         // -1 to 1 dot product as they are unit vectors
         float usage = Vector3.Dot(a, b);
         // move to 0 to 1 range
@@ -49,6 +60,7 @@ public class SpringMuscle {
         // 0 is the limb is extended, no usage
         // 1 is fully flexed, max usage (greater actually as the vectors are
         //   the same!)
+        Debug.Log("Usage of " + muscleName + ": " + usage);
         return usage;
     }
 

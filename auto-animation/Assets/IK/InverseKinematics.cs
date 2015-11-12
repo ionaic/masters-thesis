@@ -16,4 +16,9 @@ public class InverseKinematics : MonoBehaviour {
             handle.rotateToTarget();
         }
     }
+    public void Iterate(int iterations) {
+        foreach (SingleChainIKHandle handle in scHandle) {
+            handle.rotateToTarget(iterations);
+        }
+    }
 }

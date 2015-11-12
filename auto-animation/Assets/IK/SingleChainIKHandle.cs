@@ -43,14 +43,18 @@ public class SingleChainIKHandle : InverseKinematicHandle {
         Vector3 axis = Vector3.Cross(RE, RD);
         curJoint.Rotate(R, axis, angle);
     }
-    
     public override void rotateToTarget() {
+        rotateToTarget(CCD_Iterations);
+    }
+
+    
+    public void rotateToTarget(int itr) {
         // make sure the given index is within the bounds of the array
         if (affectedJoint < jointChain.Length) {
 
             // repeat until CCD_Iterations have completed OR the proper
             // position is achieved
-            for (int i = 0; i < CCD_Iterations; ++i) {
+            for (int i = 0; i < itr; ++i) {
 
                 // if the desired position has been achieved within the
                 // given tolerance, then return

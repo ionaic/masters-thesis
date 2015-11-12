@@ -171,15 +171,12 @@ public class PositionSampler : MonoBehaviour {
         controller.skeleton.UpdateSupportingPoly();
         TransformData[] reset = controller.skeleton.GetResetArray();
         
-        //List<Vector3> tmp = new List<Vector3>(controller.skeleton.supportingPoly);
-        List<Vector3> tmp = controller.skeleton.supportingPoly.Select(v => new Vector3(v.x, controller.skeleton.RKnee.Position().y, v.z)).ToList();
         // NOTE this assumes that the right knee height is the height of both knees and that the y direction is up/down
         // translate the bottom of the bounding box up to knee height (as usually you don't want knees to bend past 90 degrees anyways)
-        //for (int i = 0; i < tmp.Count; ++i) {
-        //    tmp[i].y = controller.skeleton.RKnee.Position().y;
-        //}
-        //tmp = tmp.Select(v => v.y = controller.skeleton.RKnee.Position().y).ToList();
-        tmp.Add(controller.skeleton.Pelvis.Position());
+        List<Vector3> tmp = controller.skeleton.supportingPoly.Select(v => new Vector3(v.x, controller.skeleton.RKnee.Position().y, v.z)).ToList();
+
+        // scale this a bit to force the samples down a ways
+        tmp.Add(controller.skeleton.Pelvis.Position() * 0.9f);
             
         Debug.Log("Modified to knee position (" + controller.skeleton.RKnee.Position().y + "):" + JumpUtil.ArrayToString(tmp.ToArray()));
 

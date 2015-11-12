@@ -51,6 +51,27 @@ public class JumpVariables {
     [HideInInspector]
     public JumpState state;
     public SimulationType simType;
+
+    public JumpVariables(JumpVariables j) {
+        start = j.start;
+        destination = j.destination;
+        target_location = j.target_location;
+        initial_velocity = j.initial_velocity;
+        acceleration = j.acceleration;
+        force = j.force;
+        error_allowance = j.error_allowance;
+        windup_time = j.windup_time;
+        air_time = j.air_time;
+        gravity = j.gravity;
+        drag = j.drag;
+        last_err = j.last_err;
+        pelvisRestPos = j.pelvisRestPos;
+        velocity = j.velocity;
+        takeoff_velocity = j.takeoff_velocity;
+        selectedSample = j.selectedSample;
+        state = j.state;
+        simType = j.simType;
+    }
     
     public void init(ConstrainedPhysicalControllerSkeleton skeleton) {
         destination = target_location.position;
@@ -78,6 +99,7 @@ public class JumpController : MonoBehaviour {
     // handle calculation of estimated path, joint contortions, "what to do"
     // handle button pushes etc.
     public float global_k;
+    public bool useGlobalK;
     public CustomInputManager controls;
     public JumpVariables jumping;
     public PIDServo windupPD;
@@ -92,10 +114,13 @@ public class JumpController : MonoBehaviour {
     public CameraView cameraView;
     public float secondsBetweenFrames = 1.0f;
     public float timeElapsed = 0.0f;
+    //public bool collectData;
     private float timeSinceSample = 0.0f;
     private Vector3 startPosition;
     private Quaternion startRotation;
     private TransformData[] resetArray;
+    //private IEnumerator<JumpVariables> dataPoints;
+    //private DataCollection dataCollection;
  
     // for debugging
     void OnDrawGizmos() {
@@ -144,9 +169,10 @@ public class JumpController : MonoBehaviour {
         
         IK = GetComponent<InverseKinematics>();
         sampler = GetComponent<PositionSampler>();
-        
-        foreach (SpringMuscle m in skeleton.muscles) {
-            m.k = global_k;
+        if (useGlobalK) {
+            foreach (SpringMuscle m in skeleton.muscles) {
+                m.k = global_k;
+            }
         }
 
         // set logfile for displacements to have a column for each muscle
@@ -164,6 +190,9 @@ public class JumpController : MonoBehaviour {
         resetArray = skeleton.GetResetArray();
         startPosition = transform.position;
         startRotation = transform.rotation;
+
+        //dataCollection = GetComponent<DataCollection>();
+        //dataPoints = dataCollection.VaryingTimes().GetEnumerator();
     }
     
     // TODO I should probably be using fixedupdate
@@ -202,6 +231,8 @@ public class JumpController : MonoBehaviour {
             ResetSimulation();
         }
         
+
+        
         // FPS movement from Unity3D Standard Assets
         // Get the input vector from keyboard or analog stick
         Vector3 directionVector = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
@@ -239,6 +270,11 @@ public class JumpController : MonoBehaviour {
         // In Air
         // Landing
         if (inputJump && jumping.state == JumpState.NotJumping) {
+            //if (collectData) {
+            //    ResetSimulation();
+            //    jumping = dataPoints.Current;
+            //}
+
             timeElapsed = 0.0f;
             cameraView.GrabFrameSet();
             
@@ -254,7 +290,8 @@ public class JumpController : MonoBehaviour {
             }
             else if (jumping.simType == SimulationType.Energy) {
                 estimate_flag = CalculateRequiredVelocity();
-                SelectEnergySample();
+                estimate_flag &= SelectEnergySample();
+
                 Debug.Log("Velocity estimate: " + jumping.velocity);
             }
             Debug.Log("Path Estimate: " + estimate_flag);
@@ -301,8 +338,8 @@ public class JumpController : MonoBehaviour {
                 jumping.takeoff_velocity = Vector3.zero;
             }
         
-
-            IK.Iterate();
+            // more iterations because there seems to be an issue here
+            IK.Iterate(100);
         }
         else if (jumping.state == JumpState.Accel) {
             bool accel_flag = Accel();
@@ -338,6 +375,12 @@ public class JumpController : MonoBehaviour {
             Debug.Log("Total Simulation Time: " + timeElapsed);
             sampler.simulationTimes.Add(timeElapsed);
             timeElapsed = 0.0f;
+
+            //if (collectData) {
+            //    dataPoints = dataCollection.VaryingTimes();
+            //    ResetSimulation();
+            //    jumping = VaryingTimes.Current;
+            //}
         }
 
         // Dump all of the data of this iteration
@@ -417,7 +460,11 @@ public class JumpController : MonoBehaviour {
         float err = E_k - skeleton.ElasticEnergy();
         Debug.Log("Energy Err " + err + " <= " + jumping.error_allowance + " " + skeleton.ElasticEnergy() + " >= " + E_k);
         
-        return err <= jumping.error_allowance * E_k;
+        // error in energy must be less than 5% of kinetic energy
+        // AND average usage of the muscles must be greater than the error allowance (5%)
+        float limbUsage = skeleton.muscles.Sum(m=> m.LimbUsage());
+        Debug.Log("Limb usage: " + limbUsage + " >= " + jumping.error_allowance * skeleton.muscles.Length);
+        return (err <= jumping.error_allowance * E_k) && (limbUsage >= jumping.error_allowance * skeleton.muscles.Length);
     }
 
     public Vector3 CalculatePelvisDisplacement(Vector3 velocity) {
@@ -587,7 +634,7 @@ public class JumpController : MonoBehaviour {
         jumping.velocity += jumping.gravity * Time.fixedDeltaTime;
         
         IK.Iterate();
-        return skeleton.IsGrounded();
+        return skeleton.IsGrounded() && ((jumping.destination - transform.position).magnitude <= (jumping.destination - jumping.start).magnitude * jumping.error_allowance);
     }
 
     // function to handle landing
@@ -626,5 +673,6 @@ public class JumpController : MonoBehaviour {
         jumping.selectedSample = new PositionSample();
         jumping.state = JumpState.NotJumping;
         jumping.init(skeleton);
+        sampler.samples.Clear();
     }
 }
