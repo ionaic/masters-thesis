@@ -66,12 +66,16 @@ public class ConstrainedPhysicalControllerSkeleton : IEnumerable<PhysicalJoint> 
             //    continue;
             //}
             //else {
-                bool tmp = m.IsLimbExtended(tolerance);
-                ext_flag = ext_flag && tmp;
-                if (!tmp) {
-                    Debug.Log("Not extended " + m.muscleName + m.LimbUsage(true));
-                }
+                //bool tmp = m.IsLimbExtended(tolerance);
+                //ext_flag = ext_flag && tmp;
+                //if (!tmp) {
+                //    Debug.Log("Not extended " + m.muscleName + m.LimbUsage(true));
+                //}
             //}
+            // really we just need the knees extended, everything else is secondary
+            if (m.centerJoint == RKnee || m.centerJoint == LKnee) {
+                ext_flag = ext_flag && m.IsLimbExtended(tolerance);
+            }
         }
         //Debug.Log("Extension average (tol = " + tolerance + "): " + (muscles.Sum(m => m.LimbUsage()) / muscles.Length));
         

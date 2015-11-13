@@ -53,9 +53,9 @@ public class SpringMuscle {
         b.Normalize();
         // -1 to 1 dot product as they are unit vectors
         float usage = Vector3.Dot(a, b);
-        if (verbose) {
-            Debug.Log(muscleName + " Raw Usage: " + usage);
-        }
+        //if (verbose) {
+        //    Debug.Log(muscleName + " Raw Usage: " + usage);
+        //}
         // move to 0 to 1 range
         usage = (usage + 1.0f) / 2.0f;
         // 0 is the limb is extended, no usage
