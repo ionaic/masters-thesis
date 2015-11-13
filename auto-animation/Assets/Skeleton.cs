@@ -58,17 +58,22 @@ public class ConstrainedPhysicalControllerSkeleton : IEnumerable<PhysicalJoint> 
         return 11 + UpperBody.Length;
     }
     
-    public bool CheckExtension() {
+    public bool CheckExtension(float tolerance = 0.1f) {
         bool ext_flag = true;
         // check if all limbs are fully extended
         foreach (SpringMuscle m in muscles) {
-            if (m.centerJoint == LHip || m.centerJoint == RHip) {
-                continue;
-            }
-            else {
-                ext_flag = ext_flag && m.IsLimbExtended();
-            }
+            //if (m.centerJoint == LHip || m.centerJoint == RHip) {
+            //    continue;
+            //}
+            //else {
+                bool tmp = m.IsLimbExtended(tolerance);
+                ext_flag = ext_flag && tmp;
+                if (!tmp) {
+                    Debug.Log("Not extended " + m.muscleName + m.LimbUsage(true));
+                }
+            //}
         }
+        //Debug.Log("Extension average (tol = " + tolerance + "): " + (muscles.Sum(m => m.LimbUsage()) / muscles.Length));
         
         // check if feet on floor
         //if (
@@ -79,15 +84,27 @@ public class ConstrainedPhysicalControllerSkeleton : IEnumerable<PhysicalJoint> 
         return IsGrounded(Vector3.down);
     }
 
-    public bool IsGrounded(Vector3 gravity, float epsilon = 0.001f) {
+    public bool IsGrounded(Vector3 gravity, float epsilon = 0.001f, bool useMin = false) {
         bool flag = false;
         bool rayFlag = false;
         
         // Average foot position to establish an approx. plane of the feet
         Vector3 toePos = (LToe.Position() + RToe.Position()) / 2.0f;
         Vector3 heelPos = (LHeel.Position() + RHeel.Position()) / 2.0f;
+        Vector3 rayOriginToe = new Vector3(toePos.x, Pelvis.Position().y, toePos.z);
+        Vector3 rayOriginHeel = new Vector3(heelPos.x, Pelvis.Position().y, heelPos.z);
         
-        float dist = Mathf.Max((toePos - Pelvis.Position()).magnitude, (heelPos - Pelvis.Position()).magnitude);
+        float dist = (((toePos + heelPos)/2.0f) - Pelvis.Position()).magnitude;
+        float heelDist = (heelPos - rayOriginHeel).magnitude;
+        float toeDist = (toePos - rayOriginToe).magnitude;
+        //if (useMin) {
+        //    dist = Mathf.Min((toePos - Pelvis.Position()).magnitude, (heelPos - Pelvis.Position()).magnitude);
+        //}
+        //else {
+        //    dist = Mathf.Max((toePos - Pelvis.Position()).magnitude, (heelPos - Pelvis.Position()).magnitude);
+        //    
+        //}
+        // average distance for median of foot
 
         //KEEP safeguard for when raycasts fail me, test feet individually just in case one foot lands and the other doesn't
         // no longer necessary but leave this here just in case
@@ -96,6 +113,13 @@ public class ConstrainedPhysicalControllerSkeleton : IEnumerable<PhysicalJoint> 
         // measure from the pelvis instead as a longer distance is more likely to get caught
         rayFlag = Physics.Raycast(Pelvis.Position(), gravity.normalized, dist + epsilon);
         Debug.DrawRay(Pelvis.Position(), gravity.normalized * (dist + epsilon), Color.red);
+
+        // cast extra rays for the toes and the heels
+        rayFlag = rayFlag || Physics.Raycast(rayOriginToe, gravity.normalized, toeDist + epsilon);
+        Debug.DrawRay(rayOriginToe, gravity.normalized * (toeDist + epsilon), Color.red);
+
+        rayFlag = rayFlag || Physics.Raycast(rayOriginHeel, gravity.normalized, heelDist + epsilon);
+        Debug.DrawRay(rayOriginHeel, gravity.normalized * (heelDist + epsilon), Color.red);
 
         return flag || rayFlag;
     }

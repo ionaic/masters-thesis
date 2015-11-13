@@ -41,6 +41,10 @@ public class SingleChainIKHandle : InverseKinematicHandle {
         // rotate by angle A around the vector perpendicular to the
         // plane defined by RD and RE
         Vector3 axis = Vector3.Cross(RE, RD);
+        if (axis.magnitude == 0) {
+            axis = Vector3.right;
+        }
+        //Debug.Log("Rotating " + curJoint.name + " " + angle + " radians about " + axis);
         curJoint.Rotate(R, axis, angle);
     }
     public override void rotateToTarget() {
@@ -49,7 +53,6 @@ public class SingleChainIKHandle : InverseKinematicHandle {
 
     
     public void rotateToTarget(int itr) {
-        Debug.Log("IK Itrs: " + itr);
         // make sure the given index is within the bounds of the array
         if (affectedJoint < jointChain.Length) {
 

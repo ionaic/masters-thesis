@@ -33,11 +33,11 @@ public class SpringMuscle {
         return 0.5f * k * displacement * displacement;
     }
 
-    public bool IsLimbExtended(float tolerance = 0.05f) {
+    public bool IsLimbExtended(float tolerance = 0.1f) {
         return LimbUsage() <= tolerance;
     }
     // gives a [0,1] value indicating how bent the joint is
-    public float LimbUsage() {
+    public float LimbUsage(bool verbose = false) {
         Vector3 a = (anchors[0].Position() - centerJoint.Position());
         Vector3 b = (anchors[1].Position() - centerJoint.Position());
 
@@ -47,11 +47,15 @@ public class SpringMuscle {
             a.y += Mathf.Abs(a.x);
             a.x = 0.0f;
         }
+        
 
         a.Normalize();
         b.Normalize();
         // -1 to 1 dot product as they are unit vectors
         float usage = Vector3.Dot(a, b);
+        if (verbose) {
+            Debug.Log(muscleName + " Raw Usage: " + usage);
+        }
         // move to 0 to 1 range
         usage = (usage + 1.0f) / 2.0f;
         // 0 is the limb is extended, no usage

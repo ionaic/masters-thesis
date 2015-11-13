@@ -612,14 +612,18 @@ public class JumpController : MonoBehaviour {
     // function to handle accel phase
     bool Accel() {
         // move pelvis in direction of acceleration
-        skeleton.Pelvis.Translate(jumping.takeoff_velocity * Time.fixedDeltaTime);
-        jumping.takeoff_velocity += jumping.acceleration * Time.fixedDeltaTime;
+        // if we're not extended but we're not grounded, then stop extending
+        if (skeleton.IsGrounded(jumping.gravity, 0.001f, true)) {
+            skeleton.Pelvis.Translate(jumping.takeoff_velocity * Time.fixedDeltaTime);
+            jumping.takeoff_velocity += jumping.acceleration * Time.fixedDeltaTime;
+        }
 
         // iterate IK
         IK.Iterate();
 
         // check if we are fully extended, if so you're done. go home.
-        return skeleton.CheckExtension() || !skeleton.IsGrounded(jumping.gravity, 0.001f);
+        return skeleton.CheckExtension(); // only extend!
+        //return skeleton.CheckExtension() || !skeleton.IsGrounded(jumping.gravity, 0.001f);
         //return skeleton.CheckExtension() || skeleton.Pelvis.Position().y >= GetComponent<CapsuleCollider>().height / 2.0f;
     }
 
