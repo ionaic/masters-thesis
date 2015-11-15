@@ -29,6 +29,6 @@
 \contentsline {section}{\numberline {5.1}Output Animations}{31}{section.5.1}
 \contentsline {section}{\numberline {5.2}Limitations}{31}{section.5.2}
 \contentsline {section}{\numberline {5.3}Summary}{31}{section.5.3}
-\contentsline {chapter}{\numberline {6.}FUTURE WORK AND CONCLUSION}{33}{chapter.6}
-\contentsline {section}{\numberline {6.1}Conclusion}{33}{section.6.1}
-\contentsline {chapter}{References}{34}{section*.19}
+\contentsline {chapter}{\numberline {6.}FUTURE WORK AND CONCLUSION}{34}{chapter.6}
+\contentsline {section}{\numberline {6.1}Conclusion}{34}{section.6.1}
+\contentsline {chapter}{References}{35}{section*.21}
