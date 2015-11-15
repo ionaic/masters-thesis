@@ -28,11 +28,15 @@ public class PositionSample {
         COM = com;
     }
     
+    public static string VecToDataString(Vector3 v, string format = "G4") {
+        return v.x.ToString(format) + "," + v.y.ToString(format) + "," + v.z.ToString(format);
+    }
+    
     public List<string> ToStringList() {
         List<string> data = new List<string>();
-        data.Add(pelvisPosition.ToString("G4"));
-        data.Add(COM.ToString("G4"));
-        data.Add(resultantAccel.ToString("G4"));
+        data.Add(VecToDataString(pelvisPosition));
+        data.Add(VecToDataString(COM));
+        data.Add(VecToDataString(resultantAccel));
         data.Add(accelError.ToString("G4"));
         data.Add(totalEnergy.ToString("G4"));
         return data;
@@ -85,10 +89,19 @@ public class PositionSampler : MonoBehaviour {
             }
         }
         
-        Gizmos.color = Color.yellow;
-        if (dbg_pos != null) {
-            foreach (Vector3 v in dbg_pos) {
-                Gizmos.DrawSphere(v, 0.01f);
+        //if (dbg_pos != null) {
+        //    foreach (Vector3 v in dbg_pos) {
+        //        Gizmos.DrawSphere(v, 0.01f);
+        //    }
+        //}
+        if (samples != null && samples.Count() > 0) {
+            float max = samples.Max(s => s.totalEnergy);
+            float min = samples.Min(s => s.totalEnergy);
+            float diff = max - min;
+            foreach (PositionSample s in samples) {
+                float tmp = 1.0f - ((s.totalEnergy - min) / diff);
+                Gizmos.color = new Color(tmp, 1.0f, tmp, 1.0f);
+                Gizmos.DrawSphere(s.pelvisPosition, 0.01f);
             }
         }
     }

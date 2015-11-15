@@ -26,6 +26,7 @@ public class CameraView : MonoBehaviour {
     public static int startNumber = 1;
     public static string fileName = "_frame";
     public string destinationFolder;
+    public bool grabFrames = false;
     
     public void Start() {
         SideView = Side.GetComponent<Camera>();
@@ -83,6 +84,9 @@ public class CameraView : MonoBehaviour {
     }
 
     public void GrabFrameSet() {
+        if (!grabFrames) {
+            return;
+        }
         // grab a screenshot from every camera angle
         Side.CaptureFrame(fileName, destinationFolder);
         Front.CaptureFrame(fileName, destinationFolder);

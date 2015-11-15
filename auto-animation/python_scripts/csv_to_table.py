@@ -15,8 +15,13 @@ csvfile = open(sys.argv[1], 'rb')
 
 # dance around to get the number of fields
 csvreader = csv.reader(csvfile, delimiter=';')
+# skip the sep line
+next(csvreader)
 fieldnum = len(next(csvreader))
 csvfile.seek(0);
+# skip the sep line
+next(csvreader)
+
 
 if full_table:
     outstring = '\\begin{table}[ht]\n\t\\begin{tabular}{|' +  (' c |' * fieldnum) + '}\n'

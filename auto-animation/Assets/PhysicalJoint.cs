@@ -94,16 +94,24 @@ public class PhysicalJoint : MonoBehaviour {
         internalAngle.z += clampedZ;
 
         jointTransform.Rotate(clampedX, clampedY, clampedZ);
+        //ReClamp();
     }
 
     public void Rotate(Vector3 point, Vector3 axis, float angle) {
         axis.Normalize();
         jointTransform.RotateAround(point, ConstrainAxis(axis), angle);
         internalAngle = jointTransform.eulerAngles - restAngle;
+        //ReClamp();
     }
 
     public void ReClamp() {
         Vector3 angles = internalAngle;
+        // ensure the angle is in (-360, 360) 
+        // if angle is negative floor returns a too large integer, so we add 1 if negative
+        angles.x = angles.x - Mathf.PI * (Mathf.Floor(angles.x/Mathf.PI) + (angles.x < 0 ? 1 : 0));
+        angles.y = angles.y - Mathf.PI * (Mathf.Floor(angles.y/Mathf.PI) + (angles.y < 0 ? 1 : 0));
+        angles.z = angles.z - Mathf.PI * (Mathf.Floor(angles.z/Mathf.PI) + (angles.z < 0 ? 1 : 0));
+
         angles.x = Mathf.Clamp(angles.x, minPitchAngle, maxPitchAngle);
         angles.y = Mathf.Clamp(angles.y, minYawAngle, maxYawAngle);
         angles.z = Mathf.Clamp(angles.z, minRollAngle, maxRollAngle);
@@ -199,6 +207,23 @@ public class PhysicalJoint : MonoBehaviour {
         }
         restAngle = jointTransform.eulerAngles;
         restRotation = jointTransform.rotation;
+        
+        // this shouldn't be necessary?
+        //if (minPitchAngle > maxPitchAngle) {
+        //    float tmp = minPitchAngle;
+        //    minPitchAngle = maxPitchAngle;
+        //    maxPitchAngle = tmp;
+        //}
+        //if (minRollAngle > maxRollAngle) {
+        //    float tmp = minRollAngle;
+        //    minRollAngle = maxRollAngle;
+        //    maxRollAngle = tmp;
+        //}
+        //if (minYawAngle > maxYawAngle) {
+        //    float tmp = minYawAngle;
+        //    minYawAngle = maxYawAngle;
+        //    maxYawAngle = tmp;
+        //}
     }
 
     void Awake() {

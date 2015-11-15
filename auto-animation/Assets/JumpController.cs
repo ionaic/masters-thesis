@@ -315,6 +315,10 @@ public class JumpController : MonoBehaviour {
                 windup_flag = EnergyWindup();
             }
             IK.Iterate();
+
+            // the ankles like to defy my will, so we force them into submission
+            skeleton.RAnkle.ReClamp();
+            skeleton.LAnkle.ReClamp();
             Debug.Log("Windup: " + windup_flag);
 
             if (windup_flag) {

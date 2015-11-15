@@ -65,7 +65,20 @@ public class SpringMuscle {
     }
 
     public float springDisplacement() {
-        return (bone_width / Mathf.Sin((Mathf.PI - Mathf.Deg2Rad * anchors[1].Angle().x) / 2.0f));
+        // i related the angles incorrectly i think? maybe?
+        //return bone_width / Mathf.Sin((Mathf.PI - Mathf.Deg2Rad * centerJoint.Angle().x) / 2.0f);
+        float theta = Mathf.Deg2Rad * centerJoint.Angle().x;
+        // law of sines to derive
+        // absolute value to cause the range of PI to 2PI to be positive as it still fits in our system just the same, but negative
+        float tmp = Mathf.Abs(bone_width * Mathf.Sin(Mathf.PI - theta) / Mathf.Sin(theta / 2.0f));
+        //if (muscleName == "Right Calf" || muscleName == "Left Calf") {
+        //    // this joint  needs to be different as it starts at 90 and goes to 180
+        //    tmp = Mathf.Sin((Mathf.PI - Mathf.Deg2Rad * centerJoint.Angle().x) / 2.0f);
+        //}
+        //else {
+        //    tmp = Mathf.Sin((Mathf.Deg2Rad * centerJoint.Angle().x) / 2.0f);
+        //}
+        return tmp != 0 ? bone_width / tmp : 2.0f * bone_width;
     }
 
     public Vector3[] torque(Vector3 force) {
@@ -100,6 +113,7 @@ public class SpringMuscle {
     public Vector3 instantLinearAcceleration(float deltaTime, float force) {
         // TODO we need the moment of inertia to actually convert this, this math is wrong
         // moment of inertia is I = mk^2 for all point masses that are part of this, i.e. assign point masses to the object (limb masses at center of bone?)
+        // this means we're possibly ignoring that the rotating thingy is larger, smaller, or more complicated in general than just a single point mass
 
         // this is actually measured at the end joints, but it is produced at
         // the center joint!
