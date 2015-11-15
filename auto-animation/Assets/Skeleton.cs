@@ -209,7 +209,7 @@ public class ConstrainedPhysicalControllerSkeleton : IEnumerable<PhysicalJoint> 
         return muscles.Sum(m => m.ElasticEnergy());
     }
 
-    // acceleration vecetor from all of the muscles
+    // acceleration vector from all of the muscles
     public Vector3 acceleration(float deltaTime) {
         // TODO need to account for the fact that different joints have different amounts of the mass they work with?
         Vector3 resultantAcceleration = Vector3.zero;

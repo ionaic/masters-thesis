@@ -8,9 +8,114 @@
 % \specialhead{INTRODUCTION}
 \chapter{RESULTS}
 \label{chapter:results}
+The windup PD controller was given constants of $k_p = 0.25$ and $k_d = 0.25$.  These were chosen empirically to offset irregularities do to time step and slow convergence in the inverse kinematic solver.  With higher values, the translation of the pelvis results in the character's feet embedding in the ground plane due to too great a movement in a single frame.  The feet then fail to adjust as the inverse kinematic solver cannot converge quickly enough.  These values were found to generally produce smooth windup phases without compromising on speed of the animation too much.
 
-\section{Images}
+Muscle spring constants were tested in various configurations, with several trials run for each set of constants for varying distances, directions, and situations.  Animations were created for forward jumps between 1m and 2m for the normal human values and at 1m, 10m, and 100m for the super human.  A jump onto a box was also simulated, with 0.5m and 0.75m boxes for the normal human and 1m and 100m boxes for the super human.  The normal human muscle constants were additionally used for sideways jumping animations, as well as a more complex scene in which the character is made to jump from on top of a box, over an obstacle before finally landing on the ground.
+
+\begin{table}[ht]
+	\centering
+	\scriptsize
+	\begin{tabular}{| c | c | c | c | c | c | c |}
+		\hline
+		& Left Hip & Left Knee & Left Ankle & Right Hip & Right Knee & Right Ankle \\ \hline
+		Global, Normal & 200000 & 200000 & 200000 & 200000 & 200000 & 200000 \\ \hline
+		Varying, Normal & 200000 & 240000 & 160000 & 200000 & 240000 & 160000 \\ \hline
+		Uneven Global, Normal & 160000 & 160000 & 160000 & 240000 & 240000 & 240000 \\ \hline
+		Uneven Varying, Normal & 240000 & 280000 & 200000 & 160000 & 200000 & 120000 \\ \hline
+		Global, Super & $1 \times 10^9$ & $1 \times 10^9$ & $1 \times 10^9$ & $1 \times 10^9$ & $1 \times 10^9$ & $1 \times 10^9$ \\ \hline
+	\end{tabular}
+	\caption[Table of spring constants for each trial]{This table shows muscle spring constants ($k$) values used for several trial runs.  Each column represents a muscle, described by the center joint which indicates the joint the muscle crosses and affects.  Each row represents a different trial, with a set of $k$ values.  Global runs used a uniform $k$ for one or both sides of the body, while varying runs used different spring constants for each muscle.  Uneven runs were meant to mimic a character with an injury or other source of imbalance where one leg was significantly stronger than the other.}
+	\label{tab:run_k_vals}
+\end{table}
+
+\newcommand{\floatedfig}[1]{\begin{subfigure}[h]{0.2\textwidth}\includegraphics[width=\textwidth]{#1}\end{subfigure}\hspace{0.025\textwidth}}
+%\newcommand{\floatedfig}[1]{\subfloat{\includegraphics[width=0.2\textwidth]{#1}}}
+
+%TODO should the frame data dump be moved to the appendix?
+\section{Output Animations}
 \label{section:image_results}
+%\begin{landscape}
+\begin{table}[ht]
+	\label{tab:superman_frames}
+	\centering
+	\begin{tabular}{|c|p{0.9\textwidth}|}
+		\hline
+		1m forward &%
+			\floatedfig{images/trials/k1e10global/1m/frame0001.png}
+			\floatedfig{images/trials/k1e10global/1m/frame0005.png}
+			\floatedfig{images/trials/k1e10global/1m/frame0011.png}
+			\floatedfig{images/trials/k1e10global/1m/frame0015.png}
+			\floatedfig{images/trials/k1e10global/1m/frame0020.png}
+			\floatedfig{images/trials/k1e10global/1m/frame0025.png} 
+			\floatedfig{images/trials/k1e10global/1m/frame0030.png}
+			\floatedfig{images/trials/k1e10global/1m/frame0033.png}
+			\floatedfig{images/trials/k1e10global/1m/frame0035.png}%
+			\\ \hline%
+		10m forward &%
+			\floatedfig{images/trials/k1e10global/10m/1s1point5s/frame0042.png}
+			\floatedfig{images/trials/k1e10global/10m/1s1point5s/frame0047.png}
+			\floatedfig{images/trials/k1e10global/10m/1s1point5s/frame0050.png}
+			\floatedfig{images/trials/k1e10global/10m/1s1point5s/frame0053.png}
+			\floatedfig{images/trials/k1e10global/10m/1s1point5s/frame0055.png}
+			\floatedfig{images/trials/k1e10global/10m/1s1point5s/frame0060.png}
+			\floatedfig{images/trials/k1e10global/10m/1s1point5s/frame0064.png}
+			\floatedfig{images/trials/k1e10global/10m/1s1point5s/frame0066.png}
+			\floatedfig{images/trials/k1e10global/10m/1s1point5s/frame0070.png}
+			\floatedfig{images/trials/k1e10global/10m/1s1point5s/frame0075.png}
+			\floatedfig{images/trials/k1e10global/10m/1s1point5s/frame0080.png}
+			\floatedfig{images/trials/k1e10global/10m/1s1point5s/frame0085.png}
+			\floatedfig{images/trials/k1e10global/10m/1s1point5s/frame0090.png}
+			\floatedfig{images/trials/k1e10global/10m/1s1point5s/frame0095.png}
+			\floatedfig{images/trials/k1e10global/10m/1s1point5s/frame0101.png}
+			\\ \hline%
+		1m box &%
+			\floatedfig{images/trials/k1e10global/1mBox/frame0001.png}
+			\floatedfig{images/trials/k1e10global/1mBox/frame0005.png}
+			\floatedfig{images/trials/k1e10global/1mBox/frame0010.png}
+			\floatedfig{images/trials/k1e10global/1mBox/frame0020.png}
+			\floatedfig{images/trials/k1e10global/1mBox/frame0025.png}
+			\floatedfig{images/trials/k1e10global/1mBox/frame0030.png}
+			\floatedfig{images/trials/k1e10global/1mBox/frame0035.png}
+			\floatedfig{images/trials/k1e10global/1mBox/frame0039.png}
+			\\ \hline
+		100m box &
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0001.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0005.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0010.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0015.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0020.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0025.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0030.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0035.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0040.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0045.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0050.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0055.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0060.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0065.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0070.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0075.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0080.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0085.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0090.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0095.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0100.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0105.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0110.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0115.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0120.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0125.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0130.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0135.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0140.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0145.png}
+			\floatedfig{images/trials/k1e10global/100mBox/1s5s/frame0148.png}
+			\\ \hline
+	\end{tabular}
+	\caption[Table of frames for forward jumps, $k=1 \times 10^9$ global]{Above are generated frame sequences for the super human trial, where the $k$ values were chosen such that the character could leap over a tall building, a 100m tall box.  Animations were generated for 1m, 10m, and 100m forward jumps, as well as 1m and 100m.  The 100m forward jump is not pictured due to the difficulty of capture, as either the jump was out of the range of the camera or the camera was too far to clearly see the animation.}
+\end{table}
+%\end{landscape}
+\begin{table}[ht]
 
 \section{Limitations}
 \label{section:limitations}

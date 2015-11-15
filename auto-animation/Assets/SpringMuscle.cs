@@ -26,7 +26,7 @@ public class SpringMuscle {
     
     public float scalarForce() {
         // calculate the force of the muscle given a length
-        return k * (bone_width / Mathf.Sin((Mathf.PI - Mathf.Deg2Rad * anchors[1].Angle().x) / 2.0f));
+        return k * springDisplacement();
     }
     public float ElasticEnergy() {
         float displacement = springDisplacement();

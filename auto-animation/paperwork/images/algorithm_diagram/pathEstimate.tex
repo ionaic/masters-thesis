@@ -1,7 +1,7 @@
 \begin{tikzpicture}[node distance=1cm and 1cm, auto]
 % Path Estimate Phase
 	%	Path Estimate Stage
-    \node [stage] (path) {\nodebox{6cm}{Path Estimate \[a = \dfrac{2 (x - x_0 - v_0 t_{windup})}{t_{windup}^2} + \dfrac{t_{air} g}{2}\]}};
+    \node [stage] (path) {\nodebox{6cm}{Path Estimate \[\vec{v_0} = \dfrac{\vec{x} - \vec{x_0}}{t_{air}} - \dfrac{\vec{g}t}{2}\]\[a = \dfrac{\vec{v_0} - \vec{v_i}}{t_{windup}}\]}};
     %	Path Estimate Data
     \node [data, above= of path] (xi) {\nodebox{2cm}{Initial Position ($x_0$)}};
     \node [data, right= of xi] (xf) {\nodebox{2cm}{Target Position ($x$)}};

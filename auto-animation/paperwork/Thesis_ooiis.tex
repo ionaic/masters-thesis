@@ -16,8 +16,11 @@
 \usepackage[hang]{caption}      % to indent subsequent lines of captions
 \renewcommand{\captionfont}{\bfseries} % bold caption (needed with caption 
                                        % package to restore boldface.)                       
-
+% for figures
 \usepackage{subcaption}
+%\usepackage{subfig} % supposedly better than subcaption but incompatible?s
+\usepackage{wrapfig}
+\usepackage{longtable}
 
 \captionsetup[algorithm]{labelsep=colon}
 
@@ -25,6 +28,9 @@
 \usepackage{graphicx}
 \usepackage{url} 
 \urlstyle{rm}
+
+% for making certain pages landscape
+\usepackage{lscape}
 
 % for eps diagrams
 \usepackage{epstopdf}
