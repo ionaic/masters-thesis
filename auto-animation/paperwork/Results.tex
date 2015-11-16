@@ -16,7 +16,7 @@ Muscle spring constants were tested in various configurations, with several tria
 Jump animations appear plausible, and the spring values result in forces similar to a human muscle.  Human muscles have about $30\frac{N}{cm^2}$ force per cross-sectional area.  The character's leg thickness is about $0.20m$ forward to back narrowing towards the knee, with a left-right thickness of around $0.15m$. If we assume that skin is about $0.002m$ thick (2mm) and about $15\%$ of the remainder is subcutaneous fat, we are left with a $0.1683m$ by $0.1258m$ cross section.  This gives an axial cross sectional area of approximately $0.021m^2$.  We use a bone width of $0.05m$, giving a cross sectional bone area of $0.0025m^2$ which leaves an area of $0.019m^2$ of non-bone muscle.  If half of this is extensor muscle, then we have an approximate cross sectional area of $0.0095m^2$ or $95cm^2$.  This means that the estimated maximum isometric force for the muscle is $F = \left(30 \frac{N}{cm^2}\right) \left(95cm^2\right) = 2850N$.  With a $k$ of 20000, our muscle produces \[
 	F = -k \left(\dfrac{r \sin (\pi - \theta)}{\sin \frac{\theta}{2}} \right)
 \]
-which for a joint bend of $\frac{\pi}{2}$ radians is 
+which for a joint bend of $\frac{\pi}{2}$ radians is $1414N$.  A more accurate $k$ value for the single muscle would be $40000$ but $20000$ suffices as the smaller muscles of the calf are modeled as overly strong.  The $k$ value was determined empirically, following the assumption that an average person has a max long jump in the range of 1.5m to 2m.
 %  The character in our simulation has a femur length of 0.4m and a shin length of 0.33m.  Our muscle crossing the knee has anchor points set between the knee and the ankle, and the knee and hip.  These anchors are set at $0.2 * 0.33m = 0.066m$ and $0.9 * 0.4m = 0.36m$ respectively, where $0.2$ and $0.9$ are values in $[0,1]$ which indicate how far along the bone the anchor is set as described in \ref{subsection:skel_joints}.  This gives a total length for this muscle as $0.426m$ or $42.6cm$. 
 
 \begin{table}[ht]
@@ -69,6 +69,10 @@ which for a joint bend of $\frac{\pi}{2}$ radians is
 \section{Limitations}
 \label{section:limitations}
 Our system has a number of limitations and failure cases.  First is that there are many constants to be specified, which is work intensive but gives freedom to make wide changes to the animation by tuning parameters
+
+There are numerous small issues with the calculations caused by strange or unexpected interactions.  Foremost is the behavior of rotations and angle measurement in \unity.  Angles are read and interacted with as Euler angles, pitch, roll, and yaw, or rotation about the x, z, and y axes respectively.  Rotations, however, are stored and calculated by the engine in the form of quaternions.  Due to the conversions between the two, and various manipulations that occur in the scene, this can result in angles not restricted to $[-360, 360]$ degrees, and can result in jumps between positive and negative angles.  A solution would be to restrict the angles to positive angles in the range $[0,360]$ for all calculations and manipulations, but this makes specifying constraints more complex.  
+
+Problems with angle also arise as the angle of the joint does not necessarily reflect the angle between the bones.  A solution is to calculate the angle between the bones of the joint when needed using the dot product of the vectors between the joint and its parent and the joint and its child.  We did not realize that there was still an issue with angle specification as the issue was balanced by a sign error, but a fully correct implementation would be desirable.  The data was collected with the flawed implementation, though as previously stated it produced similar results.
 
 Limited secondary motion.
 
