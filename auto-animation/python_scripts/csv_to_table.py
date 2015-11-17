@@ -14,7 +14,7 @@ if len(sys.argv) > 3:
 csvfile = open(sys.argv[1], 'rb')
 
 # dance around to get the number of fields
-csvreader = csv.reader(csvfile, delimiter=';')
+csvreader = csv.reader(csvfile, delimiter=',')
 # skip the sep line
 next(csvreader)
 fieldnum = len(next(csvreader))

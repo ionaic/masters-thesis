@@ -8,17 +8,22 @@
 % \specialhead{METHODS}
 \chapter{VISUALIZATION}
 \label{chapter:visualization}
+In this chapter we motivate the need for good visualizations, as well as the difficulty of visualizing character animation in print format as well as moving media.  We then discuss techniques we utilized to visualize our data for presentation as well as for debugging and analysis.
 
 % talk about instpiriations here instead of prev work
-\section{Inspirations}
+\section{Motivation and Inspiration}
 \label{section:vis_insp}
+Showing a motion in a static medium such as print presents numerous challenges.  The static image or images must convey a sense of time that is understandable, such that a viewer may intuit the direction and rate of movement.  Especially for a complex object such as a figure, occlusion can obstruct information, and prevent understanding of the motion of hidden portions of the body.  The projection of a 3D scene can also create similar issues as occlusion, creating ambiguity in depth and obscuring motions in some directions.
 
+We drew from several sources for inspiration on how to visualize our results.  A video by KORB created for the CCTV Documentary Channel shows ``motion sculptures,'' in which the people in the scene leave trails of material as they move.  These sculptures very cleverly captured the movement of the body throughout the space of the video, creating aesthetically pleasing, if somewhat difficult to parse, visuals.
+
+Another film of a similar nature is Choros by Michael Langan and Terah Maher.  Images of a single dancer follow her through her her movements, leaving a traceable pattern of movement.  This technique was inspired by chronophotography, a precursor to video which utilizes multiple successive photographs or multiple exposures on the same film to visualize movement of a figure or object.  These can be laid out in animation strips or superimposed to create a single image.
 
 \section{Motion Visualization}
 \label{section:motion_vis}
-For visualizing motion of a character or figure, there are a limited selection of different techniques.  Most common is a sequence of frames in which a character is posed, either in a still sequence or as a video.  As this is a final goal of our system, this is a valid visualization, but fails to provide a simple comparison between one animated sequence and another.  This is desirable for qualifying or quantifying performance of the system.  A sequence of still images is also space-consuming, which can be undesirable for print formats or even digital formats where length or size of document is an issue.
+%For visualizing motion of a character or figure, there are a limited selection of different techniques.  Most common is a sequence of frames in which a character is posed, either in a still sequence or as a video.  As this is a final goal of our system, this is a valid visualization, but fails to provide a simple comparison between one animated sequence and another.  This is desirable for qualifying or quantifying performance of the system.  A sequence of still images is also space-consuming, which can be undesirable for print formats or even digital formats where length or size of document is an issue.
 
-Specific markers can be used to highlight motion of particular parts of the body, such as the pelvis or center of mass.  Other indicators placed on or around the figure can indicate other values, such as arrows to represent vectors of force.  This however can result in clutter within the images, scene, or frame of video, occluding or distraction from the primary animation.
+Specific markers can be used to highlight motion of particular parts of the body, such as the pelvis or center of mass.  Other indicators placed on or around the figure can indicate other values, such as arrows to represent vectors of force.  This however can result in clutter within the images, scene, or frame of video, occluding or distraction from the primary animation.  We used 
 %TODO motion sculptures, see vimeo likes
 % the motion sculptures are previous work, but the rest is something I just kind of tried, is that a previous work? should this whole section just be under visualization?
 

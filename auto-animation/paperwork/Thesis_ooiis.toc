@@ -11,27 +11,27 @@
 \contentsline {section}{\numberline {3.2}Setup and Inputs}{10}{section.3.2}
 \contentsline {subsection}{\numberline {3.2.1}User Specified Constants}{11}{subsection.3.2.1}
 \contentsline {subsection}{\numberline {3.2.2}Skeleton, Joints, and Muscles}{13}{subsection.3.2.2}
-\contentsline {section}{\numberline {3.3}Center of Mass and Balance}{16}{section.3.3}
-\contentsline {section}{\numberline {3.4}Inverse Kinematic Solving}{17}{section.3.4}
-\contentsline {section}{\numberline {3.5}Torque-based simulation}{19}{section.3.5}
-\contentsline {subsection}{\numberline {3.5.1}Path Estimation}{19}{subsection.3.5.1}
-\contentsline {subsection}{\numberline {3.5.2}Windup}{20}{subsection.3.5.2}
-\contentsline {subsubsection}{\numberline {3.5.2.1}Sampling}{22}{subsubsection.3.5.2.1}
-\contentsline {subsection}{\numberline {3.5.3}Thrust and Takeoff}{24}{subsection.3.5.3}
-\contentsline {section}{\numberline {3.6}Energy Based Calculation}{24}{section.3.6}
-\contentsline {subsection}{\numberline {3.6.1}Path Estimation and Windup}{25}{subsection.3.6.1}
-\contentsline {subsection}{\numberline {3.6.2}Solutions to the Energy Assignment Problem}{26}{subsection.3.6.2}
-\contentsline {subsection}{\numberline {3.6.3}Thrust, In Air, and Landing}{27}{subsection.3.6.3}
-\contentsline {section}{\numberline {3.7}Summary}{28}{section.3.7}
-\contentsline {chapter}{\numberline {4.}VISUALIZATION}{29}{chapter.4}
-\contentsline {section}{\numberline {4.1}Inspirations}{29}{section.4.1}
-\contentsline {section}{\numberline {4.2}Motion Visualization}{29}{section.4.2}
-\contentsline {section}{\numberline {4.3}Summary}{29}{section.4.3}
-\contentsline {chapter}{\numberline {5.}RESULTS}{30}{chapter.5}
-\contentsline {section}{\numberline {5.1}Output Animations}{32}{section.5.1}
-\contentsline {section}{\numberline {5.2}Limitations}{33}{section.5.2}
-\contentsline {section}{\numberline {5.3}Summary}{36}{section.5.3}
-\contentsline {chapter}{\numberline {6.}FUTURE WORK AND CONCLUSION}{43}{chapter.6}
-\contentsline {section}{\numberline {6.1}Future Work}{43}{section.6.1}
-\contentsline {section}{\numberline {6.2}Conclusion and Summary}{44}{section.6.2}
-\contentsline {chapter}{References}{45}{section*.23}
+\contentsline {section}{\numberline {3.3}Center of Mass and Balance}{17}{section.3.3}
+\contentsline {section}{\numberline {3.4}Inverse Kinematic Solving}{18}{section.3.4}
+\contentsline {section}{\numberline {3.5}Torque-based simulation}{20}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Path Estimation}{20}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.5.2}Windup}{21}{subsection.3.5.2}
+\contentsline {subsubsection}{\numberline {3.5.2.1}Sampling}{23}{subsubsection.3.5.2.1}
+\contentsline {subsection}{\numberline {3.5.3}Thrust and Takeoff}{25}{subsection.3.5.3}
+\contentsline {section}{\numberline {3.6}Energy Based Calculation}{25}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}Path Estimation and Windup}{26}{subsection.3.6.1}
+\contentsline {subsection}{\numberline {3.6.2}Solutions to the Energy Assignment Problem}{27}{subsection.3.6.2}
+\contentsline {subsection}{\numberline {3.6.3}Thrust, In Air, and Landing}{28}{subsection.3.6.3}
+\contentsline {section}{\numberline {3.7}Summary}{29}{section.3.7}
+\contentsline {chapter}{\numberline {4.}VISUALIZATION}{30}{chapter.4}
+\contentsline {section}{\numberline {4.1}Motivation and Inspiration}{30}{section.4.1}
+\contentsline {section}{\numberline {4.2}Motion Visualization}{31}{section.4.2}
+\contentsline {section}{\numberline {4.3}Summary}{31}{section.4.3}
+\contentsline {chapter}{\numberline {5.}RESULTS}{32}{chapter.5}
+\contentsline {section}{\numberline {5.1}Output Animations}{34}{section.5.1}
+\contentsline {section}{\numberline {5.2}Limitations}{35}{section.5.2}
+\contentsline {section}{\numberline {5.3}Summary}{38}{section.5.3}
+\contentsline {chapter}{\numberline {6.}FUTURE WORK AND CONCLUSION}{45}{chapter.6}
+\contentsline {section}{\numberline {6.1}Future Work}{45}{section.6.1}
+\contentsline {section}{\numberline {6.2}Conclusion and Summary}{46}{section.6.2}
+\contentsline {chapter}{References}{47}{section*.24}

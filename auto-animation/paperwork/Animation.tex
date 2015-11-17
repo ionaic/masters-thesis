@@ -59,6 +59,7 @@ The times indicate how much time the character is expected to spend in the air a
 %TODO table of values from testing excel sheet showing why it fails
 \begin{table}[ht]
 	\centering
+	\input{path_est_table.tex}
 	\caption{Values for calculated necessary velocity given air and windup times for a skeleton with muscle k values around 20000.}
 \end{table}
 
@@ -115,20 +116,20 @@ Along with the $s$ values, a muscle keeps track of its center joint, anchor join
 \]
 We derive this equation by calculating the supplementary angle, opposite the spring displacement.  This angle can therefore be expressed as $\pi - \theta$. The sum of the remaining angles of the triangle formed by the spring displacement and bone ends can then be expressed as $\frac{\theta}{2}$.  These angles are shown in Figure \ref{fig:angleDiag}. We assume uniform bone width, which allows a simpler calculation of the angles.
 
+\begin{table}[ht]
+	\centering
+	\input{force_est.tex}
+	\caption[Table of estimated forces given $k$ values and times]{}
+	\label{tab:force_est}
+\end{table}
+
 For utility purposes we have each muscle calculate its utilization, giving a value in $[0,1]$.  This utilization is calculated as the dot product of the normalized vectors between the center joint and the anchor points.  The value is then scaled from $[-1, 1]$ to $[0,1]$ by adding 1 and dividing by 2.
 
 \section{Center of Mass and Balance}
 \label{section:com}
-%TODO need to standardize usage of joint to anatomical, animation, or something else
 The center of mass (CoM) is calculated as the centroid of the character.  More specifically, joint positions are averaged, with a weight assigned to each joint based on the weight of the limb associated.  The CoM must be recalculated with each update to the character's pose as the shift in weight changes the position.
 
 Using the calculated CoM, the balance of the character can be determined by the position of the CoM relative to the supporting polygon of the character.  The supporting polygon is a polygon determined by the points of contact of the character with the ground or other supports which provide a normal force to counteract gravity and other external forces.  During the windup and thrust phases, the character maintains contact with the ground through their feet, with the outer edges of the feet forming two sides of a quad, a line between the two feet at the toes forming a third, and a line between the heels of the character forming the fourth side.  This polygon should be parallel to the ground plane, and is positioned at the bottom of the feet.  If the character's center of mass is over this supporting polygon, the character is balanced.
-
-%\begin{figure}[ht]
-%	\centering
-%	\caption[Algorithm diagram for calculation of balance error]{Balance error calculation.}
-%	\label{fig:balanceErr}
-%\end{figure}
 
 To quantify balance, the vector between the center of the supporting polygon and the position of the CoM is measured.  This vector is then projected into the same plane as the supporting polygon, giving a 2 dimensional error between where the CoM is currently and where it would need to be to be perfectly centered.  The PD controller then attempts to minimize the magnitude of this vector by moving in the proscribed direction while bending to achieve the desired force, constraining the number of solutions possible to provide the desired force.
 
