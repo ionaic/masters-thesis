@@ -6,7 +6,10 @@
  
 \chapter{ANIMATION}
 \label{chapter:animation}
+In this chapter we describe our method for simulating a character.  We begin by describing the motion, breaking it into stages.  We then describe the setup of the problem and inputs to our simulation.  As part of our description of the inputs to the simulation, we describe the representation of a skeleton in detail.  Following the skeleton section, we describe our inverse kinematics solver.  We then describe two methods of simulation: one using torque to describe the motion and one using energy to describe the motion.  The stages of jumping are described for each of these calculation paths.
 
+\section{Description of the Motion}
+\label{section:motion_desc}
 Jumping is the acceleration of a character's center of mass upward.  Acceleration is applied in excess and in opposition to gravity, resulting in the character breaking contact with the ground and traveling a short distance before contact is re-established.  This acceleration results due to the character pushing against the ground, first bending
 
 Jumping motions can be divided into several stages.  First is the lead-up or wind-up stage in which the character flexes, preparing their muscles for contraction and providing space for their body to extend.  This takes the form of a slight crouch.  Next comes the thrust stage, in which the character extends and exerts a force against the ground to accelerate upward.  The character pushes against the floor with their feet, the contractions of the muscles causing joints to unbend and as a result displace the character's center of mass causing work to be done.  This extension and resulting thrust is caused by the contraction of muscles, which produce torques on the skeleton.
@@ -16,13 +19,14 @@ Once the character has broken contact with the ground, they travel through the a
 We attempted two main approaches to producing a jump motion through muscle simulation.  The first method focused heavily on the torques produced by the muscles, but ultimately failed due to unknown reasons.  The second method focused on the kinetic energy and performed calculations to match the energy of the muscles, which simplifies the movement and produced a successful simulation.
 
 \section{Setup and Inputs}
+\label{section:setup_inputs}
 The character in our system consists of a mesh, a skeleton, and a controller which has itself several sub-components.  First we constructed a mesh, a 3D visual representation of our character.  Our mesh is a simple, blocky humanoid, lacking arms in order to focus more heavily on the lower body motion of the figure.  A more complex human character, or even a humanoid non-human character could be substituted.  This mesh consists of vertices, which each have a position as well as other information not relevant to our simulation such as normal and texture coordinate, which are used by \unity for displaying the mesh.  This mesh can also be referred to as a character model, but in the context of this simulation we will refer to it as the mesh.  Three vertices form a triangular face, though these are often created as quadrilaterals by the artist as the topology of the model can be simpler to work with due to the grid patterns formed as compared to triangular meshes.  In the case of quad meshes, the mesh is often treated as a triangle mesh by the game engine or renderer, with each quad producing two triangles.
 
-Our mesh was created using \maya, positioning the vertices in groups or individually, using several rectangular prisms as a base.  Using the edge loop tool, more vertices were inserted, with loops of edges circling the torso and legs to produce the final shape.  This mesh was then rigged, meaning a skeleton was added.  As described in further detail in \ref{subsection:skel_joints}, joints were positioned individually relative to the mesh, attempting to mimic the positioning of joints in the human skeleton.  The connections were made simply, with each joint acting as a ball and socket joint, meaning that constraints needed to be specified at a later stage to facilitate hinge joints such as the knee and ankle and that complex, multi-boned structures as found in the foot and shin were simplified to a single bone connecting two joints.  The hierarchy of joints for the skeleton was rooted at the pelvis with three children: one leading to the upper body and one to each hip.  From there a single joint was used for the manipulation of the upper body, with separate joints for each hip, knee, ankle, toe, and heel.  Though there is no movement in the toe, placing a bone for the foot requires an end joint for the bone to connect to.
+Our mesh was created using \maya, positioning the vertices in groups or individually, using several rectangular prisms as a base.  Using the edge loop tool, more vertices were inserted, with loops of edges circling the torso and legs to produce the final shape.  This mesh was then rigged, meaning a skeleton was added.  As described in further detail in section \ref{subsection:skel_joints}, joints were positioned individually relative to the mesh, attempting to mimic the positioning of joints in the human skeleton.  The connections were made simply, with each joint acting as a ball and socket joint, meaning that constraints needed to be specified at a later stage to facilitate hinge joints such as the knee and ankle and that complex, multi-boned structures as found in the foot and shin were simplified to a single bone connecting two joints.  The hierarchy of joints for the skeleton was rooted at the pelvis with three children: one leading to the upper body and one to each hip.  From there a single joint was used for the manipulation of the upper body, with separate joints for each hip, knee, ankle, toe, and heel.  Though there is no movement in the toe, placing a bone for the foot requires an end joint for the bone to connect to.
 
 %TODO how do i talk about this with authority, there isn't really anything to cite there's just youtube videos and it's generally taught as such/discovered via industry
 % found some articles, gamasutra especially
-Joints are then associated with the mesh through weight painting, in which each vertex of the mesh is assigned a weight for each joint.  This weight designates if and how much a vertex transforms when a joint is moved.  Each vertex must be assigned a weight for each joint of the model.  Careful weight assignment is highly important as this determines the behavior of the character's ``skin'' when they move, affecting how the mesh twists or bends as well as which parts move with which bones.  The joints may then be used to manipulate the mesh to produce animations, with each keyframe in an animation storing information about each joint instead of each vertex.
+Joints are then associated with the mesh through weight painting, in which each vertex of the mesh is assigned a weight for each joint.  This weight designates if and how much a vertex transforms when a joint is moved.  Each vertex must be assigned a weight for each joint of the model.  Careful weight assignment is highly important as this determines the behavior of the character's ``skin'' when they move, affecting how the mesh twists or bends as well as which parts move with which bones.  The joints may then be used to manipulate the mesh to produce animations, with each key frame in an animation storing information about each joint instead of each vertex. \cite{gamasutra_char_anim}
 
 \subsection{User Specified Constants}
 \label{subsection:user_constants}
@@ -146,7 +150,7 @@ As the skeleton is a hierarchy assumed to be rooted at the hip, a problem arises
 	\label{tab:jointConstraints}
 \end{table}
 
-A solution to the joint positions is found greedily using these constraints, and gradient descent method which works on single-chains of joints.  A single chain of joints is a sequence of joints in which each joint has a single child and a single parent, with one root joint and one leaf joint which lack a parent and child respectively.  Given the hierarchy of joints and a desired position for one of the non-root nodes of the chain, cyclic-coordinate descent (CCD) is used to determine rotations of the joints between the joint in question and the root that will minimize the distance between the joint in question and the desired position.  This algorithm is shown in \ref{alg:ik}.
+A solution to the joint positions is found greedily using these constraints, and gradient descent method which works on single-chains of joints.  A single chain of joints is a sequence of joints in which each joint has a single child and a single parent, with one root joint and one leaf joint which lack a parent and child respectively.  Given the hierarchy of joints and a desired position for one of the non-root nodes of the chain, cyclic-coordinate descent (CCD) is used to determine rotations of the joints between the joint in question and the root that will minimize the distance between the joint in question and the desired position.  This algorithm is shown in Algorithm \ref{alg:ik}.
 
 \begin{algorithm}[ht]
 	\centering
@@ -181,10 +185,10 @@ One method of simulation we attempted used springs placed along the length of ea
 %	\label{fig:pathEstimate}
 %\end{figure}
 
-\begin{figure}[ht]
-	\label{fig:pathExample}
-	\caption[Example of estimated path]{Example of a path estimation.}
-\end{figure}
+%\begin{figure}[ht]
+%	\label{fig:pathExample}
+%	\caption[Example of estimated path]{Example of a path estimation.}
+%\end{figure}
 Before calculations relating to the model's skeleton are performed, an initial estimate of the jump path is performed.  The estimate uses a forward kinematic calculation to determine the velocity required to move an object through the air from the initial position of the model to a final position.
 
 The user specifies a desired time ($t_{air}$), which indicates the time the character will spend airborne during the animation, i.e. the time between when the character's feet break contact with the ground and when they regain contact with the ground.  This is useful as the desired animation can be more easily adjusted to fit a desired time as an in-game animation or to fit a particular storyboard for an animated film sequence.
@@ -211,15 +215,14 @@ where $\vec{v_i}$ is the initial velocity of the character before the jump calcu
 \label{subsection:torque_windup}
 %From this force, the acceleration can be determined using $F=ma$ from classical mechanics.  This assumes the character is a rigid body with negligible air resistance acted upon by gravity of $10\frac{m}{s}$.  The mass is calculated as the summed total of the distributed masses assigned to the character's limbs, which are summed to produce a total mass for the character.
 
-Using the calculated velocity and acceleration, we compare the desired values to achieve a particular path with the values produced by the muscles on the skeleton.  To compute a resultant instant linear acceleration, we start from the muscle and calculate the torque resulting from the muscle's contraction.  First we calculate the scalar force of the muscle-spring as $F = -k s$ where $s$ is the spring displacement as calculated in \ref{subsection:skel_joints}.  Using the scalar force, we calculate the torque and the angular momentum.  Torque magnitude can be calculated as \[\tau = r F\] where $r$ in this case is the scalar distance between the pivot point and the location of force application.  In our case, this is the distance from the center of the joint to the major anchor point, which we consider to be the anchor point highest in the hierarchy, which is the bone most expected to move.  The direction of the torque is the normal vector to the plane of rotation, calculated as the cross product between the directions to each anchor point which gives the plane of rotation about the joint.
+Using the calculated velocity and acceleration, we compare the desired values to achieve a particular path with the values produced by the muscles on the skeleton.  To compute a resultant instant linear acceleration, we start from the muscle and calculate the torque resulting from the muscle's contraction.  First we calculate the scalar force of the muscle-spring as $F = -k s$ where $s$ is the spring displacement as calculated in section \ref{subsection:skel_joints}.  Using the scalar force, we calculate the torque and the angular momentum.  Torque magnitude can be calculated as \[\tau = r F\] where $r$ in this case is the scalar distance between the pivot point and the location of force application.  In our case, this is the distance from the center of the joint to the major anchor point, which we consider to be the anchor point highest in the hierarchy, which is the bone most expected to move.  The direction of the torque is the normal vector to the plane of rotation, calculated as the cross product between the directions to each anchor point which gives the plane of rotation about the joint.
 
 Angular momentum is derived from torque, as \[\vec{\tau} = \dfrac{d\vec{L}}{dt}\] where $\vec{\tau}$ is torque and $\vec{L}$ is the angular momentum.  The angular momentum can then be calculated as $\vec{\tau} t_{windup}$.  Angular momentum is used to calculate linear momentum by finding the tangent to the circle at the moment of takeoff.  The magnitude of the linear momentum is then calculated as \[p = \frac{L}{r}\] which then gives the acceleration as follows \[ \vec{a} = \frac{1}{m}\left(\dfrac{d\vec{p}}{dt}\right)\] where m is the mass of the character.
 
 \subsubsection{Sampling}
 \label{subsubsection:torque_sample}
-In order to determine the position of the character that produces this acceleration, we sample uniformly over the region in which the character is balanced.   A sample is described by the position of the pelvis joint, the resulting linear momentum, and a vector describing the displacement of the character's center of mass from the center of its support to indicate balance as described above.  Samples were restricted to a box defined by a rectangle around the character's feet with a height reaching the position of the character's pelvis when standing at rest.  Any sample outside of this volume was assumed to put the character off balance.  Samples were then taken at uniformly distributed positions in this region.  The calculated acceleration was projected onto the desired acceleration vector through the dot product, with values greater than or equal to the desired acceleration's magnitude indicating a plausible solution.  These plausible solutions are then ordered by their balance error, calculated as the difference in position between the center of mass and the center of the supporting polygon.  The first result of this list is then chosen as the candidate answer and the pelvis is moved towards this sample.  At each iteration this is repeated until the desired acceleration is achieved.  A plot of samples for a particular set of values, in this case all muscle constants set to $k=20000$, is shown in Figure \ref{fig:torque_samples}.  An equation for the described calculation is shown below.
 
-%Proportional derivative control is used to produce the windup motion once the initial path estimate is calculated.  A plot of the sampled positions with the corresponding instant linear accelerations calculated with the pelvis at that position are shown in Figure \ref{fig:torque_samples}.  Error in acceleration is calculated as below by taking the difference between the square magnitude of the desired acceleration and the dot product between the calculated and desired accelerations, comparing the difference to the percent error tolerance referred to in \ref{subsection:user_constants}.  This compares the difference in magnitudes while adjusting for direction.
+In order to determine the position of the character that produces this acceleration, we sample uniformly over the region in which the character is balanced.   A sample is described by the position of the pelvis joint, the resulting linear momentum, and a vector describing the displacement of the character's center of mass from the center of its support to indicate balance as described above.  Samples were restricted to a box defined by a rectangle around the character's feet with a height reaching the position of the character's pelvis when standing at rest.  Any sample outside of this volume was assumed to put the character off balance.  Samples were then taken at uniformly distributed positions in this region.  The calculated acceleration was projected onto the desired acceleration vector through the dot product, with values greater than or equal to the desired acceleration's magnitude indicating a plausible solution.  These plausible solutions are then ordered by their balance error, calculated as the difference in position between the center of mass and the center of the supporting polygon.  The first result of this list is then chosen as the candidate answer and the pelvis is moved towards this sample.  At each iteration this is repeated until the desired acceleration is achieved.  A plot of samples for a particular set of values, in this case all muscle constants set to $k=20000$, is shown in Figure \ref{fig:torque_samples}.  An equation for the described calculation is shown below.
 
 \[
 	E_{accel} = \vec{a_{desired}}^2 - \vec{a_{desired}} \cdot \vec{a_{calc}} \le \epsilon \left(\vec{a_{desired}}^2\right)
@@ -236,65 +239,15 @@ Each iteration the error for the skeleton is calculated as for the samples but f
 
 The hip is repositioned based on the output of the PD controller, and the inverse kinematics component then iterates to calculate the positions of the remaining leg joints, assuming the feet should remain in the same position on the ground and the pelvis should remain at the chosen position.  This chooses a solution for the intervening joints.  At the next iteration, these new joint positions and angles are then used to compute the instant linear acceleration, center of mass, balance error, and acceleration error which are then passed back to the PD controller until the error in acceleration is below the tolerance.
 
-%To determine which of numerous possible solutions is the most desirable, we take several samples. 
-
-
-%\begin{figure}[ht]
-%	\centering
-%	\resizebox{\textwidth}{!}{
-%		\input{images/algorithm_diagram/bendPhase.tex}
-%	}
-%	\caption[Diagram of windup phase algorithm]{Algorithm diagram of the windup phase.}
-%	\label{fig:bendPhase}
-%	%TODO decision lines need to be labeled
-%\end{figure}
-
-%\begin{table}[ht]
-%	\centering
-%	\caption[Table of PD controller constants for windup phase]{Example values for the PD controller constants, showing the sweet spot that we use as well as the effect of going higher or lower (how do we show this effect, show that the steps are too large or too small? time or iterations to finish?).}
-%	\label{tab:windup_pd_vals}
-%\end{table}
-
-%\subsubsection{Force calculation}
-%TODO force calculation should be done with error in net torque instead of error in force as we don't really have a resultant force here and the net force really means nothing
-% calculation of the muscle flexion
-
-%Current force is computed by approximating muscles as linear springs attached to two bones and crossing a joint.  The change in spring length is produced by the bend of the joint which opens a space between the rigid bones that the spring must stretch across.  This approximation uses spring constants that simulate a flexed muscle that has been stretched by an amount equal to \[\theta = cos^{-1} \left( \dfrac{2 k^2 r^2}{F^2} - 1 \right)\] which requires a more rigid spring constant.  In this equation, $r$, represents the width of the bone, which is a constant that changes the amount the character must bend to achieve a force.  This acts similarly to the $k$ value, which represents the stiffness of the spring, or a constant for the linear restoring force of the muscle.  
-%TODO For our simulations, we used values in the range ().
-%TODO values and equation
-%TODO tables of values with varied k and varied r and corresponding bend/angle
-%\begin{table}[ht]
-%	\centering
-%	\caption[Table of spring muscle constants]{A table of various values for k and r, demonstrating effect on the model's bend.  TODO Columns of k and r (varied individually), and image of fully bent character resulting from values.}
-%	\label{tab:variedSpringValues}
-%\end{table}
-
-%At each iteration of the PD controller, current force output of the legs is computed.  An accurate calculation of the force must take into account the torques ($\vec{\tau}$) produced by the muscles on each joint.  We use a simplified version, calculating the magnitudes of the torques which avoids the complexity of implementation and computation.  This is found for a joint j as \[\tau_j = ||\vec{r_j}|| F_j\] where r is the moment arm, the cross product between the vector between the attachment point of muscle and the center of the joint with the direction of the muscle crossing the joint.  Direction of a muscle is in the direction of restoration of the spring (TODO double check this, is this always the value we want, point placed along the spring based on the masses on each end) as used in \cite{muscle_based_bipeds}.
-%TODO does this setup effectively result in springs connected in series? No because you can assume that the muscles you don't want to unbend with remain rigid?
-%TODO does this give a sort of impulse function as you unbend at the hips and knees, then the ankles?
-%TODO this is where the torques come into play, and they're absolutely necessary
-
-%\begin{figure}[ht]
-%	\centering
-%	\caption[Algorithm diagram for calculation of force error]{Force error calculation}
-%	\label{fig:forceErr}
-%\end{figure}
-
-%To calculate the error used for PD control, the vector between the two forces is measured, indicating the change required in both direction and magnitude.  As we require the force to act in the direction of acceleration, the main adjustment is the force magnitude.  When instead considering the torque magnitude, the magnitude alone can be considered. (TODO I think I need to be using the torque magnitude instead of a force here).
-
 
 \subsection{Thrust and Takeoff}
 \label{subsection:thrust}
 Upward acceleration is animated by calculating the angular accelerations of the joints given the forces acting upon them and the resulting torques.  Torque is the change in angular momentum over time, allowing for the acceleration to be calculated as the mass can be assumed to be constant: \[\tau = \dfrac{dL}{dt} = m \dfrac{dv_{\theta}}{dt} = m a_{\theta}\] where $\tau$ is the torque of a joint, $L$ is the angular momentum, $m$ is the mass of the limb, which must take into account the mass of the rest of the body which is also moved by the limb, $v_{\theta}$ is the angular velocity and $a_{\theta}$ is the angular acceleration. This results in the below equation for determining angular acceleration. \[a_{\theta} = \dfrac{\tau}{m}\]
 
-Using angular acceleration, the intermediary poses for the model can be determined at each time step.   For each frame, an explicit Euler integration is performed to determine first angular velocity and finally angle.  As the character continues to extend, a check is made for if the character has yet reached full extension as described in \ref{subsection:skel_joints}.  At full extension, the character can no longer accelerate in the direction of the jump, and the character breaks contact with the ground to enter the in-air phase.
+Using angular acceleration, the intermediary poses for the model can be determined at each time step.   For each frame, an explicit Euler integration is performed to determine first angular velocity and finally angle.  As the character continues to extend, a check is made for if the character has yet reached full extension as described in section \ref{subsection:skel_joints}.  At full extension, the character can no longer accelerate in the direction of the jump, and the character breaks contact with the ground to enter the in-air phase.
 
 As the windup phase of the torque based simulation fails, it is difficult to quantify or qualify the success and failure of this portion of the simulation.  For values where the simulation could not complete the windup phase, the in-air portion is unavailable and for values where the windup phase completes, the values are erratic and fail to produce valid poses, often resulting in extreme contortions of the model.
 
-%To select the minimum sample, the collected data were organized first by the difference between the linear momentum calculated and the desired linear momentum, and the top ten percent were selected.  Ten percent was found empirically to be a good selection of points to select the most balanced from while also retrieving points with very low differences from the desired.
-
-%\subsection{Rebalancing}
-%As the character re-positions its pelvis, the balance must be calculated again and its position accordingly re-adjusted.  To maintain the position of the legs, we use the upper body to achieve balance.  A separate PD controller is used to regulate the rate of movement.  While the character shifts its balance to achieve a particular acceleration, it bends its upper body, moving the weight forward, backward, left, or right to attempt to center itself over its supporting polygon.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %               Energy                %
@@ -308,7 +261,7 @@ Change in direction is accomplished through usage of the feet and shift of weigh
 \label{subsection:energy_path}
 Kinetic energy is calculated as \[ E_k = \frac{1}{2} m v^2 \] where $m$ is the mass of the character and $v$ is the velocity.  Mass is a constant specified by the user, and we calculate the desired velocity and acceleration as in the torque based path estimation as described in section \ref{subsection:torque_path}.  Instead of 
 
-Like with the torque-based method, we took samples in the region where the character maintains balance as in \ref{subsubsection:torque_sample}.  Samples were collected at regular intervals within a bounding box defined by the character's supporting polygon, the ground, and the the height of the character's pelvis at full extension.  The pelvis was repositioned and the resulting elastic potential energy measured.  Candidate samples were selected by finding all samples with \[ E_{kinetic} - E_{elastic} \le \epsilon(E_kinetic)\] and the candidate with the lowest incurred balance error was selected.
+Like with the torque-based method, we took samples in the region where the character maintains balance as in section \ref{subsubsection:torque_sample}.  Samples were collected at regular intervals within a bounding box defined by the character's supporting polygon, the ground, and the the height of the character's pelvis at full extension.  The pelvis was repositioned and the resulting elastic potential energy measured.  Candidate samples were selected by finding all samples with \[ E_{kinetic} - E_{elastic} \le \epsilon(E_kinetic)\] and the candidate with the lowest incurred balance error was selected.
 
 \begin{figure}[ht]
 	\centering
@@ -335,11 +288,11 @@ This problem of quadratically constrained quadratic programming is NP-hard and a
 
 \subsection{Thrust, In Air, and Landing}
 \label{subsection:energy_thrust}
-Thrust for the energy based simulation works off of explicit euler integration.  The calculated acceleration from the path estimation stage is used to accelerate the character over the duration of $t_{windup}$.  At each time step, the pelvis is translated by $v_{takeoff}$, which begins at 0 and gains $\vec{a} dt$ per frame.  Each frame the character's extension is checked using the function described in \ref{subsection:skel_joints}, and when it falls below a tolerance of $0.1$, the character is considered fully extended and the in air phase begins.  During the thrust, the movement can sometimes proceed faster than the IK solver can converge, so we pause the simulation briefly and only iterate the solver until it converges.
+Thrust for the energy based simulation works off of explicit euler integration.  The calculated acceleration from the path estimation stage is used to accelerate the character over the duration of $t_{windup}$.  At each time step, the pelvis is translated by $v_{takeoff}$, which begins at 0 and gains $\vec{a} dt$ per frame.  Each frame the character's extension is checked using the function described in section \ref{subsection:skel_joints}, and when it falls below a tolerance of $0.1$, the character is considered fully extended and the in air phase begins.  During the thrust, the movement can sometimes proceed faster than the IK solver can converge, so we pause the simulation briefly and only iterate the solver until it converges.
 
 The in air phase proceeds similarly, with the character translated by the calculated velocity from the path estimate each frame.  Velocity is modified by $\vec{g} dt$ where $\vec{g}$ is the acceleration due to gravity, resulting in the desired parabolic path of the player through the air.  Ray casts are performed to check if the character's feet have contacted a surface to land on.  These ray casts are made from above toe, heel, and middle of the foot, starting above and passing through the points to produce a longer ray for more stable results.  Once one of these ray casts indicates the feet have touched such a surface, the character enters the landing phase.
 
-A landing controller is beyond the scope of this thesis, and thus we end the simulation as the character's feet touch a suitable surface.  As described in Chapter \ref{chapter:previous_work}, other controllers can be composed with this controller to produce a full animation, handling the complexities of the landing motion as a separate, modular controller.
+A landing controller is beyond the scope of this thesis, and thus we end the simulation as the character's feet touch a suitable surface.  As described in chapter \ref{chapter:previous_work}, other controllers can be composed with this controller to produce a full animation, handling the complexities of the landing motion as a separate, modular controller.
 
 \section{Summary}
 \label{subsection:animation_summary}

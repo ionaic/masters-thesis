@@ -12,17 +12,21 @@ In this chapter we discuss future work and conclude our discussion of research o
 
 \section{Future Work}
 \label{section:future_work}
-\begin{itemize}
-	\item learning model - slight adjustments to different situations can be more easily generated through the use of a learning model such as in XYZ \cite{falling_landing, muscle_based_bipeds}.
-	\item upper body affects, non-negligible effect of upper body movements on acceleration of CoM
-	\item expand to non-bipedal
-	\item more complex muscle and motion model, trials to determine level of effect on simulation (is it worthwhile)
-	\item in-air phase: add complexity, can we jump to create vaulting motions, mid-jump push off from objects (jump and push off a wall), rotations, or flips.
-\end{itemize}
 
 We planned some further work that we decided was beyond the scope of this thesis.  Our current system does not allow much flexibility with specification of the path the character travels for its jump.  Jumping path estimation could be performed based on a policy.  Possible policies are achieving a height while jumping to a target destination, pathing to clear an object or intersect with an object, follow a path defined by the user, and jumping with a user specified velocity or speed.  These policies would require a smarter handling of the in air phase of the jump, which would be best implemented as a secondary controller to allow controller composition for more complex motions.  A more complex in air controller would ideally handle cases such as acrobatics, in air maneuvers, and checking for and handling collisions.
 
-Current work exists for landing motions such as \liufall
+
+
+Current work exists for landing motions such as described in chapter \ref{chapter:previous_work}.   \liufall describes an example of one such controller for a falling and landing motions.  Incorporation of such other controllers would allow creation of more complex animations.  A separate controller could also be used for improving the motions of the upper body for each of these phases.  This could be used to create complex freerunning animations such as vaults and wall runs which are becoming prevalent in video games such as Mirror's Edge.
+
+To help with choosing values, a learning model could be applied.  Animations could be marked as successful and desirable by humans to train an algorithm to choose desirable constants for the muscles given target destinations.  Machine learning could also be applied for learning a function to determine muscle load in the windup phase of our simulation.  Intuitively the situation seems to fit a learning model well, but more study would be required.
+
+Both simulations were solved using a sampling solution, but could have been solved using an optimization problem.  Solving the optimization problem, such as the quadratic program in \ref{subsection:energy_prob} would likely provide a better solution and would give stronger guarantees of optimality.  This would likely decrease performance.
+
+Our animation output is currently images.  A more desirable animation output would be key frames storing the positions and orientations for each joint of the character's skeleton, which could then be used in a game or video as a pre-baked animation.  An implementation as a plugin for \maya could also be more desirable, as it could then be incorporated into an artist's work flow.
 
 \section{Conclusion and Summary}
 \label{section:conclusion}
+
+In this thesis, we discussed the need for a more efficient way to produce character animations for video games and film.  We then presented a simulation based approach for creating such animations for a jumping motion of a character to reach a given target position.  Our system used two different types of simulation: torque based and energy based.  The torque based simulation failed to produce good results, but we collected frame data for a variety of situations using the energy based simulation.  We then described our methods for visualizing the animations to quantify and qualify the performance, giving visual information in an animated format and still format.
+
