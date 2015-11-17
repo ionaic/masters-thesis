@@ -27,8 +27,9 @@
 \contentsline {section}{\numberline {4.2}Summary}{29}{section.4.2}
 \contentsline {chapter}{\numberline {5.}RESULTS}{30}{chapter.5}
 \contentsline {section}{\numberline {5.1}Output Animations}{32}{section.5.1}
-\contentsline {section}{\numberline {5.2}Limitations}{39}{section.5.2}
-\contentsline {section}{\numberline {5.3}Summary}{41}{section.5.3}
-\contentsline {chapter}{\numberline {6.}FUTURE WORK AND CONCLUSION}{42}{chapter.6}
-\contentsline {section}{\numberline {6.1}Conclusion}{42}{section.6.1}
-\contentsline {chapter}{References}{43}{section*.25}
+\contentsline {section}{\numberline {5.2}Limitations}{33}{section.5.2}
+\contentsline {section}{\numberline {5.3}Summary}{36}{section.5.3}
+\contentsline {chapter}{\numberline {6.}FUTURE WORK AND CONCLUSION}{43}{chapter.6}
+\contentsline {section}{\numberline {6.1}Future Work}{43}{section.6.1}
+\contentsline {section}{\numberline {6.2}Conclusion and Summary}{44}{section.6.2}
+\contentsline {chapter}{References}{45}{section*.24}

@@ -50,13 +50,16 @@ Several trials were run with different, empirically determined $k$ values as sho
 
 The complex scene is pictured in Figure \ref{fig:complex_scene}.  The box on which the character starts is 1m in height, and the obstacle is 1.4m in height.  To achieve the path shown, the destination was set at $(0, 1.5, 1)$, with the starting position at $(0, 0, 0)$.  Muscle spring constants were set for all muscles globally as $k=20000$.
 
-Forward jumps are shown in Tables \ref{tab:forward_200k_g} and \ref{tab:superman_forward}. For the super human, jump destinations were set 1m and 100m in front of the character's starting position.  For the normal human, jumps were set at 1m, 1.3m, 1.6m, and 1.9m.  Box jumps are also included in these tables, with 1m, 10m, and 100m boxes for the super human and 0.5m and 1m for the normal human.  
+Forward jumps are shown in Tables \ref{tab:forward_200k_g}, \ref{tab:forward_200k_v}, and \ref{tab:superman_forward}. For the super human, jump destinations were set 1m and 100m in front of the character's starting position.  For the normal human, jumps were set at 1m, 1.3m, 1.6m, and 1.9m, shown in Table \ref{tab:forward_200k_g} for a globally set k and in Table \ref{tab:forward_200k_v} for a varying k.  Box jumps are also included in these tables, with 1m, 10m, and 100m boxes for the super human and 0.5m and 1m for the normal human.  Animations were produced for normal human strength with both a globally set $k=20000$, where each muscle had the same constant, and varying with $k=20000\pm 4000$ as shown in Table \ref{tab:run_k_vals}.
+
+In Table \ref{tab:forward_200k_u} we show forward jumping motions of 1.6m and 1.9m where the character has uneven strength in their legs.  These values were chosen similar to the normal human run.  There is little effect, which is why lengths shown were only at the extreme of distance possible for the character.  However, the character's right leg can be seen to dangle in the trial with varying $k$ values, indicating that more load is on the left leg.
+
+To demonstrate the flexibility of a simulation-based animation, we also include a jump to the side.  The destination was specified as 1m, 1.3m, and 1.6m to the right, i.e. the direction $(1, 0, 0)$ relative to the character, of the character's start position.  Instead of the pelvis thrusting forward and up, in these trials the pelvis thrust is to the side and upwards as expected.  These animations are shown in Table \ref{tab:side_200k_g} and were collected with a global $k=20000$.
 
 \newcommand{\floatedfig}[1]{\begin{subfigure}[h]{0.2\textwidth}\vspace{1mm}\includegraphics[width=\textwidth]{#1}\vspace{1mm}\end{subfigure}\hspace{0.025\textwidth}}
-%\newcommand{\floatedfig}[1]{\subfloat{\includegraphics[width=0.2\textwidth]{#1}}}
 \newcommand{\framesubfig}[1]{\begin{subfigure}[h]{0.24\textwidth}\includegraphics[width=\textwidth]{#1}\end{subfigure}}
 
-\begin{figure}[H]
+\begin{figure}[ht]
 	\centering
 	\begin{subfigure}[h]{\textwidth}
 		\includegraphics[width=\textwidth]{images/trials/K200000global/ComplexScene/BestPlacement/side-camera-composite.png}
