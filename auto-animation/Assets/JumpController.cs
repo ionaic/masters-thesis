@@ -430,6 +430,7 @@ public class JumpController : MonoBehaviour {
     }
 
     bool SelectEnergySample() {
+        Profiler.BeginSample("Select Energy Sample");
         float E_k = 0.5f * skeleton.TotalMass() * jumping.velocity.sqrMagnitude;
         List<PositionSample> diffList = sampler.samples.Where(s => E_k - s.totalEnergy <= jumping.error_allowance).ToList();
         diffList.OrderBy(s => EstimateBalanceError(s.COM).sqrMagnitude);
@@ -438,12 +439,15 @@ public class JumpController : MonoBehaviour {
             jumping.selectedSample = diffList.First();
         }
         else {
+            Profiler.EndSample();
             return false;
         }
+        Profiler.EndSample();
         return true;
     }
 
     bool EnergyWindup() {
+        Profiler.BeginSample("Energy Windup");
         // solve the issue of how to load the springs
         // let's pick samples again!
         Vector3 direction;
@@ -468,6 +472,7 @@ public class JumpController : MonoBehaviour {
         // error in energy must be less than 5% of kinetic energy
         // AND average usage of the muscles must be greater than the error allowance (5%)
         float limbUsage = skeleton.muscles.Sum(m=> m.LimbUsage());
+        Profiler.EndSample();
         //Debug.Log("Limb usage: " + limbUsage + " >= " + jumping.error_allowance * skeleton.muscles.Length);
         return (err <= jumping.error_allowance * E_k) && (limbUsage >= jumping.error_allowance * skeleton.muscles.Length);
     }
@@ -591,6 +596,7 @@ public class JumpController : MonoBehaviour {
     // function to handle the windup phase
     // returns true when finished
     bool Windup() {
+        Profiler.BeginSample("Windup");
         //Vector3 servo_modification = windupPD.modify(BalanceError());
         //Vector3 servo_modification = windupPD.modify(AccelError());
         Vector3 servo_modification = windupPD.modify(DirToAchieveAccel());
@@ -610,11 +616,13 @@ public class JumpController : MonoBehaviour {
         float total_err = accel_err + bal_err;
         jumping.last_err = servo_modification;
 
+        Profiler.EndSample();
         return total_err <= jumping.error_allowance * jumping.acceleration.magnitude;
     }
 
     // function to handle accel phase
     bool Accel() {
+        Profiler.BeginSample("Accel");
         // move pelvis in direction of acceleration
         // if we're not extended but we're not grounded, then stop extending
         if (skeleton.IsGrounded(jumping.gravity, 0.001f, true)) {
@@ -625,6 +633,7 @@ public class JumpController : MonoBehaviour {
         // iterate IK
         IK.Iterate();
 
+        Profiler.EndSample();
         // check if we are fully extended, if so you're done. go home.
         return skeleton.CheckExtension(); // only extend!
         //return skeleton.CheckExtension() || !skeleton.IsGrounded(jumping.gravity, 0.001f);
@@ -633,6 +642,7 @@ public class JumpController : MonoBehaviour {
 
     // function to handle the acceleration/upward phase
     bool InAir() {
+        Profiler.BeginSample("InAir");
         Vector3 vdt = jumping.velocity * Time.fixedDeltaTime;
         // apply the jump to the controller
         //transform.Translate(vdt.x, 0.0f, vdt.z);
@@ -645,6 +655,7 @@ public class JumpController : MonoBehaviour {
         jumping.velocity += jumping.gravity * Time.fixedDeltaTime;
         
         IK.Iterate();
+
         //return skeleton.IsGrounded() && ((jumping.destination - transform.position).magnitude <= (jumping.destination - jumping.start).magnitude * jumping.error_allowance);
         return skeleton.IsGrounded();
     }

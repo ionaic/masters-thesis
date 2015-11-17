@@ -12,13 +12,17 @@ public class InverseKinematics : MonoBehaviour {
     public SingleChainIKHandle[] scHandle;
     
     public void Iterate() {
+        Profiler.BeginSample("IK Iterate");
         foreach (SingleChainIKHandle handle in scHandle) {
             handle.rotateToTarget();
         }
+        Profiler.EndSample();
     }
     public void Iterate(int iterations) {
+        Profiler.BeginSample("IK Iterate " + iterations + " iterations");
         foreach (SingleChainIKHandle handle in scHandle) {
             handle.rotateToTarget(iterations);
         }
+        Profiler.EndSample();
     }
 }

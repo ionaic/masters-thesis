@@ -178,6 +178,7 @@ public class PositionSampler : MonoBehaviour {
     }
     
     public void SampleHipPositions() {
+        Profiler.BeginSample("SampleHipPositions");
         dbg_pos = new List<Vector3>();
 
         controller.skeleton.UpdateCOM();
@@ -230,6 +231,7 @@ public class PositionSampler : MonoBehaviour {
         //controller.skeleton.Pelvis.Position(base_pos);
         //ikmanager.Iterate();
         controller.skeleton.ResetFromArray(reset);
+        Profiler.EndSample();
     }
 	
 	// Update is called once per frame

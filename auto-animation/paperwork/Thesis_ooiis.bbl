@@ -21,11 +21,6 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
-\bibitem{muscle_based_bipeds}
-T.~Geijtenbeek, M.~van~de Panne, and A.~F. van~der Stappen, ``Flexible
-  muscle-based locomotion for bipedal creatures,'' \emph{ACM Transactions on
-  Graphics}, vol.~32, no.~6, 2013.
-
 \bibitem{falling_landing}
 \BIBentryALTinterwordspacing
 S.~Ha, Y.~Ye, and C.~K. Liu, ``Falling and landing motion control for character
@@ -41,6 +36,11 @@ P.~Faloutsos, M.~van~de Panne, and D.~Terzopoulos, ``Composable controllers for
   '01.\hskip 1em plus 0.5em minus 0.4em\relax New York, NY, USA: ACM, 2001, pp.
   251--260. [Online]. Available: \url{http://doi.acm.org/10.1145/383259.383287}
 \BIBentrySTDinterwordspacing
+
+\bibitem{muscle_based_bipeds}
+T.~Geijtenbeek, M.~van~de Panne, and A.~F. van~der Stappen, ``Flexible
+  muscle-based locomotion for bipedal creatures,'' \emph{ACM Transactions on
+  Graphics}, vol.~32, no.~6, 2013.
 
 \bibitem{motion_intentions}
 \BIBentryALTinterwordspacing
@@ -67,5 +67,9 @@ T.~Geijtenbeek and N.~Pronost, ``Interactive character animation using
   Forum}, vol.~31, no.~8, pp. 2492--2515, 2012. [Online]. Available:
   \url{http://dx.doi.org/10.1111/j.1467-8659.2012.03189.x}
 \BIBentrySTDinterwordspacing
+
+\bibitem{biomech_sport}
+P.~M. McGinnis, \emph{Biomechanics of Sport and Exercise}.\hskip 1em plus 0.5em
+  minus 0.4em\relax Champaign, IL, USA: Human Kinetics, March 2013.
 
 \end{thebibliography}
