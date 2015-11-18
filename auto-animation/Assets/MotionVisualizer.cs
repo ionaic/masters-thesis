@@ -78,6 +78,7 @@ public class MotionVisualizer : MonoBehaviour {
     public float secondsPerGhostSample;
     private float secondsSinceGhost;
     private List<GameObject> ghosts;
+    private GameObject ghostBody;
     private bool paused;
 
     void Start() {
@@ -87,6 +88,7 @@ public class MotionVisualizer : MonoBehaviour {
         }
 
         ghosts = new List<GameObject>();
+        ghostBody = Resources.Load("EmptyBody", typeof(GameObject)) as GameObject;
 
         UpdateMarkers();
     }
@@ -133,17 +135,43 @@ public class MotionVisualizer : MonoBehaviour {
             joints[idx].PlotPosition(tick);
         }
     }
+
+    private void IterativelySetTransforms(Transform root) {
+        Queue<Transform> ts = new Queue<Transform>();
+        Queue<Transform> sources = new Queue<Transform>();
+        ts.Enqueue(root);
+        sources.Enqueue(transform.Find(root.name));
+        while (ts.Count > 0 && sources.Count > 0) {
+            Transform t = ts.Dequeue();
+            Transform s = sources.Dequeue();
+            if (s == null) {
+                Debug.Log("Couldn't find " + t.name + " in " + name);
+            }
+            else {
+                t.position = s.position;
+                t.rotation = s.rotation;
+            }
+            foreach (Transform child in t) {
+                ts.Enqueue(child);
+                if (s != null) {
+                    sources.Enqueue(s.Find(child.name));
+                }
+                else {
+                    sources.Enqueue(null);
+                }
+            }
+        }
+    }
     
     public void MakeGhost(float tick) {
         secondsSinceGhost += tick;
         if (secondsSinceGhost >= secondsPerGhostSample) {
-            GameObject ghost = Instantiate(gameObject) as GameObject;
-            Destroy(ghost.GetComponent<BalanceVisualization>());
-            Destroy(ghost.GetComponent<JumpController>());
-            Destroy(ghost.GetComponent<MotionVisualizer>());
-            Destroy(ghost.GetComponent<MotionVisualizer>());
-            Destroy(ghost.GetComponent<StaticParticleManager>());
-            Destroy(ghost.GetComponent<InverseKinematics>());
+            GameObject ghost = Instantiate(ghostBody) as GameObject;
+            ghost.transform.position = transform.position;
+            ghost.transform.rotation = transform.rotation;
+
+            IterativelySetTransforms(ghost.transform.Find("pelvis"));
+
             secondsSinceGhost = 0.0f;
             ghosts.Add(ghost);
         }

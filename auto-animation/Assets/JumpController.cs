@@ -201,25 +201,6 @@ public class JumpController : MonoBehaviour {
             timeElapsed += Time.fixedDeltaTime;
         }
 
-        if (Input.GetKey(controls.cam.sideView)) {
-            cameraView.UseSideView();
-        }
-        else if (Input.GetKey(controls.cam.frontView)) {
-            cameraView.UseFrontView();
-        }
-        else if (Input.GetKey(controls.cam.slantView)) {
-            cameraView.UseSlantView();
-        }
-        else if (Input.GetKey(controls.cam.trackingView)) {
-            cameraView.UseTrackingView();
-        }
-
-        if (Input.GetKey(controls.cam.screenshot)) {
-            cameraView.TakeScreenshot();
-        }
-        if (Input.GetKey(controls.cam.frameset)) {
-            cameraView.GrabFrameSet();
-        }
         if (Input.GetKey(controls.simulation.torqueBased)) {
             jumping.simType = SimulationType.Torque;
         }
@@ -230,8 +211,6 @@ public class JumpController : MonoBehaviour {
         if (Input.GetKey(controls.simulation.reset)) {
             ResetSimulation();
         }
-        
-
         
         // FPS movement from Unity3D Standard Assets
         // Get the input vector from keyboard or analog stick

@@ -79,6 +79,19 @@ Lastly, we utilize proportional-integral-derivative (PID) controllers, which req
 \subsection{Skeleton, Joints, and Muscles}
 \label{subsection:skel_joints}
 
+%TODO make the images the same level of zoom
+\begin{figure}[htp]
+	\centering
+	\begin{subfigure}[b]{0.41\textwidth}
+		\includegraphics[width=\textwidth]{images/simpleSkeleton2Screen1Cropped.png}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\textwidth}
+		\includegraphics[width=\textwidth]{images/simpleSkeleton2Screen2Cropped.png}
+	\end{subfigure}
+	\caption[Example of Rigged 3D Character Model]{Above is an example of a character model in \maya.  The character skin or mesh is shown in gray, with a rig shown in multicolor.  While it is visualized as a series of spherical joints with connecting solids, the rig itself does not have a visual component in practice.  The rig acts as a skeleton, deforming the mesh of the character model to make animation easier.  Additional tools such as deformer groups and inverse kinematics handles can be used to further simplify the creation of animations for artists.  While these tools simplify movement of the model, the artist still must position each joint for each frame of the animation, which is then stored for later playback.}
+	\label{fig:rig_character}
+\end{figure}
+
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=10cm]{images/spring_calc/spring_angle_calc.eps}
@@ -86,7 +99,7 @@ Lastly, we utilize proportional-integral-derivative (PID) controllers, which req
 	\label{fig:forceCalc}
 \end{figure}
 
-For the purposes of animation, a joint is an object with an associated position, associated transformation, a parent joint, and some number of child joints.  In the case of the root, the parent joint is absent and in the case of the end joints such as tips of the fingers there are no child joints.  Each child joint is connected to the parent by a rigid bone, which protrudes from the parent at a given resting angle.  These joints are structured in a tree, as the parent and child joints imply, with the root of the tree at the pelvis.  This tree serves as a hierarchy for transformations.
+For the purposes of animation, a joint is an object with an associated position, associated transformation, a parent joint, and some number of child joints.  In the case of the root, the parent joint is absent and in the case of the end joints such as tips of the fingers there are no child joints.  Each child joint is connected to the parent by a rigid bone, which protrudes from the parent at a given resting angle.  These joints are structured in a tree, as the parent and child joints imply, with the root of the tree at the pelvis.  This tree serves as a hierarchy for transformations.  Figure \ref{fig:rig_character} shows the skeleton for our character.
 
 Joints are associated with a set of vertices from the mesh to be animated.  Each of these may be associated with multiple joints, and are assigned a weight for each joint which acts as a scale factor for the transformations performed on the vertex.  When a joint is transformed, the transformation is propagated to the children, with the parent as the origin of the child node's coordinate system.
 

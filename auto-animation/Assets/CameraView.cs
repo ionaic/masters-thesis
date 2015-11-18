@@ -27,16 +27,40 @@ public class CameraView : MonoBehaviour {
     public static string fileName = "_frame";
     public string destinationFolder;
     public bool grabFrames = false;
+    private CustomInputManager controls;
     
-    public void Start() {
+    void Start() {
         SideView = Side.GetComponent<Camera>();
         SlantView = Slant.GetComponent<Camera>();
         FrontView = Front.GetComponent<Camera>();
         TrackingView = Tracking.GetComponent<Camera>();
+        
+        controls = GetComponent<JumpController>().controls;
 
         // create the directory if it does not already exist
         if (System.IO.Directory.Exists(destinationFolder)) {
             System.IO.Directory.CreateDirectory(destinationFolder);
+        }
+    }
+    
+    void Update() {
+        if (Input.GetKey(controls.cam.sideView)) {
+            UseSideView();
+        }
+        else if (Input.GetKey(controls.cam.frontView)) {
+            UseFrontView();
+        }
+        else if (Input.GetKey(controls.cam.slantView)) {
+            UseSlantView();
+        }
+        else if (Input.GetKey(controls.cam.trackingView)) {
+            UseTrackingView();
+        }
+        if (Input.GetKey(controls.cam.screenshot)) {
+            TakeScreenshot();
+        }
+        if (Input.GetKey(controls.cam.frameset)) {
+            GrabFrameSet(true);
         }
     }
 
@@ -83,8 +107,8 @@ public class CameraView : MonoBehaviour {
         Application.CaptureScreenshot(destinationFolder + whichCamera + fileName + name + ".png");
     }
 
-    public void GrabFrameSet() {
-        if (!grabFrames) {
+    public void GrabFrameSet(bool force = false) {
+        if (!(grabFrames || force)) {
             return;
         }
         // grab a screenshot from every camera angle
