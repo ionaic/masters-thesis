@@ -5,7 +5,7 @@
 \contentsline {chapter}{\numberline {1.}INTRODUCTION}{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}An Example of Animation Creation}{4}{section.1.1}
 \contentsline {section}{\numberline {1.2}Contributions}{6}{section.1.2}
-\contentsline {subsection}{\numberline {1.2.1}Unity3D }{6}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.1}Unity3D{}}{6}{subsection.1.2.1}
 \contentsline {chapter}{\numberline {2.}PREVIOUS WORK}{9}{chapter.2}
 \contentsline {section}{\numberline {2.1}Background}{9}{section.2.1}
 \contentsline {subsection}{\numberline {2.1.1}Existing Technologies}{10}{subsection.2.1.1}
@@ -25,7 +25,7 @@
 \contentsline {subsection}{\numberline {3.6.1}Path Estimation and Windup}{30}{subsection.3.6.1}
 \contentsline {subsection}{\numberline {3.6.2}Solutions to the Energy Assignment Problem}{31}{subsection.3.6.2}
 \contentsline {subsection}{\numberline {3.6.3}Thrust, In Air, and Landing}{32}{subsection.3.6.3}
-\contentsline {section}{\numberline {3.7}Summary}{33}{section.3.7}
+\contentsline {section}{\numberline {3.7}Summary}{32}{section.3.7}
 \contentsline {chapter}{\numberline {4.}VISUALIZATION}{34}{chapter.4}
 \contentsline {section}{\numberline {4.1}Motivation and Inspiration}{34}{section.4.1}
 \contentsline {section}{\numberline {4.2}Motion Visualization}{35}{section.4.2}
@@ -37,4 +37,4 @@
 \contentsline {chapter}{\numberline {6.}FUTURE WORK AND CONCLUSION}{53}{chapter.6}
 \contentsline {section}{\numberline {6.1}Future Work}{53}{section.6.1}
 \contentsline {section}{\numberline {6.2}Conclusion and Summary}{54}{section.6.2}
-\contentsline {chapter}{References}{56}{section*.34}
+\contentsline {chapter}{References}{56}{section*.32}
