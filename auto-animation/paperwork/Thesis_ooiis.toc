@@ -15,9 +15,9 @@
 \contentsline {subsection}{\numberline {3.2.1}User Specified Constants}{14}{subsection.3.2.1}
 \contentsline {subsection}{\numberline {3.2.2}Skeleton, Joints, and Muscles}{16}{subsection.3.2.2}
 \contentsline {section}{\numberline {3.3}Center of Mass and Balance}{20}{section.3.3}
-\contentsline {section}{\numberline {3.4}Inverse Kinematic Solving}{22}{section.3.4}
+\contentsline {section}{\numberline {3.4}Inverse Kinematic Solving}{21}{section.3.4}
 \contentsline {section}{\numberline {3.5}Torque-based simulation}{23}{section.3.5}
-\contentsline {subsection}{\numberline {3.5.1}Path Estimation}{24}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.5.1}Path Estimation}{23}{subsection.3.5.1}
 \contentsline {subsection}{\numberline {3.5.2}Windup}{25}{subsection.3.5.2}
 \contentsline {subsubsection}{\numberline {3.5.2.1}Sampling}{26}{subsubsection.3.5.2.1}
 \contentsline {subsection}{\numberline {3.5.3}Thrust and Takeoff}{28}{subsection.3.5.3}
@@ -25,7 +25,7 @@
 \contentsline {subsection}{\numberline {3.6.1}Path Estimation and Windup}{30}{subsection.3.6.1}
 \contentsline {subsection}{\numberline {3.6.2}Solutions to the Energy Assignment Problem}{31}{subsection.3.6.2}
 \contentsline {subsection}{\numberline {3.6.3}Thrust, In Air, and Landing}{32}{subsection.3.6.3}
-\contentsline {section}{\numberline {3.7}Summary}{32}{section.3.7}
+\contentsline {section}{\numberline {3.7}Summary}{33}{section.3.7}
 \contentsline {chapter}{\numberline {4.}VISUALIZATION}{34}{chapter.4}
 \contentsline {section}{\numberline {4.1}Motivation and Inspiration}{34}{section.4.1}
 \contentsline {section}{\numberline {4.2}Motion Visualization}{35}{section.4.2}

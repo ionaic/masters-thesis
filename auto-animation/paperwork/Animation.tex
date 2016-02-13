@@ -50,13 +50,6 @@ Within the controller there are a number of constants the user can specify, outs
 
 The times indicate how much time the character is expected to spend in the air and winding up for the jump.  Air time in our case consists of the portion of the animation where the character's feet are not in contact with the ground plane.  Windup time refers to the time in which the character has their feet on the ground and is in the process of accelerating their mass upwards as the initial takeoff portion of the jump.  A long windup time gives a very slow, exaggerated jumping motion while a short windup gives a very rapid, clipped motion.  While we allow the user to specify any time for both air and windup, in practice there is a limited range of values that are possible for the character.  Values outside of the reasonable range produce indeterminate or strange behaviors in the simulation, such as either failing to find a muscle load that can feasibly produce the jump or attempting to produce the jump and failing partway.
 
-%TODO table of values from testing excel sheet showing why it fails
-\begin{table}[ht]
-	\centering
-	\input{path_est_table.tex}
-	\caption{Values for calculated necessary velocity given air and windup times for a skeleton with muscle k values around 20000. This table shows separate columns for each vector component, where $v_0$ is the velocity when the character leaves the ground, $x_0$ is initial position, $x$ is the destination position, $g$ is gravity, $t_a$ is air time, $a$ is acceleration to reach $v_0$ from rest, and $t_w$ is the windup time in which $a$ is applied to reach velocity $v_0$.}
-\end{table}
-
 Error allowance in our simulation is a widely used value indicating a percent error tolerance.  This tolerance is used for determining the allowable difference between the desired values of either resultant linear acceleration and desired acceleration for the torque based simulation, or calculated kinetic energy and total elastic energy for the energy based simulation.  The allowable difference is used for choosing samples and determining if the character has satisfied either the energy or acceleration requirements to complete the windup stage.  The same error allowance is also used to determine if the limb usage is greater than a minimum to complete the windup stage, which is used to force a degree of bend in extreme cases, where very little bend is required as the muscles are extremely strong or the jump distance is very small.  This minimum is applied to compensate for the contraction rates of muscles, which would require a higher degree of bend than our muscle model does, leading to a more realistic simulation.  Below is an example of the inequality using the error allowance.
 
 \[
@@ -197,6 +190,16 @@ One method of simulation we attempted used springs placed along the length of ea
 %	\label{fig:pathExample}
 %	\caption[Example of estimated path]{Example of a path estimation.}
 %\end{figure}
+
+
+%TODO table of values from testing excel sheet showing why it fails
+\begin{table}[ht]
+	\centering
+	\input{path_est_table.tex}
+	\caption[Values for path estimates]{Values for calculated necessary velocity given air and windup times for a skeleton with muscle k values around 20000. This table shows separate columns for each vector component, where $v_0$ is the velocity when the character leaves the ground, $x_0$ is initial position, $x$ is the destination position, $g$ is gravity, $t_a$ is air time, $a$ is acceleration to reach $v_0$ from rest, and $t_w$ is the windup time in which $a$ is applied to reach velocity $v_0$.}
+	\label{tab:path_est}
+\end{table}
+
 Before calculations relating to the model's skeleton are performed, an initial estimate of the jump path is performed.  The estimate uses a forward kinematic calculation to determine the velocity required to move an object through the air from the initial position of the model to a final position.
 
 The user specifies a desired time ($t_{air}$), which indicates the time the character will spend airborne during the animation, i.e. the time between when the character's feet break contact with the ground and when they regain contact with the ground.  This is useful as the desired animation can be more easily adjusted to fit a desired time as an in-game animation or to fit a particular storyboard for an animated film sequence.
