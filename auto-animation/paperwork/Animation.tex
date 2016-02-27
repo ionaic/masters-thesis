@@ -4,31 +4,48 @@
 %                                                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
  
-\chapter{ANIMATION}
+\chapter{SIMULATION METHOD FOR A JUMPING MOTION}
 \label{chapter:animation}
-In this chapter we describe our method for simulating a character.  We begin by describing the motion, breaking it into stages.  We then describe the setup of the problem and inputs to our simulation.  As part of our description of the inputs to the simulation, we describe the representation of a skeleton in detail.  Following the skeleton section, we describe our inverse kinematics solver.  We then describe two methods of simulation: one using torque to describe the motion and one using energy to describe the motion.  The stages of jumping are described for each of these calculation paths.
+In this chapter we describe our method for simulating a character.  We begin by describing the motion, breaking it into stages in Section \ref{section:motion_desc}.  In Section \ref{section:setup_inputs} we then describe the setup of the problem and inputs to our simulation.  As part of our description of the inputs to the simulation, we describe the representation of a skeleton in detail in Section \ref{subsection:skel_joints} as well as the other user specified constants in Section \ref{subsection:user_constants}.  Following the problem setup, we describe our inverse kinematics solver in Section \ref{section:ik}, and balancing of the character in Section \ref{section:com}.  We then describe two methods of simulation: the first using torque on a joint to describe the motion in Section \ref{section:torque} and the second using energy of the muscles to describe the motion in Section \ref{section:energy}.  The stages of jumping are described for each of these calculation paths.
 
-\section{Description of the Motion}
+\section{Overview of a Jumping Motion}
 \label{section:motion_desc}
-Jumping is the acceleration of a character's center of mass upward.  Acceleration is applied in excess and in opposition to gravity, resulting in the character breaking contact with the ground and traveling a short distance before contact is re-established.  This acceleration results due to the character pushing against the ground, first bending
+Jumping is the acceleration of a character's center of mass upward.  Acceleration is applied in excess and in opposition to gravity, resulting in the character breaking contact with the ground and traveling a short distance before contact is re-established.  This acceleration results due to the character pushing against the ground, first bending to create space and lengthen muscles, then extending, contracting the muscles.
 
 Jumping motions can be divided into several stages.  First is the lead-up or wind-up stage in which the character flexes, preparing their muscles for contraction and providing space for their body to extend.  This takes the form of a slight crouch.  Next comes the thrust stage, in which the character extends and exerts a force against the ground to accelerate upward.  The character pushes against the floor with their feet, the contractions of the muscles causing joints to unbend and as a result displace the character's center of mass causing work to be done.  This extension and resulting thrust is caused by the contraction of muscles, which produce torques on the skeleton.
 
 Once the character has broken contact with the ground, they travel through the air, their velocity decreasing steadily due to gravity, air resistance, and other forces until they eventually land.  Once they regain contact with the ground, the character absorbs or disperses the kinetic energy of their jump.
 
-We attempted two main approaches to producing a jump motion through muscle simulation.  The first method focused heavily on the torques produced by the muscles, but ultimately failed due to unknown reasons.  The second method focused on the kinetic energy and performed calculations to match the energy of the muscles, which simplifies the movement and produced a successful simulation.
+We attempted two main approaches to producing a jump motion through muscle simulation.  The first method focused heavily on the torques produced by the muscles, but ultimately failed to converge, and consistently moved towards a solution that appears incorrect, where the character begins to lean towards the right.  These calculated values were also extremely small as compared to the calculated required values, despite repetitions of the math derivation and careful debugging.  The second method focused on the kinetic energy and performed calculations to match the energy of the muscles, which simplifies the movement and produced a successful simulation.
 
-\section{Setup and Inputs}
+\section{Model Initialization and Setup}
 \label{section:setup_inputs}
-The character in our system consists of a mesh, a skeleton, and a controller which has itself several sub-components.  First we constructed a mesh, a 3D visual representation of our character.  Our mesh is a simple, blocky humanoid, lacking arms in order to focus more heavily on the lower body motion of the figure.  A more complex human character, or even a humanoid non-human character could be substituted.  This mesh consists of vertices, which each have a position as well as other information not relevant to our simulation such as normal and texture coordinate, which are used by \unity{} for displaying the mesh.  This mesh can also be referred to as a character model, but in the context of this simulation we will refer to it as the mesh.  Three vertices form a triangular face, though these are often created as quadrilaterals by the artist as the topology of the model can be simpler to work with due to the grid patterns formed as compared to triangular meshes.  In the case of quad meshes, the mesh is often treated as a triangle mesh by the game engine or renderer, with each quad producing two triangles.
+\subsection{Creation of the Model and Rig}
+\label{subsection:model_rig}
 
-Our mesh was created using \maya{}, positioning the vertices in groups or individually, using several rectangular prisms as a base.  Using the edge loop tool, more vertices were inserted, with loops of edges circling the torso and legs to produce the final shape.  This mesh was then rigged, meaning a skeleton was added.  As described in further detail in section \ref{subsection:skel_joints}, joints were positioned individually relative to the mesh, attempting to mimic the positioning of joints in the human skeleton.  The connections were made simply, with each joint acting as a ball and socket joint, meaning that constraints needed to be specified at a later stage to facilitate hinge joints such as the knee and ankle and that complex, multi-boned structures as found in the foot and shin were simplified to a single bone connecting two joints.  The hierarchy of joints for the skeleton was rooted at the pelvis with three children: one leading to the upper body and one to each hip.  From there a single joint was used for the manipulation of the upper body, with separate joints for each hip, knee, ankle, toe, and heel.  Though there is no movement in the toe, placing a bone for the foot requires an end joint for the bone to connect to.
+
+%TODO make the images the same level of zoom
+\begin{figure}[htp]
+	\centering
+	\begin{subfigure}[b]{0.41\textwidth}
+		\includegraphics[width=\textwidth]{images/simpleSkeleton2Screen1Cropped.png}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\textwidth}
+		\includegraphics[width=\textwidth]{images/simpleSkeleton2Screen2Cropped.png}
+	\end{subfigure}
+	\caption[Example of Rigged 3D Character Model]{Above is an example of a character model in \maya{}, the character used for our simulation.  The character skin or mesh is shown in gray, with a rig shown in multicolor.  While it is visualized as a series of spherical joints with connecting solids, the rig itself does not have a visual component in practice.  The rig acts as a skeleton, deforming the mesh of the character model to make animation easier.  Additional tools such as user-specified skeletal controls and inverse kinematic handles can be used to further simplify the creation of animations for artists.  While these tools simplify movement of the model, the artist still must position each joint for each frame of the animation, which is then stored for later playback.  This rig contains 11 bones and 12 joints: a pelvis, two hips, two knees, two ankles, two toes, two heels, and one head.  In this visual, orange bones and joints are connected directly to the root, the pelvis, yellow are the first level of the tree, green the second, light blue the third, and dark blue the fourth level of the tree.}
+	\label{fig:rig_character}
+\end{figure}
+
+The character in our system consists of a mesh, a skeleton or \emph{rig}, and a controller which has itself several sub-components.  First we constructed a mesh, a 3D visual representation of our character.  Our mesh is a simple, blocky humanoid, lacking arms in order to focus on the motion of the lower body.  A more complex human character, or non-human bipedal characters could be substituted.  This mesh consists of vertices, which each have a position as well as other information not relevant to our simulation such as normal and texture coordinate, which are used by \unity{} for displaying the mesh.  This mesh can also be referred to as a character model, but in the context of this simulation we will refer to it as the mesh.  Three vertices form a triangular face, though these are often created as quadrilaterals by the artist as the topology of the model can be simpler to work with due to the grid patterns formed as compared to triangular meshes.  In the case of quad meshes, the mesh is often treated as a triangle mesh by the game engine or renderer, with each quad split into two triangles.
+
+Our mesh was created using \maya{}, positioning the vertices in groups or individually, using several rectangular prisms as a base.  Using the edge loop tool, more vertices were inserted, with loops of edges circling the torso and legs to produce the final shape.  This mesh was then rigged, meaning a skeleton was added.  As described in further detail in section \ref{subsection:skel_joints}, joints were positioned individually relative to the mesh, attempting to mimic the positioning of joints in the human skeleton.  The connections were made simply, with each joint acting as a ball and socket joint, meaning that constraints needed to be specified at a later stage to facilitate hinge joints such as the knee and ankle and that complex, multi-boned structures as found in the human foot and shin were simplified to a single bone connecting two joints.  The hierarchy of joints for the skeleton was rooted at the pelvis with three children: one leading to the upper body and one to each hip.  From there a single joint was used for the manipulation of the upper body, with separate joints for each hip, knee, ankle, toe, and heel.  Though there is no movement in the toe, placing a bone for the foot requires an end joint for the bone to connect to.
 
 %TODO how do i talk about this with authority, there isn't really anything to cite there's just youtube videos and it's generally taught as such/discovered via industry
 % found some articles, gamasutra especially
-Joints are then associated with the mesh through weight painting, in which each vertex of the mesh is assigned a weight for each joint.  This weight designates if and how much a vertex transforms when a joint is moved.  Each vertex must be assigned a weight for each joint of the model.  Careful weight assignment is highly important as this determines the behavior of the character's ``skin'' when they move, affecting how the mesh twists or bends as well as which parts move with which bones.  The joints may then be used to manipulate the mesh to produce animations, with each key frame in an animation storing information about each joint instead of each vertex. \cite{gamasutra_char_anim}
+Joints are then associated with the mesh through weight painting, in which each vertex of the mesh is assigned a weight for each joint.  This weight designates if and how much a vertex transforms when a joint is moved.  Each vertex must be assigned a weight for each joint of the model.  Careful weight assignment is highly important as this determines the behavior of the character's ``skin'' when they move, affecting how the mesh twists or bends as well as which parts move with which bones.  The joints may then be used to manipulate the mesh to produce animations, with each key frame in an animation storing information about each joint instead of each vertex. %\cite{gamasutra_char_anim}
 
-\subsection{User Specified Constants}
+\subsection{Environmental and Jump Constants}
 \label{subsection:user_constants}
 % specified constants
 % gravity
@@ -50,13 +67,32 @@ Within the controller there are a number of constants the user can specify, outs
 
 The times indicate how much time the character is expected to spend in the air and winding up for the jump.  Air time in our case consists of the portion of the animation where the character's feet are not in contact with the ground plane.  Windup time refers to the time in which the character has their feet on the ground and is in the process of accelerating their mass upwards as the initial takeoff portion of the jump.  A long windup time gives a very slow, exaggerated jumping motion while a short windup gives a very rapid, clipped motion.  While we allow the user to specify any time for both air and windup, in practice there is a limited range of values that are possible for the character.  Values outside of the reasonable range produce indeterminate or strange behaviors in the simulation, such as either failing to find a muscle load that can feasibly produce the jump or attempting to produce the jump and failing partway.
 
-Error allowance in our simulation is a widely used value indicating a percent error tolerance.  This tolerance is used for determining the allowable difference between the desired values of either resultant linear acceleration and desired acceleration for the torque based simulation, or calculated kinetic energy and total elastic energy for the energy based simulation.  The allowable difference is used for choosing samples and determining if the character has satisfied either the energy or acceleration requirements to complete the windup stage.  The same error allowance is also used to determine if the limb usage is greater than a minimum to complete the windup stage, which is used to force a degree of bend in extreme cases, where very little bend is required as the muscles are extremely strong or the jump distance is very small.  This minimum is applied to compensate for the contraction rates of muscles, which would require a higher degree of bend than our muscle model does, leading to a more realistic simulation.  Below is an example of the inequality using the error allowance.
+%TODO table of values from testing excel sheet showing why it fails
+\begin{table}[ht]
+	\centering
+	\input{path_est_table.tex}
+	\caption{Values for calculated necessary velocity given air and windup times for a skeleton with muscle k values around 20000. This table shows calculated necessary acceleration and velocity for the character given constant jump displacement of $x - x_0 = (0, 0, 1)m$, gravity $g=(0, -10, 0)\frac{m}{s^2}$, and windup time $t_w = 0.2s$, where windup time refers to the amount of time the force of the jump is applied to the character. Values are calculated with variable desired air time $t_a$ in range $[0.1, 1.5]s$ with a step of $0.1s$, where $v_0$ is the velocity when the character leaves the ground, and $a$ is acceleration required to reach $v_0$ from rest.}
+\end{table}
+
+Error allowance in our simulation is a widely used value indicating a percent error tolerance.  This tolerance is used for determining the allowable difference between the desired values of either resultant linear acceleration and desired acceleration for the torque based simulation, or calculated kinetic energy and total elastic energy for the energy based simulation.  The allowable difference is used for choosing samples and determining if the character has satisfied either the energy or acceleration requirements to complete the windup stage.  The same error allowance is also used to determine if the limb usage is greater than a minimum to complete the windup stage, which is used to force a degree of bend in extreme cases, where very little bend is required as the muscles are extremely strong or the jump distance is very small.  This minimum is applied to compensate for the contraction rates of muscles, which would require a higher degree of bend than our muscle model does, leading to a more realistic simulation.  We use an $\epsilon=0.05$ for calculating our percent error allowance, and a separate, floating point epsilon of 0.001 for comparison of floating point numbers.  Below is an example of the inequality using the error allowance.  
 
 \[
 	E_{kinetic} - E_{elastic} \le \epsilon E_{kinetic}
 \]
 
-Lastly, we utilize proportional-integral-derivative (PID) controllers, which require 3 constants for each controller.  A PID controller modifies an input based on error in 3 ways: proportional to the error, proportional to the integral of the error, and proportional to the derivative of the error.  This allows changes to the system to have gains directly related to the error through the proportional component, eliminate steady-state error with the integral component, and to adjust gain with the derivative to improve stability of the changes.  Our system does not require an integral component, meaning our controllers are just PD controllers with their constant for I set to 0.  For our controllers, as we work in discrete frames, our controller calculation is as follows.
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		& Windup & Balance \\ \hline
+		$k_p$ & 0.25 & 1 \\ \hline
+		$k_i$ & 0 & 0 \\ \hline
+		$k_d$ & 0.25 & 1 \\ \hline
+	\end{tabular}
+	\caption[PID controller constants for our simulation]{Above are the proportional ($k_p$), integral ($k_i$), and derivative ($k_d$) constants for the two PID controllers used in our simulations.  One controller handles feedback control of the bend of the character, working with the error between the required output of the muscles and the desired output while the second handles the balance of the character, minimizing the distance of the character's center of mass from the center of the character's supporting polygon through feedback control.  These constants act as a weight on the different components of the controller, adjusting the rate of control and the rate of control relative to the error, constant error, and change in error through the proportional, integral, and derivative components respectively.}
+\end{table}
+
+Lastly, we utilize proportional-integral-derivative (PID) controllers, which require 3 constants for each controller.  A PID controller modifies an input based on error in 3 ways: proportional to the error, proportional to the integral of the error, and proportional to the derivative of the error \cite{pid}.  This allows changes to the system to have gains directly related to the error through the proportional component, eliminate steady-state error with the integral component, and to adjust gain with the derivative to improve stability of the changes.  Our system does not require an integral component, meaning our controllers are just PD controllers with their constant for I set to 0.  For our controllers, as we work in discrete frames, our controller calculation is as follows.
 \[
 	u(t) = k_p e(t) + k_i \displaystyle\sum_{\tau = 0}^t e(\tau) + k_d \left( e(t) - e(t-1) \right)
 \]
@@ -65,19 +101,6 @@ Lastly, we utilize proportional-integral-derivative (PID) controllers, which req
 
 \subsection{Skeleton, Joints, and Muscles}
 \label{subsection:skel_joints}
-
-%TODO make the images the same level of zoom
-\begin{figure}[htp]
-	\centering
-	\begin{subfigure}[b]{0.41\textwidth}
-		\includegraphics[width=\textwidth]{images/simpleSkeleton2Screen1Cropped.png}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.3\textwidth}
-		\includegraphics[width=\textwidth]{images/simpleSkeleton2Screen2Cropped.png}
-	\end{subfigure}
-	\caption[Example of Rigged 3D Character Model]{Above is an example of a character model in \maya{}.  The character skin or mesh is shown in gray, with a rig shown in multicolor.  While it is visualized as a series of spherical joints with connecting solids, the rig itself does not have a visual component in practice.  The rig acts as a skeleton, deforming the mesh of the character model to make animation easier.  Additional tools such as deformer groups and inverse kinematics handles can be used to further simplify the creation of animations for artists.  While these tools simplify movement of the model, the artist still must position each joint for each frame of the animation, which is then stored for later playback.}
-	\label{fig:rig_character}
-\end{figure}
 
 \begin{figure}[ht]
 	\centering
@@ -90,7 +113,7 @@ For the purposes of animation, a joint is an object with an associated position,
 
 Joints are associated with a set of vertices from the mesh to be animated.  Each of these may be associated with multiple joints, and are assigned a weight for each joint which acts as a scale factor for the transformations performed on the vertex.  When a joint is transformed, the transformation is propagated to the children, with the parent as the origin of the child node's coordinate system.
 
-In addition to the animation related functions, joints in our system handle a number of other functions and values.  Each joint keeps track of its constraints on rotation.  Rotations are performed axis-angle, which makes the constraints somewhat more complicated.  Constraints are specified through euler angles: pitch, roll, and yaw.  These correspond to a rotation about the x, z, and y axes respectively in \unity{}'s coordinate system.  When rotating using a traditional rotation matrix through Euler angles, constraints simply prevent any of the angles from exceeding the bounds.  The other issue was how to constrain a joint when rotation about a certain axis was fully prohibited, such as the knee joint which can only rotate about the x-axis.  To constrain the axis-angle rotation thus, simply zero the undesirable component of the vector.  Constraining the axis-angle rotation to a region with degree minima and maxima for rotations around the x, y, and z axes requires definition and constraint to the region of a sphere the rotation constraints covers.  Instead of solving this complex problem, we instead clamp the euler angles to their constrained regions after each rotation.
+In addition to the animation-related functions, joints in our system handle a number of other functions and values.  Each joint keeps track of its constraints on rotation.  Rotations are performed axis-angle, which makes the constraints somewhat more complicated.  Constraints are specified through euler angles: pitch, roll, and yaw.  These correspond to a rotation about the x, z, and y axes respectively in \unity{}'s coordinate system.  When rotating using a traditional rotation matrix through Euler angles, constraints simply prevent any of the angles from exceeding the bounds.  The other issue was how to constrain a joint when rotation about a certain axis was fully prohibited, such as the knee joint which can only rotate about the x-axis.  To constrain the axis-angle rotation thus, simply zero the undesirable component of the vector.  Constraining the axis-angle rotation to a region with degree minima and maxima for rotations around the x, y, and z axes requires definition and constraint to the region of a sphere the rotation constraints covers.  Instead of solving this complex problem, we instead clamp the euler angles to their constrained regions after each rotation.
 
 Along with constraints, each joint tracks a weight, which allows distribution of weight over the body.  This distribution affected the torque simulation heavily as the torque of each joint resulted in a different angular momentum depending on the mass distribution.  The energy simulation considered the character as a rigid body, not considering the changes occurring due to weight distribution except for balance issues and the effects on the muscles as described shortly.  Joints also provide functions for calculating the direction to the next joint for muscle calculations, and a utility function for returning to a resting position.
 
@@ -98,7 +121,7 @@ Several joints form a muscle.  Though any number of joints is possible, our musc
 \begin{align*}
 	F &= -ks \\
 	E &= \frac{1}{2} k s^2
-\end{align*}\
+\end{align*}
 where $k$ is the spring constant for the muscle and $s$ is the displacement of the spring.  The negation of $k$ in the force calculation indicates the force restores the spring to rest.
 
 Considering a muscle as a spring models a muscle at maximum activation.  A relaxed muscle has very little contractual or restoring force, and thus a low value for $k$, while a flexed muscle has a large $k$.  While the muscle model could take muscle activation level into account, we chose the simpler system, allowing the user to specify $k$ for their particular case.  This gives more control for the animation, but also allows for more errors and issues.  The results with poorly chosen $k$ values resemble the results with poorly chosen times.
@@ -106,7 +129,7 @@ Considering a muscle as a spring models a muscle at maximum activation.  A relax
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=10cm]{images/spring_calc/angle_diag.eps}
-	\caption[Diagram of spring displacement calculation]{Above is a visual representation of the angles used to calculate the spring displacement.  The angle of the joint, $\theta$, is used to calculate the displacement $s$ using the bone width $r$ and the law of sines.}
+	\caption[Diagram of spring displacement calculation]{Above is a visual representation of the angles used to calculate the spring displacement.  The angle of the joint, $\theta$, is used to calculate the displacement $s$ using the bone width $r$ and the law of sines.  Angles for the joint are restricted to the range $(0, \pi)$, with values outside of this range producing an undefined $s$.  As a bend in the reverse direction, considering rotation about each axis separately, produces an equivalent situation, the absolute value of the angle is used and the equivalent angle within the range is found.  For negative angles, an adjustment is made in the direction to account for the difference in the direction of the forces produced after calculating the displacement, reversing the sign on the resulting torque or altering the direction of acceleration for the energy calculation.}
 	\label{fig:angleDiag}
 \end{figure}
 
@@ -124,6 +147,7 @@ We derive this equation by calculating the supplementary angle, opposite the spr
 \end{table}
 
 For utility purposes we have each muscle calculate its utilization, giving a value in $[0,1]$.  This utilization is calculated as the dot product of the normalized vectors between the center joint and the anchor points.  The value is then scaled from $[-1, 1]$ to $[0,1]$ by adding 1 and dividing by 2.
+
 
 \section{Center of Mass and Balance}
 \label{section:com}
@@ -190,16 +214,6 @@ One method of simulation we attempted used springs placed along the length of ea
 %	\label{fig:pathExample}
 %	\caption[Example of estimated path]{Example of a path estimation.}
 %\end{figure}
-
-
-%TODO table of values from testing excel sheet showing why it fails
-\begin{table}[ht]
-	\centering
-	\input{path_est_table.tex}
-	\caption[Values for path estimates]{Values for calculated necessary velocity given air and windup times for a skeleton with muscle k values around 20000. This table shows separate columns for each vector component, where $v_0$ is the velocity when the character leaves the ground, $x_0$ is initial position, $x$ is the destination position, $g$ is gravity, $t_a$ is air time, $a$ is acceleration to reach $v_0$ from rest, and $t_w$ is the windup time in which $a$ is applied to reach velocity $v_0$.}
-	\label{tab:path_est}
-\end{table}
-
 Before calculations relating to the model's skeleton are performed, an initial estimate of the jump path is performed.  The estimate uses a forward kinematic calculation to determine the velocity required to move an object through the air from the initial position of the model to a final position.
 
 The user specifies a desired time ($t_{air}$), which indicates the time the character will spend airborne during the animation, i.e. the time between when the character's feet break contact with the ground and when they regain contact with the ground.  This is useful as the desired animation can be more easily adjusted to fit a desired time as an in-game animation or to fit a particular storyboard for an animated film sequence.
@@ -264,6 +278,7 @@ As the windup phase of the torque based simulation fails, it is difficult to qua
 %               Energy                %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Energy Based Calculation}
+\label{section:energy}
 Another way we simulated jumping motions was energy based.  We assumed that the kinetic energy of the character traveling at a calculated velocity from its start position to the destination position is equivalent to the summed elastic potential energies of the leg muscles.  The direction of the velocity is determined by the direction the center of mass is accelerated after the windup phase, and we assume that this is achievable given that the character can achieve the desired energy.  
 
 Change in direction is accomplished through usage of the feet and shift of weight during the acceleration and windup phases, applied through balance and inverse kinematic calculations.  If a character wishes to move forward, they shift their weight back farther during windup, allowing them to accelerate forward farther before becoming airborne.  In the same way, shifting to one side can allow the character to accelerate in the opposite direction for non-forward jumps.  As with the torque-based simulation, the jump follows the stages of path estimation, windup, thrust, in-air, and landing.

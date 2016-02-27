@@ -28,6 +28,11 @@ S.~Ha, Y.~Ye, and C.~K. Liu, ``Falling and landing motion control for character
   2012. [Online]. Available: \url{http://doi.acm.org/10.1145/2366145.2366174}
 \BIBentrySTDinterwordspacing
 
+\bibitem{muscle_based_bipeds}
+T.~Geijtenbeek, M.~van~de Panne, and A.~F. van~der Stappen, ``Flexible
+  muscle-based locomotion for bipedal creatures,'' \emph{ACM Transactions on
+  Graphics}, vol.~32, no.~6, 2013.
+
 \bibitem{composable_controllers}
 \BIBentryALTinterwordspacing
 P.~Faloutsos, M.~van~de Panne, and D.~Terzopoulos, ``Composable controllers for
@@ -35,20 +40,6 @@ P.~Faloutsos, M.~van~de Panne, and D.~Terzopoulos, ``Composable controllers for
   Conference on Computer Graphics and Interactive Techniques}, ser. SIGGRAPH
   '01.\hskip 1em plus 0.5em minus 0.4em\relax New York, NY, USA: ACM, 2001, pp.
   251--260. [Online]. Available: \url{http://doi.acm.org/10.1145/383259.383287}
-\BIBentrySTDinterwordspacing
-
-\bibitem{muscle_based_bipeds}
-T.~Geijtenbeek, M.~van~de Panne, and A.~F. van~der Stappen, ``Flexible
-  muscle-based locomotion for bipedal creatures,'' \emph{ACM Transactions on
-  Graphics}, vol.~32, no.~6, 2013.
-
-\bibitem{motion_intentions}
-\BIBentryALTinterwordspacing
-Y.~Koga, K.~Kondo, J.~Kuffner, and J.-C. Latombe, ``Planning motions with
-  intentions,'' in \emph{Proceedings of the 21st Annual Conference on Computer
-  Graphics and Interactive Techniques}, ser. SIGGRAPH '94.\hskip 1em plus 0.5em
-  minus 0.4em\relax New York, NY, USA: ACM, 1994, pp. 395--408. [Online].
-  Available: \url{http://doi.acm.org/10.1145/192161.192266}
 \BIBentrySTDinterwordspacing
 
 \bibitem{anim_human_athletics}
@@ -67,6 +58,20 @@ T.~Geijtenbeek and N.~Pronost, ``Interactive character animation using
   Forum}, vol.~31, no.~8, pp. 2492--2515, 2012. [Online]. Available:
   \url{http://dx.doi.org/10.1111/j.1467-8659.2012.03189.x}
 \BIBentrySTDinterwordspacing
+
+\bibitem{motion_intentions}
+\BIBentryALTinterwordspacing
+Y.~Koga, K.~Kondo, J.~Kuffner, and J.-C. Latombe, ``Planning motions with
+  intentions,'' in \emph{Proceedings of the 21st Annual Conference on Computer
+  Graphics and Interactive Techniques}, ser. SIGGRAPH '94.\hskip 1em plus 0.5em
+  minus 0.4em\relax New York, NY, USA: ACM, 1994, pp. 395--408. [Online].
+  Available: \url{http://doi.acm.org/10.1145/192161.192266}
+\BIBentrySTDinterwordspacing
+
+\bibitem{pid}
+S.~Bennett, ``Nicholas minorsky and the automatic steering of ships,''
+  \emph{IEEE Control Systems Magazine}, vol.~4, no.~4, pp. 10--15, November
+  1984.
 
 \bibitem{biomech_sport}
 P.~M. McGinnis, \emph{Biomechanics of Sport and Exercise}.\hskip 1em plus 0.5em
@@ -99,8 +104,8 @@ S.~Jain, Y.~Ye, and C.~K. Liu, ``Optimization-based interactive motion
 \BIBentrySTDinterwordspacing
 
 \bibitem{block_spike_survey}
-R.~S. S. G.~C. Roberto~Lobietti, Silvia~Fantozzi, ``A biomechanical comparison
-  of jumping techniques in the volleyball block and spike.''
+R.~Lobietti, S.~Fantozzi, R.~Stagni, and S.~G. Coleman, ``A biomechanical
+  comparison of jumping techniques in the volleyball block and spike.''
 
 \bibitem{robust_ctrl_policies}
 \BIBentryALTinterwordspacing
@@ -125,7 +130,7 @@ J.~Babi\v{c} and J.~Lenar\v{c}i\v{c}, \emph{Vertical Jump: Biomechanical
   InTech, June 2007, ch.~31.
 
 \bibitem{cat_hindlimb_activity}
-Z.~M.~R. Zajac, Felix~E. and W.~S. Levine, ``Hindlimb muscular activity,
+F.~E. Zajac, M.~R. Zomlefer, and W.~S. Levine, ``Hindlimb muscular activity,
   kinetics and kinematics of cats jumping to their maximum achievable
   heights,'' \emph{The Journal of Experimental Biology}, vol.~91, pp. 73--86,
   1980.
