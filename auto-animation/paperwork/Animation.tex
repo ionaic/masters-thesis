@@ -102,22 +102,23 @@ Lastly, we utilize proportional-integral-derivative (PID) controllers, which req
 \subsection{Skeleton, Joints, and Muscles}
 \label{subsection:skel_joints}
 
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=10cm]{images/spring_calc/spring_angle_calc.eps}
-	\caption[Diagram of muscle setup]{Visual representation of the setup of bones and muscles for a single joint.  This illustrates the method by which we calculate the spring displacement, taking the bones as rigid blocks which separate and stretch the string as the joint bends.}
-	\label{fig:forceCalc}
-\end{figure}
-
 For the purposes of animation, a joint is an object with an associated position, associated transformation, a parent joint, and some number of child joints.  In the case of the root, the parent joint is absent and in the case of the end joints such as tips of the fingers there are no child joints.  Each child joint is connected to the parent by a rigid bone, which protrudes from the parent at a given resting angle.  These joints are structured in a tree, as the parent and child joints imply, with the root of the tree at the pelvis.  This tree serves as a hierarchy for transformations.  Figure \ref{fig:rig_character} shows the skeleton for our character.
 
 Joints are associated with a set of vertices from the mesh to be animated.  Each of these may be associated with multiple joints, and are assigned a weight for each joint which acts as a scale factor for the transformations performed on the vertex.  When a joint is transformed, the transformation is propagated to the children, with the parent as the origin of the child node's coordinate system.
 
-In addition to the animation-related functions, joints in our system handle a number of other functions and values.  Each joint keeps track of its constraints on rotation.  Rotations are performed axis-angle, which makes the constraints somewhat more complicated.  Constraints are specified through euler angles: pitch, roll, and yaw.  These correspond to a rotation about the x, z, and y axes respectively in \unity{}'s coordinate system.  When rotating using a traditional rotation matrix through Euler angles, constraints simply prevent any of the angles from exceeding the bounds.  The other issue was how to constrain a joint when rotation about a certain axis was fully prohibited, such as the knee joint which can only rotate about the x-axis.  To constrain the axis-angle rotation thus, simply zero the undesirable component of the vector.  Constraining the axis-angle rotation to a region with degree minima and maxima for rotations around the x, y, and z axes requires definition and constraint to the region of a sphere the rotation constraints covers.  Instead of solving this complex problem, we instead clamp the euler angles to their constrained regions after each rotation.
+In addition to the animation-related functions, joints in our system handle a number of other functions and values.  Each joint keeps track of its constraints on rotation.  Rotations are performed axis-angle, that is a rotation is specified as a rotation $\theta$ degrees around an arbitrary axis $\vec{e} \in \mathbb{R}^3$. This makes the constraints somewhat more complicated as compared to euler angles in exchange for simpler, rotations.  
+
+Constraints, however, are specified through euler angles: pitch, roll, and yaw.  These correspond to a rotation about the x, z, and y axes respectively in \unity{}'s coordinate system.  When rotating using a traditional rotation matrix through Euler angles, constraints simply prevent any of the angles from exceeding the bounds.  The other issue was how to constrain a joint when rotation about a certain axis was fully prohibited, such as the knee joint which can only rotate about the x-axis.  To constrain the axis-angle rotation thus, simply zero the undesirable component of the vector.  Constraining the axis-angle rotation to a region with degree minima and maxima for rotations around the x, y, and z axes requires definition and constraint to the region of a sphere the rotation constraints covers.  Instead of solving this complex problem, we instead clamp the euler angles to their constrained regions after each rotation, forcing the controller and the inverse kinematics solver to operate within the region and thus reducing the possible solutions for each to only those solutions within the region.
 
 Along with constraints, each joint tracks a weight, which allows distribution of weight over the body.  This distribution affected the torque simulation heavily as the torque of each joint resulted in a different angular momentum depending on the mass distribution.  The energy simulation considered the character as a rigid body, not considering the changes occurring due to weight distribution except for balance issues and the effects on the muscles as described shortly.  Joints also provide functions for calculating the direction to the next joint for muscle calculations, and a utility function for returning to a resting position.
 
-Several joints form a muscle.  Though any number of joints is possible, our muscles only utilize 3 joints each.  These joints serve as anchor points, as seen in \cite{muscle_based_bipeds}.  The muscle itself is a linear spring, obeying Hooke's law.  This gives force ($F$) and elastic energy ($E_{elastic}$) as
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=10cm]{images/spring_calc/spring_anchors.eps}
+	\caption[Diagram of muscle definition showing anchor points and joints used for specification]{Pictured is a diagram of how a muscle is defined.  Three joints are used: joint1, joint2, and centerJoint, where centerJoint is the joint the muscle crosses.}
+\end{figure}
+
+Several joints form a muscle.  Though any number of joints is possible, our muscles only utilize 3 joints each.  These joints serve as anchor points for the muscles, with each anchor point specified as a number in $[0, 1]$ between the center joint, i.e. the joint the muscle crosses, and the other joint the bone connects to.  In this way three joints describe the path of a muscle in our system.  The muscle itself is a linear spring, obeying Hooke's law.  This gives force ($F$) and elastic energy ($E_{elastic}$) as
 \begin{align*}
 	F &= -ks \\
 	E &= \frac{1}{2} k s^2
@@ -142,7 +143,7 @@ We derive this equation by calculating the supplementary angle, opposite the spr
 \begin{table}[ht]
 	\centering
 	\input{force_est.tex}
-	\caption[Table of estimated forces given $k$ values and times]{}
+	\caption[Table of estimated forces given $k$ values and joint angles]{Above is a table of different displacement, force, and energy values calculated given a constant bone width of $0.05m$, varying $k$ and varying angle of the joint.  By using this and similar tables, we compared the calculated values to an approximate, expected value calculated by assuming a human weighing $80kg$ jumps producing an upward displacement of }
 	\label{tab:force_est}
 \end{table}
 

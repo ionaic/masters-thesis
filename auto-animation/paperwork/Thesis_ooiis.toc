@@ -18,27 +18,27 @@
 \contentsline {subsection}{\numberline {3.2.1}Creation of the Model and Rig}{15}{subsection.3.2.1}
 \contentsline {subsection}{\numberline {3.2.2}Environmental and Jump Constants}{17}{subsection.3.2.2}
 \contentsline {subsection}{\numberline {3.2.3}Skeleton, Joints, and Muscles}{20}{subsection.3.2.3}
-\contentsline {section}{\numberline {3.3}Center of Mass and Balance}{23}{section.3.3}
-\contentsline {section}{\numberline {3.4}Inverse Kinematic Solving}{25}{section.3.4}
-\contentsline {section}{\numberline {3.5}Torque-based simulation}{26}{section.3.5}
+\contentsline {section}{\numberline {3.3}Center of Mass and Balance}{25}{section.3.3}
+\contentsline {section}{\numberline {3.4}Inverse Kinematic Solving}{26}{section.3.4}
+\contentsline {section}{\numberline {3.5}Torque-based simulation}{27}{section.3.5}
 \contentsline {subsection}{\numberline {3.5.1}Path Estimation}{27}{subsection.3.5.1}
-\contentsline {subsection}{\numberline {3.5.2}Windup}{28}{subsection.3.5.2}
-\contentsline {subsubsection}{\numberline {3.5.2.1}Sampling}{29}{subsubsection.3.5.2.1}
-\contentsline {subsection}{\numberline {3.5.3}Thrust and Takeoff}{31}{subsection.3.5.3}
-\contentsline {section}{\numberline {3.6}Energy Based Calculation}{32}{section.3.6}
+\contentsline {subsection}{\numberline {3.5.2}Windup}{29}{subsection.3.5.2}
+\contentsline {subsubsection}{\numberline {3.5.2.1}Sampling}{30}{subsubsection.3.5.2.1}
+\contentsline {subsection}{\numberline {3.5.3}Thrust and Takeoff}{32}{subsection.3.5.3}
+\contentsline {section}{\numberline {3.6}Energy Based Calculation}{33}{section.3.6}
 \contentsline {subsection}{\numberline {3.6.1}Path Estimation and Windup}{33}{subsection.3.6.1}
-\contentsline {subsection}{\numberline {3.6.2}Solutions to the Energy Assignment Problem}{34}{subsection.3.6.2}
+\contentsline {subsection}{\numberline {3.6.2}Solutions to the Energy Assignment Problem}{35}{subsection.3.6.2}
 \contentsline {subsection}{\numberline {3.6.3}Thrust, In Air, and Landing}{35}{subsection.3.6.3}
-\contentsline {section}{\numberline {3.7}Summary}{35}{section.3.7}
-\contentsline {chapter}{\numberline {4.}VISUALIZATION}{37}{chapter.4}
-\contentsline {section}{\numberline {4.1}Motivation and Inspiration}{37}{section.4.1}
-\contentsline {section}{\numberline {4.2}Motion Visualization}{38}{section.4.2}
-\contentsline {section}{\numberline {4.3}Summary}{41}{section.4.3}
-\contentsline {chapter}{\numberline {5.}RESULTS}{43}{chapter.5}
-\contentsline {section}{\numberline {5.1}Output Animations}{45}{section.5.1}
-\contentsline {section}{\numberline {5.2}Limitations}{46}{section.5.2}
-\contentsline {section}{\numberline {5.3}Summary}{49}{section.5.3}
-\contentsline {chapter}{\numberline {6.}FUTURE WORK AND CONCLUSION}{56}{chapter.6}
-\contentsline {section}{\numberline {6.1}Future Work}{56}{section.6.1}
-\contentsline {section}{\numberline {6.2}Conclusion and Summary}{57}{section.6.2}
-\contentsline {chapter}{References}{59}{section*.34}
+\contentsline {section}{\numberline {3.7}Summary}{36}{section.3.7}
+\contentsline {chapter}{\numberline {4.}VISUALIZATION}{38}{chapter.4}
+\contentsline {section}{\numberline {4.1}Motivation and Inspiration}{38}{section.4.1}
+\contentsline {section}{\numberline {4.2}Motion Visualization}{39}{section.4.2}
+\contentsline {section}{\numberline {4.3}Summary}{42}{section.4.3}
+\contentsline {chapter}{\numberline {5.}RESULTS}{44}{chapter.5}
+\contentsline {section}{\numberline {5.1}Output Animations}{46}{section.5.1}
+\contentsline {section}{\numberline {5.2}Limitations}{47}{section.5.2}
+\contentsline {section}{\numberline {5.3}Summary}{50}{section.5.3}
+\contentsline {chapter}{\numberline {6.}FUTURE WORK AND CONCLUSION}{57}{chapter.6}
+\contentsline {section}{\numberline {6.1}Future Work}{57}{section.6.1}
+\contentsline {section}{\numberline {6.2}Conclusion and Summary}{58}{section.6.2}
+\contentsline {chapter}{References}{60}{section*.35}
