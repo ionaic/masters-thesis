@@ -115,7 +115,8 @@ Along with constraints, each joint tracks a weight, which allows distribution of
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=10cm]{images/spring_calc/spring_anchors.eps}
-	\caption[Diagram of muscle definition showing anchor points and joints used for specification]{Pictured is a diagram of how a muscle is defined.  Three joints are used: joint1, joint2, and centerJoint, where centerJoint is the joint the muscle crosses.}
+	\caption[Diagram of muscle definition showing anchor points and joints used for specification]{Pictured is a diagram of how a muscle is defined.  Three joints are used: joint1, joint2, and centerJoint, where centerJoint is the joint the muscle crosses.  The center of rotation for the joint is conceptualized as at the edge of the bone as shown above, with the movement modeled after connecting a pair of blocks with a rubber band, though the joint is positioned at the center of the bone.  As the bone used to calculate the muscle forces is only loosely related to the bone of the character's rig, this does not introduce errors as the model is kept internally consistent with only the angle and relative positions of the joints used for the calculation.}
+	\label{fig:muscle_anchors}
 \end{figure}
 
 Several joints form a muscle.  Though any number of joints is possible, our muscles only utilize 3 joints each.  These joints serve as anchor points for the muscles, with each anchor point specified as a number in $[0, 1]$ between the center joint, i.e. the joint the muscle crosses, and the other joint the bone connects to.  In this way three joints describe the path of a muscle in our system.  The muscle itself is a linear spring, obeying Hooke's law.  This gives force ($F$) and elastic energy ($E_{elastic}$) as
@@ -123,7 +124,9 @@ Several joints form a muscle.  Though any number of joints is possible, our musc
 	F &= -ks \\
 	E &= \frac{1}{2} k s^2
 \end{align*}
-where $k$ is the spring constant for the muscle and $s$ is the displacement of the spring.  The negation of $k$ in the force calculation indicates the force restores the spring to rest.
+where $k$ is the spring constant for the muscle and $s$ is the displacement of the spring.  The negation of $k$ in the force calculation indicates the force restores the spring to rest.  These anchor points and the method of muscle specification are shown in Figure \ref{fig:muscle_anchors}.  While the muscle in Figure \ref{fig:muscle_anchors} is at rest when the joint is straightened, the rest angle can be specified arbitrarily to handle, for example, the right angles of the muscles crossing the ankles and hips, as the hip muscles span from pelvis to hip to knee.
+
+Intuitively, this models the bones as blocks, with a spring representing a combination of the muscle and tendons connecting the blocks.  When the joint rotates, the spring necessarily stretches, producing a restoring force attempting to retract the spring to its initial length.  This then produces a torque on the blocks involved, causing a torque on the blocks at the joint.  As one block is more strongly anchored than the other, i.e. the part of the joint chain closer to the foot and thus the ground is less able to move freely as more of the character's weight is resting on it, one bone rotates about the joint center.  The user is free to then restrict this motion further by specifying ranges of motion for the joint to mimic human capabilities.
 
 Considering a muscle as a spring models a muscle at maximum activation.  A relaxed muscle has very little contractual or restoring force, and thus a low value for $k$, while a flexed muscle has a large $k$.  While the muscle model could take muscle activation level into account, we chose the simpler system, allowing the user to specify $k$ for their particular case.  This gives more control for the animation, but also allows for more errors and issues.  The results with poorly chosen $k$ values resemble the results with poorly chosen times.
 
@@ -140,32 +143,29 @@ Along with the $s$ values, a muscle keeps track of its center joint, anchor join
 \]
 We derive this equation by calculating the supplementary angle, opposite the spring displacement.  This angle can therefore be expressed as $\pi - \theta$. The sum of the remaining angles of the triangle formed by the spring displacement and bone ends can then be expressed as $\frac{\theta}{2}$.  These angles are shown in Figure \ref{fig:angleDiag}. We assume uniform bone width, which allows a simpler calculation of the angles.
 
-\begin{table}[ht]
-	\centering
-	\input{force_est.tex}
-	\caption[Table of estimated forces given $k$ values and joint angles]{Above is a table of different displacement, force, and energy values calculated given a constant bone width of $0.05m$, varying $k$ and varying angle of the joint.  By using this and similar tables, we compared the calculated values to an approximate, expected value calculated by assuming a human weighing $80kg$ jumps producing an upward displacement of }
-	\label{tab:force_est}
-\end{table}
+For debugging purposes we have each muscle calculate its utilization, giving a value in $[0,1]$.  Utilization is a number used to determine if a muscle is being stretched and producing a force, indicating if the muscle is too weak or is simply not being used by the simulation.  This utilization is calculated as the dot product of the normalized vectors between the center joint and the anchor points.  The value is then scaled from $[-1, 1]$ to $[0,1]$ by adding 1 and dividing by 2.
 
-For utility purposes we have each muscle calculate its utilization, giving a value in $[0,1]$.  This utilization is calculated as the dot product of the normalized vectors between the center joint and the anchor points.  The value is then scaled from $[-1, 1]$ to $[0,1]$ by adding 1 and dividing by 2.
+As an additional debugging tool and method of determining the expected ranges of values, we calculated the values in Table \ref{tab:force_est}.  By testing different ranges of values and comparing with some expected values, we determined empirically a range of values that should produce ``normal'' human simulation, i.e. expected strength values required for several different heights given body mass and proportions.  An military study of male aviators in 1988 provided information on mass, mass distribution, and the dimensions of different body sections.  Range of motion data was obtained from Boone and Azen who compared clinical measurements with estimations in the handbook of The American Academy of Orthopaedic Surgeons as a reference \cite{Boone756}.
 
 
-\section{Center of Mass and Balance}
+\section{Center of Mass and Maintaining Balance}
 \label{section:com}
 The center of mass (CoM) is calculated as the centroid of the character.  More specifically, joint positions are averaged, with a weight assigned to each joint based on the weight of the limb associated.  The CoM must be recalculated with each update to the character's pose as the shift in weight changes the position.
 
 Using the calculated CoM, the balance of the character can be determined by the position of the CoM relative to the supporting polygon of the character.  The supporting polygon is a polygon determined by the points of contact of the character with the ground or other supports which provide a normal force to counteract gravity and other external forces.  During the windup and thrust phases, the character maintains contact with the ground through their feet, with the outer edges of the feet forming two sides of a quad, a line between the two feet at the toes forming a third, and a line between the heels of the character forming the fourth side.  This polygon should be parallel to the ground plane, and is positioned at the bottom of the feet.  If the character's center of mass is over this supporting polygon, the character is balanced.
 
-To quantify balance, the vector between the center of the supporting polygon and the position of the CoM is measured.  This vector is then projected into the same plane as the supporting polygon, giving a 2 dimensional error between where the CoM is currently and where it would need to be to be perfectly centered.  The PD controller then attempts to minimize the magnitude of this vector by moving in the proscribed direction while bending to achieve the desired force, constraining the number of solutions possible to provide the desired force.
+To quantify balance, the vector between the center of the supporting polygon and the position of the CoM is measured.  This vector is then projected into the same plane as the supporting polygon, giving a 2 dimensional error between where the CoM is currently and where it would need to be to be perfectly centered.  The PD controller then attempts to minimize the magnitude of this vector by moving in the prescribed direction while bending to achieve the desired force, constraining the number of solutions possible to provide the desired force.
 
 % does the vertical distance have effect?  you're going to fall over more easily if you're on a stilt as opposed to crouching over your feet as the moment will be (bigger? is that bigger?).  the lever will be more able to move your weight easily
 
 % upper body rebalancing
-As the character bends for the windup and extends for thrusting, the character must rebalance without using its legs in order to maintain the calculated load on the muscles.  For these cases, the upper body is used to rebalance.  The character bends forwards, backwards, left, and right to shift the weight of the upper body to offset the balance error created by the lower body pose.  This is performed using a PD controller, with the error input as the balance error as calculated above, and the output as the amount to rotate in each direction subject to skeletal constraints.
+As the character bends for the windup and extends for thrusting, the character must rebalance with minimal change in flexion, i.e. height of the hips, in order to maintain the calculated load on the muscles.  For these cases, the upper body is used to rebalance.  The character bends forwards, backwards, left, and right to shift the weight of the upper body to offset the balance error created by the lower body pose.  This is performed using a PD controller, with the error input as the balance error as calculated above, and the output as the amount to rotate in each direction subject to skeletal constraints.
 
-\section{Inverse Kinematic Solving}
+\section{Inverse Kinematic Solving for Ankle and Knee Position}
 \label{section:ik}
-As the skeleton is a hierarchy assumed to be rooted at the hip, a problem arises with applying rotations to joints.  To keep a character's feet rooted to the floor as is expected, positions must be solved for using inverse kinematics.  Given the desired position for the hip, and the desired position of the foot, the joint angles and positions of the knee and ankle are solved for.  Constraints are placed on each joint, limiting the range of motion to an expected range as well as limiting the axes about which each joint can rotate, preventing unnatural directions of motion.  These values are specified per joint and can be edited by the user to simulate varied levels of flexibility or alternate body shapes.
+
+
+As the skeleton is a hierarchy assumed to be rooted at the hip, a problem arises with applying rotations to joints.  To keep a character's feet rooted to the floor as is expected, positions must be solved for using inverse kinematics.  Given the desired position for the hip, and the desired position of the foot, we solve for the joint angles and positions of the knee and ankle.  Constraints are placed on each joint, limiting the range of motion to an expected range as well as limiting the axes about which each joint can rotate, preventing unnatural directions of motion.  These values are specified per joint and can be edited by the user to simulate varied levels of flexibility or alternate body shapes.
 
 %TODO alternate body with digitigrade, Tauren or whatever from WoW, raptor style...
 %TODO Further justification of why choosing this method instead of learning is that this is more user-tunable as opposed to a learning heavy model which doesn't allow as much user tuning
@@ -176,7 +176,14 @@ As the skeleton is a hierarchy assumed to be rooted at the hip, a problem arises
 %	\label{tab:jointConstraints}
 %\end{table}
 
-A solution to the joint positions is found greedily using these constraints, and gradient descent method which works on single-chains of joints.  A single chain of joints is a sequence of joints in which each joint has a single child and a single parent, with one root joint and one leaf joint which lack a parent and child respectively.  Given the hierarchy of joints and a desired position for one of the non-root nodes of the chain, cyclic-coordinate descent (CCD) is used to determine rotations of the joints between the joint in question and the root that will minimize the distance between the joint in question and the desired position.  This algorithm is shown in Algorithm \ref{alg:ik}.
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=2.5in]{images/ik/ccd.eps}
+	\caption[Diagram of the process of CCD Inverse Kinematics]{Depicted is a chain of joints, with a root joint, an end joint E, and two joints in the middle of the chain.  To move the end joint E, which may for example be a hand or foot, to position D, iterate over the chain of joints and calculate the vectors between the current and end joint positions as well as the vector between the current joint position and the destination for the end joint.  The dot product of the normalized vectors then gives the cosine of the angle between these vectors.  Rotating R by this angle will then align the vectors, moving E towards position D.  The dotted gray circle shows an example target area in which the joint E is considered ``close enough'' to position D, allowing the algorithm to terminate if the center of E is anywhere within that circle.  If D is farther away than the total length of the joint chain, the algorithm is set to terminate after a user-specified number of iterations, in our case 30.}
+	\label{fig:ccd}
+\end{figure}
+
+A solution to the joint positions is found greedily using these constraints, and gradient descent method which works on single-chains of joints.  A single chain of joints is a sequence of joints in which each joint has a single child and a single parent, with one root joint and one leaf joint which lack a parent and child respectively.  This hierarchy may be specified as a subtree of the skeleton in which these conditions hold true, as in our simulation where the joints from the hip to the heel are considered separately for each leg.  Given the hierarchy of joints and a desired position for one of the non-root nodes of the chain, cyclic-coordinate descent (CCD) is used to determine rotations of the joints between the joint in question and the root that will minimize the distance between the joint in question and the desired position as done by Lander \cite{kine1, kine2}.  This algorithm is shown in Algorithm \ref{alg:ik}, with a visual representation of a calculation for a single joint in the chain shown in Figure \ref{fig:ccd}.
 
 \begin{algorithm}[ht]
 	\centering
@@ -184,25 +191,29 @@ A solution to the joint positions is found greedily using these constraints, and
 		\Function{SingleChainIK}{C, D, E}
 		\Repeat
 		\ForAll{Joints R between E and the root, starting with the end E}
-			\State $\theta_R = \vec{RD} \times \vec{RE}$
+			\State $\theta = \cos^{-1} \left(\vec{RD} \cdot \vec{RE}\right)$
+			\State Rotate R by $\theta$
 		\EndFor
 		\Until{\textit{Desired number of iterations performed} or \textbf{E} \textit{is close enough to} \textbf{D}}
 		\EndFunction
 	\end{algorithmic}
-	\caption[Single chain IK algorithm]{Given chain of joints C, move joint E to position D using cyclic coordinate descent.  This process iteratively moves joint E closer to the location D, concentrating on each joint R in the chain one at a time and solving the geometric problem of minimizing distance between E and D by rotating R.}
+	\caption[Single chain IK algorithm]{Given chain of joints C, move joint E to position D using cyclic coordinate descent.  This process iteratively moves joint E closer to the location D, concentrating on each joint R in the chain one at a time and solving the geometric problem of minimizing distance between E and D by rotating R.  D is the desired position of the body part, such as where the toe should be placed and E is the joint that should be moved to the desired position.  The vectors RD and RE are the vectors between the positions of joints R and E, and joint R and the desired location D in $\mathbb{R}^3$.}
 	\label{alg:ik}
 \end{algorithm}
 
-This approach is simpler to implement than other approaches such as the pseudo-inverse of the Jacobian for the specific case of single chains of joints.  In addition, this approach allows some flexibility, specifically in constraints of the joints.  As each joint is addressed individually instead of the system as a whole, any constraints placed on the joint can easily be accounted for by simply preventing the joint from rotating out of the desired range while the rest of the system continues to move as close as possible to the solution.  One downside is that a halting condition must be determined, through a minimum acceptable distance.  To handle the case where the joint cannot be moved within this minimum distance, a maximum number of iterations must be designated.  In practice, 100 iterations is enough to converge, with as few as 30 working well for our simulation.
+
+This approach is simpler to implement than other approaches such as the pseudo-inverse of the Jacobian for the specific case of single chains of joints.  In addition, this approach allows some flexibility, specifically in constraints of the joints.  As each joint is addressed individually instead of the system as a whole, any constraints placed on the joint can easily be accounted for by simply preventing the joint from rotating out of the desired range while the rest of the system continues to move as close as possible to the solution.  One downside is that a halting condition must be determined, through a minimum acceptable distance.  Additionally, the algorithm does not halt if D is farther from the root position of the chain than the length of the chain, i.e. it is farther away than the length of the limb.  To handle the case where the joint cannot be moved within this minimum distance, a maximum number of iterations must be designated.  In practice, 100 iterations is enough to converge, with as few as 30 working well for our simulation.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %               Torque Method                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Torque-based simulation}
 \label{section:torque}
-One method of simulation we attempted used springs placed along the length of each limb to produce a torque on the joints of the character.  This method failed for unknown reasons.  Torques on the joints results from the force of the muscle pulling a bone to rotate about the joint, resulting in a complex system of motion with each bone rotating around the joints.  These rotations combine to move the body in a direction, allowing a character's control to be centered around degree and timing of muscle activation. Our method for this type of simulation was inspired by the other work in complex muscle based simulation for bipeds such as in Geijtenbeek et al.. \cite{muscle_based_bipeds}  In our case, we take the muscle as constantly activated, which means that its spring constant defines the strength of the muscle, allowing the user to set the activation manually.  This muscle is then stretched to produce the desired torque by bending the affected limb.  The restoring force of the spring-muscles produce torques which are used to calculate angular momentum, and from that linear momentum.  Linear momentum is then used to calculate the resulting acceleration.
+One method of simulation we attempted used springs placed along the length of each limb to produce a torque on the joints of the character.  Torques on the joints result from the force of the muscle pulling a bone to rotate about the joint, resulting in a complex system of motion with each bone rotating around the joints.  These rotations combine to move the body in a direction, allowing a character's control to be centered around degree and timing of muscle activation. 
 
-\subsection{Path Estimation}
+Our method for this type of simulation was inspired by the other work in complex muscle based simulation for bipeds such as in Geijtenbeek et al. \cite{muscle_based_bipeds}.  In our case, we take the muscle as constantly activated, which means that its spring constant defines the strength of the muscle, allowing the user to set the activation manually.  This muscle is then stretched to produce the desired torque by bending the affected limb.  The restoring force of the spring-muscles produce torques which are used to calculate angular momentum, and from that linear momentum.  Linear momentum is then used to calculate the resulting acceleration.
+
+\subsection{Calculation of Required Velocity and Acceleration Given Time Constraints}
 \label{subsection:torque_path}
 %\begin{figure}[ht]
 %	\centering
@@ -237,7 +248,7 @@ where $\vec{v_i}$ is the initial velocity of the character before the jump calcu
 
 %There is an additional modification to the equation of $\frac{1}{2} g t_{air}$, which considers that the upward velocity of the acceleration is determined by gravity.  Assuming that gravity is a vector with only a vertical component, we can calculate the necessary vertical component for our acceleration by calculating the initial velocity achieved from our calculated acceleration by using the fact that $a = \dfrac{dv}{dt} = \dfrac{v - v_0}{t}$ or $v = v_0 + at$.  By calculating the velocity resulting from the windup, $v = at$ we can substitute this into 
 
-\subsection{Windup}
+\subsection{Windup Animation of the Character Based on Required Acceleration}
 \label{subsection:torque_windup}
 %From this force, the acceleration can be determined using $F=ma$ from classical mechanics.  This assumes the character is a rigid body with negligible air resistance acted upon by gravity of $10\frac{m}{s}$.  The mass is calculated as the summed total of the distributed masses assigned to the character's limbs, which are summed to produce a total mass for the character.
 
@@ -245,10 +256,12 @@ Using the calculated velocity and acceleration, we compare the desired values to
 
 Angular momentum is derived from torque, as \[\vec{\tau} = \dfrac{d\vec{L}}{dt}\] where $\vec{\tau}$ is torque and $\vec{L}$ is the angular momentum.  The angular momentum can then be calculated as $\vec{\tau} t_{windup}$.  Angular momentum is used to calculate linear momentum by finding the tangent to the circle at the moment of takeoff.  The magnitude of the linear momentum is then calculated as \[p = \frac{L}{r}\] which then gives the acceleration as follows \[ \vec{a} = \frac{1}{m}\left(\dfrac{d\vec{p}}{dt}\right)\] where m is the mass of the character.
 
-\subsubsection{Sampling}
+\subsubsection{Sampling of Torque Values at Uniformly Distributed Pelvis Positions}
 \label{subsubsection:torque_sample}
 
-In order to determine the position of the character that produces this acceleration, we sample uniformly over the region in which the character is balanced.   A sample is described by the position of the pelvis joint, the resulting linear momentum, and a vector describing the displacement of the character's center of mass from the center of its support to indicate balance as described above.  Samples were restricted to a box defined by a rectangle around the character's feet with a height reaching the position of the character's pelvis when standing at rest.  Any sample outside of this volume was assumed to put the character off balance.  Samples were then taken at uniformly distributed positions in this region.  The calculated acceleration was projected onto the desired acceleration vector through the dot product, with values greater than or equal to the desired acceleration's magnitude indicating a plausible solution.  These plausible solutions are then ordered by their balance error, calculated as the difference in position between the center of mass and the center of the supporting polygon.  The first result of this list is then chosen as the candidate answer and the pelvis is moved towards this sample.  At each iteration this is repeated until the desired acceleration is achieved.  A plot of samples for a particular set of values, in this case all muscle constants set to $k=20000$, is shown in Figure \ref{fig:torque_samples}.  An equation for the described calculation is shown below.
+In order to determine the position of the character that produces this acceleration, we sample uniformly over the region in which the character is balanced.   A sample is described by the position of the pelvis joint, the resulting linear momentum, and a vector describing the displacement of the character's center of mass from the center of its support to indicate balance as described above.  Samples were restricted to a box defined by a rectangle around the character's feet with a height reaching the position of the character's pelvis when standing at rest.  Any sample outside of this volume was assumed to put the character off balance.  
+
+Samples were then taken at uniformly distributed positions in this region.  The calculated acceleration was projected onto the desired acceleration vector through the dot product, with values greater than or equal to the desired acceleration's magnitude indicating a plausible solution.  These plausible solutions are then ordered by their balance error, calculated as the difference in position between the center of mass and the center of the supporting polygon.  The first result of this list is then chosen as the candidate answer and the pelvis is moved towards this sample.  At each iteration this is repeated until the desired acceleration is achieved.  A plot of samples for a particular set of values, in this case all muscle constants set to $k=20000$, is shown in Figure \ref{fig:torque_samples}.  An equation for the described calculation is shown below.
 
 \[
 	E_{accel} = \vec{a_{desired}}^2 - \vec{a_{desired}} \cdot \vec{a_{calc}} \le \epsilon \left(\vec{a_{desired}}^2\right)
@@ -298,6 +311,15 @@ Like with the torque-based method, we took samples in the region where the chara
 \end{figure}
 
 Our sampling method does not guarantee an optimal solution, but can be seen as guaranteeing an approximate minimum.  We choose a sample with minimum balance error and iteratively approach it, which greedily finds the nearest sample to the rest pose which satisfies the energy equivalence, $E_{kinetic} = \displaystyle\sum E_{elastic}$.  While not guaranteed to be the minimum, this guarantees that we find a near-minimum value assuming the region is continuous.  Figure \ref{fig:energy_samples} is a graph of samples for a particular run with all muscle $k$ values set to 20000.  Color indicates the calculated energy for the sample point, with higher saturation of blue indicating a higher energy value for the sample.  The higher energy samples tend to be clustered towards the center of the sample group, which meets expectations as most humans will bend to a position such that their hip is between its normal position when standing and the level of their knees.
+
+Table \ref{tab:force_est} shows examples of estimated values produced by the muscle crossing the knee joint given several different $k$ values over a range of joint angles.  By comparing the summed calculated energy output with the desired, we check if the current pose produces enough elastic energy for the intended motion.
+
+\begin{table}[ht]
+	\centering
+	\input{force_est.tex}
+	\caption[Table of estimated forces given $k$ values and joint angles]{Above is a table of different displacement (s), force (F), and energy (E) values calculated given a constant bone width of $0.05m$, varying $k$ and varying angle of the joint.  These values are for a single knee, with one muscle crossing the joint.}
+	\label{tab:force_est}
+\end{table}
 
 %Given that work is the change in kinetic energy, velocity
 %\begin{align*}
