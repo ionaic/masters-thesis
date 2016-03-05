@@ -207,7 +207,7 @@ This approach is simpler to implement than other approaches such as the pseudo-i
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %               Torque Method                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Torque-based simulation}
+\section{Torque-Based Simulation}
 \label{section:torque}
 One method of simulation we attempted used springs placed along the length of each limb to produce a torque on the joints of the character.  Torques on the joints result from the force of the muscle pulling a bone to rotate about the joint, resulting in a complex system of motion with each bone rotating around the joints.  These rotations combine to move the body in a direction, allowing a character's control to be centered around degree and timing of muscle activation. 
 
@@ -226,9 +226,9 @@ Our method for this type of simulation was inspired by the other work in complex
 %	\label{fig:pathExample}
 %	\caption[Example of estimated path]{Example of a path estimation.}
 %\end{figure}
-Before calculations relating to the model's skeleton are performed, an initial estimate of the jump path is performed.  The estimate uses a forward kinematic calculation to determine the velocity required to move an object through the air from the initial position of the model to a final position.
+Before calculations relating to the model's skeleton are performed, an initial estimate of the jump path is performed.  The estimate uses a forward kinematic calculation to determine the velocity required to move an object through the air from the initial position of the model to a final position.  This path is specified indirectly by the user by setting time in air, gravity, and desired displacement in three dimensional space, which necessarily describe a parabolic path assuming that displacement and gravity are not 0, and that gravity is an attractive force pulling the character toward the ground.  While perhaps somewhat less intuitive than positioning the character exactly how the artist wants it for each frame, this allows a wide range of physically plausible, simple jumps to be produced.  In such cases, this reduces work excepting special case jumps, such as those found in Warner Brothers' Looney Toons.
 
-The user specifies a desired time ($t_{air}$), which indicates the time the character will spend airborne during the animation, i.e. the time between when the character's feet break contact with the ground and when they regain contact with the ground.  This is useful as the desired animation can be more easily adjusted to fit a desired time as an in-game animation or to fit a particular storyboard for an animated film sequence.
+The user specifies a desired time ($t_{air}$) that indicates the time the character will spend airborne during the animation, i.e. the time between when the character's feet break contact with the ground and when they regain contact with the ground.  Changes to this time affect the animation length as well as modify the peak height of the jump, as a longer time will necessarily require the character to be airborne longer, and thus be higher in the air.  While this reduces the direct control the artist has, this provides a simple way to control animation length.
 
 The initial velocity is given by a manipulation of a simple kinematic equation \[ \vec{x} = \vec{x_0} + \vec{v_0} t_{air} + \frac{1}{2} \vec{a} t_{air}^2 \] derived from the relationships between acceleration ($\vec{a}$), velocity ($\vec{v}$), and displacement ($\vec{x} - \vec{x_0}$), namely
 \begin{align*}
@@ -259,7 +259,7 @@ Angular momentum is derived from torque, as \[\vec{\tau} = \dfrac{d\vec{L}}{dt}\
 \subsubsection{Sampling of Torque Values at Uniformly Distributed Pelvis Positions}
 \label{subsubsection:torque_sample}
 
-In order to determine the position of the character that produces this acceleration, we sample uniformly over the region in which the character is balanced.   A sample is described by the position of the pelvis joint, the resulting linear momentum, and a vector describing the displacement of the character's center of mass from the center of its support to indicate balance as described above.  Samples were restricted to a box defined by a rectangle around the character's feet with a height reaching the position of the character's pelvis when standing at rest.  Any sample outside of this volume was assumed to put the character off balance.  
+In order to determine the position of the character that produces this acceleration, we sample uniformly over a region in which the character is balanced, excluding some points where the character may be balanced in favor of simplified sampling.   A sample is described by the position of the pelvis joint, the resulting linear momentum, and a vector describing the displacement of the character's center of mass from the center of its support to indicate balance as described above.  Samples were restricted to a box defined by a rectangle around the character's feet with a height reaching the position of the character's pelvis when standing at rest.  Any sample outside of this volume was assumed to put the character off balance due to the lack of upper body definition in our simulation.
 
 Samples were then taken at uniformly distributed positions in this region.  The calculated acceleration was projected onto the desired acceleration vector through the dot product, with values greater than or equal to the desired acceleration's magnitude indicating a plausible solution.  These plausible solutions are then ordered by their balance error, calculated as the difference in position between the center of mass and the center of the supporting polygon.  The first result of this list is then chosen as the candidate answer and the pelvis is moved towards this sample.  At each iteration this is repeated until the desired acceleration is achieved.  A plot of samples for a particular set of values, in this case all muscle constants set to $k=20000$, is shown in Figure \ref{fig:torque_samples}.  An equation for the described calculation is shown below.
 
@@ -270,7 +270,7 @@ Samples were then taken at uniformly distributed positions in this region.  The 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=4in]{images/K200000_global_dense_torque.png}
-	\caption[A plot of a sample field for the torque based simulation]{Pictured above is a plot of instant linear acceleration samples at different pelvis positions within the balanced region.  Color indicates the magnitude, with the red, green, and blue channels corresponding to the x, y, and z components respectively of the acceleration sample.  Lighter color indicates a larger magnitude.  This is a clear example of the failures of this simulation method, as the samples seem to continuously increase from the one corner of the bounding box to the opposite diagonally, which does not produce a plausible animation as the character heavily favors one side, even with symmetric strengths.}
+	\caption[A plot of a sample field for the torque based simulation]{A plot of instant linear acceleration samples at different pelvis positions within the balanced region.  The axes shown correspond to the axes of the world, with x, y, and z of the plot corresponding to the x, y, and z position in space.  Color indicates the magnitude, with the red, green, and blue channels corresponding to the x, y, and z components respectively of the acceleration sample.  Lighter color indicates a larger magnitude.  This is a clear example of the failures of this simulation method, as the samples seem to continuously increase from the one corner of the bounding box to the opposite diagonally, which does not produce a plausible animation as the character heavily favors one side, even with symmetric strengths.}
 	\label{fig:torque_samples}
 \end{figure}
 
@@ -291,7 +291,7 @@ As the windup phase of the torque based simulation fails, it is difficult to qua
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %               Energy                %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Energy Based Calculation}
+\section{Energy-Based Simulation}
 \label{section:energy}
 Another way we simulated jumping motions was energy based.  We assumed that the kinetic energy of the character traveling at a calculated velocity from its start position to the destination position is equivalent to the summed elastic potential energies of the leg muscles.  The direction of the velocity is determined by the direction the center of mass is accelerated after the windup phase, and we assume that this is achievable given that the character can achieve the desired energy.  
 

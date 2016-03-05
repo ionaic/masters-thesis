@@ -20,16 +20,16 @@
 \contentsline {subsection}{\numberline {3.2.3}Skeleton, Joints, and Muscles}{20}{subsection.3.2.3}
 \contentsline {section}{\numberline {3.3}Center of Mass and Maintaining Balance}{25}{section.3.3}
 \contentsline {section}{\numberline {3.4}Inverse Kinematic Solving for Ankle and Knee Position}{26}{section.3.4}
-\contentsline {section}{\numberline {3.5}Torque-based simulation}{28}{section.3.5}
+\contentsline {section}{\numberline {3.5}Torque-Based Simulation}{28}{section.3.5}
 \contentsline {subsection}{\numberline {3.5.1}Calculation of Required Velocity and Acceleration Given Time Constraints}{29}{subsection.3.5.1}
 \contentsline {subsection}{\numberline {3.5.2}Windup Animation of the Character Based on Required Acceleration}{30}{subsection.3.5.2}
 \contentsline {subsubsection}{\numberline {3.5.2.1}Sampling of Torque Values at Uniformly Distributed Pelvis Positions}{31}{subsubsection.3.5.2.1}
-\contentsline {subsection}{\numberline {3.5.3}Thrust and Takeoff}{33}{subsection.3.5.3}
-\contentsline {section}{\numberline {3.6}Energy Based Calculation}{34}{section.3.6}
+\contentsline {subsection}{\numberline {3.5.3}Thrust and Takeoff}{34}{subsection.3.5.3}
+\contentsline {section}{\numberline {3.6}Energy-Based Simulation}{34}{section.3.6}
 \contentsline {subsection}{\numberline {3.6.1}Path Estimation and Windup}{35}{subsection.3.6.1}
-\contentsline {subsection}{\numberline {3.6.2}Solutions to the Energy Assignment Problem}{36}{subsection.3.6.2}
+\contentsline {subsection}{\numberline {3.6.2}Solutions to the Energy Assignment Problem}{37}{subsection.3.6.2}
 \contentsline {subsection}{\numberline {3.6.3}Thrust, In Air, and Landing}{38}{subsection.3.6.3}
-\contentsline {section}{\numberline {3.7}Summary}{38}{section.3.7}
+\contentsline {section}{\numberline {3.7}Summary}{39}{section.3.7}
 \contentsline {chapter}{\numberline {4.}VISUALIZATION}{40}{chapter.4}
 \contentsline {section}{\numberline {4.1}Motivation and Inspiration}{40}{section.4.1}
 \contentsline {section}{\numberline {4.2}Motion Visualization}{41}{section.4.2}
