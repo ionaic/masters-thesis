@@ -193,6 +193,7 @@ public class JumpController : MonoBehaviour {
 
         //dataCollection = GetComponent<DataCollection>();
         //dataPoints = dataCollection.VaryingTimes().GetEnumerator();
+        Debug.Log("Mass: " + skeleton.TotalMass());
     }
     
     // TODO I should probably be using fixedupdate

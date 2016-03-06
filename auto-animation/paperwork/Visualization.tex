@@ -8,12 +8,12 @@
 % \specialhead{METHODS}
 \chapter{VISUALIZATION}
 \label{chapter:visualization}
-In this chapter we motivate the need for good visualizations, as well as the difficulty of visualizing character animation in print format as well as moving media.  We then discuss techniques we utilized to visualize our data for presentation as well as for debugging and analysis.
+In this chapter we motivate the need for good visualizations, as well as the difficulty of visualizing character animation in print format as well as video.  We then discuss techniques we utilized to visualize our data for presentation as well as for debugging and analysis.
 
 % talk about instpiriations here instead of prev work
 \section{Motivation and Inspiration}
 \label{section:vis_insp}
-Showing a motion in a static medium such as print presents numerous challenges.  The static image or images must convey a sense of time that is understandable, such that a viewer may intuit the direction and rate of movement.  Especially for a complex object such as a figure, occlusion can obstruct information, and prevent understanding of the motion of hidden portions of the body.  The projection of a 3D scene can also create similar issues as occlusion, creating ambiguity in depth and obscuring motions in some directions.
+Showing a motion in a static medium such as print presents numerous challenges.  The static image or images must convey a sense of time that is understandable, such that a viewer may intuit the direction and rate of movement.  Especially for a complex object such as a figure, occlusion can obstruct information, and prevent understanding of the motion of hidden portions of the body.  The projection of a 3D scene can also create similar issues as occlusion, creating ambiguity in depth and obscuring motions in some dimensions.
 
 We drew from several sources for inspiration on how to visualize our results.  A video by KORB created for the CCTV Documentary Channel shows ``motion sculptures,'' in which the people in the scene leave trails of material as they move.  These sculptures very cleverly captured the movement of the body throughout the space of the video, creating aesthetically pleasing, if somewhat difficult to parse, visuals.
 
@@ -56,7 +56,7 @@ We used a ghost image visualization as well in 2 ways: leaving copies of the cha
 	\label{fig:composite_vis}
 \end{figure}
 
-An alternate method of forming the ghost image visualization was to layer numerous collected frames in an image editing program.  This method was very work intensive, requiring each layer to be matte painted by hand.  Algorithms and techniques in image processing and computer vision for automating this process, but for our purposes it was necessary to manually select the desired region in each image that should be visible in the final combined image.  To reduce the negative effects of occlusion, layers above the first were given an opacity of $75\%$.  Though work intensive, this produced an excellent visual for still media to show the path of the entire motion, but was a poor visual in many cases for showing detail of the movement as images often occlude each other.  Examples of this visualization are shown in Figure \ref{fig:composite_vis} and in Figure \ref{fig:complex_scene}.  As a compliment to this visual, we used animation strips, in which the frames were simply presented adjacent to each other in order from left to right.  These strips are also found in the data tables presented in section \ref{section:image_results} and in Figure \ref{fig:complex_scene}.
+An alternate method of forming the ghost image visualization was to layer numerous collected frames in an image editing program.  This method was very work intensive, requiring each layer to be matte painted by hand.  Algorithms and techniques in image processing and computer vision for automating this process, but for our purposes it was necessary to manually select the desired region in each image that should be visible in the final combined image.  To reduce the negative effects of occlusion, layers above the first were given an opacity of $75\%$.  Though work intensive, this produced an excellent visual for still media to show the path of the entire motion, but was a poor visual in many cases for showing detail of the movement as images often occlude each other.  Examples of this visualization are shown in Figure \ref{fig:composite_vis} and in Figure \ref{fig:complex_scene}.  As a compliment to this visual, we used animation strips, in which the frames were simply presented adjacent to each other in order from left to right.  These strips are also found in the data tables presented in Section \ref{section:image_results} and in Figure \ref{fig:complex_scene}.
 
 \begin{figure}[ht]
 	\centering

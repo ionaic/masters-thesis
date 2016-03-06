@@ -22,23 +22,23 @@
 \contentsline {section}{\numberline {3.4}Inverse Kinematic Solving for Ankle and Knee Position}{26}{section.3.4}
 \contentsline {section}{\numberline {3.5}Torque-Based Simulation}{28}{section.3.5}
 \contentsline {subsection}{\numberline {3.5.1}Calculation of Required Velocity and Acceleration Given Time Constraints}{29}{subsection.3.5.1}
-\contentsline {subsection}{\numberline {3.5.2}Windup Animation of the Character Based on Required Acceleration}{30}{subsection.3.5.2}
-\contentsline {subsubsection}{\numberline {3.5.2.1}Sampling of Torque Values at Uniformly Distributed Pelvis Positions}{31}{subsubsection.3.5.2.1}
-\contentsline {subsection}{\numberline {3.5.3}Thrust and Takeoff}{34}{subsection.3.5.3}
-\contentsline {section}{\numberline {3.6}Energy-Based Simulation}{34}{section.3.6}
+\contentsline {subsection}{\numberline {3.5.2}Windup Animation of the Character Based on Required Acceleration}{31}{subsection.3.5.2}
+\contentsline {subsubsection}{\numberline {3.5.2.1}Sampling of Torque Values at Uniformly Distributed Pelvis Positions}{32}{subsubsection.3.5.2.1}
+\contentsline {subsection}{\numberline {3.5.3}Extension of the Character's Body and Takeoff from Ground}{34}{subsection.3.5.3}
+\contentsline {section}{\numberline {3.6}Energy-Based Simulation}{35}{section.3.6}
 \contentsline {subsection}{\numberline {3.6.1}Path Estimation and Windup}{35}{subsection.3.6.1}
-\contentsline {subsection}{\numberline {3.6.2}Solutions to the Energy Assignment Problem}{37}{subsection.3.6.2}
-\contentsline {subsection}{\numberline {3.6.3}Thrust, In Air, and Landing}{38}{subsection.3.6.3}
+\contentsline {subsection}{\numberline {3.6.2}Solutions to the Energy Assignment Problem}{38}{subsection.3.6.2}
+\contentsline {subsection}{\numberline {3.6.3}Thrust, In-Air, and Landing}{38}{subsection.3.6.3}
 \contentsline {section}{\numberline {3.7}Summary}{39}{section.3.7}
-\contentsline {chapter}{\numberline {4.}VISUALIZATION}{40}{chapter.4}
-\contentsline {section}{\numberline {4.1}Motivation and Inspiration}{40}{section.4.1}
-\contentsline {section}{\numberline {4.2}Motion Visualization}{41}{section.4.2}
-\contentsline {section}{\numberline {4.3}Summary}{44}{section.4.3}
-\contentsline {chapter}{\numberline {5.}RESULTS}{46}{chapter.5}
-\contentsline {section}{\numberline {5.1}Output Animations}{48}{section.5.1}
-\contentsline {section}{\numberline {5.2}Limitations}{49}{section.5.2}
-\contentsline {section}{\numberline {5.3}Summary}{52}{section.5.3}
-\contentsline {chapter}{\numberline {6.}FUTURE WORK AND CONCLUSION}{59}{chapter.6}
-\contentsline {section}{\numberline {6.1}Future Work}{59}{section.6.1}
-\contentsline {section}{\numberline {6.2}Conclusion and Summary}{60}{section.6.2}
-\contentsline {chapter}{References}{62}{section*.36}
+\contentsline {chapter}{\numberline {4.}VISUALIZATION}{41}{chapter.4}
+\contentsline {section}{\numberline {4.1}Motivation and Inspiration}{41}{section.4.1}
+\contentsline {section}{\numberline {4.2}Motion Visualization}{42}{section.4.2}
+\contentsline {section}{\numberline {4.3}Summary}{45}{section.4.3}
+\contentsline {chapter}{\numberline {5.}RESULTS}{47}{chapter.5}
+\contentsline {section}{\numberline {5.1}Output Animations}{49}{section.5.1}
+\contentsline {section}{\numberline {5.2}Limitations}{50}{section.5.2}
+\contentsline {section}{\numberline {5.3}Summary}{53}{section.5.3}
+\contentsline {chapter}{\numberline {6.}FUTURE WORK AND CONCLUSION}{60}{chapter.6}
+\contentsline {section}{\numberline {6.1}Future Work}{60}{section.6.1}
+\contentsline {section}{\numberline {6.2}Conclusion and Summary}{61}{section.6.2}
+\contentsline {chapter}{References}{63}{section*.36}
