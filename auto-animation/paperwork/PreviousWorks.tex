@@ -8,12 +8,20 @@
 % \specialhead{PREVIOUS WORK}
 \chapter{PREVIOUS WORK}
 \label{chapter:previous_work}
+In this chapter, we introduce previous work in the field that inspired and directed our work.  First we describe animation of characters as performed by artists in 2D and 3D media in Section \ref{section:animation_bg}. We then discuss the production of animation using motion capture in Section \ref{subsection:mocap_bg}, then muscle-based simulations in Section \ref{subsection:muscle_sim_bg}.  Muscle-based simulations were a major inspiration for our work, as well as simpler, rigid-body simulations which we describe in Section \ref{subsection:rigid_body_bg}.
 
-\section{Background}
+\section{Artist Creation of Animations}
+\label{section:animation_bg}
+
+\section{Background of Computer Generated Simulation}
+\label{section:computer_gen_bg}
+\subsection{Motion Capture}
+\label{subsection:mocap_bg}
+Producing athletic animations for human characters is difficult.  One method, motion capture is used for production of realistic animations for human athletics and other motions, however it requires the collection of information for each motion and does not adapt to the virtual environment.  
+
 \subsection{Muscle-based Simulation}
-Producing athletic animations for human characters is difficult.  One method, motion capture is used for production of realistic animations for human athletics and other motions, however it requires the collection of information for each motion and does not adapt to the virtual environment.  Muscle-based approaches produce realistic motions which adapt to the environment, using a complex model of the musculo-skeletal structure.  
-
-Geijtenbeek et al.\cite{muscle_based_bipeds} use a rough, user-created muscle routing on a skeleton to produce various gaits that are learned based on the velocity and environment.  The muscle routing is optimized to remain within a physical region while providing optimal forces on the skeleton based on freedom of motion of the skeletal joints and the calculated optimal length of the muscle.  This model is then used to compute sequences of muscle activations, modeling neural signals, which produce the final animations.  This method is effective, producing good results in various levels of gravity on at least 10 different bipedal skeletons.
+\label{subsection:muscle_sim_bg}
+Another method of producing animations simulates a complex muscle model mimicking the biology of the human body. Muscle-based approaches produce realistic motions which adapt to the environment, using a complex model of the musculo-skeletal structure. Geijtenbeek et al.\cite{muscle_based_bipeds} use a rough, user-created muscle routing on a skeleton to produce various gaits that are learned based on the velocity and environment.  The muscle routing is optimized to remain within a physical region while providing optimal forces on the skeleton based on freedom of motion of the skeletal joints and the calculated optimal length of the muscle.  This model is then used to compute sequences of muscle activations, modeling neural signals, which produce the final animations.  This method is effective, producing good results in various levels of gravity on at least 10 different bipedal skeletons.
 
 %\begin{figure}[htp]
 	%\centering
@@ -30,15 +38,20 @@ Geijtenbeek et al.\cite{muscle_based_bipeds} use a rough, user-created muscle ro
 %\end{figure}
 
 \subsection{Rigid Body Simulations}
-Instead of complex muscle systems, some physical simulations utilize a rigid-body character with a user-defined skeleton to find optimal poses based on desired conditions other than muscle simulation.  \liufall{} utilize such a scheme to generate landing motions for human characters based off linear velocity, global angular velocity, and angle of attack.  The system chooses either a feet first or hands first landing strategy and moves into a roll to reduce stress on the body using principles from biomechanics and robotics.  A sampling method is applied to determine successful conditions, producing bounding planes for the data.  The movement is broken into stages of airborne and landing, in which the character re-positions for the designated landing strategy, and executes the landing strategy respectively. Each of these is separated into impact, roll, and get-up stages.  Movement and joint positions are produced using PID servos \cite{falling_landing}.  
+\label{subsection:rigid_body_bg}
+Instead of complex muscle systems, some physical simulations utilize a rigid-body character with a user-defined skeleton to find optimal poses based on desired conditions other than muscle simulation.  \liufall{} utilize such a scheme to generate landing motions for human characters based off linear velocity, global angular velocity, and angle of attack  \cite{falling_landing}.  The system chooses either a feet first or hands first landing strategy and moves into a roll to reduce stress on the body using principles from biomechanics and robotics.  A sampling method is applied to determine successful conditions, producing bounding planes for the data.  The movement is broken into stages of airborne and landing, in which the character re-positions for the designated landing strategy, and executes the landing strategy respectively. Each of these is separated into impact, roll, and get-up stages.  Movement and joint positions are produced using PID servos.  
 
-Other work on producing such controllers was produced by Faloutsos et al. who described a method of composing such controllers by giving pre-conditions, post-conditions, and intermediate state requirements.  The composed controllers are then chosen at each step based on the current pose and which controller is deemed most suitable \cite{composable_controllers}.  Hodgins et al. created several controllers for running, vaulting, and bicycling, creating realistic motions and secondary motion using rigid bodies and spring-mass simulations \cite{anim_human_athletics}.  Geijtenbeek and Pronost provide a detailed review of physics based simulations \cite{inter_physics_anim}.
+Other work on producing such controllers was produced by Faloutsos et al. who described a method of composing such controllers by giving pre-conditions, post-conditions, and intermediate state requirements \cite{composable_controllers}.  The composed controllers are then chosen at each step based on the current pose and which controller is deemed most suitable.  By providing a state-machine-style construction for the controllers, they create a way to build many smaller controllers into a more complex motion.
+
+Hodgins et al. created several controllers for running, vaulting, and bicycling, creating realistic motions and secondary motion using rigid bodies and spring-mass simulations \cite{anim_human_athletics}.  Geijtenbeek and Pronost provide a detailed review of physics based simulations \cite{inter_physics_anim}.
 
 \subsection{Inverse Kinematics}
+\label{subsection:ik_bg}
 Inverse kinematics approaches attempt to generate the motion based on a desired final position, determining the skeletal position by solving the system given constraints.  Koga et. al use path planning, inverse kinematics, and forward simulation to generate animations of arm motions for robots and humans working cooperatively.  They produce arm manipulations that avoid collisions and result in final positions and orientations for specified parts of the arm to produce motions such as a human putting on glasses and a robot arm and human cooperating to flip a chessboard \cite{motion_intentions}.  
 
 
-\subsection{Commercial Software}
+\section{Commercial Software}
+\label{section:commercial_bg}
 Several technologies exist to similarly aid in animation production. \unity{} MecAnim applies constructed animations of various types to similar skeletons, providing joint constraints and muscle definitions in a similar manner to our simulation.  MecAnim provides functionality for constraining range of motion and blending between existing animations, utilizing existing clips to produce complex animations in a manner similar to the composable controllers described by Faloutsos et al., as well as inverse kinematics solving.  Due to a lack of understanding of the features and limitations, as well as what level of control is available, we chose not to utilize MecAnim for our current implementation.  As discussed in chapter \ref{chapter:future_work}, future work would ideally take advantage of MecAnim.
 
 3ds Max footsteps offer a method of positioning feet and producing walk, run, and jump cycles based on  number of parameters.  Without knowledge of the algorithm, analysis is difficult, but it seems to produce animations by specifying timing and parameters about the stride.  Parameters defined include stride width, length, and height.  Our simulation seeks to produce more natural looking animations through use of a muscle simulation.  The footstep style of animation may be preferable to artists however as it gives very strong control over the timing and spacing of the individual events of the animation, such as foot falls.
