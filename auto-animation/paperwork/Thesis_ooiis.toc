@@ -42,8 +42,8 @@
 \contentsline {section}{\numberline {5.1}Proportional Derivative Controller Constants}{48}{section.5.1}
 \contentsline {section}{\numberline {5.2}Muscle Constants and Strength Intuition}{49}{section.5.2}
 \contentsline {section}{\numberline {5.3}Simulation Speed and Frame Collection}{50}{section.5.3}
-\contentsline {section}{\numberline {5.4}Output Animations}{51}{section.5.4}
-\contentsline {section}{\numberline {5.5}Limitations}{52}{section.5.5}
+\contentsline {section}{\numberline {5.4}Output Animations}{52}{section.5.4}
+\contentsline {section}{\numberline {5.5}Limitations}{53}{section.5.5}
 \contentsline {section}{\numberline {5.6}Summary}{55}{section.5.6}
 \contentsline {chapter}{\numberline {6.}FUTURE WORK AND CONCLUSION}{62}{chapter.6}
 \contentsline {section}{\numberline {6.1}Future Work}{62}{section.6.1}
