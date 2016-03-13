@@ -28,6 +28,35 @@ S.~Ha, Y.~Ye, and C.~K. Liu, ``Falling and landing motion control for character
   2012. [Online]. Available: \url{http://doi.acm.org/10.1145/2366145.2366174}
 \BIBentrySTDinterwordspacing
 
+\bibitem{radke}
+R.~J. Radke, \emph{Motion Capture}.\hskip 1em plus 0.5em minus 0.4em\relax
+  Cambridge University Press, 2013, ch.~7, pp. 255--297.
+
+\bibitem{liu_mocap}
+G.~Liu and L.~McMillan, ``Estimation of missing markers in human motion
+  capture,'' \emph{The Visual Computer}, vol.~22, pp. 721--728, September 2006.
+
+\bibitem{shotton_kinect}
+\BIBentryALTinterwordspacing
+J.~Shotton, A.~Fitzgibbon, M.~Cook, T.~Sharp, M.~Finocchio, R.~Moore,
+  A.~Kipman, and A.~Blake, ``Real-time human pose recognition in parts from
+  single depth images,'' in \emph{Proceedings of the 2011 IEEE Conference on
+  Computer Vision and Pattern Recognition}, ser. CVPR '11.\hskip 1em plus 0.5em
+  minus 0.4em\relax Washington, DC, USA: IEEE Computer Society, 2011, pp.
+  1297--1304. [Online]. Available:
+  \url{http://dx.doi.org/10.1109/CVPR.2011.5995316}
+\BIBentrySTDinterwordspacing
+
+\bibitem{fish_muscles}
+\BIBentryALTinterwordspacing
+R.~Grzeszczuk and D.~Terzopoulos, ``Automated learning of muscle-actuated
+  locomotion through control abstraction,'' in \emph{Proceedings of the 22Nd
+  Annual Conference on Computer Graphics and Interactive Techniques}, ser.
+  SIGGRAPH '95.\hskip 1em plus 0.5em minus 0.4em\relax New York, NY, USA: ACM,
+  1995, pp. 63--70. [Online]. Available:
+  \url{http://doi.acm.org/10.1145/218380.218411}
+\BIBentrySTDinterwordspacing
+
 \bibitem{muscle_based_bipeds}
 T.~Geijtenbeek, M.~van~de Panne, and A.~F. van~der Stappen, ``Flexible
   muscle-based locomotion for bipedal creatures,'' \emph{ACM Transactions on
@@ -68,6 +97,22 @@ Y.~Koga, K.~Kondo, J.~Kuffner, and J.-C. Latombe, ``Planning motions with
   Available: \url{http://doi.acm.org/10.1145/192161.192266}
 \BIBentrySTDinterwordspacing
 
+\bibitem{kine1}
+J.~Lander, ``Oh my god, i inverted kine!'' \emph{Game Developer}, pp. 15--22,
+  September 1998.
+
+\bibitem{kine2}
+J.~Lander, ``Making kine more flexible,'' \emph{Game Developer}, pp. 15--22,
+  November 1998.
+
+\bibitem{buss_ik}
+S.~R. Buss, ``Introduction to inverse kinematics with jacobian transpose,
+  pseudoinverse and damped least squares methods,'' 2009.
+
+\bibitem{fabrik}
+A.~Aristidou and J.~Lasenby, ``Fabrik: A fast, iterative solver for the inverse
+  kinematics problem,'' \emph{Graphical Models}, pp. 243--260, 2011.
+
 \bibitem{pid}
 S.~Bennett, ``Nicholas minorsky and the automatic steering of ships,''
   \emph{IEEE Control Systems Magazine}, vol.~4, no.~4, pp. 10--15, November
@@ -80,22 +125,44 @@ D.~C. Boone and S.~P. Azen, ``Normal range of motion of joints in male
   756--759, 1979. [Online]. Available: \url{http://jbjs.org/content/61/5/756}
 \BIBentrySTDinterwordspacing
 
-\bibitem{kine1}
-J.~Lander, ``Oh my god, i inverted kine!'' \emph{Game Developer}, pp. 15--22,
-  September 1998.
+\bibitem{Zajac73}
+\BIBentryALTinterwordspacing
+F.~E. Zajac, M.~R. Zomlefer, and W.~S. Levine, ``Hindlimb muscular activity,
+  kinetics and kinematics of cats jumping to their maximum achievable
+  heights,'' \emph{Journal of Experimental Biology}, vol.~91, no.~1, pp.
+  73--86, 1981. [Online]. Available:
+  \url{http://jeb.biologists.org/content/91/1/73}
+\BIBentrySTDinterwordspacing
 
-\bibitem{kine2}
-J.~Lander, ``Making kine more flexible,'' \emph{Game Developer}, pp. 15--22,
-  November 1998.
+\bibitem{Zajac979}
+\BIBentryALTinterwordspacing
+F.~E. Zajac, ``Thigh muscle activity during maximum-height jumps by cats,''
+  \emph{Journal of Neurophysiology}, vol.~53, no.~4, pp. 979--994, 1985.
+  [Online]. Available: \url{http://jn.physiology.org/content/53/4/979}
+\BIBentrySTDinterwordspacing
 
 \bibitem{longjump}
 W.-L. Wu, J.-H. Wu, H.-T. Lin, and G.-J. Wang, ``Biomechanical analysis of the
   standing long jump,'' \emph{Biomedical Engineering Applications, Basis \&
   Communications}, vol.~15, pp. 186--192, 2003.
 
+\bibitem{vertjump}
+L.~F. Arag\'{o}n-Vargas and M.~M. Gross, ``Kinesiological factors in vertical
+  jump performance: Differences among individuals,'' \emph{Journal of Applied
+  Biomechanics}, vol.~13, pp. 24--44, 1997.
+
 \bibitem{biomech_sport}
 P.~M. McGinnis, \emph{Biomechanics of Sport and Exercise}.\hskip 1em plus 0.5em
   minus 0.4em\relax Champaign, IL, USA: Human Kinetics, March 2013.
+
+\bibitem{lees_arm_swing}
+A.~Lees, J.~Vanrenterghem, and D.~D. Clercq, ``Understanding how an arm swing
+  enhances performance in the vertical jump,'' \emph{Journal of Biomechanics},
+  pp. 1929--1940, 2004.
+
+\bibitem{parkour}
+D.~Edwardes, \emph{Standing Precision Jumps}.\hskip 1em plus 0.5em minus
+  0.4em\relax Elwin Street Limited, 2009, ch.~3, pp. 90--91.
 
 \bibitem{modeling_human_mov}
 \BIBentryALTinterwordspacing
@@ -114,7 +181,8 @@ M.~Alexander and A.~Honish, ``Footwork for the volleyball block.''
 
 \bibitem{static_block_jumps}
 T.~Amasay, ``Static block jump techniques in volleyball: Upright versus
-  squatting start position.''
+  squatting start position,'' \emph{The Journal of Strength and Conditioning
+  Research}, vol.~22, no.~4, pp. 1242--1248, July 2008.
 
 \bibitem{opt_motion_synth}
 \BIBentryALTinterwordspacing
@@ -166,9 +234,37 @@ J.~Hayes, ``Creating character animation assets,'' pp. 2--3, November 1999.
   \url{http://www.gamasutra.com/view/feature/131796/creating_character_animation_assets.php}
 \BIBentrySTDinterwordspacing
 
-\bibitem{vertjump}
-L.~F. Arag\'{o}n-Vargas and M.~M. Gross, ``Kinesiological factors in vertical
-  jump performance: Differences among individuals,'' \emph{Journal of Applied
-  Biomechanics}, vol.~13, pp. 24--44, 1997.
+\bibitem{witkin_moedit}
+\BIBentryALTinterwordspacing
+A.~Witkin and Z.~Popovic, ``Motion warping,'' in \emph{Proceedings of the 22Nd
+  Annual Conference on Computer Graphics and Interactive Techniques}, ser.
+  SIGGRAPH '95.\hskip 1em plus 0.5em minus 0.4em\relax New York, NY, USA: ACM,
+  1995, pp. 105--108. [Online]. Available:
+  \url{http://doi.acm.org/10.1145/218380.218422}
+\BIBentrySTDinterwordspacing
+
+\bibitem{unity}
+\BIBentryALTinterwordspacing
+U.~Technologies, ``Unity3d,'' 2016. [Online]. Available:
+  \url{https://unity3d.com/}
+\BIBentrySTDinterwordspacing
+
+\bibitem{unity_mecanim}
+\BIBentryALTinterwordspacing
+U.~Technologies, ``Mecanim animation system,'' 2016. [Online]. Available:
+  \url{http://docs.unity3d.com/460/Documentation/Manual/MecanimAnimationSystem.html}
+\BIBentrySTDinterwordspacing
+
+\bibitem{maya}
+\BIBentryALTinterwordspacing
+A.~Inc., ``Maya,'' 2016. [Online]. Available:
+  \url{http://www.autodesk.com/products/maya/overview-dts}
+\BIBentrySTDinterwordspacing
+
+\bibitem{3dsmax}
+\BIBentryALTinterwordspacing
+A.~Inc., ``3ds max,'' 2016. [Online]. Available:
+  \url{http://www.autodesk.com/products/3ds-max/overview-dts}
+\BIBentrySTDinterwordspacing
 
 \end{thebibliography}

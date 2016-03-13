@@ -1,66 +1,73 @@
 \relax 
 \providecommand\hyper@newdestlabel[2]{}
-\@writefile{toc}{\contentsline {chapter}{\numberline {3.}SIMULATION METHOD FOR A JUMPING MOTION}{14}{chapter.3}}
-\newlabel{chapter:animation}{{3}{14}{SIMULATION METHOD FOR A JUMPING MOTION}{chapter.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.1}Overview of a Jumping Motion}{14}{section.3.1}}
-\newlabel{section:motion_desc}{{3.1}{14}{Overview of a Jumping Motion}{section.3.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.2}Model Initialization and Setup}{15}{section.3.2}}
-\newlabel{section:setup_inputs}{{3.2}{15}{Model Initialization and Setup}{section.3.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}Creation of the Model and Rig}{15}{subsection.3.2.1}}
-\newlabel{subsection:model_rig}{{3.2.1}{15}{Creation of the Model and Rig}{subsection.3.2.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Example of Rigged 3D Character Model}}{16}{figure.caption.14}}
-\newlabel{fig:rig_character}{{3.1}{16}{Example of Rigged 3D Character Model}{figure.caption.14}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Environmental and Jump Constants}{17}{subsection.3.2.2}}
-\newlabel{subsection:user_constants}{{3.2.2}{17}{Environmental and Jump Constants}{subsection.3.2.2}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {3.}SIMULATION METHOD FOR A JUMPING MOTION}{15}{chapter.3}}
+\newlabel{chapter:animation}{{3}{15}{SIMULATION METHOD FOR A JUMPING MOTION}{chapter.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.1}Overview of a Jumping Motion}{15}{section.3.1}}
+\newlabel{section:motion_desc}{{3.1}{15}{Overview of a Jumping Motion}{section.3.1}{}}
+\citation{maya}
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}Model Initialization and Setup}{16}{section.3.2}}
+\newlabel{section:setup_inputs}{{3.2}{16}{Model Initialization and Setup}{section.3.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}Creation of the Model and Rig}{16}{subsection.3.2.1}}
+\newlabel{subsection:model_rig}{{3.2.1}{16}{Creation of the Model and Rig}{subsection.3.2.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Example of Rigged 3D Character Model}}{17}{figure.caption.13}}
+\newlabel{fig:rig_character}{{3.1}{17}{Example of Rigged 3D Character Model}{figure.caption.13}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Environmental and Jump Constants}{18}{subsection.3.2.2}}
+\newlabel{subsection:user_constants}{{3.2.2}{18}{Environmental and Jump Constants}{subsection.3.2.2}{}}
 \citation{pid}
-\@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces Values for calculated necessary velocity given air and windup times for a skeleton with muscle k values around 20000. This table shows calculated necessary acceleration and velocity for the character given constant jump displacement of $x - x_0 = (0, 0, 1)m$, gravity $g=(0, -10, 0)\frac  {m}{s^2}$, and windup time $t_w = 0.2s$, where windup time refers to the amount of time the force of the jump is applied to the character. Values are calculated with variable desired air time $t_a$ in range $[0.1, 1.5]s$ with a step of $0.1s$, where $v_0$ is the velocity when the character leaves the ground, and $a$ is acceleration required to reach $v_0$ from rest.\relax }}{19}{table.caption.15}}
-\@writefile{lot}{\contentsline {table}{\numberline {3.2}{\ignorespaces PID controller constants for our simulation}}{20}{table.caption.16}}
-\newlabel{tab:pd_constants}{{3.2}{20}{PID controller constants for our simulation}{table.caption.16}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}Skeleton, Joints, and Muscles}{20}{subsection.3.2.3}}
-\newlabel{subsection:skel_joints}{{3.2.3}{20}{Skeleton, Joints, and Muscles}{subsection.3.2.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces Diagram of muscle definition showing anchor points and joints used for specification}}{22}{figure.caption.17}}
-\newlabel{fig:muscle_anchors}{{3.2}{22}{Diagram of muscle definition showing anchor points and joints used for specification}{figure.caption.17}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces Calculated required velocities for a jump given skeleton and desired air and windup times}}{20}{table.caption.14}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.2}{\ignorespaces PID controller constants for our simulation}}{21}{table.caption.15}}
+\newlabel{tab:pd_constants}{{3.2}{21}{PID controller constants for our simulation}{table.caption.15}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}Skeleton, Joints, and Muscles}{21}{subsection.3.2.3}}
+\newlabel{subsection:skel_joints}{{3.2.3}{21}{Skeleton, Joints, and Muscles}{subsection.3.2.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces Diagram of muscle definition showing anchor points and joints used for specification}}{23}{figure.caption.16}}
+\newlabel{fig:muscle_anchors}{{3.2}{23}{Diagram of muscle definition showing anchor points and joints used for specification}{figure.caption.16}{}}
 \citation{Boone756}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces Diagram of spring displacement calculation}}{24}{figure.caption.18}}
-\newlabel{fig:angleDiag}{{3.3}{24}{Diagram of spring displacement calculation}{figure.caption.18}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.3}Center of Mass and Maintaining Balance}{25}{section.3.3}}
-\newlabel{section:com}{{3.3}{25}{Center of Mass and Maintaining Balance}{section.3.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces Diagram of spring displacement calculation}}{25}{figure.caption.17}}
+\newlabel{fig:angleDiag}{{3.3}{25}{Diagram of spring displacement calculation}{figure.caption.17}{}}
+\citation{Zajac73,Zajac979}
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Center of Mass and Maintaining Balance}{26}{section.3.3}}
+\newlabel{section:com}{{3.3}{26}{Center of Mass and Maintaining Balance}{section.3.3}{}}
 \citation{kine1,kine2}
-\@writefile{toc}{\contentsline {section}{\numberline {3.4}Inverse Kinematic Solving for Ankle and Knee Position}{26}{section.3.4}}
-\newlabel{section:ik}{{3.4}{26}{Inverse Kinematic Solving for Ankle and Knee Position}{section.3.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces Diagram of the process of CCD Inverse Kinematics}}{27}{figure.caption.19}}
-\newlabel{fig:ccd}{{3.4}{27}{Diagram of the process of CCD Inverse Kinematics}{figure.caption.19}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.4}Inverse Kinematic Solving for Ankle and Knee Position}{27}{section.3.4}}
+\newlabel{section:ik}{{3.4}{27}{Inverse Kinematic Solving for Ankle and Knee Position}{section.3.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces Diagram of the process of CCD Inverse Kinematics}}{28}{figure.caption.18}}
+\newlabel{fig:ccd}{{3.4}{28}{Diagram of the process of CCD Inverse Kinematics}{figure.caption.18}{}}
 \citation{muscle_based_bipeds}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {3.1}{\ignorespaces Single chain IK algorithm}}{28}{algorithm.3.1}}
-\newlabel{alg:ik}{{3.1}{28}{Single chain IK algorithm}{algorithm.3.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.5}Torque-Based Simulation}{28}{section.3.5}}
-\newlabel{section:torque}{{3.5}{28}{Torque-Based Simulation}{section.3.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.1}Calculation of Required Velocity and Acceleration Given Time Constraints}{29}{subsection.3.5.1}}
-\newlabel{subsection:torque_path}{{3.5.1}{29}{Calculation of Required Velocity and Acceleration Given Time Constraints}{subsection.3.5.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}Windup Animation of the Character Based on Required Acceleration}{31}{subsection.3.5.2}}
-\newlabel{subsection:torque_windup}{{3.5.2}{31}{Windup Animation of the Character Based on Required Acceleration}{subsection.3.5.2}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.2.1}Sampling of Torque Values at Uniformly Distributed Pelvis Positions}{32}{subsubsection.3.5.2.1}}
-\newlabel{subsubsection:torque_sample}{{3.5.2.1}{32}{Sampling of Torque Values at Uniformly Distributed Pelvis Positions}{subsubsection.3.5.2.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces A plot of a sample field for the torque based simulation}}{33}{figure.caption.20}}
-\newlabel{fig:torque_samples}{{3.5}{33}{A plot of a sample field for the torque based simulation}{figure.caption.20}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.3}Extension of the Character's Body and Takeoff from Ground}{34}{subsection.3.5.3}}
-\newlabel{subsection:thrust}{{3.5.3}{34}{Extension of the Character's Body and Takeoff from Ground}{subsection.3.5.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.6}Energy-Based Simulation}{35}{section.3.6}}
-\newlabel{section:energy}{{3.6}{35}{Energy-Based Simulation}{section.3.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.6.1}Path Estimation and Windup}{35}{subsection.3.6.1}}
-\newlabel{subsection:energy_path}{{3.6.1}{35}{Path Estimation and Windup}{subsection.3.6.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.6}{\ignorespaces A plot of a sample field for energy based simulation}}{36}{figure.caption.21}}
-\newlabel{fig:energy_samples}{{3.6}{36}{A plot of a sample field for energy based simulation}{figure.caption.21}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3.3}{\ignorespaces Table of estimated forces given $k$ values and joint angles}}{37}{table.caption.22}}
-\newlabel{tab:force_est}{{3.3}{37}{Table of estimated forces given $k$ values and joint angles}{table.caption.22}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {3.1}{\ignorespaces Single chain IK algorithm}}{29}{algorithm.3.1}}
+\newlabel{alg:ik}{{3.1}{29}{Single chain IK algorithm}{algorithm.3.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.5}Torque-Based Simulation}{29}{section.3.5}}
+\newlabel{section:torque}{{3.5}{29}{Torque-Based Simulation}{section.3.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.1}Calculation of Required Velocity and Acceleration Given Time Constraints}{30}{subsection.3.5.1}}
+\newlabel{subsection:torque_path}{{3.5.1}{30}{Calculation of Required Velocity and Acceleration Given Time Constraints}{subsection.3.5.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}Windup Animation of the Character Based on Required Acceleration}{32}{subsection.3.5.2}}
+\newlabel{subsection:torque_windup}{{3.5.2}{32}{Windup Animation of the Character Based on Required Acceleration}{subsection.3.5.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.2.1}Sampling of Torque Values at Uniformly Distributed Pelvis Positions}{33}{subsubsection.3.5.2.1}}
+\newlabel{subsubsection:torque_sample}{{3.5.2.1}{33}{Sampling of Torque Values at Uniformly Distributed Pelvis Positions}{subsubsection.3.5.2.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces A plot of a sample field for the torque based simulation}}{34}{figure.caption.19}}
+\newlabel{fig:torque_samples}{{3.5}{34}{A plot of a sample field for the torque based simulation}{figure.caption.19}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.3}Extension of the Character's Body and Takeoff from Ground}{35}{subsection.3.5.3}}
+\newlabel{subsection:thrust}{{3.5.3}{35}{Extension of the Character's Body and Takeoff from Ground}{subsection.3.5.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.6}Energy-Based Simulation}{36}{section.3.6}}
+\newlabel{section:energy}{{3.6}{36}{Energy-Based Simulation}{section.3.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6.1}Path Estimation and Windup}{36}{subsection.3.6.1}}
+\newlabel{subsection:energy_path}{{3.6.1}{36}{Path Estimation and Windup}{subsection.3.6.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.6}{\ignorespaces A plot of a sample field for energy based simulation}}{37}{figure.caption.20}}
+\newlabel{fig:energy_samples}{{3.6}{37}{A plot of a sample field for energy based simulation}{figure.caption.20}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.6.2}Solutions to the Energy Assignment Problem}{38}{subsection.3.6.2}}
 \newlabel{subsection:energy_prob}{{3.6.2}{38}{Solutions to the Energy Assignment Problem}{subsection.3.6.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.6.3}Thrust, In-Air, and Landing}{38}{subsection.3.6.3}}
-\newlabel{subsection:energy_thrust}{{3.6.3}{38}{Thrust, In-Air, and Landing}{subsection.3.6.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.7}Summary}{39}{section.3.7}}
-\newlabel{subsection:animation_summary}{{3.7}{39}{Summary}{section.3.7}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.3}{\ignorespaces Table of estimated forces given $k$ values and joint angles}}{39}{table.caption.21}}
+\newlabel{tab:force_est}{{3.3}{39}{Table of estimated forces given $k$ values and joint angles}{table.caption.21}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6.3}Thrust, In-Air, and Landing}{39}{subsection.3.6.3}}
+\newlabel{subsection:energy_thrust}{{3.6.3}{39}{Thrust, In-Air, and Landing}{subsection.3.6.3}{}}
+\citation{unity}
+\@writefile{toc}{\contentsline {section}{\numberline {3.7}Functionality Provided by Unity3D{}}{40}{section.3.7}}
+\newlabel{section:unity}{{3.7}{40}{Functionality Provided by \unity {}}{section.3.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.7}{\ignorespaces Screenshot of the Unity3D{} Editor}}{42}{figure.caption.22}}
+\newlabel{fig:unity_interface}{{3.7}{42}{Screenshot of the \unity {} Editor}{figure.caption.22}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.8}Summary}{42}{section.3.8}}
+\newlabel{subsection:animation_summary}{{3.8}{42}{Summary}{section.3.8}{}}
 \@setckpt{Animation}{
-\setcounter{page}{41}
+\setcounter{page}{44}
 \setcounter{equation}{0}
 \setcounter{enumi}{0}
 \setcounter{enumii}{0}
@@ -70,12 +77,12 @@
 \setcounter{mpfootnote}{0}
 \setcounter{part}{0}
 \setcounter{chapter}{3}
-\setcounter{section}{7}
+\setcounter{section}{8}
 \setcounter{subsection}{0}
 \setcounter{subsubsection}{0}
 \setcounter{paragraph}{0}
 \setcounter{subparagraph}{0}
-\setcounter{figure}{6}
+\setcounter{figure}{7}
 \setcounter{table}{3}
 \setcounter{firstchapter}{1}
 \setcounter{ContinuedFloat}{0}
