@@ -138,10 +138,10 @@ J.~Hayes, ``Creating character animation assets,'' pp. 2--3, November 1999.
   \url{http://www.gamasutra.com/view/feature/131796/creating_character_animation_assets.php}
 \BIBentrySTDinterwordspacing
 
-\bibitem{anim_bible}
+\bibitem{anim_bible_ex}
 M.~Furniss, \emph{The Animation Bible - A Practical Guide to the Art of
   Animating, from Flipbooks to Flash}.\hskip 1em plus 0.5em minus 0.4em\relax
-  North American Publishing, 2008.
+  North American Publishing, 2008, ch. 12-13, pp. 101--102, 285--321.
 
 \bibitem{pid}
 S.~Bennett, ``Nicholas minorsky and the automatic steering of ships,''
@@ -190,6 +190,13 @@ L.~F. Arag\'{o}n-Vargas and M.~M. Gross, ``Kinesiological factors in vertical
 \bibitem{biomech_sport}
 P.~M. McGinnis, \emph{Biomechanics of Sport and Exercise}.\hskip 1em plus 0.5em
   minus 0.4em\relax Champaign, IL, USA: Human Kinetics, March 2013.
+
+\bibitem{fat_layer}
+A.~W. Tarulli, A.~B. Chin, K.~Lee, and S.~B. Rutkove, ``Impact of
+  skin-subcutaneous fat layer thickness on electrical impedance myography
+  measurements: An initial assessment,'' \emph{Clinical Neurophysiology :
+  Official Journal of the International Federation of Clinical
+  Neurophysiology}, vol. 118, pp. 2393--2397, 2007.
 
 \bibitem{lees_arm_swing}
 A.~Lees, J.~Vanrenterghem, and D.~D. Clercq, ``Understanding how an arm swing
@@ -272,9 +279,9 @@ A.~Witkin and Z.~Popovic, ``Motion warping,'' in \emph{Proceedings of the 22Nd
   \url{http://doi.acm.org/10.1145/218380.218422}
 \BIBentrySTDinterwordspacing
 
-\bibitem{anim_bible_ex}
+\bibitem{anim_bible}
 M.~Furniss, \emph{The Animation Bible - A Practical Guide to the Art of
   Animating, from Flipbooks to Flash}.\hskip 1em plus 0.5em minus 0.4em\relax
-  North American Publishing, 2008, ch. 12-13, pp. 101--102, 285--321.
+  North American Publishing, 2008.
 
 \end{thebibliography}
