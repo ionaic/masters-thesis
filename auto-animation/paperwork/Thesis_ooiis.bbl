@@ -113,6 +113,36 @@ S.~R. Buss, ``Introduction to inverse kinematics with jacobian transpose,
 A.~Aristidou and J.~Lasenby, ``Fabrik: A fast, iterative solver for the inverse
   kinematics problem,'' \emph{Graphical Models}, pp. 243--260, 2011.
 
+\bibitem{unity_mecanim}
+\BIBentryALTinterwordspacing
+{Unity Technologies}, ``Mecanim animation system,'' 2016. [Online]. Available:
+  \url{http://docs.unity3d.com/460/Documentation/Manual/MecanimAnimationSystem.html}
+\BIBentrySTDinterwordspacing
+
+\bibitem{3dsmax}
+\BIBentryALTinterwordspacing
+{Autodesk Inc.}, ``3ds max,'' 2016. [Online]. Available:
+  \url{http://www.autodesk.com/products/3ds-max/overview-dts}
+\BIBentrySTDinterwordspacing
+
+\bibitem{maya}
+\BIBentryALTinterwordspacing
+{Autodesk Inc.}, ``Maya,'' 2016. [Online]. Available:
+  \url{http://www.autodesk.com/products/maya/overview-dts}
+\BIBentrySTDinterwordspacing
+
+\bibitem{gamasutra_char_anim}
+\BIBentryALTinterwordspacing
+J.~Hayes, ``Creating character animation assets,'' pp. 2--3, November 1999.
+  [Online]. Available:
+  \url{http://www.gamasutra.com/view/feature/131796/creating_character_animation_assets.php}
+\BIBentrySTDinterwordspacing
+
+\bibitem{anim_bible}
+M.~Furniss, \emph{The Animation Bible - A Practical Guide to the Art of
+  Animating, from Flipbooks to Flash}.\hskip 1em plus 0.5em minus 0.4em\relax
+  North American Publishing, 2008.
+
 \bibitem{pid}
 S.~Bennett, ``Nicholas minorsky and the automatic steering of ships,''
   \emph{IEEE Control Systems Magazine}, vol.~4, no.~4, pp. 10--15, November
@@ -139,6 +169,12 @@ F.~E. Zajac, M.~R. Zomlefer, and W.~S. Levine, ``Hindlimb muscular activity,
 F.~E. Zajac, ``Thigh muscle activity during maximum-height jumps by cats,''
   \emph{Journal of Neurophysiology}, vol.~53, no.~4, pp. 979--994, 1985.
   [Online]. Available: \url{http://jn.physiology.org/content/53/4/979}
+\BIBentrySTDinterwordspacing
+
+\bibitem{unity}
+\BIBentryALTinterwordspacing
+{Unity Technologies}, ``Unity3d,'' 2016. [Online]. Available:
+  \url{https://unity3d.com/}
 \BIBentrySTDinterwordspacing
 
 \bibitem{longjump}
@@ -227,13 +263,6 @@ F.~E. Zajac, M.~R. Zomlefer, and W.~S. Levine, ``Hindlimb muscular activity,
 F.~E. Zajac, ``Thigh muscle activity during maximum-height jumps by cats,''
   \emph{Journal of Neurophysiology}, vol.~53, no.~4, pp. 979--994, 1985.
 
-\bibitem{gamasutra_char_anim}
-\BIBentryALTinterwordspacing
-J.~Hayes, ``Creating character animation assets,'' pp. 2--3, November 1999.
-  [Online]. Available:
-  \url{http://www.gamasutra.com/view/feature/131796/creating_character_animation_assets.php}
-\BIBentrySTDinterwordspacing
-
 \bibitem{witkin_moedit}
 \BIBentryALTinterwordspacing
 A.~Witkin and Z.~Popovic, ``Motion warping,'' in \emph{Proceedings of the 22Nd
@@ -243,28 +272,9 @@ A.~Witkin and Z.~Popovic, ``Motion warping,'' in \emph{Proceedings of the 22Nd
   \url{http://doi.acm.org/10.1145/218380.218422}
 \BIBentrySTDinterwordspacing
 
-\bibitem{unity}
-\BIBentryALTinterwordspacing
-U.~Technologies, ``Unity3d,'' 2016. [Online]. Available:
-  \url{https://unity3d.com/}
-\BIBentrySTDinterwordspacing
-
-\bibitem{unity_mecanim}
-\BIBentryALTinterwordspacing
-U.~Technologies, ``Mecanim animation system,'' 2016. [Online]. Available:
-  \url{http://docs.unity3d.com/460/Documentation/Manual/MecanimAnimationSystem.html}
-\BIBentrySTDinterwordspacing
-
-\bibitem{maya}
-\BIBentryALTinterwordspacing
-A.~Inc., ``Maya,'' 2016. [Online]. Available:
-  \url{http://www.autodesk.com/products/maya/overview-dts}
-\BIBentrySTDinterwordspacing
-
-\bibitem{3dsmax}
-\BIBentryALTinterwordspacing
-A.~Inc., ``3ds max,'' 2016. [Online]. Available:
-  \url{http://www.autodesk.com/products/3ds-max/overview-dts}
-\BIBentrySTDinterwordspacing
+\bibitem{anim_bible_ex}
+M.~Furniss, \emph{The Animation Bible - A Practical Guide to the Art of
+  Animating, from Flipbooks to Flash}.\hskip 1em plus 0.5em minus 0.4em\relax
+  North American Publishing, 2008, ch. 12-13, pp. 101--102, 285--321.
 
 \end{thebibliography}
