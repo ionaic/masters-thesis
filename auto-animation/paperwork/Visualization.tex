@@ -29,7 +29,7 @@ Markers were used to highlight motion of particular parts of the body, such as t
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=\textwidth]{images/trails/trail-side.png}
-	\caption[Marker trail visualization of motion]{Above is an example of the markers tracking joints.  With a high sample rate, a curve forms trailing along the path of the joint.  Markers were placed at a rate of 10 per second of simulation time.}
+	\caption[Marker trail visualization of motion]{An example of the markers tracking joints.  With a high sample rate, a curve forms trailing along the path of the joint.  Markers were placed at a rate of 10 per second of simulation time.}
 	\label{fig:marker_trails}
 \end{figure}
 
@@ -61,18 +61,6 @@ An alternate method of forming the ghost image visualization was to layer numero
 \section{Debugging Visualizations and Controls}
 \label{section:debug_control_vis}
 
-\begin{figure}[ht]
-	\centering
-	\begin{subfigure}[b]{0.49\textwidth}
-		\includegraphics[width=\textwidth]{images/gizmos1.png}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.49\textwidth}
-		\includegraphics[width=\textwidth]{images/gizmos2.png}
-	\end{subfigure}
-	\caption[Screenshot of Gizmos used for debug visualizations in \unity{}]{Pictured above are screenshots of Gizmos in the \unity{} Editor.  The green points illustrate the sample field taken at the beginning of the jump, while the gray lines show the energy measured at this sample.  The rays beginning at the player's pelvis show the magnitude and direction of the acceleration (magenta) and velocity (blue) of the character.  The green line at the player's feet shows the displacement from the start position to the destination, and the cyan line starting at the player's pelvis shows the calculated kinetic energy.  At right, a closer view of the samples is shown to show the blue dots which outline the balanced region which the samples were restricted to.  The character is distanced from these samples as the Gizmos are drawn at the character's start position, and the character in this scene has completed its jump and is at the destination position.  The orange particle is a marker placed at the start position.}
-	\label{fig:gizmo_vis}
-\end{figure}
-
 For debugging visuals, I used a feature in \unity{} called Gizmos \footnote{http://docs.unity3d.com/ScriptReference/Gizmos.html [Accessed: August 10, 2015]}, which allowed debug drawing of primitive shapes.  I used small spheres of various colors to show sample positions, target positions for the IK solver, corners of the supporting polygon, and the position of the center of mass.  Rays were used to visualize velocity, acceleration, distance to the destination, and value of the samples.  A screenshot of my Gizmos active for an energy based simulation are shown in Figure \ref{fig:gizmo_vis}.
 
 \begin{figure}[ht]
@@ -83,11 +71,30 @@ For debugging visuals, I used a feature in \unity{} called Gizmos \footnote{http
 	\begin{subfigure}[b]{0.49\textwidth}
 		\includegraphics[width=\textwidth]{images/handles2.png}
 	\end{subfigure}
-	\caption[Screenshot of Handles used for setting and visualizing joint constraints in \unity{}]{Shown above are Handles, a tool similar to Gizmos but with the addition of changing a value.  In this case, the Handles affect the minimum and maximum rotation for the joints.  Handles are only visible when the corresponding object is selected by the user, reducing clutter.  All three Handles are shown in the left image, allowing the user to set the constraints for pitch (red), yaw (green), and roll (blue) as the pelvis is set to allow rotations about all three axes.  At right, I show the Handle for adjusting the constraints of the left knee, which is only able to rotate about the x-axis (pitch).}
+	\caption[Screenshot of Handles used for setting and visualizing joint constraints in \unity{}]{Screenshots of Handles, a tool in \unity{} which allows the user to create custom UI elements in the editor for changing a value in the game or simulation.  In this case, the Handles affect the minimum and maximum rotation for the joints.  Handles are only visible when the corresponding object is selected by the user, reducing clutter.  All three Handles are shown in the left image, allowing the user to set the constraints for pitch (red), yaw (green), and roll (blue) as the pelvis is set to allow rotations about all three axes.  At right, I show the Handle for adjusting the constraints of the left knee, which is only able to rotate about the x-axis (pitch).}
 	\label{fig:handle_vis}
 \end{figure}
 
 Similar to the Gizmos, I utilized a feature called Handles \footnote{http://docs.unity3d.com/ScriptReference/Handles.html [Accessed Aug. 13, 2015]} to ease setting and visualization of the joint constraints on the skeleton.  Unlike a Gizmo, a Handle can be manipulated by the user to affect values in the simulation before run time.  As shown in Figure \ref{fig:handle_vis}, three handles were used to adjust pitch, yaw, and roll, color coded as red, green, and blue.  Colors were chosen to correspond to the colors of the reference axes placed in the scene to aid the user, showing the red, green, and blue handles as limiting rotation about the x, y, and z axes respectively.
+
+\begin{figure}[ht]
+	\centering
+	\begin{subfigure}[b]{0.49\textwidth}
+		\includegraphics[width=\textwidth]{images/gizmos1.png}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.49\textwidth}
+		\includegraphics[width=\textwidth]{images/gizmos2.png}
+	\end{subfigure}
+	\par\medskip
+	\begin{subfigure}[b]{0.49\textwidth}
+		\includegraphics[width=\textwidth]{images/gizmos3.png}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.49\textwidth}
+		\includegraphics[width=\textwidth]{images/gizmos4.png}
+	\end{subfigure}
+	\caption[Screenshot of Gizmos used for debug visualizations in \unity{}]{Screenshots of Gizmos in the \unity{} Editor.  The green points illustrate the sample field taken at the beginning of the jump, while the gray lines show the energy measured at this sample.  The rays beginning at the player's pelvis show the magnitude and direction of the acceleration (magenta) and velocity (blue) of the character.  The green line at the player's feet shows the displacement from the start position to the destination, and the cyan line starting at the player's pelvis shows the calculated kinetic energy.  At right, a closer view of the samples is shown to show the blue dots which outline the balanced region which the samples were restricted to.  The character is distanced from these samples as the Gizmos are drawn at the character's start position, and the character in this scene has completed its jump and is at the destination position.  The orange particle is a marker placed at the start position.}
+	\label{fig:gizmo_vis}
+\end{figure}
 
 \section{Discussion}
 \label{section:vis_discussion}

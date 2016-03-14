@@ -6,47 +6,47 @@
 \contentsline {section}{\numberline {1.1}A Description of 3D Animation Creation}{6}{section.1.1}
 \contentsline {section}{\numberline {1.2}Contributions}{8}{section.1.2}
 \contentsline {section}{\numberline {1.3}Summary}{8}{section.1.3}
-\contentsline {chapter}{\numberline {2.}PREVIOUS WORK}{9}{chapter.2}
-\contentsline {section}{\numberline {2.1}Background of Computer Generated Animation}{9}{section.2.1}
-\contentsline {subsection}{\numberline {2.1.1}Motion Capture}{9}{subsection.2.1.1}
-\contentsline {subsection}{\numberline {2.1.2}Muscle-based Simulation}{11}{subsection.2.1.2}
-\contentsline {subsection}{\numberline {2.1.3}Non-Muscle Simulations}{12}{subsection.2.1.3}
-\contentsline {subsection}{\numberline {2.1.4}Inverse Kinematics}{13}{subsection.2.1.4}
-\contentsline {section}{\numberline {2.2}Commercial Software}{14}{section.2.2}
-\contentsline {section}{\numberline {2.3}Summary}{14}{section.2.3}
-\contentsline {chapter}{\numberline {3.}SIMULATION METHOD FOR A JUMPING MOTION}{16}{chapter.3}
-\contentsline {section}{\numberline {3.1}Overview of a Jumping Motion}{16}{section.3.1}
-\contentsline {section}{\numberline {3.2}Model Initialization and Setup}{17}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Creation of the Model and Rig}{17}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}Environmental and Jump Constants}{19}{subsection.3.2.2}
-\contentsline {subsection}{\numberline {3.2.3}Skeleton, Joints, and Muscles}{22}{subsection.3.2.3}
-\contentsline {section}{\numberline {3.3}Center of Mass and Maintaining Balance}{27}{section.3.3}
-\contentsline {section}{\numberline {3.4}Inverse Kinematic Solving for Ankle and Knee Position}{28}{section.3.4}
-\contentsline {section}{\numberline {3.5}Torque-Based Simulation}{30}{section.3.5}
-\contentsline {subsection}{\numberline {3.5.1}Calculation of Required Velocity and Acceleration Given Time Constraints}{31}{subsection.3.5.1}
-\contentsline {subsection}{\numberline {3.5.2}Windup Animation of the Character Based on Required Acceleration}{33}{subsection.3.5.2}
-\contentsline {subsubsection}{\numberline {3.5.2.1}Sampling of Torque Values at Uniformly Distributed Pelvis Positions}{34}{subsubsection.3.5.2.1}
-\contentsline {subsection}{\numberline {3.5.3}Extension of the Character's Body and Takeoff from Ground}{36}{subsection.3.5.3}
-\contentsline {section}{\numberline {3.6}Energy-Based Simulation}{37}{section.3.6}
-\contentsline {subsection}{\numberline {3.6.1}Calculation of Required Energy to Produce Target Velocity and Acceleration}{38}{subsection.3.6.1}
-\contentsline {subsection}{\numberline {3.6.2}Solutions to the Energy Assignment Problem}{39}{subsection.3.6.2}
-\contentsline {subsection}{\numberline {3.6.3}Thrust, In-Air, and Landing}{40}{subsection.3.6.3}
-\contentsline {section}{\numberline {3.7}Functionality Provided by Unity3D{}}{42}{section.3.7}
-\contentsline {section}{\numberline {3.8}Summary}{44}{section.3.8}
-\contentsline {chapter}{\numberline {4.}VISUALIZATION}{45}{chapter.4}
-\contentsline {section}{\numberline {4.1}Motivation and Inspiration}{45}{section.4.1}
-\contentsline {section}{\numberline {4.2}Motion Visualization}{46}{section.4.2}
-\contentsline {section}{\numberline {4.3}Debugging Visualizations and Controls}{48}{section.4.3}
-\contentsline {section}{\numberline {4.4}Discussion}{49}{section.4.4}
-\contentsline {section}{\numberline {4.5}Summary}{51}{section.4.5}
-\contentsline {chapter}{\numberline {5.}RESULTS}{52}{chapter.5}
-\contentsline {section}{\numberline {5.1}Proportional Derivative Controller Constants}{52}{section.5.1}
-\contentsline {section}{\numberline {5.2}Muscle Constants and Strength Intuition}{53}{section.5.2}
-\contentsline {section}{\numberline {5.3}Simulation Speed and Frame Collection}{55}{section.5.3}
-\contentsline {section}{\numberline {5.4}Output Animations}{56}{section.5.4}
-\contentsline {section}{\numberline {5.5}Limitations}{57}{section.5.5}
-\contentsline {section}{\numberline {5.6}Summary}{60}{section.5.6}
-\contentsline {chapter}{\numberline {6.}FUTURE WORK AND CONCLUSION}{67}{chapter.6}
-\contentsline {section}{\numberline {6.1}Future Work}{67}{section.6.1}
-\contentsline {section}{\numberline {6.2}Conclusion and Summary}{68}{section.6.2}
-\contentsline {chapter}{References}{70}{section*.36}
+\contentsline {chapter}{\numberline {2.}PREVIOUS WORK}{10}{chapter.2}
+\contentsline {section}{\numberline {2.1}Background of Computer Generated Animation}{10}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Motion Capture}{10}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}Muscle-based Simulation}{12}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}Non-Muscle Simulations}{13}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.4}Inverse Kinematics}{14}{subsection.2.1.4}
+\contentsline {section}{\numberline {2.2}Commercial Software}{15}{section.2.2}
+\contentsline {section}{\numberline {2.3}Summary}{15}{section.2.3}
+\contentsline {chapter}{\numberline {3.}SIMULATION METHOD FOR A JUMPING MOTION}{17}{chapter.3}
+\contentsline {section}{\numberline {3.1}Overview of a Jumping Motion}{17}{section.3.1}
+\contentsline {section}{\numberline {3.2}Model Initialization and Setup}{18}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Creation of the Model and Rig}{18}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Environmental and Jump Constants}{20}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}Skeleton, Joints, and Muscles}{23}{subsection.3.2.3}
+\contentsline {section}{\numberline {3.3}Center of Mass and Maintaining Balance}{28}{section.3.3}
+\contentsline {section}{\numberline {3.4}Inverse Kinematic Solving for Ankle and Knee Position}{29}{section.3.4}
+\contentsline {section}{\numberline {3.5}Torque-Based Simulation}{31}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Calculation of Required Velocity and Acceleration Given Time Constraints}{32}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.5.2}Windup Animation of the Character Based on Required Acceleration}{34}{subsection.3.5.2}
+\contentsline {subsubsection}{\numberline {3.5.2.1}Sampling of Torque Values at Uniformly Distributed Pelvis Positions}{35}{subsubsection.3.5.2.1}
+\contentsline {subsection}{\numberline {3.5.3}Extension of the Character's Body and Takeoff from Ground}{37}{subsection.3.5.3}
+\contentsline {section}{\numberline {3.6}Energy-Based Simulation}{38}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}Calculation of Required Energy to Produce Target Velocity and Acceleration}{39}{subsection.3.6.1}
+\contentsline {subsection}{\numberline {3.6.2}Solutions to the Energy Assignment Problem}{40}{subsection.3.6.2}
+\contentsline {subsection}{\numberline {3.6.3}Thrust, In-Air, and Landing}{41}{subsection.3.6.3}
+\contentsline {section}{\numberline {3.7}Functionality Provided by Unity3D{}}{43}{section.3.7}
+\contentsline {section}{\numberline {3.8}Summary}{45}{section.3.8}
+\contentsline {chapter}{\numberline {4.}VISUALIZATION}{46}{chapter.4}
+\contentsline {section}{\numberline {4.1}Motivation and Inspiration}{46}{section.4.1}
+\contentsline {section}{\numberline {4.2}Motion Visualization}{47}{section.4.2}
+\contentsline {section}{\numberline {4.3}Debugging Visualizations and Controls}{50}{section.4.3}
+\contentsline {section}{\numberline {4.4}Discussion}{51}{section.4.4}
+\contentsline {section}{\numberline {4.5}Summary}{52}{section.4.5}
+\contentsline {chapter}{\numberline {5.}RESULTS}{54}{chapter.5}
+\contentsline {section}{\numberline {5.1}Proportional Derivative Controller Constants}{54}{section.5.1}
+\contentsline {section}{\numberline {5.2}Muscle Constants and Strength Intuition}{55}{section.5.2}
+\contentsline {section}{\numberline {5.3}Simulation Speed and Frame Collection}{57}{section.5.3}
+\contentsline {section}{\numberline {5.4}Output Animations}{58}{section.5.4}
+\contentsline {section}{\numberline {5.5}Limitations}{59}{section.5.5}
+\contentsline {section}{\numberline {5.6}Summary}{62}{section.5.6}
+\contentsline {chapter}{\numberline {6.}FUTURE WORK AND CONCLUSION}{69}{chapter.6}
+\contentsline {section}{\numberline {6.1}Future Work}{69}{section.6.1}
+\contentsline {section}{\numberline {6.2}Conclusion and Summary}{70}{section.6.2}
+\contentsline {chapter}{References}{72}{section*.36}

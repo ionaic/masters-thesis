@@ -21,12 +21,33 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
+\bibitem{goldberg_char_anim}
+E.~Goldberg, \emph{Character Animation Crash Course!}\hskip 1em plus 0.5em
+  minus 0.4em\relax Silman-James Press, 2008.
+
+\bibitem{disney_hist}
+C.~Solomon, \emph{The History of Animation: Enchanted Drawings}.\hskip 1em plus
+  0.5em minus 0.4em\relax Wings Books, 1994.
+
+\bibitem{disney_art}
+B.~Thomas, \emph{Disney's Art of Animation}, 2nd~ed.\hskip 1em plus 0.5em minus
+  0.4em\relax Hyperion, 1997.
+
+\bibitem{cartoon_anim}
+P.~Blair, \emph{Cartoon Animation}.\hskip 1em plus 0.5em minus 0.4em\relax
+  Walter Foster Publishing, Inc., 1994.
+
 \bibitem{falling_landing}
 \BIBentryALTinterwordspacing
 S.~Ha, Y.~Ye, and C.~K. Liu, ``Falling and landing motion control for character
   animation,'' \emph{ACM Trans. Graph.}, vol.~31, no.~6, pp. 155:1--155:9, Nov.
   2012. [Online]. Available: \url{http://doi.acm.org/10.1145/2366145.2366174}
 \BIBentrySTDinterwordspacing
+
+\bibitem{camara_anim_tech}
+S.~C\`{a}mara, \emph{All About Techniques in Drawing for Animation
+  Production}.\hskip 1em plus 0.5em minus 0.4em\relax Parram\'{o}n Ediciones S.
+  A., 2004.
 
 \bibitem{radke}
 R.~J. Radke, \emph{Motion Capture}.\hskip 1em plus 0.5em minus 0.4em\relax
@@ -283,5 +304,8 @@ A.~Witkin and Z.~Popovic, ``Motion warping,'' in \emph{Proceedings of the 22Nd
 M.~Furniss, \emph{The Animation Bible - A Practical Guide to the Art of
   Animating, from Flipbooks to Flash}.\hskip 1em plus 0.5em minus 0.4em\relax
   North American Publishing, 2008.
+
+\bibitem{mirrors_edge}
+{EA DICE}, ``Mirror's edge,'' 2008.
 
 \end{thebibliography}
