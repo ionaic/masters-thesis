@@ -228,13 +228,13 @@ A.~Lees, J.~Vanrenterghem, and D.~D. Clercq, ``Understanding how an arm swing
 D.~Edwardes, \emph{Standing Precision Jumps}.\hskip 1em plus 0.5em minus
   0.4em\relax Elwin Street Limited, 2009, ch.~3, pp. 90--91.
 
+\bibitem{mirrors_edge}
+{EA DICE}, ``Mirror's edge,'' 2008.
+
 \bibitem{modeling_human_mov}
-\BIBentryALTinterwordspacing
 i.~Pei-shan Xie1 and i.~Xing~Cai2, ``Research on computer modeling of human
   movement.'' \emph{Advanced Materials Research}, no. 926-930, pp. 4190 --
-  4193, 2014. [Online]. Available:
-  \url{http://libproxy.rpi.edu/login?url=http://search.ebscohost.com/login.aspx?direct=true&db=aci&AN=96297571&site=eds-live&scope=site}
-\BIBentrySTDinterwordspacing
+  4193, 2014.
 
 \bibitem{soft_contacts}
 S.~Jain and C.~K. Liu, ``Controlling physics-based characters using soft
@@ -304,8 +304,5 @@ A.~Witkin and Z.~Popovic, ``Motion warping,'' in \emph{Proceedings of the 22Nd
 M.~Furniss, \emph{The Animation Bible - A Practical Guide to the Art of
   Animating, from Flipbooks to Flash}.\hskip 1em plus 0.5em minus 0.4em\relax
   North American Publishing, 2008.
-
-\bibitem{mirrors_edge}
-{EA DICE}, ``Mirror's edge,'' 2008.
 
 \end{thebibliography}
