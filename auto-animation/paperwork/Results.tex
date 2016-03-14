@@ -72,13 +72,14 @@ In Figure \ref{fig:forward_200k_u} I show forward jumping motions of 1.6m and 1.
 
 To demonstrate the flexibility of a simulation-based animation, I also include a jump to the side.  The destination was specified as 1m, 1.3m, and 1.6m to the right, i.e. the direction $(1, 0, 0)$ relative to the character, of the character's start position.  Instead of the pelvis thrusting forward and up, in these trials the pelvis thrust is to the side and upwards as expected.  These animations are shown in Figure \ref{fig:side_200k_g} and were collected with a global $k=20000$.
 
-\newcommand{\floatedfig}[1]{\begin{subfigure}[h]{0.2\textwidth}\vspace{1mm}\includegraphics[width=\textwidth]{#1}\vspace{1mm}\end{subfigure}\hspace{0.025\textwidth}}
-\newcommand{\framesubfig}[1]{\begin{subfigure}[h]{0.24\textwidth}\includegraphics[width=\textwidth]{#1}\end{subfigure}}
+\newcommand{\floatedfig}[1]{\begin{subfigure}[h]{0.12\textwidth}\vspace{1mm}\includegraphics[width=\textwidth]{#1}\vspace{1mm}\end{subfigure}\hspace{0.025\textwidth}}
+\newcommand{\framesubfig}[1]{\begin{subfigure}[h]{0.15\textwidth}\includegraphics[width=\textwidth]{#1}\end{subfigure}}
 
 \begin{figure}[ht]
 	\centering
 	\begin{subfigure}[h]{\textwidth}
-		\includegraphics[width=\textwidth]{images/trials/K200000global/ComplexScene/BestPlacement/side-camera-composite.png}
+		\centering
+		\includegraphics[height=3in]{images/trials/K200000global/ComplexScene/BestPlacement/side-camera-composite.png}
 	\end{subfigure}\vspace{1mm}
 	%\raggedleft
 	\framesubfig{images/trials/K200000global/ComplexScene/BestPlacement/side/frame0001.png}
@@ -110,7 +111,7 @@ Movement of the upper body is very minimal, and is quite unlike a human performi
 
 As my simulation was focused on the movements leading to the airborne phase, the handling of in air maneuvers and landing are overly simplistic.  After the character becomes airborne, the pelvis will generally be displaced in the direction of acceleration relative to the feet.  The character should maneuver while airborne such that their feet are in front of their body to prepare for landing.  For landing, a reverse of the windup for the energy simulation could be used, loading the muscles in the legs to offset the kinetic energy the character has from the jump, converting it to elastic energy in the muscles.  Landing and airborne phases should be handled ideally by a separate controller.
 
-My inverse kinematic solver is also very simple, and brings its own issues due to this simplicity.  This algorithm was chosen specifically to minimize time, effort, and resources spent on the inverse kinematic component, in favor of the simulation itself.  With a different inverse kinematic solver, more stable results could be achieved that more strongly follow and account for constraints than the method used with faster convergence.  One preferable method is the Jacobian transpose method, which is described in Section \ref{section:ik_bg}, but was rejected due to the need for matrix math libraries that allow arbitrary sizes of matrix which were not readily available and would have required additional time to implement.  Other 
+My inverse kinematic solver is also very simple, and brings its own issues due to this simplicity.  This algorithm was chosen specifically to minimize time, effort, and resources spent on the inverse kinematic component, in favor of the simulation itself.  With a different inverse kinematic solver, more stable results could be achieved that more strongly follow and account for constraints than the method used with faster convergence.  One preferable method is the Jacobian transpose method, which is described in Section \ref{subsection:ik_bg}, but was rejected due to the need for matrix math libraries that allow arbitrary sizes of matrix which were not readily available and would have required additional time to implement.  Another option would be to utilize features available in Mecanim, an animation system provided by \unity{} which also provides a state machine for animation control.
 
 The output of my simulation is currently image frames as well as the direct visualization through \unity{}, as opposed to a key frame animation in a format such as FBX\footnote{AutoDesk FBX Format. http://www.autodesk.com/products/fbx/overview [Accessed: January 14, 2016]}, which could be utilized in video games.  An \maya{}  plugin that runs my simulation would also be more useful for allowing creation of animations if a real-time frame rate cannot be achieved.
 
