@@ -9,8 +9,8 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="744.09448819"
-   height="1052.3622047"
+   width="694.31372"
+   height="554.88696"
    id="svg4230"
    version="1.1"
    inkscape:version="0.91 r13725"
@@ -129,8 +129,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4142136"
-     inkscape:cx="512.31926"
-     inkscape:cy="743.21644"
+     inkscape:cx="369.94958"
+     inkscape:cy="255.62358"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -138,7 +138,11 @@
      inkscape:window-height="1017"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <metadata
      id="metadata4235">
     <rdf:RDF>
@@ -147,14 +151,15 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(-38.07143,-61.923431)">
     <rect
        style="fill:none;stroke:#000000"
        id="rect4246"
@@ -176,7 +181,7 @@
        mask="url(#mask4849)" />
     <text
        xml:space="preserve"
-       style="font-size:26px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       style="font-style:normal;font-weight:normal;font-size:26px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
        x="156.57364"
        y="276.565"
        id="text4774"
@@ -189,7 +194,7 @@
          style="font-style:italic">bone1</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:26px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       style="font-style:normal;font-weight:normal;font-size:26px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
        x="459.79318"
        y="438.79092"
        id="text4774-3"
@@ -201,7 +206,7 @@
          y="438.79092"
          style="font-style:italic">bone2</tspan></text>
     <path
-       style="fill:none;stroke:#000000;stroke-width:4.80000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:none;stroke:#000000;stroke-width:4.80000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 267.14286,188.07647 104.28571,0 121.42857,64.28571 78.57143,132.85715"
        id="path4799"
        inkscape:connector-curvature="0"
@@ -209,7 +214,7 @@
     <flowRoot
        xml:space="preserve"
        id="flowRoot4803"
-       style="font-size:26px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><flowRegion
+       style="font-style:normal;font-weight:normal;font-size:26px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"><flowRegion
          id="flowRegion4805"><rect
            id="rect4807"
            width="77.14286"
@@ -219,7 +224,7 @@
          id="flowPara4809">sprisprin</flowPara></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot4811"
-       style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       style="font-style:normal;font-weight:normal;font-size:20px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
        transform="translate(-220,-41.428573)"
        mask="url(#mask4829)"><flowRegion
          id="flowRegion4813"><rect
@@ -251,7 +256,7 @@
     <flowRoot
        xml:space="preserve"
        id="flowRoot3111"
-       style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       style="font-style:normal;font-weight:normal;font-size:20px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
        transform="translate(-80,1.4285714)"><flowRegion
          id="flowRegion3113"><rect
            id="rect3115"
@@ -260,17 +265,14 @@
            x="470.71429"
            y="117.36218" /></flowRegion><flowPara
          id="flowPara3117"
-         style="font-size:20px">spring displacement</flowPara></flowRoot>    <path
-       sodipodi:type="arc"
+         style="font-size:20px">spring displacement</flowPara></flowRoot>    <circle
        style="fill:none;stroke:#000000;stroke-opacity:1"
        id="path3929"
-       sodipodi:cx="347.85715"
-       sodipodi:cy="365.93362"
-       sodipodi:rx="63.57143"
-       sodipodi:ry="63.57143"
-       d="m 411.42858,365.93362 a 63.57143,63.57143 0 1 1 -127.14286,0 63.57143,63.57143 0 1 1 127.14286,0 z"
        transform="translate(20,-32.142857)"
-       mask="url(#mask3937)" />
+       mask="url(#mask3937)"
+       cx="347.85715"
+       cy="365.93362"
+       r="63.57143" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 325,392.36218 -20.71429,33.57143"
@@ -278,7 +280,7 @@
        inkscape:connector-curvature="0" />
     <text
        xml:space="preserve"
-       style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       style="font-style:normal;font-weight:normal;font-size:20px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
        x="254.28572"
        y="445.21933"
        id="text3947"
