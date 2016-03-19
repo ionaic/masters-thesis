@@ -303,7 +303,7 @@ Change in direction is accomplished through usage of the feet and shift of weigh
 \label{subsection:energy_path}
 Kinetic energy is calculated as \[ E_k = \frac{1}{2} m v^2 \] where $m$ is the mass of the character and $v$ is the velocity.  Mass is a constant specified by the user, and I calculate the desired velocity and acceleration as in the torque based path estimation as described in section \ref{subsection:torque_path}.
 
-Like with the torque-based method, I took samples in the region where the character maintains balance as in section \ref{subsubsection:torque_sample}.  Samples were collected at regular intervals within a bounding box defined by the character's supporting polygon, the ground, and the the height of the character's pelvis at full extension.  The pelvis was repositioned and the resulting elastic potential energy measured.  Candidate samples were selected by finding all samples with \[ E_{kinetic} - E_{elastic} \le \epsilon(E_kinetic)\] and the candidate with the lowest incurred balance error was selected.
+Like with the torque-based method, I took samples in the region where the character maintains balance as in section \ref{subsubsection:torque_sample}.  Samples were collected at regular intervals within a bounding box defined by the character's supporting polygon, the ground, and the the height of the character's pelvis at full extension.  The pelvis was repositioned and the resulting elastic potential energy measured.  Candidate samples were selected by finding all samples with \[ E_{kinetic} - E_{elastic} \le \epsilon(E_{kinetic})\] and the candidate with the lowest incurred balance error was selected.
 
 \begin{figure}[ht]
 	\centering
