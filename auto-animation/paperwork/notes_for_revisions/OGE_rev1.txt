@@ -1,0 +1,14 @@
+Contents 
+[+] 1.	List of Figures should have consistent capitalization throughout. Please correct. 
+
+Body 
+[+] 1.	Table captions should appear above the table, not below. Please correct in all cases. 
+[+] 2.	Abbreviations of dates in footnotes should be consistent. 
+
+References 
+1.	Book references are missing information.
+2.	Journal and conference titles should be abbreviated in accordance with IEEE style. 
+3.	Internet sources must have date last accessed included. See OGE thesis manual for details. 
+4.	What kind of source is 36? 
+5.	References 38, 39 and 42 are missing information. 
+6.	What kind of source is 45? 

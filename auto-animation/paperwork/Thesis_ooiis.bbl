@@ -142,7 +142,7 @@ A.~Aristidou and J.~Lasenby, ``Fabrik: A fast, iterative solver for the inverse
 
 \bibitem{3dsmax}
 \BIBentryALTinterwordspacing
-{Autodesk Inc.}, ``3ds max,'' 2016. [Online]. Available:
+{Autodesk Inc.}, ``{3ds Max},'' 2016. [Online]. Available:
   \url{http://www.autodesk.com/products/3ds-max/overview-dts}
 \BIBentrySTDinterwordspacing
 
@@ -229,19 +229,21 @@ D.~Edwardes, \emph{Standing Precision Jumps}.\hskip 1em plus 0.5em minus
   0.4em\relax Elwin Street Limited, 2009, ch.~3, pp. 90--91.
 
 \bibitem{mirrors_edge}
-{EA DICE}, ``Mirror's edge,'' 2008.
+\BIBentryALTinterwordspacing
+{EA DICE}, ``{Mirror's Edge},'' 2008. [Online]. Available:
+  \url{http://www.ea.com/mirrors-edge}
+\BIBentrySTDinterwordspacing
 
 \bibitem{modeling_human_mov}
-i.~Pei-shan Xie1 and i.~Xing~Cai2, ``Research on computer modeling of human
-  movement.'' \emph{Advanced Materials Research}, no. 926-930, pp. 4190 --
-  4193, 2014.
+P.~S. Xie and X.~Cai, ``Research on computer modeling of human movement.''
+  \emph{Advanced Materials Research}, no. 926-930, pp. 4190 -- 4193, 2014.
 
 \bibitem{soft_contacts}
+\BIBentryALTinterwordspacing
 S.~Jain and C.~K. Liu, ``Controlling physics-based characters using soft
-  contacts.''
-
-\bibitem{vball_footwork_block}
-M.~Alexander and A.~Honish, ``Footwork for the volleyball block.''
+  contacts,'' \emph{ACM Trans. Graph.}, vol.~30, no.~6, pp. 163:1--163:10, Dec.
+  2011. [Online]. Available: \url{http://doi.acm.org/10.1145/2070781.2024197}
+\BIBentrySTDinterwordspacing
 
 \bibitem{static_block_jumps}
 T.~Amasay, ``Static block jump techniques in volleyball: Upright versus

@@ -30,7 +30,7 @@
 \contentsline {section}{\numberline {3.6}Energy-Based Simulation}{38}{section.3.6}
 \contentsline {subsection}{\numberline {3.6.1}Calculation of Required Energy to Produce Target Velocity and Acceleration}{39}{subsection.3.6.1}
 \contentsline {subsection}{\numberline {3.6.2}Solutions to the Energy Assignment Problem}{40}{subsection.3.6.2}
-\contentsline {subsection}{\numberline {3.6.3}Thrust, In-Air, and Landing}{41}{subsection.3.6.3}
+\contentsline {subsection}{\numberline {3.6.3}Thrust, In-Air, and Landing}{42}{subsection.3.6.3}
 \contentsline {section}{\numberline {3.7}Functionality Provided by Unity3D{}}{43}{section.3.7}
 \contentsline {section}{\numberline {3.8}Summary}{45}{section.3.8}
 \contentsline {chapter}{\numberline {4.}VISUALIZATION}{46}{chapter.4}
