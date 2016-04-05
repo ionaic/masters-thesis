@@ -63,54 +63,52 @@ G.~Liu and L.~McMillan, ``Estimation of missing markers in human motion
 \BIBentryALTinterwordspacing
 J.~Shotton, A.~Fitzgibbon, M.~Cook, T.~Sharp, M.~Finocchio, R.~Moore,
   A.~Kipman, and A.~Blake, ``Real-time human pose recognition in parts from
-  single depth images,'' in \emph{Proceedings of the 2011 IEEE Conference on
-  Computer Vision and Pattern Recognition}, ser. CVPR '11.\hskip 1em plus 0.5em
-  minus 0.4em\relax Washington, DC, USA: IEEE Computer Society, 2011, pp.
-  1297--1304. [Online]. Available:
-  \url{http://dx.doi.org/10.1109/CVPR.2011.5995316}.  (Accessed February 13,
-  2016)
+  single depth images,'' in \emph{Proc. of the 2011 IEEE Conf. on Comput.
+  Vision and Pattern Recognition}, ser. CVPR '11.\hskip 1em plus 0.5em minus
+  0.4em\relax Washington, DC, USA: IEEE Computer Society, 2011, pp. 1297--1304.
+  [Online]. Available: \url{http://dx.doi.org/10.1109/CVPR.2011.5995316}.
+  (Accessed February 13, 2016)
 \BIBentrySTDinterwordspacing
 
 \bibitem{fish_muscles}
 \BIBentryALTinterwordspacing
 R.~Grzeszczuk and D.~Terzopoulos, ``Automated learning of muscle-actuated
-  locomotion through control abstraction,'' in \emph{Proceedings of the 22Nd
-  Annual Conference on Computer Graphics and Interactive Techniques}, ser.
-  SIGGRAPH '95.\hskip 1em plus 0.5em minus 0.4em\relax New York, NY, USA: ACM,
-  1995, pp. 63--70. [Online]. Available:
-  \url{http://doi.acm.org/10.1145/218380.218411}.  (Accessed February 20, 2016)
+  locomotion through control abstraction,'' in \emph{Proc. of the 22nd Annu.
+  Conf. on Comput. Graph. and Interactive Techniques}, ser. SIGGRAPH '95.\hskip
+  1em plus 0.5em minus 0.4em\relax New York, NY, USA: ACM, 1995, pp. 63--70.
+  [Online]. Available: \url{http://doi.acm.org/10.1145/218380.218411}.
+  (Accessed February 20, 2016)
 \BIBentrySTDinterwordspacing
 
 \bibitem{muscle_based_bipeds}
 T.~Geijtenbeek, M.~van~de Panne, and A.~F. van~der Stappen, ``Flexible
-  muscle-based locomotion for bipedal creatures,'' \emph{ACM Transactions on
-  Graphics}, vol.~32, no.~6, 2013.
+  muscle-based locomotion for bipedal creatures,'' \emph{ACM Trans. on Graph.},
+  vol.~32, no.~6, 2013.
 
 \bibitem{composable_controllers}
 \BIBentryALTinterwordspacing
 P.~Faloutsos, M.~van~de Panne, and D.~Terzopoulos, ``Composable controllers for
-  physics-based character animation,'' in \emph{Proceedings of the 28th Annual
-  Conference on Computer Graphics and Interactive Techniques}, ser. SIGGRAPH
-  '01.\hskip 1em plus 0.5em minus 0.4em\relax New York, NY, USA: ACM, 2001, pp.
-  251--260. [Online]. Available:
-  \url{http://doi.acm.org/10.1145/383259.383287}.  (Accessed November 10, 2015)
+  physics-based character animation,'' in \emph{Proc. of the 28th Annu. Conf.
+  on Comput. Graph. and Interactive Techniques}, ser. SIGGRAPH '01.\hskip 1em
+  plus 0.5em minus 0.4em\relax New York, NY, USA: ACM, 2001, pp. 251--260.
+  [Online]. Available: \url{http://doi.acm.org/10.1145/383259.383287}.
+  (Accessed November 10, 2015)
 \BIBentrySTDinterwordspacing
 
 \bibitem{anim_human_athletics}
 \BIBentryALTinterwordspacing
 J.~K. Hodgins, W.~L. Wooten, D.~C. Brogan, and J.~F. O'Brien, ``Animating human
-  athletics,'' in \emph{Proceedings of the 22Nd Annual Conference on Computer
-  Graphics and Interactive Techniques}, ser. SIGGRAPH '95.\hskip 1em plus 0.5em
-  minus 0.4em\relax New York, NY, USA: ACM, 1995, pp. 71--78. [Online].
-  Available: \url{http://doi.acm.org/10.1145/218380.218414}.  (Accessed August
-  3, 2015)
+  athletics,'' in \emph{Proc. of the 22nd Annu. Conf. on Comput. Graph. and
+  Interactive Techniques}, ser. SIGGRAPH '95.\hskip 1em plus 0.5em minus
+  0.4em\relax New York, NY, USA: ACM, 1995, pp. 71--78. [Online]. Available:
+  \url{http://doi.acm.org/10.1145/218380.218414}.  (Accessed August 3, 2015)
 \BIBentrySTDinterwordspacing
 
 \bibitem{inter_physics_anim}
 \BIBentryALTinterwordspacing
 T.~Geijtenbeek and N.~Pronost, ``Interactive character animation using
-  simulated physics: A state-of-the-art review,'' \emph{Computer Graphics
-  Forum}, vol.~31, no.~8, pp. 2492--2515, 2012. [Online]. Available:
+  simulated physics: A state-of-the-art review,'' \emph{Comput. Graph. Forum},
+  vol.~31, no.~8, pp. 2492--2515, 2012. [Online]. Available:
   \url{http://dx.doi.org/10.1111/j.1467-8659.2012.03189.x}.  (Accessed March 2,
   2016)
 \BIBentrySTDinterwordspacing
@@ -118,11 +116,10 @@ T.~Geijtenbeek and N.~Pronost, ``Interactive character animation using
 \bibitem{motion_intentions}
 \BIBentryALTinterwordspacing
 Y.~Koga, K.~Kondo, J.~Kuffner, and J.-C. Latombe, ``Planning motions with
-  intentions,'' in \emph{Proceedings of the 21st Annual Conference on Computer
-  Graphics and Interactive Techniques}, ser. SIGGRAPH '94.\hskip 1em plus 0.5em
-  minus 0.4em\relax New York, NY, USA: ACM, 1994, pp. 395--408. [Online].
-  Available: \url{http://doi.acm.org/10.1145/192161.192266}.  (Accessed April
-  18, 2015)
+  intentions,'' in \emph{Proc. of the 21st Annu. Conf. on Comput. Graph. and
+  Interactive Techniques}, ser. SIGGRAPH '94.\hskip 1em plus 0.5em minus
+  0.4em\relax New York, NY, USA: ACM, 1994, pp. 395--408. [Online]. Available:
+  \url{http://doi.acm.org/10.1145/192161.192266}.  (Accessed April 18, 2015)
 \BIBentrySTDinterwordspacing
 
 \bibitem{kine1}
@@ -134,8 +131,12 @@ J.~Lander, ``Making kine more flexible,'' \emph{Game Developer}, pp. 15--22,
   November 1998.
 
 \bibitem{buss_ik}
+\BIBentryALTinterwordspacing
 S.~R. Buss, ``Introduction to inverse kinematics with jacobian transpose,
-  pseudoinverse and damped least squares methods,'' 2009.
+  pseudoinverse and damped least squares methods,'' 2009. [Online]. Available:
+  \url{https://www.math.ucsd.edu/~sbuss/ResearchWeb/ikmethods/iksurvey.pdf}.
+  (Accessed March 12, 2016)
+\BIBentrySTDinterwordspacing
 
 \bibitem{fabrik}
 A.~Aristidou and J.~Lasenby, ``Fabrik: A fast, iterative solver for the inverse
@@ -165,7 +166,8 @@ A.~Aristidou and J.~Lasenby, ``Fabrik: A fast, iterative solver for the inverse
 
 \bibitem{gamasutra_char_anim}
 \BIBentryALTinterwordspacing
-J.~Hayes, ``Creating character animation assets,'' pp. 2--3, November 1999.
+J.~Hayes, ``Creating character animation assets,'' ser. Game Developer's Conf.
+  '99.\hskip 1em plus 0.5em minus 0.4em\relax GDC, November 1999, pp. 2--3.
   [Online]. Available:
   \url{http://www.gamasutra.com/view/feature/131796/creating_character_animation_assets.php}.
    (Accessed November 8, 2015)
@@ -215,12 +217,12 @@ F.~E. Zajac, ``Thigh muscle activity during maximum-height jumps by cats,''
 
 \bibitem{longjump}
 W.-L. Wu, J.-H. Wu, H.-T. Lin, and G.-J. Wang, ``Biomechanical analysis of the
-  standing long jump,'' \emph{Biomedical Engineering Applications, Basis \&
-  Communications}, vol.~15, pp. 186--192, 2003.
+  standing long jump,'' \emph{Biomedical Eng. Applicat., Basis \& Commun.},
+  vol.~15, pp. 186--192, 2003.
 
 \bibitem{vertjump}
 L.~F. Arag\'{o}n-Vargas and M.~M. Gross, ``Kinesiological factors in vertical
-  jump performance: Differences among individuals,'' \emph{Journal of Applied
+  jump performance: Differences among individuals,'' \emph{J. of Appl.
   Biomechanics}, vol.~13, pp. 24--44, 1997.
 
 \bibitem{biomech_sport}
@@ -236,8 +238,8 @@ A.~W. Tarulli, A.~B. Chin, K.~Lee, and S.~B. Rutkove, ``Impact of
 
 \bibitem{lees_arm_swing}
 A.~Lees, J.~Vanrenterghem, and D.~D. Clercq, ``Understanding how an arm swing
-  enhances performance in the vertical jump,'' \emph{Journal of Biomechanics},
-  pp. 1929--1940, 2004.
+  enhances performance in the vertical jump,'' \emph{J. of Biomechanics}, pp.
+  1929--1940, 2004.
 
 \bibitem{parkour}
 D.~Edwardes, ``Standing precision jumps,'' in \emph{The Parkour and Freerunning
@@ -264,7 +266,7 @@ S.~Jain and C.~K. Liu, ``Controlling physics-based characters using soft
 
 \bibitem{static_block_jumps}
 T.~Amasay, ``Static block jump techniques in volleyball: Upright versus
-  squatting start position,'' \emph{The Journal of Strength and Conditioning
+  squatting start position,'' \emph{The J. of Strength and Conditioning
   Research}, vol.~22, no.~4, pp. 1242--1248, July 2008.
 
 \bibitem{opt_motion_synth}
@@ -285,10 +287,10 @@ S.~Coros, P.~Beaudoin, and M.~van~de Panne, ``Robust task-based control
 
 \bibitem{Sun:2001:AGG:383259.383288}
 \BIBentryALTinterwordspacing
-H.~C. Sun and D.~N. Metaxas, ``Automating gait generation,'' in
-  \emph{Proceedings of the 28th Annual Conference on Computer Graphics and
-  Interactive Techniques}, ser. SIGGRAPH '01.\hskip 1em plus 0.5em minus
-  0.4em\relax New York, NY, USA: ACM, 2001, pp. 261--270. [Online]. Available:
+H.~C. Sun and D.~N. Metaxas, ``Automating gait generation,'' in \emph{Proc. of
+  the 28th Annu. Conf. on Comput. Graph. and Interactive Techniques}, ser.
+  SIGGRAPH '01.\hskip 1em plus 0.5em minus 0.4em\relax New York, NY, USA: ACM,
+  2001, pp. 261--270. [Online]. Available:
   \url{http://doi.acm.org/10.1145/383259.383288}.  (Accessed August 22, 2015)
 \BIBentrySTDinterwordspacing
 
@@ -305,12 +307,11 @@ J.~Babi\v{c} and J.~Lenar\v{c}i\v{c}, ``Vertical jump: Biomechanical analysis
 \bibitem{cat_hindlimb_activity}
 F.~E. Zajac, M.~R. Zomlefer, and W.~S. Levine, ``Hindlimb muscular activity,
   kinetics and kinematics of cats jumping to their maximum achievable
-  heights,'' \emph{The Journal of Experimental Biology}, vol.~91, pp. 73--86,
-  1980.
+  heights,'' \emph{The J. of Experimental Biology}, vol.~91, pp. 73--86, 1980.
 
 \bibitem{cat_thigh_activity}
 F.~E. Zajac, ``Thigh muscle activity during maximum-height jumps by cats,''
-  \emph{Journal of Neurophysiology}, vol.~53, no.~4, pp. 979--994, 1985.
+  \emph{J. of Neurophysiology}, vol.~53, no.~4, pp. 979--994, 1985.
 
 \bibitem{parkour_book}
 D.~Edwardes, \emph{The Parkour and Freerunning Handbook}.\hskip 1em plus 0.5em
@@ -322,11 +323,11 @@ R.~J. Radke, \emph{Computer Vision for Visual Effects}.\hskip 1em plus 0.5em
 
 \bibitem{witkin_moedit}
 \BIBentryALTinterwordspacing
-A.~Witkin and Z.~Popovic, ``Motion warping,'' in \emph{Proceedings of the 22Nd
-  Annual Conference on Computer Graphics and Interactive Techniques}, ser.
-  SIGGRAPH '95.\hskip 1em plus 0.5em minus 0.4em\relax New York, NY, USA: ACM,
-  1995, pp. 105--108. [Online]. Available:
-  \url{http://doi.acm.org/10.1145/218380.218422}.  (Accessed February 3, 2016)
+A.~Witkin and Z.~Popovic, ``Motion warping,'' in \emph{Proc. of the 22nd Annu.
+  Conf. on Comput. Graph. and Interactive Techniques}, ser. SIGGRAPH '95.\hskip
+  1em plus 0.5em minus 0.4em\relax New York, NY, USA: ACM, 1995, pp. 105--108.
+  [Online]. Available: \url{http://doi.acm.org/10.1145/218380.218422}.
+  (Accessed February 3, 2016)
 \BIBentrySTDinterwordspacing
 
 \bibitem{anim_bible}
