@@ -43,8 +43,6 @@
 \renewcommand{\algorithmicensure}{\textbf{Output:}}
 
 % For code
-%\usepackage{listings}
-%\renewcommand*{\lstlistlistingname}{LIST OF LISTINGS}
 \usepackage{algorithmicx}
 \usepackage{algorithm}
 
@@ -55,33 +53,6 @@
 
 \renewcommand{\vec}[1]{\mathbf{#1}}
 
-% For tikz
-%\usepackage{tikz}
-%\usetikzlibrary{fit,positioning,shapes,arrows}
-%\pgfdeclarelayer{l1}
-%\pgfsetlayers{l1,main}
-%\makeatletter
-%\pgfkeys{%
-%  /tikz/node on layer/.code={
-%    \gdef\node@@on@layer{%
-%      %\setbox\tikz@tempbox=\hbox\bgroup\pgfonlayer{#1}\unhbox\tikz@tempbox\endpgfonlayer\egroup}
-%    \aftergroup\node@on@layer
-%  },
-%  /tikz/end node on layer/.code={
-%    \endpgfonlayer\endgroup\endgroup
-%  }
-%}
-
-%\def\node@on@layer{\aftergroup\node@@on@layer}
-%\makeatother
-% Define stage styles
-%\tikzstyle{stage} = [rectangle, draw, fill=blue!25, text centered, rounded corners, minimum height=2cm, inner sep=0.5cm, node on layer=l1]
-%\tikzstyle{substage} = [draw=blue,fill=white,dashed,rounded corners=0.25cm,align=flush center,text width=12em,inner sep=0.25cm,minimum height=1.5cm]
-%\tikzstyle{line} = [draw, -latex']
-%\tikzstyle{data} = [draw, rectangle, shape border rotate=90, aspect=0.25, fill=red!20, minimum height=2em, text centered]
-%\tikzstyle{decision} = [diamond, draw, fill=white, text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
-%\newcommand{\nodebox}[2]{\parbox[c]{#1}{\centering #2}}
-
 % For rotating in the tables
 %\usepackage{rotating} 
 \usepackage[T1]{fontenc}
@@ -91,7 +62,6 @@
 
 % % For hyperreffing
 \usepackage{hyperref}
-% \usepackage[backref]{hyperref}
 \hypersetup{
     unicode=false,          % non-Latin characters in Acrobats bookmarks
     pdftoolbar=true,        % show Acrobats toolbar?
@@ -116,31 +86,14 @@
 \newcommand{\bibfnamefont}[1]{#1}
 \newcommand{\bibnamefont}[1]{#1}
 \newcommand{\Argmin}{\operatornamewithlimits{argmin}}
-%\usepackage{natbib}
 \usepackage{cite}
-%\usepackage{listings}
-%\usepackage{color}
 \usepackage[toc,page]{appendix}
 \usepackage{float}
-%\definecolor{dkgreen}{rgb}{0,0.6,0}
-%\definecolor{gray}{rgb}{0.5,0.5,0.5}
-%\definecolor{mauve}{rgb}{0.58,0,0.82}
-%\lstset{frame=tb,
-%  language=[Sharp]C, 
-%  aboveskip=3mm,
-%  belowskip=3mm,
-%  showstringspaces=false,
-%  columns=flexible,
-%  basicstyle={\small\ttfamily},
-%  numbers=none,
-%  numberstyle=\tiny\color{gray},
-%  keywordstyle=\color{blue},
-%  commentstyle=\color{dkgreen},
-%  stringstyle=\color{mauve},
-%  breaklines=true,
-%  breakatwhitespace=true
-%  tabsize=3
-%}
+
+% biblatex, alternative thing to using straight bibtex
+%\usepackage[style = ieee, urldate = comp]{biblatex}
+%\addbibresource{research.bib}
+%\addbibresource{IEEEabrv.bib}
 
 \renewcommand{\topfraction}{0.9}
 \renewcommand{\bottomfraction}{0.8}
@@ -165,8 +118,6 @@
 \newcommand{\liufallcite}{(Ha et al., 2012) }
 
 \begin{document}
-% TO GET THE IEEE STANDARD RIGHT
-%\bstctlcite{IEEE_Thing}
  
 \include{TitlePage}   % titlepage material for Master's thesis or project
 \include{Acknowledgement}
@@ -177,10 +128,11 @@
 \include{Visualization}
 \include{Results}
 \include{FutureWork}
+% if using straight bibtex
 \specialhead{References}
 \nocite{*}
 \bibliography{IEEEabrv,research}
-\bibliographystyle{ieeetran}
-%\include{Bibliography} 	% bibliography
-%\include{rpiapp} 	% appendix
+\bibliographystyle{bibtex-ieeetran-urldate/IEEEtranUrldate}
+% if using biblatex
+%\printbibliography
 \end{document}
